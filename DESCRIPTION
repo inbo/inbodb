@@ -16,3 +16,7 @@ Encoding: UTF-8
 Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
+Imports:
+  DBI,
+  odbc
+RoxygenNote: 6.1.1
