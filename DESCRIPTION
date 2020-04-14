@@ -1,0 +1,18 @@
+Package: inbodb
+Title: Connect to and retrieve data from databases on the INBO server
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Els",
+             family = "Lommelen",
+             role = c("aut", "cre"),
+             email = "els.lommelen@inbo.be",
+             comment = c(ORCID = "0000-0002-3481-5684")),
+      person(given = "Research Institute for Nature and Forest",
+             role = c("cph", "fnd"),
+             email = "info@inbo.be"))
+Description: What the package does (one paragraph).
+License: MIT
+Encoding: UTF-8
+Language: en-GB
+LazyData: true
+Roxygen: list(markdown = TRUE)
