@@ -4,6 +4,7 @@
 #' @inheritParams odbc::dbSendQuery
 #' @inheritParams odbc::dbClearResults
 #' @inheritParams odbc::dbFetch
+#' @inheritParams odbc::dbColumnInfo
 #' @inheritParams odbc::dbHasCompleted
 #' @export
 setMethod(
@@ -16,7 +17,9 @@ setMethod(
       df <- dbFetch(rs, n = n, ...),
       error = function(e) {
         if (grepl("Descriptor", e) & grepl("index", tolower(e))) {
-          stop("Query problem: put columns with long data (text, image, varchar(max),... at the end of the select statement")
+          info <- dbColumnInfo(rs)
+          columns <- paste0(info[info$type == min(as.numeric(info$type)), "name"], collapse = "', '")
+          stop(paste0("Query problem: put field(s) '", columns, "' at the end of the select statement."))
         } else {
           stop(e)
         }
