@@ -1,11 +1,10 @@
-#' @rdname OdbcConnection
+#' send and fetch query to database via odbc
+#'
+#' This method is an adaptation from the eponymous function in the odbc package and is an implementation of the virtual method `dbGetQuery` defined in the `DBI` package.
+#'
 #' @inheritParams DBI::dbGetQuery
 #' @inheritParams DBI::dbFetch
-#' @inheritParams odbc::dbSendQuery
-#' @inheritParams odbc::dbClearResults
-#' @inheritParams odbc::dbFetch
-#' @inheritParams odbc::dbColumnInfo
-#' @inheritParams odbc::dbHasCompleted
+#' @importFrom  odbc dbClearResult dbColumnInfo dbFetch dbGetQuery dbHasCompleted dbSendQuery
 #' @export
 setMethod(
   "dbGetQuery", signature("OdbcConnection", "character"),
