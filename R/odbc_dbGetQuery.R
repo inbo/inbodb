@@ -22,7 +22,7 @@ setMethod(
           if (.Platform$OS.type == "unix") {
             columns <- paste0(columns, "' and fields of the datatypes 'nvarchar(max)' and 'varchar(max)")
           }
-          stop(paste0("Query problem: put field(s) '", columns, "' at the end of the select statement."))
+          stop(paste0("Query problem: put field(s) '", columns, "' at the end of the select statement (info in vignet odbc_query_problem)"))
         } else {
           stop(e)
         }
