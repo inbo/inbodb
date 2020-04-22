@@ -43,6 +43,10 @@ globalVariables("%LIKE%")
 #' @family florabank
 #' @examples
 #' \dontrun{
+#' library(inbodb)
+#' library(DBI)
+#' library(odbc)
+#' library(dplyr)
 #' # connect to florabank
 #' db_connectie <- connect_inbo_dbase("D0021_00_userFlora")
 #'

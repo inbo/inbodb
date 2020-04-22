@@ -38,6 +38,9 @@
 #' @examples
 #' \dontrun{
 #' # code can only be run if a connection to the database is possible
+#' library(inbodb)
+#' library(DBI)
+#' library(odbc)
 #' # connect to florabank
 #' db_connectie <- connect_inbo_dbase("D0021_00_userFlora")
 #'
