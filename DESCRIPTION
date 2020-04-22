@@ -17,7 +17,10 @@ Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
 Imports:
+  assertthat,
   DBI,
+  dplyr,
+  glue,
   odbc
 RoxygenNote: 6.1.1
 Suggests: 
