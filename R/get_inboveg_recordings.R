@@ -34,6 +34,9 @@
 #' @family inboveg
 #' @examples
 #' \dontrun{
+#' library(inbodb)
+#' library(DBI)
+#' library(odbc)
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
 #' # get the recordings from one survey and collect the data
