@@ -11,7 +11,7 @@ Authors@R:
              role = c("cph", "fnd"),
              email = "info@inbo.be"))
 Description: What the package does (one paragraph).
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
@@ -21,7 +21,8 @@ Imports:
   DBI,
   dplyr,
   glue,
-  odbc
+  odbc,
+  rlang
 RoxygenNote: 6.1.1
 Suggests: 
     knitr,
