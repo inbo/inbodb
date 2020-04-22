@@ -74,6 +74,7 @@ connect_inbo_dbase <- function(database_name) {
 #' @importFrom odbc odbcListObjectTypes odbcListObjects odbcListColumns
 #' odbcPreviewObject odbcConnectionActions
 #' @importFrom DBI dbDisconnect
+#' @noRd
 on_connection_opened <- function(connection, code, type) {
     # make sure we have an observer
     observer <- getOption("connectionObserver")
