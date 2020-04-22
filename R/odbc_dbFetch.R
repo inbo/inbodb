@@ -3,7 +3,9 @@
 #' This method is an adaptation from the eponymous function in the `odbc` package and is an implementation of the method `dbFetch` defined in the `DBI` package.  Additional to the `odbc` package, it replaces an cryptic error message by an informative error message.
 #'
 #' @inheritParams DBI::dbFetch
+#' @importFrom DBI dbFetch
 #' @importFrom  odbc dbColumnInfo
+#' @importFrom utils getFromNamespace
 #' @export
 setMethod(
   "dbFetch", "OdbcResult",
