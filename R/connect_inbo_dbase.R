@@ -55,7 +55,7 @@ connect_inbo_dbase <- function(database_name) {
 
     # derived from the odbc package Viewer setup to activate the Rstudio Viewer
     code_call <- c(match.call())
-    code_call <- paste(c("library(inborutils)",
+    code_call <- paste(c("library(inbodb)",
                          paste("con <-", gsub(", ", ",\n\t", code_call))),
                        collapse = "\n")
     on_connection_opened(conn, code_call, type)
@@ -98,7 +98,7 @@ on_connection_opened <- function(connection, code, type) {
 
         # icon for connection
         icon = system.file(file.path("static", "logo.png"),
-                           package = "inborutils"),
+                           package = "inbodb"),
 
         # connection code
         connectCode = code,

@@ -4,8 +4,7 @@
 \alias{get_inboveg_classification}
 \title{Query classification information from INBOVEG}
 \usage{
-get_inboveg_classification(connection, survey_name, classif,
-  collect = FALSE)
+get_inboveg_classification(connection, survey_name, classif, collect = FALSE)
 }
 \arguments{
 \item{connection}{dbconnection with the database 'Cydonia'
@@ -57,9 +56,10 @@ rm(con)
 }
 }
 \seealso{
-Other inboveg: \code{\link{get_inboveg_header}},
-  \code{\link{get_inboveg_qualifiers}},
-  \code{\link{get_inboveg_recordings}},
-  \code{\link{get_inboveg_survey}}
+Other inboveg: 
+\code{\link{get_inboveg_header}()},
+\code{\link{get_inboveg_qualifiers}()},
+\code{\link{get_inboveg_recordings}()},
+\code{\link{get_inboveg_survey}()}
 }
 \concept{inboveg}

@@ -4,8 +4,7 @@
 \alias{get_florabank_observations}
 \title{Get all validated observations for one or more taxa from the florabank database}
 \usage{
-get_florabank_observations(connection, names, fixed = FALSE,
-  collect = FALSE)
+get_florabank_observations(connection, names, fixed = FALSE, collect = FALSE)
 }
 \arguments{
 \item{connection}{A connection to the florabank database. See the example
@@ -33,7 +32,7 @@ A dataframe with the following variables: "NaamNederlands",
 \description{
 This function takes as input a character vector with one or more names of
 species either as scientific names and/or Dutch names. By default (fixed = FALSE),
-partial matching will be used (the names are prepended with appended with %).
+partial matching will be used (the names are prepended with appended with \%).
 The function queries the florabank, and returns a dataframe with observation
 level information about the matching taxa.
 }
@@ -88,7 +87,8 @@ dbDisconnect(db_connectie)
 }
 }
 \seealso{
-Other florabank: \code{\link{get_florabank_taxon_ifbl_year}},
-  \code{\link{get_florabank_traits}}
+Other florabank: 
+\code{\link{get_florabank_taxon_ifbl_year}()},
+\code{\link{get_florabank_traits}()}
 }
 \concept{florabank}

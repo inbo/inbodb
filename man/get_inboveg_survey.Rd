@@ -33,14 +33,19 @@ See the examples for how to get information for all surveys.
 library(inbodb)
 library(DBI)
 library(odbc)
+library(dplyr)
 con <- connect_inbo_dbase("D0010_00_Cydonia")
 
 # get information of a specific survey and collect data
 survey_info <- get_inboveg_survey(con, survey_name = "OudeLanden_1979",
 collect = TRUE)
 
-# get information of all surveys and collect data
+# get information of all surveys without collecting data
 allsurveys <- get_inboveg_survey(con)
+# inspect result
+allsurveys
+# collect all data
+allsurveys <- collect(allsurveys)
 
 # Close the connection when done
 dbDisconnect(con)
@@ -48,9 +53,10 @@ rm(con)
 }
 }
 \seealso{
-Other inboveg: \code{\link{get_inboveg_classification}},
-  \code{\link{get_inboveg_header}},
-  \code{\link{get_inboveg_qualifiers}},
-  \code{\link{get_inboveg_recordings}}
+Other inboveg: 
+\code{\link{get_inboveg_classification}()},
+\code{\link{get_inboveg_header}()},
+\code{\link{get_inboveg_qualifiers}()},
+\code{\link{get_inboveg_recordings}()}
 }
 \concept{inboveg}

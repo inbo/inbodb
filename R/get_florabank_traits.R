@@ -81,8 +81,10 @@ get_florabank_traits <- function(connection, trait_name, collect = FALSE) {
       distinct(.data$Naam) %>%
       collect() %>%
       pull(.data$Naam)
-    stop(paste0("Please provide (part of) a trait name from this list: ",
-                paste(traitnames, collapse = ", ")))
+    message <- paste0("Please provide (part of) a trait name from this list: ",
+                      paste(traitnames, collapse = ", "))
+    options(warning.length = nchar(message))
+    stop(message)
   }
 
   trait_name <- tolower(trait_name)
