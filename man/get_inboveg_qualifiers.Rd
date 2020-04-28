@@ -4,12 +4,8 @@
 \alias{get_inboveg_qualifiers}
 \title{Query qualifier information of recordings (releve) from INBOVEG}
 \usage{
-get_inboveg_qualifiers(
-  connection,
-  survey_name,
-  qualifier_type,
-  multiple = FALSE
-)
+get_inboveg_qualifiers(connection, survey_name, qualifier_type,
+  multiple = FALSE)
 }
 \arguments{
 \item{connection}{dbconnection with the database 'Cydonia'
@@ -68,10 +64,9 @@ rm(con)
 
 }
 \seealso{
-Other inboveg: 
-\code{\link{get_inboveg_classification}()},
-\code{\link{get_inboveg_header}()},
-\code{\link{get_inboveg_recordings}()},
-\code{\link{get_inboveg_survey}()}
+Other inboveg: \code{\link{get_inboveg_classification}},
+  \code{\link{get_inboveg_header}},
+  \code{\link{get_inboveg_recordings}},
+  \code{\link{get_inboveg_survey}}
 }
 \concept{inboveg}

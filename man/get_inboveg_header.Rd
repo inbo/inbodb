@@ -4,13 +4,8 @@
 \alias{get_inboveg_header}
 \title{Query header information from INBOVEG}
 \usage{
-get_inboveg_header(
-  connection,
-  survey_name,
-  rec_type,
-  multiple = FALSE,
-  collect = FALSE
-)
+get_inboveg_header(connection, survey_name, rec_type, multiple = FALSE,
+  collect = FALSE)
 }
 \arguments{
 \item{connection}{dbconnection with the database 'Cydonia'
@@ -71,10 +66,9 @@ rm(con)
 }
 }
 \seealso{
-Other inboveg: 
-\code{\link{get_inboveg_classification}()},
-\code{\link{get_inboveg_qualifiers}()},
-\code{\link{get_inboveg_recordings}()},
-\code{\link{get_inboveg_survey}()}
+Other inboveg: \code{\link{get_inboveg_classification}},
+  \code{\link{get_inboveg_qualifiers}},
+  \code{\link{get_inboveg_recordings}},
+  \code{\link{get_inboveg_survey}}
 }
 \concept{inboveg}

@@ -1,6 +1,6 @@
 body {
   background-color: #efefef;
-  color: #5e5e5e;
+  color: #2e2e2e;
   background-image: url('https://www.inbo.be/sites/all/themes/bootstrap_inbo/img/inbo/background-pattern.png');
   font-family: FlandersArtSans-Light, Verdana, Arial, sans-serif;
 }
@@ -34,7 +34,7 @@ a:hover {
 }
 
 .nav-pills a {
-  color: #5e5e5e;
+  color: #2e2e2e;
 }
 
 @font-face {
