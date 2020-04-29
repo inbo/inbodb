@@ -36,12 +36,8 @@
 #' survey_info <- get_inboveg_survey(con, survey_name = "OudeLanden_1979",
 #' collect = TRUE)
 #'
-#' # get information of all surveys without collecting data
+#' # get information of all surveys and collect data
 #' allsurveys <- get_inboveg_survey(con)
-#' # inspect result
-#' allsurveys
-#' # collect all data
-#' allsurveys <- collect(allsurveys)
 #'
 #' # Close the connection when done
 #' dbDisconnect(con)
@@ -49,8 +45,8 @@
 #' }
 
 get_inboveg_survey <- function(connection,
-                  survey_name,
-                  collect = FALSE) {
+                           survey_name,
+                           collect = FALSE) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
