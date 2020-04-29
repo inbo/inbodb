@@ -1,7 +1,7 @@
 # inbodb
 connect to and retrieve data from databases on the INBO server
 
-#installation
+# installation
 
 To install `inbodb` from Github, start a new R session and run this code (before loading any packages):
 
