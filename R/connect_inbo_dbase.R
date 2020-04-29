@@ -18,6 +18,7 @@
 #' @importFrom odbc odbc odbcListDrivers
 #' @importFrom utils tail
 #'
+#' @author Stijn Van Hoey \email{stijnvanhoey@@gmail.com}
 #' @examples
 #' \dontrun{
 #' connection <- connect_inbo_dbase("D0021_00_userFlora")

@@ -27,3 +27,6 @@ connection <- connect_inbo_dbase("D0021_00_userFlora")
 connection <- connect_inbo_dbase("W0003_00_Lims")
 }
 }
+\author{
+Stijn Van Hoey \email{stijnvanhoey@gmail.com}
+}
