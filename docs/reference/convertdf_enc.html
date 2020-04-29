@@ -124,21 +124,30 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>convertdf_enc</span>(<span class='no'>x</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"UTF-8"</span>)</pre>
+    <pre class="usage"><span class='fu'>convertdf_enc</span>(<span class='no'>x</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"UTF-8"</span>, <span class='kw'>sub</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A dataframe.</p></td>
+      <td><p>A dataframe or an object (such as <code>sf</code>) with the <code>data.frame</code>
+class</p></td>
+    </tr>
+    <tr>
+      <th>from</th>
+      <td><p>A character string describing the current encoding.</p></td>
     </tr>
     <tr>
       <th>to</th>
-      <td><p>Encoding string to convert to.
-All <code>R</code> platforms support <code>""</code> (for the encoding of the current
-locale), <code>"latin1"</code> and <code>"UTF-8"</code>.
-See <code><a href='https://www.rdocumentation.org/packages/base/topics/iconv'>iconv</a></code> for more information.</p></td>
+      <td><p>A character string describing the target encoding.</p></td>
+    </tr>
+    <tr>
+      <th>sub</th>
+      <td><p>character string.  If not <code>NA</code> it is used to replace
+    any non-convertible bytes in the input.  (This would normally be a
+    single character, but can be more.)  If <code>"byte"</code>, the indication is
+    <code>"&lt;xx&gt;"</code> with the hex code of the byte.</p></td>
     </tr>
     </table>
     
@@ -146,6 +155,13 @@ See <code><a href='https://www.rdocumentation.org/packages/base/topics/iconv'>ic
 
     <p>The original dataframe, with character variables (and levels of
 (character) factor variables) converted to the specified encoding.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Encoding strings: all <code>R</code> platforms support <code>""</code> (for the
+encoding of the current
+locale), <code>"latin1"</code> and <code>"UTF-8"</code>.
+See <code><a href='https://www.rdocumentation.org/packages/base/topics/iconv'>iconv</a></code> for more information.</p>
     
 
   </div>
@@ -155,6 +171,8 @@ See <code><a href='https://www.rdocumentation.org/packages/base/topics/iconv'>ic
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>
