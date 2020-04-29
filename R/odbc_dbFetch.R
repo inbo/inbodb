@@ -28,5 +28,11 @@ setMethod(
       }
     )
 
+    #convert characters to UTF-8
+    if (.Platform$OS.type == "windows") {
+      df <- df %>%
+        convertdf_enc(to = "UTF-8")
+    }
+
     df
   })
