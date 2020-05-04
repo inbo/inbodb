@@ -7,7 +7,6 @@
 #' @importFrom  odbc dbColumnInfo
 #' @importFrom utils getFromNamespace
 #' @export
-#' @noRd
 setMethod(
   "dbFetch", "OdbcResult",
   function(res, n = -1, ...) {
