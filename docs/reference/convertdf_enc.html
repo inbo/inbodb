@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • inbodb</title>
+<title>Convert encoding of character and factor variables in a dataframe — convertdf_enc • inbodb</title>
 
 
 <!-- jquery -->
@@ -41,7 +41,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Convert encoding of character and factor variables in a dataframe — convertdf_enc" />
+<meta property="og:description" content="Convert encoding of character and factor variables in a dataframe" />
 
 
 
@@ -60,7 +61,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -119,96 +120,56 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Convert encoding of character and factor variables in a dataframe</h1>
+    <small class="dont-index">Source: <a href='https://github.com/inbo/inbodb/blob/master/R/convertdf_enc.R'><code>R/convertdf_enc.R</code></a></small>
+    <div class="hidden name"><code>convertdf_enc.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Convert encoding of character and factor variables in a dataframe</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>convertdf_enc</span>(<span class='no'>x</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"UTF-8"</span>, <span class='kw'>sub</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="connect_inbo_dbase.html">connect_inbo_dbase()</a></code> </p>
-        </td>
-        <td><p>Connect to an INBO database</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="convertdf_enc.html">convertdf_enc()</a></code> </p>
-        </td>
-        <td><p>Convert encoding of character and factor variables in a dataframe</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_florabank_observations.html">get_florabank_observations()</a></code> </p>
-        </td>
-        <td><p>Get all validated observations for one or more taxa from the florabank database</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_florabank_taxon_ifbl_year.html">get_florabank_taxon_ifbl_year()</a></code> </p>
-        </td>
-        <td><p>Get unique combinations of taxon, IFBL-square and year.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_florabank_traits.html">get_florabank_traits()</a></code> </p>
-        </td>
-        <td><p>Query the florabank to get taxon trait values for (a) taxon trait(s)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_inboveg_classification.html">get_inboveg_classification()</a></code> </p>
-        </td>
-        <td><p>Query classification information from INBOVEG</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_inboveg_header.html">get_inboveg_header()</a></code> </p>
-        </td>
-        <td><p>Query header information from INBOVEG</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_inboveg_qualifiers.html">get_inboveg_qualifiers()</a></code> </p>
-        </td>
-        <td><p>Query qualifier information of recordings (releve) from INBOVEG</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_inboveg_recordings.html">get_inboveg_recordings()</a></code> </p>
-        </td>
-        <td><p>Query recording (releve) information from INBOVEG</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_inboveg_survey.html">get_inboveg_survey()</a></code> </p>
-        </td>
-        <td><p>Query survey information from INBOVEG</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A dataframe or an object (such as <code>sf</code>) with the <code>data.frame</code>
+class</p></td>
+    </tr>
+    <tr>
+      <th>from</th>
+      <td><p>A character string describing the current encoding.</p></td>
+    </tr>
+    <tr>
+      <th>to</th>
+      <td><p>A character string describing the target encoding.</p></td>
+    </tr>
+    <tr>
+      <th>sub</th>
+      <td><p>character string.  If not <code>NA</code> it is used to replace
+    any non-convertible bytes in the input.  (This would normally be a
+    single character, but can be more.)  If <code>"byte"</code>, the indication is
+    <code>"&lt;xx&gt;"</code> with the hex code of the byte.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>The original dataframe, with character variables (and levels of
+(character) factor variables) converted to the specified encoding.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Encoding strings: all <code>R</code> platforms support <code>""</code> (for the
+encoding of the current
+locale), <code>"latin1"</code> and <code>"UTF-8"</code>.
+See <code><a href='https://rdrr.io/r/base/iconv.html'>iconv</a></code> for more information.</p>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
