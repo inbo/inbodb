@@ -43,6 +43,7 @@ Imports:
   DBI,
   dplyr,
   glue,
+  methods,
   odbc,
   rlang
 RoxygenNote: 7.1.0
