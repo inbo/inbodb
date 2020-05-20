@@ -20,7 +20,7 @@ class}
     \code{"<xx>"} with the hex code of the byte.}
 }
 \value{
-The original dataframe, with character variables (and levels of
+The original object, with character variables (and levels of
 (character) factor variables) converted to the specified encoding.
 }
 \description{
