@@ -6,15 +6,15 @@
 #' locale), \code{"latin1"} and \code{"UTF-8"}.
 #' See \code{\link[base]{iconv}} for more information.
 #'
-#' @param x A dataframe or an object (such as `sf`) with the `data.frame`
-#' class
+#' @param x An object with the `data.frame`
+#' class (such as `data.frame` or `sf`)
 #'
 #' @inheritParams base::iconv
 #'
 #' @md
 #'
 #' @return
-#' The original dataframe, with character variables (and levels of
+#' The original object, with character variables (and levels of
 #' (character) factor variables) converted to the specified encoding.
 #'
 #' @export
@@ -38,7 +38,7 @@ convertdf_enc <- function(x,
     } else FALSE
   }
 
-  conv_levels <- function(fact, to) {
+  conv_levels <- function(fact, from, to, sub) {
     levels(fact) <- iconv(levels(fact),
                           from = from,
                           to = to,
