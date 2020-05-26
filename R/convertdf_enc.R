@@ -6,7 +6,7 @@
 #' locale), \code{"latin1"} and \code{"UTF-8"}.
 #' See \code{\link[base]{iconv}} for more information.
 #'
-#' @param x A dataframe or an object (such as `sf`) with the `data.frame`
+#' @param x An object (such as `sf`) with the `data.frame`
 #' class
 #'
 #' @inheritParams base::iconv

@@ -7,7 +7,7 @@
 convertdf_enc(x, from = "", to = "UTF-8", sub = NA)
 }
 \arguments{
-\item{x}{A dataframe or an object (such as \code{sf}) with the \code{data.frame}
+\item{x}{An object (such as \code{sf}) with the \code{data.frame}
 class}
 
 \item{from}{A character string describing the current encoding.}
