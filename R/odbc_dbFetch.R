@@ -33,7 +33,7 @@ setMethod(
     if (.Platform$OS.type == "windows" &
         tolower(res@connection@encoding) == "utf-8") {
       info <- dbColumnInfo(res) %>%
-        filter(.data$type == "12")
+        filter(.data$type %in% c("-1", "12"))
       df <- df %>%
         mutate_at(info$name, iconv, to = "UTF-8")
     }
