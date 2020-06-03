@@ -6,6 +6,8 @@
 #' @importFrom DBI dbFetch
 #' @importFrom  odbc dbColumnInfo
 #' @importFrom utils getFromNamespace
+#' @importFrom dplyr %>% filter mutate_at
+#' @importFrom rlang .data
 #' @export
 setMethod(
   "dbFetch", "OdbcResult",
@@ -27,11 +29,13 @@ setMethod(
       }
     )
 
-    #convert characters to UTF-8
+    #convert columns of data type varchar to UTF-8
     if (.Platform$OS.type == "windows" &
         tolower(res@connection@encoding) == "utf-8") {
+      info <- dbColumnInfo(res) %>%
+        filter(.data$type == "12")
       df <- df %>%
-        convertdf_enc(to = "UTF-8")
+        mutate_at(info$name, iconv, to = "UTF-8")
     }
 
     df
