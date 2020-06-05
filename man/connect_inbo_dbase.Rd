@@ -4,13 +4,13 @@
 \alias{connect_inbo_dbase}
 \title{Connect to an INBO database}
 \usage{
-connect_inbo_dbase(database_name, encoding = "")
+connect_inbo_dbase(database_name, autoconvert_utf8 = TRUE)
 }
 \arguments{
 \item{database_name}{char Name of the INBO database you want to connect}
 
-\item{encoding}{defaults to an empty string, if "UTF-8", tables retrieved from
-the database are encoded to UTF-8 using convertdf_enc()}
+\item{autoconvert_utf8}{Should the encoding of the tables that are retrieved
+from the database be adapted to ensure correct presentation?  Defaults to TRUE.}
 }
 \value{
 odbc connection
