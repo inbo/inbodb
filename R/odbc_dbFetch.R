@@ -35,7 +35,7 @@ setMethod(
       info <- dbColumnInfo(res) %>%
         filter(.data$type %in% c("-1", "12"))
       df <- df %>%
-        mutate_at(info$name, iconv, to = "UTF-8")
+        mutate_at(info$name, `Encoding<-`, "latin1")
     }
 
     df
