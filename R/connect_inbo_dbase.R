@@ -9,6 +9,8 @@
 #' \href{https://inbo.github.io/tutorials/tutorials/r_database_access/}{this tutorial}.
 #'
 #' @param database_name char Name of the INBO database you want to connect
+#' @param autoconvert_utf8 Should the encoding of the tables that are retrieved
+#' from the database be adapted to ensure correct presentation?  Defaults to TRUE.
 #'
 #' @return odbc connection
 #'
@@ -17,6 +19,10 @@
 #' @importFrom DBI dbGetQuery dbConnect dbListTables
 #' @importFrom odbc odbc odbcListDrivers
 #' @importFrom utils tail
+#' @importFrom assertthat
+#' assert_that
+#' is.flag
+#' noNA
 #'
 #' @author Stijn Van Hoey \email{stijnvanhoey@@gmail.com}
 #' @examples
@@ -24,7 +30,11 @@
 #' connection <- connect_inbo_dbase("D0021_00_userFlora")
 #' connection <- connect_inbo_dbase("W0003_00_Lims")
 #' }
-connect_inbo_dbase <- function(database_name) {
+connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
+
+    assert_that(is.flag(autoconvert_utf8), noNA(autoconvert_utf8))
+    encoding <-
+        ifelse(autoconvert_utf8 & .Platform$OS.type == "windows", "latin1", "")
 
     # datawarehouse databases (sql08) start with an M, S or W; most
     # transactional (sql07) with a D (by agreement with dba's)
@@ -52,6 +62,7 @@ connect_inbo_dbase <- function(database_name) {
                       server = server,
                       port = 1433,
                       database = database_name,
+                      encoding = encoding,
                       trusted_connection = "YES")
 
     # derived from the odbc package Viewer setup to activate the Rstudio Viewer
@@ -135,5 +146,3 @@ on_connection_opened <- function(connection, code, type) {
         connectionObject = connection
     )
 }
-
-
