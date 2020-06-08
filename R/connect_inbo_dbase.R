@@ -19,7 +19,10 @@
 #' @importFrom DBI dbGetQuery dbConnect dbListTables
 #' @importFrom odbc odbc odbcListDrivers
 #' @importFrom utils tail
-#' @importFrom assertthat assert_that
+#' @importFrom assertthat
+#' assert_that
+#' is.flag
+#' noNA
 #'
 #' @author Stijn Van Hoey \email{stijnvanhoey@@gmail.com}
 #' @examples
@@ -143,4 +146,3 @@ on_connection_opened <- function(connection, code, type) {
         connectionObject = connection
     )
 }
-
