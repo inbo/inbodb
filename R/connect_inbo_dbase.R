@@ -29,7 +29,7 @@
 #' }
 connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
 
-    assert_that(is.logical(autoconvert_utf8))
+    assert_that(is.flag(autoconvert_utf8), noNA(autoconvert_utf8))
 
     # datawarehouse databases (sql08) start with an M, S or W; most
     # transactional (sql07) with a D (by agreement with dba's)
@@ -143,5 +143,4 @@ on_connection_opened <- function(connection, code, type) {
         connectionObject = connection
     )
 }
-
 
