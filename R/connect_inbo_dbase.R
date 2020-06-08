@@ -33,6 +33,8 @@
 connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
 
     assert_that(is.flag(autoconvert_utf8), noNA(autoconvert_utf8))
+    encoding <-
+        ifelse(autoconvert_utf8 & .Platform$OS.type == "windows", "latin1", "")
 
     # datawarehouse databases (sql08) start with an M, S or W; most
     # transactional (sql07) with a D (by agreement with dba's)
@@ -60,10 +62,8 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
                       server = server,
                       port = 1433,
                       database = database_name,
+                      encoding = encoding,
                       trusted_connection = "YES")
-
-    # add encoding to connection object
-    conn@encoding <- ifelse(autoconvert_utf8, "UTF-8", "")
 
     # derived from the odbc package Viewer setup to activate the Rstudio Viewer
     code_call <- c(match.call())

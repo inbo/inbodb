@@ -29,14 +29,5 @@ setMethod(
       }
     )
 
-    #convert columns of data type varchar to UTF-8
-    if (.Platform$OS.type == "windows" &
-        tolower(res@connection@encoding) == "utf-8") {
-      info <- dbColumnInfo(res) %>%
-        filter(.data$type %in% c("-1", "12"))
-      df <- df %>%
-        mutate_at(info$name, `Encoding<-`, "latin1")
-    }
-
     df
   })
