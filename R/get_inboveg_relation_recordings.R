@@ -2,7 +2,7 @@
 #'
 #' @description This function queries the INBOVEG database for
 #' relation information on recordings for one or more surveys based on
-#' Parent (classic-chain/bucket) and Child (classic) relationchip.
+#' Parent (classic-chain/bucket) and Child (classic) relationship.
 #'
 #' @param survey_name A character string or a character vector, depending on
 #' multiple parameter, giving the name or names of the
@@ -14,6 +14,11 @@
 #' multiple survey names that must match exactly. If FALSE (the default),
 #' survey_name must be a single character string (one survey name) that can
 #' include wildcards to allow partial matches
+#' @param collect If FALSE (the default), a remote tbl object is returned. This
+#' is like a reference to the result of the query but the full result of the
+#' query is not brought into memory. If TRUE the full result of the query is
+#' collected (fetched) from the database and brought into memory of the working
+#' environment.
 #'
 #' @return A dataframe with variables RecordingId, Child_GIVID (unique RecordingGIVID), Child_UserRef (UserReference),
 #' ParentId (RecordingId), Parent_GIVID (uniek RecordingGIVID) and Parent_UserRef (UserReference)

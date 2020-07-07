@@ -149,14 +149,11 @@ recording_specific_user_reference <- get_inboveg_recordings(
   con, 
   user_reference = "HS_1001",
   collect = TRUE)
-
 ```
 
 ```{r}
 recording_specific_user_reference
 ```
-
-
 
 
 Get all recordings from MILKLIM surveys (partial matching), without collecting the data:
