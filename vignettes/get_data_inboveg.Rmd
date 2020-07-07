@@ -38,6 +38,7 @@ We have provided functions to query
 * metadata of recordings (header info)
 * classification (Natura2000 or local classification like BWK)
 * qualifiers (management and site characteristics)
+* relations between recordings (relation information on recordings for one or more surveys based on Parent (classic-chain/bucket) and Child (classic) relationships)
   
 # Packages and connection
 
@@ -127,6 +128,37 @@ head(recording_heischraal2012, 10)
 ```
 
 
+Get the relevés for a specific RecordingGivid:
+
+```{r}
+recording_specific_givid <- get_inboveg_recordings(
+  con, 
+  recording_givid = "IV2012080609161322",
+  collect = TRUE)
+```
+
+```{r}
+recording_specific_givid
+```
+
+
+Or based on a user reference:
+
+```{r}
+recording_specific_user_reference <- get_inboveg_recordings(
+  con, 
+  user_reference = "HS_1001",
+  collect = TRUE)
+
+```
+
+```{r}
+recording_specific_user_reference
+```
+
+
+
+
 Get all recordings from MILKLIM surveys (partial matching), without collecting the data:
 
 ```{r}
@@ -161,6 +193,36 @@ allrecordings <- get_inboveg_recordings(con)
 
 ```{r}
 allrecordings
+```
+
+## Parent-child relationships between recordings
+
+The function `get_inboveg_relation` queries the INBOVEG database for relational information on recordings for one or more surveys based on parent (classic-chain/bucket) and Child (classic) relationships.
+
+### Examples
+
+Get all parent-child-relations from N2000meetnet surveys (partial matching):
+
+```{r}
+relations_N2000meetnet <- get_inboveg_relation(con, survey_name = "%N2000meetnet%")
+```
+
+```{r}
+head(relations_N2000meetnet)
+```
+
+
+Get the parent-child-relations from several specific surveys:
+
+```{r}
+relations_severalsurveys <- get_inboveg_relation(
+  con, 
+  survey_name =  c("DeBlankaart-1985-Beheer", "N2000meetnet_Grasland"), 
+  multiple = TRUE)
+```
+
+```{r}
+head(relations_severalsurveys)
 ```
 
 
