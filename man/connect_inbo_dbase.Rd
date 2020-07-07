@@ -4,10 +4,13 @@
 \alias{connect_inbo_dbase}
 \title{Connect to an INBO database}
 \usage{
-connect_inbo_dbase(database_name)
+connect_inbo_dbase(database_name, autoconvert_utf8 = TRUE)
 }
 \arguments{
 \item{database_name}{char Name of the INBO database you want to connect}
+
+\item{autoconvert_utf8}{Should the encoding of the tables that are retrieved
+from the database be adapted to ensure correct presentation?  Defaults to TRUE.}
 }
 \value{
 odbc connection
@@ -26,4 +29,7 @@ For more information, refer to
 connection <- connect_inbo_dbase("D0021_00_userFlora")
 connection <- connect_inbo_dbase("W0003_00_Lims")
 }
+}
+\author{
+Stijn Van Hoey \email{stijnvanhoey@gmail.com}
 }
