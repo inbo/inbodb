@@ -168,7 +168,7 @@ allrecordings
 
 The function `get_inboveg_header` queries the INBOVEG database for header information (metadata for a vegetation-relevé) for one or more survey by the name of the survey(s) and the recorder type. 
 
-###Examples
+### Examples
 
 Three examples are given, this can be used as base to continue selecting the data you require.
 
@@ -307,7 +307,7 @@ head(allqualifiers, 10)
 
 ## More complex queries
 
-These functions give basis information out of INBOVEG.  
+These functions give most of the relevant basic information that is available in INBOVEG.
 If more detailed information is needed `dplyr` is the magic word. 
 In the future additional functions can be added to this package to help the inboveg-users.
 
