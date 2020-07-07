@@ -1,10 +1,10 @@
 ---
-title: "how to retrieve data from the INBOVEG database"
-author: "Els De Bie, Hans Van Calster & Jo Loos"
+title: "How to retrieve data from the INBOVEG database"
+author: "Els De Bie, Hans Van Calster, Jo Loos"
 date: 2020-07-03
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{get_data_INBOVEG}
+  %\VignetteIndexEntry{get_data_inboveg}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
