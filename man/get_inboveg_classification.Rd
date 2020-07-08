@@ -4,19 +4,30 @@
 \alias{get_inboveg_classification}
 \title{Query classification information from INBOVEG}
 \usage{
-get_inboveg_classification(connection, survey_name, classif, collect = FALSE)
+get_inboveg_classification(
+  connection,
+  survey_name,
+  classif,
+  multiple = FALSE,
+  collect = FALSE
+)
 }
 \arguments{
 \item{connection}{dbconnection with the database 'Cydonia'
 on the inbo-sql07-prd server}
 
-\item{survey_name}{A character vector giving the names of the surveys for
-which you want to extract Classification information. If missing, all
-surveys are returned.}
+\item{survey_name}{A character string or a character vector
+giving the name or names of the survey(s) for which you want to extract
+Classification information. If missing, all surveys are returned.}
 
 \item{classif}{A character vector giving the Classification code of the
 vegetation type for which you want to extract information. If missing,
 all classifications are returned.}
+
+\item{multiple}{If TRUE, survey_name can take a character vector with
+multiple survey names that must match exactly. If FALSE (the default),
+survey_name must be a single character string (one survey name) that can
+include wildcards to allow partial matches}
 
 \item{collect}{If FALSE (the default), a remote tbl object is returned. This
 is like a reference to the result of the query but the full result of the
@@ -41,11 +52,16 @@ for how to get information for all surveys.
 library(inbodb)
 library(DBI)
 library(odbc)
+library(dplyr)
 con <- connect_inbo_dbase("D0010_00_Cydonia")
 
 # get a specific classification from a survey and collect the data
 classif_info <- get_inboveg_classification(con,
 survey_name = "MILKLIM_Heischraal2012", classif = "4010", collect = TRUE)
+
+# get the classification from several specific surveys
+classif_info <- get_inboveg_classification(con,
+survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen" ))
 
 # get all surveys, all classifications,  don't collect the data
 allecodes <- get_inboveg_classification(con)
@@ -60,6 +76,7 @@ Other inboveg:
 \code{\link{get_inboveg_header}()},
 \code{\link{get_inboveg_qualifiers}()},
 \code{\link{get_inboveg_recordings}()},
+\code{\link{get_inboveg_relation}()},
 \code{\link{get_inboveg_survey}()}
 }
 \concept{inboveg}
