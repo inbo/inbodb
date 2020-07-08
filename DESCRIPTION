@@ -41,6 +41,7 @@ Roxygen: list(markdown = TRUE)
 Imports:
   assertthat,
   DBI,
+  dbplyr,
   dplyr,
   glue,
   methods,
