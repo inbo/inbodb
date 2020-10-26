@@ -46,19 +46,12 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
         type <- "INBO PRD Server"
     }
 
-    sql_driver <- if (.Platform$OS.type == "unix") {
-                        driversdf <- odbcListDrivers()
-                        driversvec <-
-                            driversdf[driversdf$attribute == "Driver", "name"]
-                        drivers_sql <- driversvec[grepl("SQL Server", driversvec)]
-                        tail(sort(drivers_sql), 1)
-                } else {
-                    driversvec <- unique(odbcListDrivers()$name)
-                    drivers_sql <- driversvec[grepl("SQL Server", driversvec)]
-                    drivers_sql_odbc <-
-                        drivers_sql[grepl("ODBC Driver", drivers_sql)]
-                    tail(sort(drivers_sql_odbc), 1)
-                }
+    # look up most recent ODBC Driver for SQL Server
+    driversvec <- unique(odbcListDrivers()$name)
+    drivers_sql <- driversvec[grepl("SQL Server", driversvec)]
+    drivers_sql_odbc <-
+        drivers_sql[grepl("ODBC Driver", drivers_sql)]
+    tail(sort(drivers_sql_odbc), 1)
 
     # connect to database
     conn <- dbConnect(odbc(),
