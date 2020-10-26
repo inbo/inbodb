@@ -51,7 +51,7 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
     drivers_sql <- driversvec[grepl("SQL Server", driversvec)]
     drivers_sql_odbc <-
         drivers_sql[grepl("ODBC Driver", drivers_sql)]
-    tail(sort(drivers_sql_odbc), 1)
+    sql_driver <- tail(sort(drivers_sql_odbc), 1)
 
     # connect to database
     conn <- dbConnect(odbc(),
