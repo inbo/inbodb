@@ -25,6 +25,7 @@
 #' noNA
 #'
 #' @author Stijn Van Hoey \email{stijnvanhoey@@gmail.com}
+#' @author Els Lommelen \email{els.lommelen@@inbo.be}
 #' @examples
 #' \dontrun{
 #' connection <- connect_inbo_dbase("D0021_00_userFlora")
