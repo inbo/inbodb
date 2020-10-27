@@ -6,8 +6,6 @@
 #' @importFrom DBI dbFetch
 #' @importFrom  odbc dbColumnInfo
 #' @importFrom utils getFromNamespace
-#' @importFrom dplyr %>% filter mutate_at
-#' @importFrom rlang .data
 #' @export
 setMethod(
   "dbFetch", "OdbcResult",
