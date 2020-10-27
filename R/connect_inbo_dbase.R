@@ -16,7 +16,7 @@
 #'
 #' @export
 #'
-#' @importFrom DBI dbGetQuery dbConnect dbListTables
+#' @importFrom DBI dbConnect
 #' @importFrom odbc odbc odbcListDrivers
 #' @importFrom utils tail
 #' @importFrom assertthat
