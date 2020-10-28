@@ -16,7 +16,7 @@
 #'
 #' @export
 #'
-#' @importFrom DBI dbGetQuery dbConnect dbListTables
+#' @importFrom DBI dbConnect
 #' @importFrom odbc odbc odbcListDrivers
 #' @importFrom utils tail
 #' @importFrom assertthat
@@ -25,6 +25,7 @@
 #' noNA
 #'
 #' @author Stijn Van Hoey \email{stijnvanhoey@@gmail.com}
+#' @author Els Lommelen \email{els.lommelen@@inbo.be}
 #' @examples
 #' \dontrun{
 #' connection <- connect_inbo_dbase("D0021_00_userFlora")
@@ -46,15 +47,12 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
         type <- "INBO PRD Server"
     }
 
-    sql_driver <- if (.Platform$OS.type == "unix") {
-                        driversdf <- odbcListDrivers()
-                        driversvec <-
-                            driversdf[driversdf$attribute == "Driver", "name"]
-                        drivers_sql <- driversvec[grepl("SQL Server", driversvec)]
-                        tail(sort(drivers_sql), 1)
-                } else {
-                        "SQL Server"
-                }
+    # look up most recent ODBC Driver for SQL Server
+    driversvec <- unique(odbcListDrivers()$name)
+    drivers_sql <- driversvec[grepl("SQL Server", driversvec)]
+    drivers_sql_odbc <-
+        drivers_sql[grepl("ODBC Driver", drivers_sql)]
+    sql_driver <- tail(sort(drivers_sql_odbc), 1)
 
     # connect to database
     conn <- dbConnect(odbc(),
