@@ -57,7 +57,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/inbo/inbodb/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -71,8 +71,7 @@
 
       
 
-      </header><script src="odbc_query_problem_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="odbc_query_problem_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="odbc_query_problem_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="odbc_query_problem_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>odbc query problem</h1>
@@ -89,6 +88,7 @@
 <h3 class="hasAnchor">
 <a href="#description-of-the-problem" class="anchor"></a>Description of the problem</h3>
 <p>If a query is fetched against a odbc based database connection, an error occurs if long data types (<code>varchar(max)</code>, <code>nvarchar(max)</code>, <code>text</code>, <code>ntext</code>, <code>xml</code>, <code>geography</code>, <code>geometry</code>, <code>hierarchyid</code>, <code>binary</code>, <code>image</code> or <code>rowversion</code>) are not put at the end of the select statement. As it is not in our power to change this shortcoming, we replaced the original cryptic warning by an informative one mentioning the columns that should be put in the end of the select statement.</p>
+<p><strong>This problem has been solved from <code>odbc 1.2.3</code></strong>, so we recommend installing an update of this package. Shortly the adapted warning and this vignette will be removed from <code>inbodb</code>.</p>
 </div>
 <div id="some-background-on-sql-server-and-odbc-data-types" class="section level3">
 <h3 class="hasAnchor">
@@ -110,9 +110,9 @@
 <li>in R by querying separate tables with <code><a href="https://rdrr.io/pkg/odbc/man/odbcConnectionColumns.html">odbc::odbcConnectionColumns(con, "table_name")</a></code> (with <code>con</code> the connection to the database and <code>table_name</code> the name of the table)</li>
 <li>once you know the corresponding ID’s in column <code>data_type</code>, these ID’s can be consulted for a specific query using the following code:</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="va">rs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dbi.r-dbi.org/reference/dbSendQuery.html">dbSendQuery</a></span><span class="op">(</span><span class="va">con</span>, <span class="va">query</span><span class="op">)</span>
-<span class="fu">odbc</span><span class="fu">::</span><span class="fu">dbColumnInfo</span><span class="op">(</span><span class="va">rs</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dbi.r-dbi.org/reference/dbSendQuery.html">dbSendQuery</a></span><span class="op">(</span><span class="va">con</span>, <span class="va">query</span><span class="op">)</span>
+<span class="fu">odbc</span><span class="fu">::</span><span class="fu">dbColumnInfo</span><span class="op">(</span><span class="va">rs</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
 
