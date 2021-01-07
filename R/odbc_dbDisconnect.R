@@ -16,7 +16,7 @@ on_connection_closed <- function(connection) {
 
 #' Close database connection
 #'
-#' This method is an adaptation to the INBO databases from the eponymous function in the `odbc` package and is an implementation of the method `dbdbDisconnect` defined in the `DBI` package.
+#' This method is an adaptation to the INBO databases from the eponymous function in the `odbc` package and is an implementation of the method `dbDisconnect` defined in the `DBI` package.
 #'
 #' @inheritParams DBI::dbDisconnect
 #'
