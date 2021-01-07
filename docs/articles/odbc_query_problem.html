@@ -94,6 +94,7 @@
 <h3 class="hasAnchor">
 <a href="#description-of-the-problem" class="anchor"></a>Description of the problem</h3>
 <p>If a query is fetched against a odbc based database connection, an error occurs if long data types (<code>varchar(max)</code>, <code>nvarchar(max)</code>, <code>text</code>, <code>ntext</code>, <code>xml</code>, <code>geography</code>, <code>geometry</code>, <code>hierarchyid</code>, <code>binary</code>, <code>image</code> or <code>rowversion</code>) are not put at the end of the select statement. As it is not in our power to change this shortcoming, we replaced the original cryptic warning by an informative one mentioning the columns that should be put in the end of the select statement.</p>
+<p><strong>This problem has been solved from <code>odbc 1.2.3</code></strong>, so we recommend installing an update of this package. Shortly the adapted warning and this vignette will be removed from <code>inbodb</code>.</p>
 </div>
 <div id="some-background-on-sql-server-and-odbc-data-types" class="section level3">
 <h3 class="hasAnchor">

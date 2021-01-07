@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
 
 If a query is fetched against a odbc based database connection, an error occurs if long data types (`varchar(max)`, `nvarchar(max)`, `text`, `ntext`, `xml`, `geography`, `geometry`, `hierarchyid`, `binary`, `image` or `rowversion`) are not put at the end of the select statement. As it is not in our power to change this shortcoming, we replaced the original cryptic warning by an informative one mentioning the columns that should be put in the end of the select statement.
 
+__This problem has been solved from `odbc 1.2.3`__, so we recommend installing an update of this package. Shortly the adapted warning and this vignette will be removed from `inbodb`.
+
 ### Some background on SQL Server and odbc data types
 
 It seems that the error corresponds to the native data types in the SQL Server database (with the exception that data type `xml` causes an error in Windows OS but not in Unix OS). These data types are however translated to odbc data types that do not always correspond to the native types, and the latter are OS dependent. E.g. the native data type `nvarchar(max)` becomes odbc type `ntext` in Windows OS and `nvarchar` in Unix OS. The data types that are shown in RStudio in the Connections pane, are the odbc data types.

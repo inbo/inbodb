@@ -13,5 +13,5 @@
 \item{...}{Other parameters passed on to methods.}
 }
 \description{
-This method is an adaptation to the INBO databases from the eponymous function in the \code{odbc} package and is an implementation of the method \code{dbdbDisconnect} defined in the \code{DBI} package.
+This method is an adaptation to the INBO databases from the eponymous function in the \code{odbc} package and is an implementation of the method \code{dbDisconnect} defined in the \code{DBI} package.
 }
