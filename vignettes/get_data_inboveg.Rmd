@@ -27,6 +27,7 @@ Ample selection and export functions toward analysis tools are provided. It also
 Original observations are preserved and a full history of subsequent identifications is saved.
 
 
+
 # Aim
 
 We make functions available to query data directly from the INBOVEG SQL-server database. 
@@ -35,11 +36,12 @@ This avoids writing your own queries or to copy/paste them from the access-front
 We have provided functions to query
 
 * survey (INBOVEG-projects)
-* recordings (vegetation relevés)
 * metadata of recordings (header info)
+* recordings (vegetation relevés)
 * classification (Natura2000 or local classification like BWK)
 * qualifiers (management and site characteristics)
 * relations between recordings (relation information on recordings for one or more surveys based on Parent (classic-chain/bucket) and Child (classic) relationships)
+  
   
 # Packages and connection
 
@@ -61,13 +63,9 @@ con <- connect_inbo_dbase("D0010_00_Cydonia")
 # Functionality
 
 ## Survey information
-
 The function `get_inboveg_survey` queries the INBOVEG database for survey information (metadata about surveys) for one or more survey(s) by the name of the survey.
 
-### Examples
-
 Three examples are given, this can be used as base to continue selecting the data you require.
-
 
 Get information of a specific survey and collect data.
 
@@ -85,7 +83,6 @@ survey_info
 #> 1   172 OudeLanden~ Verlinden A, Leys G en Slembrouck J (1979) G~ NA    els_deb~
 ```
 
-
 Get information of all surveys. 
 This time we will not use `collect = TRUE`, which will return a [lazy query](https://docs.lucee.org/guides/cookbooks/lazy_queries.html):
 
@@ -101,8 +98,6 @@ class(allsurveys)
 ```
 
 
-
-
 If only a part of the survey name is known, you can make use of wildcards such as `%`.
 
 ```{r}
@@ -112,14 +107,58 @@ partsurveys <- get_inboveg_survey(con,
 ```
 
 
-## Recording information
+## Header information
+The function `get_inboveg_header` queries the INBOVEG database for header information (metadata for a vegetation-relevé) for one or more survey by the name of the survey(s) and the recorder type (classic, classic-emmer, classic-ketting, biohab). 
 
+Three examples are given, this can be used as base to continue selecting the data you require.
+
+Get header information from a specific survey and a specific recording type and collect the data:
+
+```{r examples_header}
+header_info <- get_inboveg_header(con, 
+                              survey_name = "OudeLanden_1979",
+                              rec_type = "Classic",
+                              collect = TRUE)
+```
+
+```{r}
+head(header_info, 10)
+#> # A tibble: 10 x 15
+#>    RecordingGivid Name  UserReference Observer LocationCode Latitude Longitude  Area
+#>    <chr>          <chr> <chr>         <chr>    <chr>           <dbl>     <dbl> <dbl>
+#>  1 IV20160210121~ Oude~ 5             Alex Ve~ Ekeren            500       500    10
+#>  2 IV20160210140~ Oude~ 1             Alex Ve~ Ekeren            500       500    25
+#>  3 IV20160210142~ Oude~ 2             Alex Ve~ Ekeren            500       500    25
+#>  4 IV20160210153~ Oude~ 4             Alex Ve~ Ekeren            500       500    12
+#>  5 IV20160210155~ Oude~ 81            Alex Ve~ Ekeren            500       500     9
+#>  6 IV20160210160~ Oude~ 20            Alex Ve~ Ekeren            500       500     9
+#>  7 IV20160210161~ Oude~ 17            Alex Ve~ Ekeren            500       500    12
+#>  8 IV20160210162~ Oude~ 19            Alex Ve~ Ekeren            500       500    12
+#>  9 IV20160210163~ Oude~ 18            Alex Ve~ Ekeren            500       500    12
+#> 10 IV20160210164~ Oude~ 23            Alex Ve~ Ekeren            500       500     6
+#> # ... with 7 more variables: Length <int>, Width <int>, VagueDateType <chr>,
+#> #   VagueDateBegin <chr>, VagueDateEnd <chr>, SurveyId <int>, RecTypeID <int>
+```
+
+Get header information from several specific surveys by using `multiple = TRUE`. 
+
+```{r}
+header_severalsurveys <- get_inboveg_header(con,
+                survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+                multiple = TRUE)
+```
+
+Get header information of all surveys without collecting the data:
+
+```{r}
+all_header_info <- get_inboveg_header(con)
+```
+
+
+## Recording information
 The function  `get_inboveg_recordings` queries the INBOVEG database for relevé information (which species were recorded in which plots and in which vegetation layers with which cover) for one or more surveys.
 
-### Examples
-
 Several examples are given, this can be used as base to continue selecting the data you require.
-
 
 First, we show how to get the relevés from one survey and collect the data:
 
@@ -147,7 +186,6 @@ recording_heischraal2012
 #>  # ... with 3,278 more rows, and 4 more variables: PhenologyCode <chr>,
 #>  #   CoverageCode <chr>, PctValue <dbl>, RecordingScale <chr>
 ```
-
 
 Here is how to get the relevés for a specific RecordingGivid:
 
@@ -180,14 +218,12 @@ recording_specific_user_reference <- get_inboveg_recordings(
   collect = TRUE)
 ```
 
-
 Get all recordings from MILKLIM surveys (partial matching), without collecting the data:
 
 ```{r}
 recording_milkim <- get_inboveg_recordings(con,
                               survey_name = "%MILKLIM%")
 ```
-
 
 Get recordings from several specific surveys:
 
@@ -198,7 +234,6 @@ recording_severalsurveys <- get_inboveg_recordings(con,
                 collect = TRUE)
 ```
 
-
 Get all relevés of all surveys,  without collecting the data:
 
 ```{r}
@@ -206,109 +241,8 @@ allrecordings <- get_inboveg_recordings(con)
 ```
 
 
-## Parent-child relationships between recordings
-
-The function `get_inboveg_relation` queries the INBOVEG database for relational information on recordings for one or more surveys based on parent (classic-chain/bucket) and Child (classic) relationships.
-
-### Examples
-
-Get all parent-child-relations from N2000meetnet surveys (partial matching):
-
-```{r}
-relations_N2000meetnet <- get_inboveg_relation(con, survey_name = "%N2000meetnet%")
-```
-
-```{r}
-relations_N2000meetnet
-#> # Source:   SQL [?? x 7]
-#> # Database: Microsoft SQL Server
-#> #   13.00.5598[INBO\hans_vancalster@INBO-SQL07-PRD\LIVE/D0010_00_Cydonia]
-#>    Name   RecordingId Child_GIVID Child_UserRef ParentId Parent_GIVID Parent_UserRef
-#>    <chr>        <int> <chr>       <chr>            <int> <chr>        <chr>         
-#>  1 N2000~       44283 IV20190218~ 13594417_2170    44282 IV201902180~ 13594417_2170 
-#>  2 N2000~       44285 IV20190218~ 10334001_2190    44284 IV201902181~ 10334001_2190 
-#>  3 N2000~       44287 IV20190218~ 10186545_213~    44286 IV201902181~ 10186545_2130~
-#>  4 N2000~       44290 IV20190218~ 10186545_2170    44289 IV201902181~ 10186545_2170 
-#>  5 N2000~       44292 IV20190218~ 13561649_2170    44291 IV201902181~ 13561649_2170 
-#>  6 N2000~       44294 IV20190218~ 11595569_2170    44293 IV201902181~ 11595569_2170 
-#>  7 N2000~       44296 IV20190218~ 1240881_2170     44295 IV201902181~ 1240881_2170  
-#>  8 N2000~       44298 IV20190218~ 13823793_2170    44297 IV201902181~ 13823793_2170 
-#>  9 N2000~       44300 IV20190218~ 12644145_2170    44299 IV201902181~ 12644145_2170 
-#> 10 N2000~       44302 IV20190218~ 10260273_213~    44301 IV201902181~ 10260273_2130~
-#> # ... with more rows
-```
-
-
-Get the parent-child-relations from several specific surveys:
-
-```{r}
-relations_severalsurveys <- get_inboveg_relation(
-  con, 
-  survey_name =  c("DeBlankaart-1985-Beheer", "N2000meetnet_Grasland"), 
-  multiple = TRUE)
-```
-
-
-## Header information
-
-The function `get_inboveg_header` queries the INBOVEG database for header information (metadata for a vegetation-relevé) for one or more survey by the name of the survey(s) and the recorder type. 
-
-### Examples
-
-Three examples are given, this can be used as base to continue selecting the data you require.
-
-
-Get header information from a specific survey and a specific recording type and collect the data:
-
-```{r examples_header}
-header_info <- get_inboveg_header(con, 
-                              survey_name = "OudeLanden_1979",
-                              rec_type = "Classic",
-                              collect = TRUE)
-```
-
-```{r}
-head(header_info, 10)
-#> # A tibble: 10 x 15
-#>    RecordingGivid Name  UserReference Observer LocationCode Latitude Longitude  Area
-#>    <chr>          <chr> <chr>         <chr>    <chr>           <dbl>     <dbl> <dbl>
-#>  1 IV20160210121~ Oude~ 5             Alex Ve~ Ekeren            500       500    10
-#>  2 IV20160210140~ Oude~ 1             Alex Ve~ Ekeren            500       500    25
-#>  3 IV20160210142~ Oude~ 2             Alex Ve~ Ekeren            500       500    25
-#>  4 IV20160210153~ Oude~ 4             Alex Ve~ Ekeren            500       500    12
-#>  5 IV20160210155~ Oude~ 81            Alex Ve~ Ekeren            500       500     9
-#>  6 IV20160210160~ Oude~ 20            Alex Ve~ Ekeren            500       500     9
-#>  7 IV20160210161~ Oude~ 17            Alex Ve~ Ekeren            500       500    12
-#>  8 IV20160210162~ Oude~ 19            Alex Ve~ Ekeren            500       500    12
-#>  9 IV20160210163~ Oude~ 18            Alex Ve~ Ekeren            500       500    12
-#> 10 IV20160210164~ Oude~ 23            Alex Ve~ Ekeren            500       500     6
-#> # ... with 7 more variables: Length <int>, Width <int>, VagueDateType <chr>,
-#> #   VagueDateBegin <chr>, VagueDateEnd <chr>, SurveyId <int>, RecTypeID <int>
-```
-
-
-Get header information from several specific surveys by using `multiple = TRUE`. 
-
-```{r}
-header_severalsurveys <- get_inboveg_header(con,
-                survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
-                multiple = TRUE)
-```
-
-
-Get header information of all surveys without collecting the data:
-
-```{r}
-all_header_info <- get_inboveg_header(con)
-```
-
-
-
 ## Classification information
-
 The function `get_inboveg_classification` queries the INBOVEG database for information on the field classification (N2000 or BWK-code) of the relevé for one or more survey(s) by the name of the survey. 
-
-### Examples
 
 Two  examples are given, this can be used as base to continue selecting the data you require.
 
@@ -339,9 +273,7 @@ all_codes <- get_inboveg_classification(con)
 ```
 
 
-
 ## Qualifiers information
-
 The function `get_inboveg_qualifiers`queries the INBOVEG database for qualifier information on recordings for one or more surveys. 
 These qualifiers give information on management (management qualifier 'MQ') or location description (site qualifier'SQ').
 
@@ -409,12 +341,53 @@ allqualifiers <- get_inboveg_qualifiers(con)
 ```
 
 
+## Parent-child relationships between recordings
+
+The function `get_inboveg_relation` queries the INBOVEG database for relational information on recordings for one or more surveys based on parent (classic-chain/bucket) and Child (classic) relationships.
+
+Get all parent-child-relations from N2000meetnet surveys (partial matching):
+
+```{r}
+relations_N2000meetnet <- get_inboveg_relation(con, survey_name = "%N2000meetnet%")
+```
+
+```{r}
+relations_N2000meetnet
+#> # Source:   SQL [?? x 7]
+#> # Database: Microsoft SQL Server
+#> #   13.00.5598[INBO\hans_vancalster@INBO-SQL07-PRD\LIVE/D0010_00_Cydonia]
+#>    Name   RecordingId Child_GIVID Child_UserRef ParentId Parent_GIVID Parent_UserRef
+#>    <chr>        <int> <chr>       <chr>            <int> <chr>        <chr>         
+#>  1 N2000~       44283 IV20190218~ 13594417_2170    44282 IV201902180~ 13594417_2170 
+#>  2 N2000~       44285 IV20190218~ 10334001_2190    44284 IV201902181~ 10334001_2190 
+#>  3 N2000~       44287 IV20190218~ 10186545_213~    44286 IV201902181~ 10186545_2130~
+#>  4 N2000~       44290 IV20190218~ 10186545_2170    44289 IV201902181~ 10186545_2170 
+#>  5 N2000~       44292 IV20190218~ 13561649_2170    44291 IV201902181~ 13561649_2170 
+#>  6 N2000~       44294 IV20190218~ 11595569_2170    44293 IV201902181~ 11595569_2170 
+#>  7 N2000~       44296 IV20190218~ 1240881_2170     44295 IV201902181~ 1240881_2170  
+#>  8 N2000~       44298 IV20190218~ 13823793_2170    44297 IV201902181~ 13823793_2170 
+#>  9 N2000~       44300 IV20190218~ 12644145_2170    44299 IV201902181~ 12644145_2170 
+#> 10 N2000~       44302 IV20190218~ 10260273_213~    44301 IV201902181~ 10260273_2130~
+#> # ... with more rows
+```
+
+
+Get the parent-child-relations from several specific surveys:
+
+```{r}
+relations_severalsurveys <- get_inboveg_relation(
+  con, 
+  survey_name =  c("DeBlankaart-1985-Beheer", "N2000meetnet_Grasland"), 
+  multiple = TRUE)
+```
+
+
 
 ## More complex queries
-
 These functions give most of the relevant basic information that is available in INBOVEG.
 If more detailed information is needed `dplyr` is the magic word. 
 In the future additional functions can be added to this package to help the inboveg-users.
+
 
 
 
