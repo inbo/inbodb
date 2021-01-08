@@ -51,6 +51,7 @@ the recorder type. See the examples for how to get information for all surveys.
 library(inbodb)
 library(DBI)
 library(odbc)
+library(dplyr)
 con <- connect_inbo_dbase("D0010_00_Cydonia")
 
 # get header information from a specific survey and a specific recording type
@@ -75,6 +76,7 @@ Other inboveg:
 \code{\link{get_inboveg_classification}()},
 \code{\link{get_inboveg_qualifiers}()},
 \code{\link{get_inboveg_recordings}()},
+\code{\link{get_inboveg_relation}()},
 \code{\link{get_inboveg_survey}()}
 }
 \concept{inboveg}

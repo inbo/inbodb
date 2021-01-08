@@ -40,12 +40,8 @@ con <- connect_inbo_dbase("D0010_00_Cydonia")
 survey_info <- get_inboveg_survey(con, survey_name = "OudeLanden_1979",
 collect = TRUE)
 
-# get information of all surveys without collecting data
+# get information of all surveys and collect data
 allsurveys <- get_inboveg_survey(con)
-# inspect result
-allsurveys
-# collect all data
-allsurveys <- collect(allsurveys)
 
 # Close the connection when done
 dbDisconnect(con)
@@ -57,6 +53,7 @@ Other inboveg:
 \code{\link{get_inboveg_classification}()},
 \code{\link{get_inboveg_header}()},
 \code{\link{get_inboveg_qualifiers}()},
-\code{\link{get_inboveg_recordings}()}
+\code{\link{get_inboveg_recordings}()},
+\code{\link{get_inboveg_relation}()}
 }
 \concept{inboveg}

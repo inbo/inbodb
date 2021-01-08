@@ -33,6 +33,7 @@
 #' library(inbodb)
 #' library(DBI)
 #' library(odbc)
+#' library(dplyr)
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
 #' # get the qualifiers from one survey
@@ -40,7 +41,7 @@
 #' "MILKLIM_Heischraal2012")
 #'
 #' # get all site qualifiers (SQ) from MILKLIM surveys (partial matching)
-#' qualifiers_milkim <- get_inboveg_qualifiers(con, survey_name = "%MILKLIM%",
+#' qualifiers_milkim <- get_inboveg_qualifiers2(con, survey_name = "%MILKLIM%",
 #' qualifier_type = "SQ")
 #'
 #' # get qualifiers from several specific surveys
@@ -90,43 +91,43 @@ get_inboveg_qualifiers <- function(connection,
 
 
   common_part <- "SELECT ivS.Name
-      , ivR.RecordingGivid
-      , ivR.UserReference
-      , ivR.Observer
-      , ivRLQ.QualifierType
-      , ivRLQ.QualifierCode as Q1Code
-      , ftACV.Description as Q1Description
-      , ivRLQ_P.QualifierCode as Q2Code
-      , ftACV_P.Description as Q2Description
-      , ivRLQ_GP.QualifierCode as Q3Code
-      , ftACV_GP.Description as Q3Description
-      , ivRLQ.Elucidation
-      , ivRLQ.NotSure
-      , ivRLQ.ParentID
-      , ivRLQ.QualifierResource
+  , ivR.RecordingGivid
+  , ivR.UserReference
+  , ivR.Observer
+  , ivRLQ.QualifierType
+  , ivRLQ.QualifierCode as Q1Code
+  , ftACV.Description as Q1Description
+  , ivRLQ_P.QualifierCode as Q2Code
+  , ftACV_P.Description as Q2Description
+  , ivRLQ_GP.QualifierCode as Q3Code
+  , ftACV_GP.Description as Q3Description
+  , ivRLQ.Elucidation
+  , ivRLQ.NotSure
+  , ivRLQ.ParentID
+  , ivRLQ.QualifierResource
   FROM  dbo.ivSurvey ivS
   INNER JOIN dbo.ivRecording ivR  ON ivR.SurveyId = ivS.Id
   LEFT JOIN dbo.ivRLQualifier ivRLQ ON ivRLQ.RecordingID = ivR.Id
   LEFT JOIN dbo.ivRLResources ivRLR ON
-                                  ivRLR.ResourceGIVID = ivRLQ.QualifierResource
+  ivRLR.ResourceGIVID = ivRLQ.QualifierResource
   LEFT JOIN dbo.ivRLQualifier ivRLQ_P ON ivRLQ_P.ParentID = ivRLQ.ID
   LEFT JOIN dbo.ivRLResources ivRLR_P ON
-                              ivRLR_P.ResourceGIVID = ivRLQ_P.QualifierResource
+  ivRLR_P.ResourceGIVID = ivRLQ_P.QualifierResource
   LEFT JOIN dbo.ivRLQualifier ivRLQ_GP ON ivRLQ_GP.ParentID = ivRLQ_P.ID
   LEFT JOIN dbo.ivRLResources ivRLR_GP ON
-                            ivRLR_GP.ResourceGIVID = ivRLQ_GP.QualifierResource
+  ivRLR_GP.ResourceGIVID = ivRLQ_GP.QualifierResource
   LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftACV ON
-                  ftACV.Code = ivRLQ.QualifierCode COLLATE Latin1_General_CI_AI
+  ftACV.Code = ivRLQ.QualifierCode COLLATE Latin1_General_CI_AI
   AND ftACV.ActionGroup = ivRLR.ActionGroup  COLLATE Latin1_General_CI_AI
   AND ftACV.ListName = ivRLR.ListName  COLLATE Latin1_General_CI_AI
 
   LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftACV_P ON
-              ftACV_P.Code = ivRLQ_P.QualifierCode  COLLATE Latin1_General_CI_AI
+  ftACV_P.Code = ivRLQ_P.QualifierCode  COLLATE Latin1_General_CI_AI
   AND ftACV_P.ActionGroup = ivRLR_P.ActionGroup  COLLATE Latin1_General_CI_AI
   AND ftACV_P.ListName = ivRLR_P.ListName  COLLATE Latin1_General_CI_AI
 
   LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftACV_GP ON
-            ftACV_GP.Code = ivRLQ_GP.QualifierCode  COLLATE Latin1_General_CI_AI
+  ftACV_GP.Code = ivRLQ_GP.QualifierCode  COLLATE Latin1_General_CI_AI
   AND ftACV_GP.ActionGroup = ivRLR_GP.ActionGroup  COLLATE Latin1_General_CI_AI
   AND ftACV_GP.ListName = ivRLR_GP.ListName  COLLATE Latin1_General_CI_AI
 

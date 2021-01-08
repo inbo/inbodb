@@ -5,14 +5,18 @@
 #' or more survey(s) by the name of the survey. See the examples
 #' for how to get information for all surveys.
 #'
-#' @param survey_name A character vector giving the names of the surveys for
-#' which you want to extract Classification information. If missing, all
-#' surveys are returned.
+#' @param survey_name A character string or a character vector
+#' giving the name or names of the survey(s) for which you want to extract
+#' Classification information. If missing, all surveys are returned.
 #' @param classif A character vector giving the Classification code of the
 #' vegetation type for which you want to extract information. If missing,
 #' all classifications are returned.
 #' @param connection dbconnection with the database 'Cydonia'
 #' on the inbo-sql07-prd server
+#' @param multiple If TRUE, survey_name can take a character vector with
+#' multiple survey names that must match exactly. If FALSE (the default),
+#' survey_name must be a single character string (one survey name) that can
+#' include wildcards to allow partial matches
 #' @param collect If FALSE (the default), a remote tbl object is returned. This
 #' is like a reference to the result of the query but the full result of the
 #' query is not brought into memory. If TRUE the full result of the query is
@@ -36,11 +40,16 @@
 #' library(inbodb)
 #' library(DBI)
 #' library(odbc)
+#' library(dplyr)
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
 #' # get a specific classification from a survey and collect the data
 #' classif_info <- get_inboveg_classification(con,
 #' survey_name = "MILKLIM_Heischraal2012", classif = "4010", collect = TRUE)
+#'
+#' # get the classification from several specific surveys
+#' classif_info <- get_inboveg_classification(con,
+#' survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen" ))
 #'
 #' # get all surveys, all classifications,  don't collect the data
 #' allecodes <- get_inboveg_classification(con)
@@ -50,9 +59,11 @@
 #' rm(con)
 #' }
 
+## uitbreiden met multiple
 get_inboveg_classification <- function(connection,
                                    survey_name,
                                    classif,
+                                   multiple = FALSE,
                                    collect = FALSE) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),

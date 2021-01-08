@@ -101,6 +101,9 @@ group can be chosen." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/get_data_inboveg.html">How to retrieve data from the INBOVEG database</a>
+    </li>
+    <li>
       <a href="../articles/odbc_query_problem.html">odbc query problem</a>
     </li>
   </ul>
@@ -197,8 +200,8 @@ and 4 x 4 square combination.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other florabank: 
-<code><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_observations.html'>get_florabank_observations</a>()</code>,
-<code><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_traits.html'>get_florabank_traits</a>()</code></p></div>
+<code><a href='get_florabank_observations.html'>get_florabank_observations</a>()</code>,
+<code><a href='get_florabank_traits.html'>get_florabank_traits</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -207,16 +210,16 @@ and 4 x 4 square combination.</p>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>odbc</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='co'># connect to florabank</span>
-<span class='no'>db_connectie</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/connect_inbo_dbase.html'>connect_inbo_dbase</a></span>(<span class='st'>"D0021_00_userFlora"</span>)
+<span class='no'>db_connectie</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='connect_inbo_dbase.html'>connect_inbo_dbase</a></span>(<span class='st'>"D0021_00_userFlora"</span>)
 
 <span class='co'># get records at 1 km x 1 km resolution for vascular plants from 2010</span>
 <span class='co'># (default) without collecting all data into memory (default).</span>
-<span class='no'>fb_kwartier</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_taxon_ifbl_year.html'>get_florabank_taxon_ifbl_year</a></span>(<span class='no'>db_connectie</span>)
+<span class='no'>fb_kwartier</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_taxon_ifbl_year</span>(<span class='no'>db_connectie</span>)
 <span class='co'># to collect the data in memory set collect to TRUE or do</span>
 <span class='no'>fb_kwartier</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/compute.html'>collect</a></span>(<span class='no'>fb_kwartier</span>)
 
 <span class='co'># get records at 4 km x 4 km resolution starting from 2000</span>
-<span class='no'>fb_uur</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_taxon_ifbl_year.html'>get_florabank_taxon_ifbl_year</a></span>(<span class='no'>db_connectie</span>, <span class='kw'>starting_year</span> <span class='kw'>=</span> <span class='fl'>2000</span>,
+<span class='no'>fb_uur</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_taxon_ifbl_year</span>(<span class='no'>db_connectie</span>, <span class='kw'>starting_year</span> <span class='kw'>=</span> <span class='fl'>2000</span>,
  <span class='kw'>ifbl_resolution</span> <span class='kw'>=</span> <span class='st'>"4km-by-4km"</span>, <span class='kw'>taxongroup</span> <span class='kw'>=</span> <span class='st'>"Mossen"</span>)
 
 <span class='co'># disconnect from florabank</span>
