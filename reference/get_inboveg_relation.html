@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get unique combinations of taxon, IFBL-square and year. — get_florabank_taxon_ifbl_year • inbodb</title>
+<title>Query relation (Parent - Child) information of recordings (releve) from INBOVEG — get_inboveg_relation • inbodb</title>
 
 
 <!-- jquery -->
@@ -41,12 +41,10 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Get unique combinations of taxon, IFBL-square and year. — get_florabank_taxon_ifbl_year" />
-<meta property="og:description" content="This functions queries all validated observations of the florabank database
-and returns unique combinations of taxon, IFBL-square and year. Either a 1 km
-by 1 km or a 4 km x 4 km resolution can be chosen and a begin year can be set.
-Observations of taxa at genus level or higher are excluded. The taxonomic
-group can be chosen." />
+<meta property="og:title" content="Query relation (Parent - Child) information of recordings (releve) from INBOVEG — get_inboveg_relation" />
+<meta property="og:description" content="This function queries the INBOVEG database for
+relation information on recordings for one or more surveys based on
+Parent (classic-chain/bucket) and Child (classic) relationship." />
 
 
 
@@ -123,24 +121,21 @@ group can be chosen." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get unique combinations of taxon, IFBL-square and year.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/inbo/inbodb/blob/master/R/get_florabank_taxon_ifbl_year.R'><code>R/get_florabank_taxon_ifbl_year.R</code></a></small>
-    <div class="hidden name"><code>get_florabank_taxon_ifbl_year.Rd</code></div>
+    <h1>Query relation (Parent - Child) information of recordings (releve) from INBOVEG</h1>
+    <small class="dont-index">Source: <a href='https://github.com/inbo/inbodb/blob/master/R/get_inboveg_relation_recordings.R'><code>R/get_inboveg_relation_recordings.R</code></a></small>
+    <div class="hidden name"><code>get_inboveg_relation.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This functions queries all validated observations of the florabank database
-and returns unique combinations of taxon, IFBL-square and year. Either a 1 km
-by 1 km or a 4 km x 4 km resolution can be chosen and a begin year can be set.
-Observations of taxa at genus level or higher are excluded. The taxonomic
-group can be chosen.</p>
+    <p>This function queries the INBOVEG database for
+relation information on recordings for one or more surveys based on
+Parent (classic-chain/bucket) and Child (classic) relationship.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_florabank_taxon_ifbl_year</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>get_inboveg_relation</span><span class='op'>(</span>
   <span class='va'>connection</span>,
-  starting_year <span class='op'>=</span> <span class='fl'>2010</span>,
-  ifbl_resolution <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"1km-by-1km"</span>, <span class='st'>"4km-by-4km"</span><span class='op'>)</span>,
-  taxongroup <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Vaatplanten"</span>, <span class='st'>"Mossen"</span>, <span class='st'>"Lichenen (korstmossen)"</span>, <span class='st'>"Kranswieren"</span><span class='op'>)</span>,
+  <span class='va'>survey_name</span>,
+  multiple <span class='op'>=</span> <span class='cn'>FALSE</span>,
   collect <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
@@ -149,24 +144,22 @@ group can be chosen.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>connection</th>
-      <td><p>A connection to the florabank database. See the example section
-for how to connect and disconnect to the database.</p></td>
+      <td><p>dbconnection with the database 'Cydonia'
+on the inbo-sql07-prd server</p></td>
     </tr>
     <tr>
-      <th>starting_year</th>
-      <td><p>Filter for observations that start from this year onwards.
-Default is 2010.</p></td>
+      <th>survey_name</th>
+      <td><p>A character string or a character vector, depending on
+multiple parameter, giving the name or names of the
+survey(s) for which you want to extract recordings information. If missing, all
+surveys are returned.</p></td>
     </tr>
     <tr>
-      <th>ifbl_resolution</th>
-      <td><p>The requested spatial resolution can be either
-1km-by-1km IFBL squares or 4km-by-4km. Default is 1km-by-1km.</p></td>
-    </tr>
-    <tr>
-      <th>taxongroup</th>
-      <td><p>Choose for which taxonomic group you want the unique
-combinations. One of "Vaatplanten" (the default), "Mossen", "Korstmossen"
-of "Kranswieren".</p></td>
+      <th>multiple</th>
+      <td><p>If TRUE, survey_name can take a character vector with
+multiple survey names that must match exactly. If FALSE (the default),
+survey_name must be a single character string (one survey name) that can
+include wildcards to allow partial matches</p></td>
     </tr>
     <tr>
       <th>collect</th>
@@ -180,22 +173,16 @@ environment.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe with one line for each combination of taxon, IFBL-square
-(either at 1 km x 1 km or 4 km x 4 km resolution) and year. In case the
-resolution is 1 km x 1 km, a variable ifbl_4by4 gives the corresponding
-ifbl_4by4 identifier within which the ifbl_1by1 square is located. In case the
-resolution is 4 km x 4 km, the variable ifbl_squares is a concatenation of
-all nested squares with observations for the taxon in the corresponding year.
-This can be nested 1 x 1 squares as well as the corresponding 4 x 4 square
-(the latter is the case if the original resolution of the observation is at
-4 x 4 resolution). In addition, the variable ifbl_number_squares gives the
-number of unique nested squares where the taxon was observed for that year
-and 4 x 4 square combination.</p>
+    <p>A dataframe with variables RecordingId, Child_GIVID (unique RecordingGIVID), Child_UserRef (UserReference),
+ParentId (RecordingId), Parent_GIVID (uniek RecordingGIVID) and Parent_UserRef (UserReference)</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other florabank: 
-<code><a href='get_florabank_observations.html'>get_florabank_observations</a>()</code>,
-<code><a href='get_florabank_traits.html'>get_florabank_traits</a>()</code></p></div>
+    <div class='dont-index'><p>Other inboveg: 
+<code><a href='get_inboveg_classification.html'>get_inboveg_classification</a>()</code>,
+<code><a href='get_inboveg_header.html'>get_inboveg_header</a>()</code>,
+<code><a href='get_inboveg_qualifiers.html'>get_inboveg_qualifiers</a>()</code>,
+<code><a href='get_inboveg_recordings.html'>get_inboveg_recordings</a>()</code>,
+<code><a href='get_inboveg_survey.html'>get_inboveg_survey</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
@@ -203,22 +190,27 @@ and 4 x 4 square combination.</p>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://r-dbi.github.io/DBI'>DBI</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/r-dbi/odbc'>odbc</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
-<span class='co'># connect to florabank</span>
-<span class='va'>db_connectie</span> <span class='op'>&lt;-</span> <span class='fu'><a href='connect_inbo_dbase.html'>connect_inbo_dbase</a></span><span class='op'>(</span><span class='st'>"D0021_00_userFlora"</span><span class='op'>)</span>
+<span class='va'>con</span> <span class='op'>&lt;-</span> <span class='fu'><a href='connect_inbo_dbase.html'>connect_inbo_dbase</a></span><span class='op'>(</span><span class='st'>"D0010_00_Cydonia"</span><span class='op'>)</span>
 
-<span class='co'># get records at 1 km x 1 km resolution for vascular plants from 2010</span>
-<span class='co'># (default) without collecting all data into memory (default).</span>
-<span class='va'>fb_kwartier</span> <span class='op'>&lt;-</span> <span class='fu'>get_florabank_taxon_ifbl_year</span><span class='op'>(</span><span class='va'>db_connectie</span><span class='op'>)</span>
-<span class='co'># to collect the data in memory set collect to TRUE or do</span>
-<span class='va'>fb_kwartier</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/compute.html'>collect</a></span><span class='op'>(</span><span class='va'>fb_kwartier</span><span class='op'>)</span>
+<span class='co'># get the Parent-Child-relations from one survey</span>
+<span class='va'>relations_N2000meetnet_Grasland</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_relation</span><span class='op'>(</span><span class='va'>con</span>,
+survey_name <span class='op'>=</span> <span class='st'>"N2000meetnet_Grasland"</span><span class='op'>)</span>
 
-<span class='co'># get records at 4 km x 4 km resolution starting from 2000</span>
-<span class='va'>fb_uur</span> <span class='op'>&lt;-</span> <span class='fu'>get_florabank_taxon_ifbl_year</span><span class='op'>(</span><span class='va'>db_connectie</span>, starting_year <span class='op'>=</span> <span class='fl'>2000</span>,
- ifbl_resolution <span class='op'>=</span> <span class='st'>"4km-by-4km"</span>, taxongroup <span class='op'>=</span> <span class='st'>"Mossen"</span><span class='op'>)</span>
+<span class='co'># get all Parent-Child-relations from N2000meetnet surveys (partial matching)</span>
+<span class='va'>relations_N2000meetnet</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_relation</span><span class='op'>(</span><span class='va'>con</span>, survey_name <span class='op'>=</span> <span class='st'>"%N2000meetnet%"</span><span class='op'>)</span>
 
-<span class='co'># disconnect from florabank</span>
-<span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span><span class='op'>(</span><span class='va'>db_connectie</span><span class='op'>)</span>
+<span class='co'># get Parent-Child-relations from several specific surveys</span>
+<span class='va'>relations_severalsurveys</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_relation</span><span class='op'>(</span><span class='va'>con</span>, survey_name <span class='op'>=</span>
+<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"DeBlankaart-1985-Beheer"</span>, <span class='st'>"N2000meetnet_Grasland"</span><span class='op'>)</span>, multiple <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='co'># get all Parent-Child-relations of all relevant surveys</span>
+<span class='va'>allrelations</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_relation</span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
+
+<span class='co'># Close the connection when done</span>
+<span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
 <span class='op'>}</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
