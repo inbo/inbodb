@@ -101,6 +101,9 @@ level information about the matching taxa." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/get_data_inboveg.html">How to retrieve data from the INBOVEG database</a>
+    </li>
+    <li>
       <a href="../articles/odbc_query_problem.html">odbc query problem</a>
     </li>
   </ul>
@@ -179,8 +182,8 @@ environment.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other florabank: 
-<code><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_taxon_ifbl_year.html'>get_florabank_taxon_ifbl_year</a>()</code>,
-<code><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_traits.html'>get_florabank_traits</a>()</code></p></div>
+<code><a href='get_florabank_taxon_ifbl_year.html'>get_florabank_taxon_ifbl_year</a>()</code>,
+<code><a href='get_florabank_traits.html'>get_florabank_traits</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -189,19 +192,19 @@ environment.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>DBI</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>odbc</span>)
 <span class='co'># connect to florabank</span>
-<span class='no'>db_connectie</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/connect_inbo_dbase.html'>connect_inbo_dbase</a></span>(<span class='st'>"D0021_00_userFlora"</span>)
+<span class='no'>db_connectie</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='connect_inbo_dbase.html'>connect_inbo_dbase</a></span>(<span class='st'>"D0021_00_userFlora"</span>)
 
 <span class='co'># query and collect the data using scientific name</span>
-<span class='no'>succprat1</span> <span class='kw'>&lt;-</span>    <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_observations.html'>get_florabank_observations</a></span>(<span class='no'>db_connectie</span>,
+<span class='no'>succprat1</span> <span class='kw'>&lt;-</span>    <span class='fu'>get_florabank_observations</span>(<span class='no'>db_connectie</span>,
 <span class='kw'>names</span> <span class='kw'>=</span> <span class='st'>'Succisa pratensis Moench'</span>, <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># the same species but using Dutch name</span>
-<span class='no'>succprat2</span> <span class='kw'>&lt;-</span>    <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_observations.html'>get_florabank_observations</a></span>(<span class='no'>db_connectie</span>,
+<span class='no'>succprat2</span> <span class='kw'>&lt;-</span>    <span class='fu'>get_florabank_observations</span>(<span class='no'>db_connectie</span>,
 <span class='kw'>names</span> <span class='kw'>=</span> <span class='st'>'Blauwe knoop'</span>, <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># providing both a Dutch name and scientific name will not duplicate records</span>
 <span class='co'># if they are the same species</span>
-<span class='no'>succprat3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_observations.html'>get_florabank_observations</a></span>(<span class='no'>db_connectie</span>,
+<span class='no'>succprat3</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_observations</span>(<span class='no'>db_connectie</span>,
 <span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Succisa pratensis Moench"</span>, <span class='st'>"Blauwe knoop"</span>), <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='no'>succprat1</span>, <span class='no'>succprat2</span>)
@@ -209,11 +212,11 @@ environment.</p></td>
 
 <span class='co'># passing dutch names and scientific names for different species</span>
 <span class='co'># is possible (records for each species is returned)</span>
-<span class='no'>myspecies1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_observations.html'>get_florabank_observations</a></span>(<span class='no'>db_connectie</span>,
+<span class='no'>myspecies1</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_observations</span>(<span class='no'>db_connectie</span>,
 <span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'Succisa pratensis Moench'</span>, <span class='st'>'Gevlekte orchis'</span>), <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># passing multiple dutch names</span>
-<span class='no'>myspecies2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_observations.html'>get_florabank_observations</a></span>(<span class='no'>db_connectie</span>,
+<span class='no'>myspecies2</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_observations</span>(<span class='no'>db_connectie</span>,
 <span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'Gevlekte orchis'</span>, <span class='st'>'Blauwe knoop'</span>),
 <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
@@ -221,7 +224,7 @@ environment.</p></td>
 
 <span class='co'># using default for collect will return a lazy query</span>
 <span class='co'># fixed = TRUE for exact matches only</span>
-<span class='no'>myspecies3</span> <span class='kw'>&lt;-</span>   <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_observations.html'>get_florabank_observations</a></span>(<span class='no'>db_connectie</span>,
+<span class='no'>myspecies3</span> <span class='kw'>&lt;-</span>   <span class='fu'>get_florabank_observations</span>(<span class='no'>db_connectie</span>,
 <span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'Succisa pratensis Moench'</span>, <span class='st'>'Gevlekte orchis'</span>),
 <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 

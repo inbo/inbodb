@@ -98,6 +98,9 @@ and returns the taxon trait values in a tidy data format" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/get_data_inboveg.html">How to retrieve data from the INBOVEG database</a>
+    </li>
+    <li>
       <a href="../articles/odbc_query_problem.html">odbc query problem</a>
     </li>
   </ul>
@@ -170,8 +173,8 @@ the latter four variables relate to the taxon traits.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other florabank: 
-<code><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_observations.html'>get_florabank_observations</a>()</code>,
-<code><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_taxon_ifbl_year.html'>get_florabank_taxon_ifbl_year</a>()</code></p></div>
+<code><a href='get_florabank_observations.html'>get_florabank_observations</a>()</code>,
+<code><a href='get_florabank_taxon_ifbl_year.html'>get_florabank_taxon_ifbl_year</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -180,23 +183,23 @@ the latter four variables relate to the taxon traits.</p>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>odbc</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='co'># connect to florabank</span>
-<span class='no'>db_connectie</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/connect_inbo_dbase.html'>connect_inbo_dbase</a></span>(<span class='st'>"D0021_00_userFlora"</span>)
+<span class='no'>db_connectie</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='connect_inbo_dbase.html'>connect_inbo_dbase</a></span>(<span class='st'>"D0021_00_userFlora"</span>)
 
 <span class='co'># get all Ellenberg values via partial matching, return as lazy query</span>
-<span class='no'>fb_ellenberg</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_traits.html'>get_florabank_traits</a></span>(<span class='no'>db_connectie</span>, <span class='st'>"llenberg"</span>)
+<span class='no'>fb_ellenberg</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_traits</span>(<span class='no'>db_connectie</span>, <span class='st'>"llenberg"</span>)
 <span class='co'># collect the data</span>
 <span class='no'>fb_ellenberg</span> <span class='kw'>&lt;-</span> <span class='no'>fb_ellenberg</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/compute.html'>collect</a></span>()
 <span class='co'># the same can be done by using the collect parameter</span>
-<span class='no'>fb_ellenberg</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_traits.html'>get_florabank_traits</a></span>(<span class='no'>db_connectie</span>, <span class='st'>"llenberg"</span>, <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>fb_ellenberg</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_traits</span>(<span class='no'>db_connectie</span>, <span class='st'>"llenberg"</span>, <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># get all red lists via partial matching</span>
-<span class='no'>fb_rodelijsten</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_traits.html'>get_florabank_traits</a></span>(<span class='no'>db_connectie</span>, <span class='st'>"rode"</span>)
+<span class='no'>fb_rodelijsten</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_traits</span>(<span class='no'>db_connectie</span>, <span class='st'>"rode"</span>)
 
 <span class='co'># get only the red list for vascular plant species</span>
-<span class='no'>fb_rodelijstvaatplanten</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_traits.html'>get_florabank_traits</a></span>(<span class='no'>db_connectie</span>, <span class='st'>"Rode lijst Vaatplanten"</span>)
+<span class='no'>fb_rodelijstvaatplanten</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_traits</span>(<span class='no'>db_connectie</span>, <span class='st'>"Rode lijst Vaatplanten"</span>)
 
 <span class='co'>#if the trait_name argument is missing, a list of possible names is printed</span>
-<span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_florabank_traits.html'>get_florabank_traits</a></span>(<span class='no'>db_connectie</span>)
+<span class='fu'>get_florabank_traits</span>(<span class='no'>db_connectie</span>)
 
 <span class='co'>#disconnect from florabank</span>
 <span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>db_connectie</span>)

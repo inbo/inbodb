@@ -43,8 +43,9 @@
 
 <meta property="og:title" content="Query recording (releve) information from INBOVEG — get_inboveg_recordings" />
 <meta property="og:description" content="This function queries the INBOVEG database for
-releve information (which species were recorded in which plots and in which
-vegetation layers with which cover) for one or more surveys." />
+releve information (which species were recorded in which plots and in
+which vegetation layers with which cover) for one or more surveys,
+or in combination with the unique ID (recordingGIVID) or user reference" />
 
 
 
@@ -99,6 +100,9 @@ vegetation layers with which cover) for one or more surveys." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/get_data_inboveg.html">How to retrieve data from the INBOVEG database</a>
+    </li>
+    <li>
       <a href="../articles/odbc_query_problem.html">odbc query problem</a>
     </li>
   </ul>
@@ -131,13 +135,16 @@ vegetation layers with which cover) for one or more surveys." />
 
     <div class="ref-description">
     <p>This function queries the INBOVEG database for
-releve information (which species were recorded in which plots and in which
-vegetation layers with which cover) for one or more surveys.</p>
+releve information (which species were recorded in which plots and in
+which vegetation layers with which cover) for one or more surveys,
+or in combination with the unique ID (recordingGIVID) or user reference</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_inboveg_recordings</span>(
   <span class='no'>connection</span>,
   <span class='no'>survey_name</span>,
+  <span class='no'>user_reference</span>,
+  <span class='no'>recording_givid</span>,
   <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>multiple</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
@@ -153,9 +160,20 @@ on the inbo-sql07-prd server</p></td>
     <tr>
       <th>survey_name</th>
       <td><p>A character string or a character vector, depending on
-multiple parameter, giving the name or names of the
-survey(s) for which you want to extract releve information. If missing, all
-surveys are returned.</p></td>
+multiple parameter, giving the name or names of the survey(s) for which you
+want to extract releve information. If missing, all surveys are returned.</p></td>
+    </tr>
+    <tr>
+      <th>user_reference</th>
+      <td><p>A character string or a character vector giving the name
+of a recording for which you want to extract releve information. If missing, all
+user-references are returned.</p></td>
+    </tr>
+    <tr>
+      <th>recording_givid</th>
+      <td><p>A character string or a character vector giving
+the unique id of a recording for which you want to extract releve information.
+If missing, all recording_givids are returned.</p></td>
     </tr>
     <tr>
       <th>collect</th>
@@ -167,49 +185,57 @@ environment.</p></td>
     </tr>
     <tr>
       <th>multiple</th>
-      <td><p>If TRUE, survey_name can take a character vector with
-multiple survey names that must match exactly. If FALSE (the default),
-survey_name must be a single character string (one survey name) that can
-include wildcarts to allow partial matches</p></td>
+      <td><p>If TRUE, survey_name, user_reference or recording_givid can
+take a character vector with multiple survey names that must match exactly.
+If FALSE (the default), survey_name , user_reference or recording_givid must
+be a single character string (one survey name, or one user_reference or one
+recording_givid). Only survey_name can include wildcarts to allow partial matches.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-= TRUE) with variables RecordingGivid (uniek Id), LayerCode, CoverCode,
+= TRUE) with variables RecordingGivid (unique ID), User reference, LayerCode, CoverCode,
 OriginalName, ScientificName, PhenologyCode, CoverageCode, PctValue
 (percentage coverage), RecordingScale (name of the scale of coverage)</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other inboveg: 
-<code><a href='https://rdrr.io/pkg/inbodb/man/get_inboveg_classification.html'>get_inboveg_classification</a>()</code>,
-<code><a href='https://rdrr.io/pkg/inbodb/man/get_inboveg_header.html'>get_inboveg_header</a>()</code>,
-<code><a href='https://rdrr.io/pkg/inbodb/man/get_inboveg_qualifiers.html'>get_inboveg_qualifiers</a>()</code>,
-<code><a href='https://rdrr.io/pkg/inbodb/man/get_inboveg_survey.html'>get_inboveg_survey</a>()</code></p></div>
+<code><a href='get_inboveg_classification.html'>get_inboveg_classification</a>()</code>,
+<code><a href='get_inboveg_header.html'>get_inboveg_header</a>()</code>,
+<code><a href='get_inboveg_qualifiers.html'>get_inboveg_qualifiers</a>()</code>,
+<code><a href='get_inboveg_relation.html'>get_inboveg_relation</a>()</code>,
+<code><a href='get_inboveg_survey.html'>get_inboveg_survey</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>inbodb</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>DBI</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>odbc</span>)
-<span class='no'>con</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/connect_inbo_dbase.html'>connect_inbo_dbase</a></span>(<span class='st'>"D0010_00_Cydonia"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='no'>con</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='connect_inbo_dbase.html'>connect_inbo_dbase</a></span>(<span class='st'>"D0010_00_Cydonia"</span>)
 
 <span class='co'># get the recordings from one survey and collect the data</span>
-<span class='no'>recording_heischraal2012</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_inboveg_recordings.html'>get_inboveg_recordings</a></span>(<span class='no'>con</span>, <span class='kw'>survey_name</span> <span class='kw'>=</span>
+<span class='no'>recording_heischraal2012</span> <span class='kw'>&lt;-</span> <span class='fu'>get_inboveg_recordings</span>(<span class='no'>con</span>, <span class='kw'>survey_name</span> <span class='kw'>=</span>
 <span class='st'>"MILKLIM_Heischraal2012"</span>, <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># get all recordings from MILKLIM surveys (partial matching), don't collect</span>
-<span class='no'>recording_milkim</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_inboveg_recordings.html'>get_inboveg_recordings</a></span>(<span class='no'>con</span>, <span class='kw'>survey_name</span> <span class='kw'>=</span> <span class='st'>"%MILKLIM%"</span>,
+<span class='no'>recording_milkim</span> <span class='kw'>&lt;-</span> <span class='fu'>get_inboveg_recordings</span>(<span class='no'>con</span>, <span class='kw'>survey_name</span> <span class='kw'>=</span> <span class='st'>"%MILKLIM%"</span>,
 <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># get recordings from several specific surveys</span>
-<span class='no'>recording_severalsurveys</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_inboveg_recordings.html'>get_inboveg_recordings</a></span>(<span class='no'>con</span>, <span class='kw'>survey_name</span> <span class='kw'>=</span>
+<span class='no'>recording_severalsurveys</span> <span class='kw'>&lt;-</span> <span class='fu'>get_inboveg_recordings</span>(<span class='no'>con</span>, <span class='kw'>survey_name</span> <span class='kw'>=</span>
 <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"MILKLIM_Heischraal2012"</span>, <span class='st'>"NICHE Vlaanderen"</span>), <span class='kw'>multiple</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
 <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
+<span class='co'># get recordings from several specific recordinggivid</span>
+<span class='no'>recording_severalgivids</span> <span class='kw'>&lt;-</span> <span class='fu'>get_inboveg_recordings</span>(<span class='no'>con</span>,
+<span class='kw'>recording_givid</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"IV2012081609450300"</span>,<span class='st'>"IV2012081610204607"</span>),
+<span class='kw'>multiple</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
 <span class='co'># get all recordings of all surveys,  don't collect the data</span>
-<span class='no'>allrecordings</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/inbodb/man/get_inboveg_recordings.html'>get_inboveg_recordings</a></span>(<span class='no'>con</span>)
+<span class='no'>allrecordings</span> <span class='kw'>&lt;-</span> <span class='fu'>get_inboveg_recordings</span>(<span class='no'>con</span>)
 
 <span class='co'># Close the connection when done</span>
 <span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con</span>)

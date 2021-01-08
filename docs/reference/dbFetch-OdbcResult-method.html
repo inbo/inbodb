@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Connect to an INBO database — connect_inbo_dbase • inbodb</title>
+<title>Fetch query result from database — dbFetch,OdbcResult-method • inbodb</title>
 
 
 <!-- jquery -->
@@ -41,10 +41,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Connect to an INBO database — connect_inbo_dbase" />
-<meta property="og:description" content="Connects to an INBO database by simply providing the database's name as an
-argument.
-The function can only be used from within the INBO network." />
+<meta property="og:title" content="Fetch query result from database — dbFetch,OdbcResult-method" />
+<meta property="og:description" content="This method is an adaptation from the eponymous function in the odbc package and is an implementation of the method dbFetch defined in the DBI package.  Additional to the odbc package, it replaces an cryptic error message by an informative error message." />
 
 
 
@@ -127,46 +125,40 @@ The function can only be used from within the INBO network." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Connect to an INBO database</h1>
-    <small class="dont-index">Source: <a href='https://github.com/inbo/inbodb/blob/master/R/connect_inbo_dbase.R'><code>R/connect_inbo_dbase.R</code></a></small>
-    <div class="hidden name"><code>connect_inbo_dbase.Rd</code></div>
+    <h1>Fetch query result from database</h1>
+    <small class="dont-index">Source: <a href='https://github.com/inbo/inbodb/blob/master/R/odbc_dbFetch.R'><code>R/odbc_dbFetch.R</code></a></small>
+    <div class="hidden name"><code>dbFetch-OdbcResult-method.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Connects to an INBO database by simply providing the database's name as an
-argument.
-The function can only be used from within the INBO network.</p>
+    <p>This method is an adaptation from the eponymous function in the <code>odbc</code> package and is an implementation of the method <code>dbFetch</code> defined in the <code>DBI</code> package.  Additional to the <code>odbc</code> package, it replaces an cryptic error message by an informative error message.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>connect_inbo_dbase</span>(<span class='no'>database_name</span>, <span class='kw'>autoconvert_utf8</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='co'># S4 method for OdbcResult</span>
+<span class='fu'>dbFetch</span>(<span class='no'>res</span>, <span class='kw'>n</span> <span class='kw'>=</span> -<span class='fl'>1</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>database_name</th>
-      <td><p>char Name of the INBO database you want to connect</p></td>
+      <th>res</th>
+      <td><p>An object inheriting from DBIResult, created by
+<code><a href='https://dbi.r-dbi.org/reference/dbSendQuery.html'>dbSendQuery()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>autoconvert_utf8</th>
-      <td><p>Should the encoding of the tables that are retrieved
-from the database be adapted to ensure correct presentation?  Defaults to TRUE.</p></td>
+      <th>n</th>
+      <td><p>maximum number of records to retrieve per fetch. Use <code>n = -1</code>
+or <code>n = Inf</code>
+to retrieve all pending records.  Some implementations may recognize other
+special values.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other arguments passed on to methods.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>odbc connection</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>For more information, refer to
-<a href='https://inbo.github.io/tutorials/tutorials/r_database_access/'>this tutorial</a>.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>connection</span> <span class='kw'>&lt;-</span> <span class='fu'>connect_inbo_dbase</span>(<span class='st'>"D0021_00_userFlora"</span>)
-<span class='no'>connection</span> <span class='kw'>&lt;-</span> <span class='fu'>connect_inbo_dbase</span>(<span class='st'>"W0003_00_Lims"</span>)
-}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
