@@ -53,6 +53,9 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
     drivers_sql_odbc <-
         drivers_sql[grepl("ODBC Driver", drivers_sql)]
     sql_driver <- tail(sort(drivers_sql_odbc), 1)
+    if (length(sql_driver) == 0) {
+        stop("The 'ODBC Driver for SQL Server' is missing. Please install it or contact your system administrator.") #nolint
+    }
 
     # connect to database
     conn <- dbConnect(odbc(),
