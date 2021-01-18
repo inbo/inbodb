@@ -1,6 +1,6 @@
 #' Fetch query result from database
 #'
-#' This method is an adaptation from the eponymous function in the `odbc` package and is an implementation of the method `dbFetch` defined in the `DBI` package.  Additional to the `odbc` package, it replaces an cryptic error message by an informative error message.
+#' This method is an adaptation from the eponymous function in the `odbc` package and is an implementation of the method `dbFetch` defined in the `DBI` package.  Additional to the `odbc` package, it replaces a cryptic error message by an informative error message.
 #'
 #' @inheritParams DBI::dbFetch
 #' @importFrom DBI dbFetch
