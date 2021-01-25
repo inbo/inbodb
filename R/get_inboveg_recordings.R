@@ -53,7 +53,7 @@
 #'
 #' # get all recordings from MILKLIM surveys (partial matching), don't collect
 #' recording_milkim <- get_inboveg_recordings(con, survey_name = "%MILKLIM%",
-#' collect = TRUE)
+#' collect = FALSE)
 #'
 #' # get recordings from several specific surveys
 #' recording_severalsurveys <- get_inboveg_recordings(con, survey_name =
