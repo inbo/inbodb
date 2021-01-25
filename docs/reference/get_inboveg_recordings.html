@@ -222,7 +222,7 @@ OriginalName, ScientificName, PhenologyCode, CoverageCode, PctValue
 
 <span class='co'># get all recordings from MILKLIM surveys (partial matching), don't collect</span>
 <span class='no'>recording_milkim</span> <span class='kw'>&lt;-</span> <span class='fu'>get_inboveg_recordings</span>(<span class='no'>con</span>, <span class='kw'>survey_name</span> <span class='kw'>=</span> <span class='st'>"%MILKLIM%"</span>,
-<span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># get recordings from several specific surveys</span>
 <span class='no'>recording_severalsurveys</span> <span class='kw'>&lt;-</span> <span class='fu'>get_inboveg_recordings</span>(<span class='no'>con</span>, <span class='kw'>survey_name</span> <span class='kw'>=</span>
