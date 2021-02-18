@@ -1,6 +1,6 @@
 Package: inbodb
 Title: Connect to and retrieve data from databases on the INBO server
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: 
     c(person(given = "Els",
              family = "Lommelen",
