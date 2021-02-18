@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">inbodb</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -66,7 +66,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/inbo/inbodb/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -119,10 +119,12 @@
 <h1 class="hasAnchor">
 <a href="#packages-and-connection" class="anchor"></a>Packages and connection</h1>
 <p>The main functions that we will use in this tutorial all start with <code>get_inboveg_*</code>. These functions are made available by loading the <code>inbodb</code> package.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">inbodb</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/inbo/inbodb">inbodb</a></span><span class="op">)</span></code></pre></div>
 <p>These functions will only work for people with access to the INBO network. As an INBO employee, you should make sure you have reading-rights for CYDONIA, otherwise place an ICT-call.</p>
 <p>The following R-code can be used to establish a connection to INBOVEG by using ‘connect_inbo_dbase’ of the inbodb-package with the database ‘Cydonia’ on the inbo-sql07-prd server:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">con</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/connect_inbo_dbase.html">connect_inbo_dbase</a></span>(<span class="st">"D0010_00_Cydonia"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect_inbo_dbase.html">connect_inbo_dbase</a></span><span class="op">(</span><span class="st">"D0010_00_Cydonia"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="functionality" class="section level1">
 <h1 class="hasAnchor">
@@ -133,24 +135,29 @@
 <p>The function <code>get_inboveg_survey</code> queries the INBOVEG database for survey information (metadata about surveys) for one or more survey(s) by the name of the survey.</p>
 <p>Three examples are given, this can be used as base to continue selecting the data you require.</p>
 <p>Get information of a specific survey and collect data.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">survey_info</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_survey.html">get_inboveg_survey</a></span>(<span class="no">con</span>,
-                              <span class="kw">survey_name</span> <span class="kw">=</span> <span class="st">"OudeLanden_1979"</span>,
-                              <span class="kw">collect</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">survey_info</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">survey_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_survey.html">get_inboveg_survey</a></span><span class="op">(</span><span class="va">con</span>, 
+                              survey_name <span class="op">=</span> <span class="st">"OudeLanden_1979"</span>, 
+                              collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">survey_info</span>
 <span class="co">#&gt; # A tibble: 1 x 5</span>
 <span class="co">#&gt;      Id Name        Description                                   Owner creator </span>
 <span class="co">#&gt;   &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;                                         &lt;chr&gt; &lt;chr&gt;   </span>
-<span class="co">#&gt; 1   172 OudeLanden~ Verlinden A, Leys G en Slembrouck J (1979) G~ NA    els_deb~</span></pre></body></html></div>
+<span class="co">#&gt; 1   172 OudeLanden~ Verlinden A, Leys G en Slembrouck J (1979) G~ NA    els_deb~</span></code></pre></div>
 <p>Get information of all surveys. This time we will not use <code>collect = TRUE</code>, which will return a <a href="https://docs.lucee.org/guides/cookbooks/lazy_queries.html">lazy query</a>:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">allsurveys</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_survey.html">get_inboveg_survey</a></span>(<span class="no">con</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="no">allsurveys</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">allsurveys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_survey.html">get_inboveg_survey</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">allsurveys</span><span class="op">)</span>
 <span class="co">#&gt; [1] "tbl_Microsoft SQL Server" "tbl_dbi"                 </span>
 <span class="co">#&gt; [3] "tbl_sql"                  "tbl_lazy"                </span>
-<span class="co">#&gt; [5] "tbl" </span></pre></body></html></div>
+<span class="co">#&gt; [5] "tbl" </span></code></pre></div>
 <p>If only a part of the survey name is known, you can make use of wildcards such as <code>%</code>.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">partsurveys</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_survey.html">get_inboveg_survey</a></span>(<span class="no">con</span>,
-                              <span class="kw">survey_name</span> <span class="kw">=</span> <span class="st">"%MILKLIM%"</span>,
-                              <span class="kw">collect</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">partsurveys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_survey.html">get_inboveg_survey</a></span><span class="op">(</span><span class="va">con</span>, 
+                              survey_name <span class="op">=</span> <span class="st">"%MILKLIM%"</span>,
+                              collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="header-information" class="section level2">
 <h2 class="hasAnchor">
@@ -158,11 +165,13 @@
 <p>The function <code>get_inboveg_header</code> queries the INBOVEG database for header information (metadata for a vegetation-relevé) for one or more survey by the name of the survey(s) and the recorder type (classic, classic-emmer, classic-ketting, biohab).</p>
 <p>Three examples are given, this can be used as base to continue selecting the data you require.</p>
 <p>Get header information from a specific survey and a specific recording type and collect the data:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">header_info</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_header.html">get_inboveg_header</a></span>(<span class="no">con</span>,
-                              <span class="kw">survey_name</span> <span class="kw">=</span> <span class="st">"OudeLanden_1979"</span>,
-                              <span class="kw">rec_type</span> <span class="kw">=</span> <span class="st">"Classic"</span>,
-                              <span class="kw">collect</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">header_info</span>, <span class="fl">10</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">header_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_header.html">get_inboveg_header</a></span><span class="op">(</span><span class="va">con</span>, 
+                              survey_name <span class="op">=</span> <span class="st">"OudeLanden_1979"</span>,
+                              rec_type <span class="op">=</span> <span class="st">"Classic"</span>,
+                              collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">header_info</span>, <span class="fl">10</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 10 x 15</span>
 <span class="co">#&gt;    RecordingGivid Name  UserReference Observer LocationCode Latitude Longitude  Area</span>
 <span class="co">#&gt;    &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -177,13 +186,15 @@
 <span class="co">#&gt;  9 IV20160210163~ Oude~ 18            Alex Ve~ Ekeren            500       500    12</span>
 <span class="co">#&gt; 10 IV20160210164~ Oude~ 23            Alex Ve~ Ekeren            500       500     6</span>
 <span class="co">#&gt; # ... with 7 more variables: Length &lt;int&gt;, Width &lt;int&gt;, VagueDateType &lt;chr&gt;,</span>
-<span class="co">#&gt; #   VagueDateBegin &lt;chr&gt;, VagueDateEnd &lt;chr&gt;, SurveyId &lt;int&gt;, RecTypeID &lt;int&gt;</span></pre></body></html></div>
+<span class="co">#&gt; #   VagueDateBegin &lt;chr&gt;, VagueDateEnd &lt;chr&gt;, SurveyId &lt;int&gt;, RecTypeID &lt;int&gt;</span></code></pre></div>
 <p>Get header information from several specific surveys by using <code>multiple = TRUE</code>.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">header_severalsurveys</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_header.html">get_inboveg_header</a></span>(<span class="no">con</span>,
-                <span class="kw">survey_name</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"MILKLIM_Heischraal2012"</span>, <span class="st">"NICHE Vlaanderen"</span>),
-                <span class="kw">multiple</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">header_severalsurveys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_header.html">get_inboveg_header</a></span><span class="op">(</span><span class="va">con</span>,
+                survey_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"MILKLIM_Heischraal2012"</span>, <span class="st">"NICHE Vlaanderen"</span><span class="op">)</span>,
+                multiple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Get header information of all surveys without collecting the data:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">all_header_info</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_header.html">get_inboveg_header</a></span>(<span class="no">con</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">all_header_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_header.html">get_inboveg_header</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="recording-information" class="section level2">
 <h2 class="hasAnchor">
@@ -191,10 +202,12 @@
 <p>The function <code>get_inboveg_recordings</code> queries the INBOVEG database for relevé information (which species were recorded in which plots and in which vegetation layers with which cover) for one or more surveys.</p>
 <p>Several examples are given, this can be used as base to continue selecting the data you require.</p>
 <p>First, we show how to get the relevés from one survey and collect the data:</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">recording_heischraal2012</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span>(<span class="no">con</span>,
-                                      <span class="kw">survey_name</span> <span class="kw">=</span> <span class="st">"MILKLIM_Heischraal2012"</span>,
-                                      <span class="kw">collect</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">recording_heischraal2012</span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">recording_heischraal2012</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span><span class="op">(</span><span class="va">con</span>, 
+                                      survey_name <span class="op">=</span> <span class="st">"MILKLIM_Heischraal2012"</span>,
+                                      collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">recording_heischraal2012</span>
 <span class="co">#&gt; # A tibble: 3,288 x 11</span>
 <span class="co">#&gt;    Name  RecordingGivid UserReference LayerCode CoverCode OrignalName ScientificName</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;         </span>
@@ -209,34 +222,40 @@
 <span class="co">#&gt;  9 MILK~ IV20120816113~ HS_1001       K         90        Luzula mul~ Luzula multif~</span>
 <span class="co">#&gt;  10 MILK~ IV20120816113~ HS_1001       K         90        Carex pilu~ Carex pilulif~</span>
 <span class="co">#&gt;  # ... with 3,278 more rows, and 4 more variables: PhenologyCode &lt;chr&gt;,</span>
-<span class="co">#&gt;  #   CoverageCode &lt;chr&gt;, PctValue &lt;dbl&gt;, RecordingScale &lt;chr&gt;</span></pre></body></html></div>
+<span class="co">#&gt;  #   CoverageCode &lt;chr&gt;, PctValue &lt;dbl&gt;, RecordingScale &lt;chr&gt;</span></code></pre></div>
 <p>Here is how to get the relevés for a specific RecordingGivid:</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">recording_specific_givid</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span>(
-  <span class="no">con</span>,
-  <span class="kw">recording_givid</span> <span class="kw">=</span> <span class="st">"IV2012080609161322"</span>,
-  <span class="kw">collect</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">recording_specific_givid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span><span class="op">(</span>
+  <span class="va">con</span>, 
+  recording_givid <span class="op">=</span> <span class="st">"IV2012080609161322"</span>,
+  collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Or for multiple RecordingGivid, make sure to set <code>multiple = TRUE</code>.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">recording_specific_givid</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span>(
-  <span class="no">con</span>,
-  <span class="kw">recording_givid</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"IV2012080609161322"</span>, <span class="st">"IV2012081611384756"</span>),
-  <span class="kw">multiple</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-  <span class="kw">collect</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">recording_specific_givid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span><span class="op">(</span>
+  <span class="va">con</span>, 
+  recording_givid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IV2012080609161322"</span>, <span class="st">"IV2012081611384756"</span><span class="op">)</span>,
+  multiple <span class="op">=</span> <span class="cn">TRUE</span>,
+  collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>The above is very useful in tandem with <code><a href="../reference/get_inboveg_header.html">get_inboveg_header()</a></code> to first search for all relevés belonging to one or more surveys and further filter these records to only the relevés you require based on the relevé metadata (such as date, observer, …).</p>
 <p>Or based on a user reference:</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">recording_specific_user_reference</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span>(
-  <span class="no">con</span>,
-  <span class="kw">user_reference</span> <span class="kw">=</span> <span class="st">"HS_1001"</span>,
-  <span class="kw">collect</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">recording_specific_user_reference</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span><span class="op">(</span>
+  <span class="va">con</span>, 
+  user_reference <span class="op">=</span> <span class="st">"HS_1001"</span>,
+  collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Get all recordings from MILKLIM surveys (partial matching), without collecting the data:</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">recording_milkim</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span>(<span class="no">con</span>,
-                              <span class="kw">survey_name</span> <span class="kw">=</span> <span class="st">"%MILKLIM%"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">recording_milkim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span><span class="op">(</span><span class="va">con</span>,
+                              survey_name <span class="op">=</span> <span class="st">"%MILKLIM%"</span><span class="op">)</span></code></pre></div>
 <p>Get recordings from several specific surveys:</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">recording_severalsurveys</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span>(<span class="no">con</span>,
-                <span class="kw">survey_name</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"MILKLIM_Heischraal2012"</span>, <span class="st">"NICHE Vlaanderen"</span>),
-                <span class="kw">multiple</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-                <span class="kw">collect</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">recording_severalsurveys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span><span class="op">(</span><span class="va">con</span>,
+                survey_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"MILKLIM_Heischraal2012"</span>, <span class="st">"NICHE Vlaanderen"</span><span class="op">)</span>,
+                multiple <span class="op">=</span> <span class="cn">TRUE</span>,
+                collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Get all relevés of all surveys, without collecting the data:</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">allrecordings</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span>(<span class="no">con</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">allrecordings</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="classification-information" class="section level2">
 <h2 class="hasAnchor">
@@ -244,27 +263,32 @@
 <p>The function <code>get_inboveg_classification</code> queries the INBOVEG database for information on the field classification (N2000 or BWK-code) of the relevé for one or more survey(s) by the name of the survey.</p>
 <p>Two examples are given, this can be used as base to continue selecting the data you require.</p>
 <p>Get a specific classification from a survey and collect the data:</p>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">classif_info</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_classification.html">get_inboveg_classification</a></span>(<span class="no">con</span>,
-                              <span class="kw">survey_name</span> <span class="kw">=</span> <span class="st">"MILKLIM_Heischraal2012"</span>,
-                              <span class="kw">classif</span> <span class="kw">=</span> <span class="st">"4010"</span>,
-                              <span class="kw">collect</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">classif_info</span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">classif_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_classification.html">get_inboveg_classification</a></span><span class="op">(</span><span class="va">con</span>, 
+                              survey_name <span class="op">=</span> <span class="st">"MILKLIM_Heischraal2012"</span>,
+                              classif <span class="op">=</span> <span class="st">"4010"</span>,
+                              collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">classif_info</span>
 <span class="co">#&gt; # A tibble: 1 x 9</span>
 <span class="co">#&gt;   RecordingGivid Name  Classif ActionGroup ListName LocalClassifica~ Habitattype</span>
 <span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt;      </span>
 <span class="co">#&gt; 1 IV20130318144~ MILK~ 4010    N2k         Habitat~ NA               Noord-Atla~</span>
-<span class="co">#&gt; # ... with 2 more variables: Cover &lt;chr&gt;, PctValue &lt;dbl&gt;</span></pre></body></html></div>
+<span class="co">#&gt; # ... with 2 more variables: Cover &lt;chr&gt;, PctValue &lt;dbl&gt;</span></code></pre></div>
 <p>Get all surveys, all classifications without collecting the data:</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">all_codes</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_classification.html">get_inboveg_classification</a></span>(<span class="no">con</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">all_codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_classification.html">get_inboveg_classification</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="qualifiers-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#qualifiers-information" class="anchor"></a>Qualifiers information</h2>
 <p>The function <code>get_inboveg_qualifiers</code>queries the INBOVEG database for qualifier information on recordings for one or more surveys. These qualifiers give information on management (management qualifier ‘MQ’) or location description (site qualifier’SQ’).</p>
 <p>Get the qualifiers from one survey:</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">qualifiers_heischraal2012</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_qualifiers.html">get_inboveg_qualifiers</a></span>(<span class="no">con</span>,
-                                  <span class="kw">survey_name</span> <span class="kw">=</span> <span class="st">"MILKLIM_Heischraal2012"</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">qualifiers_heischraal2012</span>)
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">qualifiers_heischraal2012</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_qualifiers.html">get_inboveg_qualifiers</a></span><span class="op">(</span><span class="va">con</span>,
+                                  survey_name <span class="op">=</span> <span class="st">"MILKLIM_Heischraal2012"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">qualifiers_heischraal2012</span><span class="op">)</span>
 <span class="co">#&gt;                     Name     RecordingGivid UserReference</span>
 <span class="co">#&gt;  1 MILKLIM_Heischraal2012 IV2012081615083167        HS_008</span>
 <span class="co">#&gt;  2 MILKLIM_Heischraal2012 IV2012081613133274        HS_009</span>
@@ -292,25 +316,30 @@
 <span class="co">#&gt;  3       NA RS2012060811060080</span>
 <span class="co">#&gt;  4       NA               &lt;NA&gt;</span>
 <span class="co">#&gt;  5       NA               &lt;NA&gt;</span>
-<span class="co">#&gt;  6       NA               &lt;NA&gt;</span></pre></body></html></div>
+<span class="co">#&gt;  6       NA               &lt;NA&gt;</span></code></pre></div>
 <p>Get all site qualifiers (SQ) from MILKLIM surveys (partial matching):</p>
-<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">qualifiers_milkim</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_qualifiers.html">get_inboveg_qualifiers</a></span>(<span class="no">con</span>,
-                                        <span class="kw">survey_name</span> <span class="kw">=</span> <span class="st">"%MILKLIM%"</span>,
-                                        <span class="kw">qualifier_type</span> <span class="kw">=</span> <span class="st">"SQ"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">qualifiers_milkim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_qualifiers.html">get_inboveg_qualifiers</a></span><span class="op">(</span><span class="va">con</span>,
+                                        survey_name <span class="op">=</span> <span class="st">"%MILKLIM%"</span>,
+                                        qualifier_type <span class="op">=</span> <span class="st">"SQ"</span><span class="op">)</span></code></pre></div>
 <p>Get qualifiers from several specific surveys with <code>multiple = TRUE</code>:</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">qualifiers_severalsurveys</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_qualifiers.html">get_inboveg_qualifiers</a></span>(<span class="no">con</span>,
-                <span class="kw">survey_name</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"MILKLIM_Heischraal2012"</span>, <span class="st">"NICHE Vlaanderen"</span>),
-                <span class="kw">multiple</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">qualifiers_severalsurveys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_qualifiers.html">get_inboveg_qualifiers</a></span><span class="op">(</span><span class="va">con</span>, 
+                survey_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"MILKLIM_Heischraal2012"</span>, <span class="st">"NICHE Vlaanderen"</span><span class="op">)</span>,
+                multiple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Get all qualifiers of all surveys:</p>
-<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="no">allqualifiers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_qualifiers.html">get_inboveg_qualifiers</a></span>(<span class="no">con</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">allqualifiers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_qualifiers.html">get_inboveg_qualifiers</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="parent-child-relationships-between-recordings" class="section level2">
 <h2 class="hasAnchor">
 <a href="#parent-child-relationships-between-recordings" class="anchor"></a>Parent-child relationships between recordings</h2>
 <p>The function <code>get_inboveg_relation</code> queries the INBOVEG database for relational information on recordings for one or more surveys based on parent (classic-chain/bucket) and Child (classic) relationships.</p>
 <p>Get all parent-child-relations from N2000meetnet surveys (partial matching):</p>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="no">relations_N2000meetnet</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_relation.html">get_inboveg_relation</a></span>(<span class="no">con</span>, <span class="kw">survey_name</span> <span class="kw">=</span> <span class="st">"%N2000meetnet%"</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="no">relations_N2000meetnet</span>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">relations_N2000meetnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_relation.html">get_inboveg_relation</a></span><span class="op">(</span><span class="va">con</span>, survey_name <span class="op">=</span> <span class="st">"%N2000meetnet%"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">relations_N2000meetnet</span>
 <span class="co">#&gt; # Source:   SQL [?? x 7]</span>
 <span class="co">#&gt; # Database: Microsoft SQL Server</span>
 <span class="co">#&gt; #   13.00.5598[INBO\hans_vancalster@INBO-SQL07-PRD\LIVE/D0010_00_Cydonia]</span>
@@ -326,12 +355,13 @@
 <span class="co">#&gt;  8 N2000~       44298 IV20190218~ 13823793_2170    44297 IV201902181~ 13823793_2170 </span>
 <span class="co">#&gt;  9 N2000~       44300 IV20190218~ 12644145_2170    44299 IV201902181~ 12644145_2170 </span>
 <span class="co">#&gt; 10 N2000~       44302 IV20190218~ 10260273_213~    44301 IV201902181~ 10260273_2130~</span>
-<span class="co">#&gt; # ... with more rows</span></pre></body></html></div>
+<span class="co">#&gt; # ... with more rows</span></code></pre></div>
 <p>Get the parent-child-relations from several specific surveys:</p>
-<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="no">relations_severalsurveys</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_relation.html">get_inboveg_relation</a></span>(
-  <span class="no">con</span>,
-  <span class="kw">survey_name</span> <span class="kw">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"DeBlankaart-1985-Beheer"</span>, <span class="st">"N2000meetnet_Grasland"</span>),
-  <span class="kw">multiple</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">relations_severalsurveys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_relation.html">get_inboveg_relation</a></span><span class="op">(</span>
+  <span class="va">con</span>, 
+  survey_name <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"DeBlankaart-1985-Beheer"</span>, <span class="st">"N2000meetnet_Grasland"</span><span class="op">)</span>, 
+  multiple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="more-complex-queries" class="section level2">
 <h2 class="hasAnchor">
@@ -343,8 +373,9 @@
 <h1 class="hasAnchor">
 <a href="#closing-the-connection" class="anchor"></a>Closing the connection</h1>
 <p>Close the connection when done</p>
-<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="fu">dbDisconnect</span>(<span class="no">con</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span>(<span class="no">con</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html">dbDisconnect</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
 
@@ -363,7 +394,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -78,7 +78,7 @@ level information about the matching taxa." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">inbodb</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@ level information about the matching taxa." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -112,7 +112,7 @@ level information about the matching taxa." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/inbo/inbodb/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -142,7 +142,7 @@ The function queries the florabank, and returns a dataframe with observation
 level information about the matching taxa.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_florabank_observations</span>(<span class='no'>connection</span>, <span class='no'>names</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>get_florabank_observations</span><span class='op'>(</span><span class='va'>connection</span>, <span class='va'>names</span>, fixed <span class='op'>=</span> <span class='cn'>FALSE</span>, collect <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -186,54 +186,55 @@ environment.</p></td>
 <code><a href='get_florabank_traits.html'>get_florabank_traits</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># code can only be run if a connection to the database is possible</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>inbodb</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>DBI</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>odbc</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/inbo/inbodb'>inbodb</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dbi.r-dbi.org'>DBI</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/r-dbi/odbc'>odbc</a></span><span class='op'>)</span>
 <span class='co'># connect to florabank</span>
-<span class='no'>db_connectie</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='connect_inbo_dbase.html'>connect_inbo_dbase</a></span>(<span class='st'>"D0021_00_userFlora"</span>)
+<span class='va'>db_connectie</span> <span class='op'>&lt;-</span> <span class='fu'><a href='connect_inbo_dbase.html'>connect_inbo_dbase</a></span><span class='op'>(</span><span class='st'>"D0021_00_userFlora"</span><span class='op'>)</span>
 
 <span class='co'># query and collect the data using scientific name</span>
-<span class='no'>succprat1</span> <span class='kw'>&lt;-</span>    <span class='fu'>get_florabank_observations</span>(<span class='no'>db_connectie</span>,
-<span class='kw'>names</span> <span class='kw'>=</span> <span class='st'>'Succisa pratensis Moench'</span>, <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>succprat1</span> <span class='op'>&lt;-</span>  <span class='fu'>get_florabank_observations</span><span class='op'>(</span><span class='va'>db_connectie</span>,
+names <span class='op'>=</span> <span class='st'>'Succisa pratensis Moench'</span>, collect <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># the same species but using Dutch name</span>
-<span class='no'>succprat2</span> <span class='kw'>&lt;-</span>    <span class='fu'>get_florabank_observations</span>(<span class='no'>db_connectie</span>,
-<span class='kw'>names</span> <span class='kw'>=</span> <span class='st'>'Blauwe knoop'</span>, <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>succprat2</span> <span class='op'>&lt;-</span>  <span class='fu'>get_florabank_observations</span><span class='op'>(</span><span class='va'>db_connectie</span>,
+names <span class='op'>=</span> <span class='st'>'Blauwe knoop'</span>, collect <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># providing both a Dutch name and scientific name will not duplicate records</span>
 <span class='co'># if they are the same species</span>
-<span class='no'>succprat3</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_observations</span>(<span class='no'>db_connectie</span>,
-<span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Succisa pratensis Moench"</span>, <span class='st'>"Blauwe knoop"</span>), <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>succprat3</span> <span class='op'>&lt;-</span> <span class='fu'>get_florabank_observations</span><span class='op'>(</span><span class='va'>db_connectie</span>,
+names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Succisa pratensis Moench"</span>, <span class='st'>"Blauwe knoop"</span><span class='op'>)</span>, collect <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='no'>succprat1</span>, <span class='no'>succprat2</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='no'>succprat1</span>, <span class='no'>succprat3</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>succprat1</span>, <span class='va'>succprat2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>succprat1</span>, <span class='va'>succprat3</span><span class='op'>)</span>
 
 <span class='co'># passing dutch names and scientific names for different species</span>
 <span class='co'># is possible (records for each species is returned)</span>
-<span class='no'>myspecies1</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_observations</span>(<span class='no'>db_connectie</span>,
-<span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'Succisa pratensis Moench'</span>, <span class='st'>'Gevlekte orchis'</span>), <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>myspecies1</span> <span class='op'>&lt;-</span> <span class='fu'>get_florabank_observations</span><span class='op'>(</span><span class='va'>db_connectie</span>,
+names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'Succisa pratensis Moench'</span>, <span class='st'>'Gevlekte orchis'</span><span class='op'>)</span>, collect <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># passing multiple dutch names</span>
-<span class='no'>myspecies2</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_observations</span>(<span class='no'>db_connectie</span>,
-<span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'Gevlekte orchis'</span>, <span class='st'>'Blauwe knoop'</span>),
-<span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>myspecies2</span> <span class='op'>&lt;-</span> <span class='fu'>get_florabank_observations</span><span class='op'>(</span><span class='va'>db_connectie</span>,
+names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'Gevlekte orchis'</span>, <span class='st'>'Blauwe knoop'</span><span class='op'>)</span>,
+collect <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='no'>myspecies1</span>, <span class='no'>myspecies2</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>myspecies1</span>, <span class='va'>myspecies2</span><span class='op'>)</span>
 
 <span class='co'># using default for collect will return a lazy query</span>
 <span class='co'># fixed = TRUE for exact matches only</span>
-<span class='no'>myspecies3</span> <span class='kw'>&lt;-</span>   <span class='fu'>get_florabank_observations</span>(<span class='no'>db_connectie</span>,
-<span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'Succisa pratensis Moench'</span>, <span class='st'>'Gevlekte orchis'</span>),
-<span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>myspecies3</span> <span class='op'>&lt;-</span>  <span class='fu'>get_florabank_observations</span><span class='op'>(</span><span class='va'>db_connectie</span>,
+names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'Succisa pratensis Moench'</span>, <span class='st'>'Gevlekte orchis'</span><span class='op'>)</span>,
+fixed <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># to collect the data for a lazy query you can also use the collect() function:</span>
-<span class='no'>myspecies3</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/compute.html'>collect</a></span>(<span class='no'>myspecies3</span>)
+<span class='va'>myspecies3</span> <span class='op'>&lt;-</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/compute.html'>collect</a></span><span class='op'>(</span><span class='va'>myspecies3</span><span class='op'>)</span>
 
 <span class='co'># disconnect from florabank</span>
-<span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>db_connectie</span>)
-}</div></pre>
+<span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span><span class='op'>(</span><span class='va'>db_connectie</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -249,7 +250,7 @@ environment.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

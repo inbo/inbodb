@@ -76,7 +76,7 @@ See the examples for how to get information for all surveys." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">inbodb</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@ See the examples for how to get information for all surveys." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -110,7 +110,7 @@ See the examples for how to get information for all surveys." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/inbo/inbodb/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -138,7 +138,7 @@ See the examples for how to get information for all surveys." />
 See the examples for how to get information for all surveys.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_inboveg_survey</span>(<span class='no'>connection</span>, <span class='no'>survey_name</span>, <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>get_inboveg_survey</span><span class='op'>(</span><span class='va'>connection</span>, <span class='va'>survey_name</span>, collect <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,24 +177,25 @@ environment.</p></td>
 <code><a href='get_inboveg_relation.html'>get_inboveg_relation</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>inbodb</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>DBI</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>odbc</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='no'>con</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='connect_inbo_dbase.html'>connect_inbo_dbase</a></span>(<span class='st'>"D0010_00_Cydonia"</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/inbo/inbodb'>inbodb</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dbi.r-dbi.org'>DBI</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/r-dbi/odbc'>odbc</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='va'>con</span> <span class='op'>&lt;-</span> <span class='fu'><a href='connect_inbo_dbase.html'>connect_inbo_dbase</a></span><span class='op'>(</span><span class='st'>"D0010_00_Cydonia"</span><span class='op'>)</span>
 
 <span class='co'># get information of a specific survey and collect data</span>
-<span class='no'>survey_info</span> <span class='kw'>&lt;-</span> <span class='fu'>get_inboveg_survey</span>(<span class='no'>con</span>, <span class='kw'>survey_name</span> <span class='kw'>=</span> <span class='st'>"OudeLanden_1979"</span>,
-<span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>survey_info</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_survey</span><span class='op'>(</span><span class='va'>con</span>, survey_name <span class='op'>=</span> <span class='st'>"OudeLanden_1979"</span>,
+collect <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># get information of all surveys and collect data</span>
-<span class='no'>allsurveys</span> <span class='kw'>&lt;-</span> <span class='fu'>get_inboveg_survey</span>(<span class='no'>con</span>)
+<span class='va'>allsurveys</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_survey</span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
 
 <span class='co'># Close the connection when done</span>
-<span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span>(<span class='no'>con</span>)
-}</div></pre>
+<span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -210,7 +211,7 @@ environment.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
