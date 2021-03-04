@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-The Flemish vegetation database, INBOVEG, is an application developed to provide a repository of relevés and makes the relevés available for future use.
+The Flemish vegetation database, INBOVEG, is an application developed to provide a repository of relevés and makes the relevés available for future use. More information? Check out https://www.vlaanderen.be/inbo/en-gb/data-applications/inboveg/
 
 INBOVEG supports different types of recordings: BioHab recordings (protocol of Natura 2000 monitoring) and the classic relevés. 
 The classic relevés can stand alone, be an element of a collection or element of a chain where the linkage is used to give information about the relative position of recording within a series. 
