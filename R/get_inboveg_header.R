@@ -109,10 +109,10 @@ get_inboveg_header <- function(connection,
   , ivR.VagueDateEnd
   , ivR.SurveyId
   , ivR.RecTypeID
+  , ivR.NeedsWork
   FROM [dbo].[ivRecording] ivR
   INNER JOIN [dbo].[ivSurvey] ivS on ivS.Id = ivR.SurveyId
-  INNER JOIN [dbo].[ivRecTypeD] ivRec on ivRec.ID = ivR.RecTypeID
-  where ivR.NeedsWork = 0"
+  INNER JOIN [dbo].[ivRecTypeD] ivRec on ivRec.ID = ivR.RecTypeID"
 
 if (!multiple) {
   sql_statement <- glue_sql(common_part,
