@@ -96,6 +96,7 @@ get_inboveg_header <- function(connection,
 
   common_part <- "SELECT
   ivR.RecordingGivid
+  , ivR.NeedsWork
   , ivS.Name
   , ivR.UserReference
   , ivR.Observer
@@ -110,7 +111,6 @@ get_inboveg_header <- function(connection,
   , ivR.VagueDateEnd
   , ivR.SurveyId
   , ivR.RecTypeID
-  , ivR.NeedsWork
   FROM [dbo].[ivRecording] ivR
   INNER JOIN [dbo].[ivSurvey] ivS on ivS.Id = ivR.SurveyId
   INNER JOIN [dbo].[ivRecTypeD] ivRec on ivRec.ID = ivR.RecTypeID
