@@ -26,7 +26,7 @@ The classic relevés can stand alone, be an element of a collection or element o
 Ample selection and export functions toward analysis tools are provided. It also provides standardized lists of species, habitats, life forms, scales etc. 
 Original observations are preserved and a full history of subsequent identifications is saved.
 
-
+More information? Check out https://www.vlaanderen.be/inbo/en-gb/data-applications/inboveg/
 
 # Aim
 
@@ -108,7 +108,7 @@ partsurveys <- get_inboveg_survey(con,
 
 
 ## Header information
-The function `get_inboveg_header` queries the INBOVEG database for header information (metadata for a vegetation-relevé) for one or more survey by the name of the survey(s) and the recorder type (classic, classic-emmer, classic-ketting, biohab). 
+The function `get_inboveg_header` queries the INBOVEG database for header information (metadata for a vegetation-relevé) for one or more survey by the name of the survey(s) and the recorder type (classic, classic-emmer, classic-ketting, biohab). All relevés are selected, also those with 'needed work' indicated. It is important to realize that the relevé is not finished yet, species lists can be incomplete, or not all species have been identified yet. For certain analysis these relevés can better be excluded (by using dplyr -> filter).
 
 Three examples are given, this can be used as base to continue selecting the data you require.
 
