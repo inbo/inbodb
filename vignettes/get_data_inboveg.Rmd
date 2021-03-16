@@ -26,7 +26,7 @@ The classic relevés can stand alone, be an element of a collection or element o
 Ample selection and export functions toward analysis tools are provided. It also provides standardized lists of species, habitats, life forms, scales etc. 
 Original observations are preserved and a full history of subsequent identifications is saved.
 
-More information? Check out https://www.vlaanderen.be/inbo/en-gb/data-applications/inboveg/
+More information? Check out [inboveg-website](https://www.vlaanderen.be/inbo/en-gb/data-applications/inboveg/)
 
 # Aim
 
@@ -123,7 +123,7 @@ header_info <- get_inboveg_header(con,
 
 ```{r}
 head(header_info, 10)
-#> # A tibble: 10 x 15
+#> # A tibble: 10 x 16
 #>    RecordingGivid Name  UserReference Observer LocationCode Latitude Longitude  Area
 #>    <chr>          <chr> <chr>         <chr>    <chr>           <dbl>     <dbl> <dbl>
 #>  1 IV20160210121~ Oude~ 5             Alex Ve~ Ekeren            500       500    10
@@ -136,8 +136,9 @@ head(header_info, 10)
 #>  8 IV20160210162~ Oude~ 19            Alex Ve~ Ekeren            500       500    12
 #>  9 IV20160210163~ Oude~ 18            Alex Ve~ Ekeren            500       500    12
 #> 10 IV20160210164~ Oude~ 23            Alex Ve~ Ekeren            500       500     6
-#> # ... with 7 more variables: Length <int>, Width <int>, VagueDateType <chr>,
-#> #   VagueDateBegin <chr>, VagueDateEnd <chr>, SurveyId <int>, RecTypeID <int>
+#> # ... with 8 more variables: Length <int>, Width <int>, VagueDateType <chr>,
+#> #   VagueDateBegin <chr>, VagueDateEnd <chr>, SurveyId <int>, RecTypeID <int>, 
+#> # NeedsWork <int>
 ```
 
 Get header information from several specific surveys by using `multiple = TRUE`. 
