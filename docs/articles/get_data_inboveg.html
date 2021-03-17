@@ -100,6 +100,7 @@
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>The Flemish vegetation database, INBOVEG, is an application developed to provide a repository of relevés and makes the relevés available for future use.</p>
 <p>INBOVEG supports different types of recordings: BioHab recordings (protocol of Natura 2000 monitoring) and the classic relevés. The classic relevés can stand alone, be an element of a collection or element of a chain where the linkage is used to give information about the relative position of recording within a series. Ample selection and export functions toward analysis tools are provided. It also provides standardized lists of species, habitats, life forms, scales etc. Original observations are preserved and a full history of subsequent identifications is saved.</p>
+<p>More information? Check out <a href="https://www.vlaanderen.be/inbo/en-gb/data-applications/inboveg/">inboveg-website</a></p>
 </div>
 <div id="aim" class="section level1">
 <h1 class="hasAnchor">
@@ -141,18 +142,18 @@
                               collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">survey_info</span>
-<span class="co">#&gt; # A tibble: 1 x 5</span>
-<span class="co">#&gt;      Id Name        Description                                   Owner creator </span>
-<span class="co">#&gt;   &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;                                         &lt;chr&gt; &lt;chr&gt;   </span>
-<span class="co">#&gt; 1   172 OudeLanden~ Verlinden A, Leys G en Slembrouck J (1979) G~ NA    els_deb~</span></code></pre></div>
+<span class="co"># A tibble: 1 x 5</span>
+<span class="co">#      Id Name        Description                                   Owner creator </span>
+<span class="co">#   &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;                                         &lt;chr&gt; &lt;chr&gt;   </span>
+<span class="co">#  1   172 OudeLanden~ Verlinden A, Leys G en Slembrouck J (1979) G~ NA    els_deb~</span></code></pre></div>
 <p>Get information of all surveys. This time we will not use <code>collect = TRUE</code>, which will return a <a href="https://docs.lucee.org/guides/cookbooks/lazy_queries.html">lazy query</a>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">allsurveys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_survey.html">get_inboveg_survey</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">allsurveys</span><span class="op">)</span>
-<span class="co">#&gt; [1] "tbl_Microsoft SQL Server" "tbl_dbi"                 </span>
-<span class="co">#&gt; [3] "tbl_sql"                  "tbl_lazy"                </span>
-<span class="co">#&gt; [5] "tbl" </span></code></pre></div>
+<span class="co"># [1] "tbl_Microsoft SQL Server" "tbl_dbi"                 </span>
+<span class="co"># [3] "tbl_sql"                  "tbl_lazy"                </span>
+<span class="co"># [5] "tbl" </span></code></pre></div>
 <p>If only a part of the survey name is known, you can make use of wildcards such as <code>%</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">partsurveys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_survey.html">get_inboveg_survey</a></span><span class="op">(</span><span class="va">con</span>, 
@@ -162,7 +163,7 @@
 <div id="header-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#header-information" class="anchor"></a>Header information</h2>
-<p>The function <code>get_inboveg_header</code> queries the INBOVEG database for header information (metadata for a vegetation-relevé) for one or more survey by the name of the survey(s) and the recorder type (classic, classic-emmer, classic-ketting, biohab).</p>
+<p>The function <code>get_inboveg_header</code> queries the INBOVEG database for header information (metadata for a vegetation-relevé) for one or more survey by the name of the survey(s) and the recorder type (classic, classic-emmer, classic-ketting, biohab). All relevés are selected, also those with ‘needs work’ indicated (0 = no work needed, 1 = needs work). It is important to realize that the relevé is not finished yet, species lists can be incomplete, or not all species have been identified yet. For certain analysis these relevés can better be excluded (by using dplyr -&gt; filter).</p>
 <p>Three examples are given, this can be used as base to continue selecting the data you require.</p>
 <p>Get header information from a specific survey and a specific recording type and collect the data:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -172,21 +173,20 @@
                               collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">header_info</span>, <span class="fl">10</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 10 x 15</span>
-<span class="co">#&gt;    RecordingGivid Name  UserReference Observer LocationCode Latitude Longitude  Area</span>
-<span class="co">#&gt;    &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 IV20160210121~ Oude~ 5             Alex Ve~ Ekeren            500       500    10</span>
-<span class="co">#&gt;  2 IV20160210140~ Oude~ 1             Alex Ve~ Ekeren            500       500    25</span>
-<span class="co">#&gt;  3 IV20160210142~ Oude~ 2             Alex Ve~ Ekeren            500       500    25</span>
-<span class="co">#&gt;  4 IV20160210153~ Oude~ 4             Alex Ve~ Ekeren            500       500    12</span>
-<span class="co">#&gt;  5 IV20160210155~ Oude~ 81            Alex Ve~ Ekeren            500       500     9</span>
-<span class="co">#&gt;  6 IV20160210160~ Oude~ 20            Alex Ve~ Ekeren            500       500     9</span>
-<span class="co">#&gt;  7 IV20160210161~ Oude~ 17            Alex Ve~ Ekeren            500       500    12</span>
-<span class="co">#&gt;  8 IV20160210162~ Oude~ 19            Alex Ve~ Ekeren            500       500    12</span>
-<span class="co">#&gt;  9 IV20160210163~ Oude~ 18            Alex Ve~ Ekeren            500       500    12</span>
-<span class="co">#&gt; 10 IV20160210164~ Oude~ 23            Alex Ve~ Ekeren            500       500     6</span>
-<span class="co">#&gt; # ... with 7 more variables: Length &lt;int&gt;, Width &lt;int&gt;, VagueDateType &lt;chr&gt;,</span>
-<span class="co">#&gt; #   VagueDateBegin &lt;chr&gt;, VagueDateEnd &lt;chr&gt;, SurveyId &lt;int&gt;, RecTypeID &lt;int&gt;</span></code></pre></div>
+<span class="co"># A tibble: 10 x 16</span>
+<span class="co"># RecordingGivid NeedsWork Name  UserReference Observer LocationCode Latitude Longitude  Area Length Width VagueDateType</span>
+<span class="co">#    &lt;chr&gt;              &lt;int&gt; &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;int&gt; &lt;int&gt; &lt;chr&gt;        </span>
+<span class="co">#  1 IV20160210121~         0 Oude~ 5             Alex Ve~ Ekeren           51.3      4.43    10     NA    NA Y            </span>
+<span class="co">#  2 IV20160210140~         0 Oude~ 1             Alex Ve~ Ekeren           51.3      4.43    25     NA    NA Y            </span>
+<span class="co">#  3 IV20160210142~         0 Oude~ 2             Alex Ve~ Ekeren           51.3      4.43    25     NA    NA Y            </span>
+<span class="co">#  4 IV20160210153~         0 Oude~ 4             Alex Ve~ Ekeren           51.3      4.43    12     NA    NA Y            </span>
+<span class="co">#  5 IV20160210155~         0 Oude~ 81            Alex Ve~ Ekeren           51.3      4.43     9     NA    NA Y            </span>
+<span class="co">#  6 IV20160210160~         0 Oude~ 20            Alex Ve~ Ekeren           51.3      4.43     9     NA    NA Y            </span>
+<span class="co">#  7 IV20160210161~         0 Oude~ 17            Alex Ve~ Ekeren           51.3      4.43    12     NA    NA Y            </span>
+<span class="co">#  8 IV20160210162~         0 Oude~ 19            Alex Ve~ Ekeren           51.3      4.43    12     NA    NA Y            </span>
+<span class="co">#  9 IV20160210163~         0 Oude~ 18            Alex Ve~ Ekeren           51.3      4.43    12     NA    NA Y            </span>
+<span class="co"># 10 IV20160210164~         0 Oude~ 23            Alex Ve~ Ekeren           51.3      4.43     6     NA    NA Y            </span>
+<span class="co"># ... with 4 more variables: VagueDateBegin &lt;chr&gt;, VagueDateEnd &lt;chr&gt;, SurveyId &lt;int&gt;, RecTypeID &lt;int&gt;</span></code></pre></div>
 <p>Get header information from several specific surveys by using <code>multiple = TRUE</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">header_severalsurveys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_header.html">get_inboveg_header</a></span><span class="op">(</span><span class="va">con</span>,
@@ -208,21 +208,21 @@
                                       collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">recording_heischraal2012</span>
-<span class="co">#&gt; # A tibble: 3,288 x 11</span>
-<span class="co">#&gt;    Name  RecordingGivid UserReference LayerCode CoverCode OrignalName ScientificName</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;         </span>
-<span class="co">#&gt;  1 MILK~ IV20120816113~ HS_1001       M         5         Rhytidiade~ Rhytidiadelph~</span>
-<span class="co">#&gt;  2 MILK~ IV20120816113~ HS_1001       M         5         Pseudoscle~ Pseudosclerop~</span>
-<span class="co">#&gt;  3 MILK~ IV20120816113~ HS_1001       K         90        Juncus acu~ Juncus acutif~</span>
-<span class="co">#&gt;  4 MILK~ IV20120816113~ HS_1001       K         90        Nardus str~ Nardus strict~</span>
-<span class="co">#&gt;  5 MILK~ IV20120816113~ HS_1001       K         90        Potentilla~ Potentilla er~</span>
-<span class="co">#&gt;  6 MILK~ IV20120816113~ HS_1001       K         90        Anthoxanth~ Anthoxanthum ~</span>
-<span class="co">#&gt;  7 MILK~ IV20120816113~ HS_1001       K         90        Molinia ca~ Molinia caeru~</span>
-<span class="co">#&gt;  8 MILK~ IV20120816113~ HS_1001       K         90        Lysimachia~ Lysimachia vu~</span>
-<span class="co">#&gt;  9 MILK~ IV20120816113~ HS_1001       K         90        Luzula mul~ Luzula multif~</span>
-<span class="co">#&gt;  10 MILK~ IV20120816113~ HS_1001       K         90        Carex pilu~ Carex pilulif~</span>
-<span class="co">#&gt;  # ... with 3,278 more rows, and 4 more variables: PhenologyCode &lt;chr&gt;,</span>
-<span class="co">#&gt;  #   CoverageCode &lt;chr&gt;, PctValue &lt;dbl&gt;, RecordingScale &lt;chr&gt;</span></code></pre></div>
+ <span class="co"># A tibble: 3,288 x 11</span>
+<span class="co">#    Name  RecordingGivid UserReference LayerCode CoverCode OrignalName ScientificName</span>
+<span class="co">#    &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;         </span>
+<span class="co">#  1 MILK~ IV20120816113~ HS_1001       M         5         Rhytidiade~ Rhytidiadelph~</span>
+<span class="co">#  2 MILK~ IV20120816113~ HS_1001       M         5         Pseudoscle~ Pseudosclerop~</span>
+<span class="co">#  3 MILK~ IV20120816113~ HS_1001       K         90        Juncus acu~ Juncus acutif~</span>
+<span class="co">#  4 MILK~ IV20120816113~ HS_1001       K         90        Nardus str~ Nardus strict~</span>
+<span class="co">#  5 MILK~ IV20120816113~ HS_1001       K         90        Potentilla~ Potentilla er~</span>
+<span class="co">#  6 MILK~ IV20120816113~ HS_1001       K         90        Anthoxanth~ Anthoxanthum ~</span>
+<span class="co">#  7 MILK~ IV20120816113~ HS_1001       K         90        Molinia ca~ Molinia caeru~</span>
+<span class="co">#  8 MILK~ IV20120816113~ HS_1001       K         90        Lysimachia~ Lysimachia vu~</span>
+<span class="co">#  9 MILK~ IV20120816113~ HS_1001       K         90        Luzula mul~ Luzula multif~</span>
+<span class="co">#  10 MILK~ IV20120816113~ HS_1001       K         90        Carex pilu~ Carex pilulif~</span>
+<span class="co">#  # ... with 3,278 more rows, and 4 more variables: PhenologyCode &lt;chr&gt;,</span>
+<span class="co">#  #   CoverageCode &lt;chr&gt;, PctValue &lt;dbl&gt;, RecordingScale &lt;chr&gt;</span></code></pre></div>
 <p>Here is how to get the relevés for a specific RecordingGivid:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">recording_specific_givid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_recordings.html">get_inboveg_recordings</a></span><span class="op">(</span>
@@ -270,11 +270,11 @@
                               collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">classif_info</span>
-<span class="co">#&gt; # A tibble: 1 x 9</span>
-<span class="co">#&gt;   RecordingGivid Name  Classif ActionGroup ListName LocalClassifica~ Habitattype</span>
-<span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt;      </span>
-<span class="co">#&gt; 1 IV20130318144~ MILK~ 4010    N2k         Habitat~ NA               Noord-Atla~</span>
-<span class="co">#&gt; # ... with 2 more variables: Cover &lt;chr&gt;, PctValue &lt;dbl&gt;</span></code></pre></div>
+<span class="co"># A tibble: 1 x 9</span>
+<span class="co">#   RecordingGivid Name  Classif ActionGroup ListName LocalClassifica~ Habitattype</span>
+<span class="co">#   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt;      </span>
+<span class="co"># 1 IV20130318144~ MILK~ 4010    N2k         Habitat~ NA               Noord-Atla~</span>
+<span class="co"># ... with 2 more variables: Cover &lt;chr&gt;, PctValue &lt;dbl&gt;</span></code></pre></div>
 <p>Get all surveys, all classifications without collecting the data:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">all_codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_classification.html">get_inboveg_classification</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></code></pre></div>
@@ -289,34 +289,34 @@
                                   survey_name <span class="op">=</span> <span class="st">"MILKLIM_Heischraal2012"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">qualifiers_heischraal2012</span><span class="op">)</span>
-<span class="co">#&gt;                     Name     RecordingGivid UserReference</span>
-<span class="co">#&gt;  1 MILKLIM_Heischraal2012 IV2012081615083167        HS_008</span>
-<span class="co">#&gt;  2 MILKLIM_Heischraal2012 IV2012081613133274        HS_009</span>
-<span class="co">#&gt;  3 MILKLIM_Heischraal2012 IV2013041614525228        HS_035</span>
-<span class="co">#&gt;  4 MILKLIM_Heischraal2012 IV2012081609450300        HS_036</span>
-<span class="co">#&gt;  5 MILKLIM_Heischraal2012 IV2012081610204607        HS_037</span>
-<span class="co">#&gt;  6 MILKLIM_Heischraal2012 IV2012081610393743        HS_044</span>
-<span class="co">#&gt;                                            Observer QualifierType Q1Code</span>
-<span class="co">#&gt;  1                   Cécile Herr en Robin Guelinckx            MQ      A</span>
-<span class="co">#&gt;  2                   Cécile Herr en Robin Guelinckx            MQ      A</span>
-<span class="co">#&gt;  3 Cécile Herr, Patrik Oosterlynck, Robin Guelinckx            MQ      A</span>
-<span class="co">#&gt;  4                   Cécile Herr en Robin Guelinckx            MQ      A</span>
-<span class="co">#&gt;  5 Cécile Herr, Robin Guelinckx, Patrik Oosterlynck            MQ      A</span>
-<span class="co">#&gt;  6                   Cécile Herr en Robin Guelinckx            MQ      A</span>
-<span class="co">#&gt;    Q1Description Q2Code Q2Description   Q3Code Q3Description Elucidation NotSure</span>
-<span class="co">#&gt;  1          &lt;NA&gt;  PBuis    Peilbuizen GUPP042A          &lt;NA&gt;                   0</span>
-<span class="co">#&gt;  2          &lt;NA&gt;  PBuis    Peilbuizen GUPP043B          &lt;NA&gt;                   0</span>
-<span class="co">#&gt;  3        Active  PBuis    Peilbuizen WALP161X          &lt;NA&gt;                   0</span>
-<span class="co">#&gt;  4          &lt;NA&gt;  PBuis    Peilbuizen WALP157X          &lt;NA&gt;                   0</span>
-<span class="co">#&gt;  5          &lt;NA&gt;  PBuis    Peilbuizen WALP117X          &lt;NA&gt;                   0</span>
-<span class="co">#&gt;  6          &lt;NA&gt;  PBuis    Peilbuizen WALP162X          &lt;NA&gt;                   0</span>
-<span class="co">#&gt;    ParentID  QualifierResource</span>
-<span class="co">#&gt;  1       NA               &lt;NA&gt;</span>
-<span class="co">#&gt;  2       NA               &lt;NA&gt;</span>
-<span class="co">#&gt;  3       NA RS2012060811060080</span>
-<span class="co">#&gt;  4       NA               &lt;NA&gt;</span>
-<span class="co">#&gt;  5       NA               &lt;NA&gt;</span>
-<span class="co">#&gt;  6       NA               &lt;NA&gt;</span></code></pre></div>
+<span class="co">#                     Name     RecordingGivid UserReference</span>
+<span class="co">#  1 MILKLIM_Heischraal2012 IV2012081615083167        HS_008</span>
+<span class="co">#  2 MILKLIM_Heischraal2012 IV2012081613133274        HS_009</span>
+<span class="co">#  3 MILKLIM_Heischraal2012 IV2013041614525228        HS_035</span>
+<span class="co">#  4 MILKLIM_Heischraal2012 IV2012081609450300        HS_036</span>
+<span class="co">#  5 MILKLIM_Heischraal2012 IV2012081610204607        HS_037</span>
+<span class="co">#  6 MILKLIM_Heischraal2012 IV2012081610393743        HS_044</span>
+<span class="co">#                                            Observer QualifierType Q1Code</span>
+<span class="co">#  1                   Cécile Herr en Robin Guelinckx            MQ      A</span>
+<span class="co">#  2                   Cécile Herr en Robin Guelinckx            MQ      A</span>
+<span class="co">#  3 Cécile Herr, Patrik Oosterlynck, Robin Guelinckx            MQ      A</span>
+<span class="co">#  4                   Cécile Herr en Robin Guelinckx            MQ      A</span>
+<span class="co">#  5 Cécile Herr, Robin Guelinckx, Patrik Oosterlynck            MQ      A</span>
+<span class="co">#  6                   Cécile Herr en Robin Guelinckx            MQ      A</span>
+<span class="co">#    Q1Description Q2Code Q2Description   Q3Code Q3Description Elucidation NotSure</span>
+<span class="co">#  1          &lt;NA&gt;  PBuis    Peilbuizen GUPP042A          &lt;NA&gt;                   0</span>
+<span class="co">#  2          &lt;NA&gt;  PBuis    Peilbuizen GUPP043B          &lt;NA&gt;                   0</span>
+<span class="co">#  3        Active  PBuis    Peilbuizen WALP161X          &lt;NA&gt;                   0</span>
+<span class="co">#  4          &lt;NA&gt;  PBuis    Peilbuizen WALP157X          &lt;NA&gt;                   0</span>
+<span class="co">#  5          &lt;NA&gt;  PBuis    Peilbuizen WALP117X          &lt;NA&gt;                   0</span>
+<span class="co">#  6          &lt;NA&gt;  PBuis    Peilbuizen WALP162X          &lt;NA&gt;                   0</span>
+<span class="co">#    ParentID  QualifierResource</span>
+<span class="co">#  1       NA               &lt;NA&gt;</span>
+<span class="co">#  2       NA               &lt;NA&gt;</span>
+<span class="co">#  3       NA RS2012060811060080</span>
+<span class="co">#  4       NA               &lt;NA&gt;</span>
+<span class="co">#  5       NA               &lt;NA&gt;</span>
+<span class="co">#  6       NA               &lt;NA&gt;</span></code></pre></div>
 <p>Get all site qualifiers (SQ) from MILKLIM surveys (partial matching):</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">qualifiers_milkim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_qualifiers.html">get_inboveg_qualifiers</a></span><span class="op">(</span><span class="va">con</span>,
@@ -340,22 +340,22 @@
 <code class="sourceCode R"><span class="va">relations_N2000meetnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_relation.html">get_inboveg_relation</a></span><span class="op">(</span><span class="va">con</span>, survey_name <span class="op">=</span> <span class="st">"%N2000meetnet%"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relations_N2000meetnet</span>
-<span class="co">#&gt; # Source:   SQL [?? x 7]</span>
-<span class="co">#&gt; # Database: Microsoft SQL Server</span>
-<span class="co">#&gt; #   13.00.5598[INBO\hans_vancalster@INBO-SQL07-PRD\LIVE/D0010_00_Cydonia]</span>
-<span class="co">#&gt;    Name   RecordingId Child_GIVID Child_UserRef ParentId Parent_GIVID Parent_UserRef</span>
-<span class="co">#&gt;    &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;         </span>
-<span class="co">#&gt;  1 N2000~       44283 IV20190218~ 13594417_2170    44282 IV201902180~ 13594417_2170 </span>
-<span class="co">#&gt;  2 N2000~       44285 IV20190218~ 10334001_2190    44284 IV201902181~ 10334001_2190 </span>
-<span class="co">#&gt;  3 N2000~       44287 IV20190218~ 10186545_213~    44286 IV201902181~ 10186545_2130~</span>
-<span class="co">#&gt;  4 N2000~       44290 IV20190218~ 10186545_2170    44289 IV201902181~ 10186545_2170 </span>
-<span class="co">#&gt;  5 N2000~       44292 IV20190218~ 13561649_2170    44291 IV201902181~ 13561649_2170 </span>
-<span class="co">#&gt;  6 N2000~       44294 IV20190218~ 11595569_2170    44293 IV201902181~ 11595569_2170 </span>
-<span class="co">#&gt;  7 N2000~       44296 IV20190218~ 1240881_2170     44295 IV201902181~ 1240881_2170  </span>
-<span class="co">#&gt;  8 N2000~       44298 IV20190218~ 13823793_2170    44297 IV201902181~ 13823793_2170 </span>
-<span class="co">#&gt;  9 N2000~       44300 IV20190218~ 12644145_2170    44299 IV201902181~ 12644145_2170 </span>
-<span class="co">#&gt; 10 N2000~       44302 IV20190218~ 10260273_213~    44301 IV201902181~ 10260273_2130~</span>
-<span class="co">#&gt; # ... with more rows</span></code></pre></div>
+<span class="co"># # Source:   SQL [?? x 7]</span>
+<span class="co"># # Database: Microsoft SQL Server</span>
+<span class="co"># #   13.00.5598[INBO\hans_vancalster@INBO-SQL07-PRD\LIVE/D0010_00_Cydonia]</span>
+<span class="co">#    Name   RecordingId Child_GIVID Child_UserRef ParentId Parent_GIVID Parent_UserRef</span>
+<span class="co">#    &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;         </span>
+<span class="co">#  1 N2000~       44283 IV20190218~ 13594417_2170    44282 IV201902180~ 13594417_2170 </span>
+<span class="co">#  2 N2000~       44285 IV20190218~ 10334001_2190    44284 IV201902181~ 10334001_2190 </span>
+<span class="co">#  3 N2000~       44287 IV20190218~ 10186545_213~    44286 IV201902181~ 10186545_2130~</span>
+<span class="co">#  4 N2000~       44290 IV20190218~ 10186545_2170    44289 IV201902181~ 10186545_2170 </span>
+<span class="co">#  5 N2000~       44292 IV20190218~ 13561649_2170    44291 IV201902181~ 13561649_2170 </span>
+<span class="co">#  6 N2000~       44294 IV20190218~ 11595569_2170    44293 IV201902181~ 11595569_2170 </span>
+<span class="co">#  7 N2000~       44296 IV20190218~ 1240881_2170     44295 IV201902181~ 1240881_2170  </span>
+<span class="co">#  8 N2000~       44298 IV20190218~ 13823793_2170    44297 IV201902181~ 13823793_2170 </span>
+<span class="co">#  9 N2000~       44300 IV20190218~ 12644145_2170    44299 IV201902181~ 12644145_2170 </span>
+<span class="co"># 10 N2000~       44302 IV20190218~ 10260273_213~    44301 IV201902181~ 10260273_2130~</span>
+<span class="co"># # ... with more rows</span></code></pre></div>
 <p>Get the parent-child-relations from several specific surveys:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relations_severalsurveys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_relation.html">get_inboveg_relation</a></span><span class="op">(</span>
