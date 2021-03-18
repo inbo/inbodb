@@ -2,7 +2,8 @@
 #'
 #' @description This function queries the INBOVEG database for header
 #' information (metadata for a vegetation-recording or releve) for one or more surveys and
-#' the recorder type. See the examples for how to get information for all surveys.
+#' the recorder type. All records, also with 'work needed' are selected.
+#' See the examples for how to get information for all surveys.
 #'
 #' @param survey_name A character string or a character vector
 #' giving the name or names of the survey(s) for which you want to extract header information.
@@ -95,6 +96,7 @@ get_inboveg_header <- function(connection,
 
   common_part <- "SELECT
   ivR.RecordingGivid
+  , ivR.NeedsWork
   , ivS.Name
   , ivR.UserReference
   , ivR.Observer
@@ -112,7 +114,7 @@ get_inboveg_header <- function(connection,
   FROM [dbo].[ivRecording] ivR
   INNER JOIN [dbo].[ivSurvey] ivS on ivS.Id = ivR.SurveyId
   INNER JOIN [dbo].[ivRecTypeD] ivRec on ivRec.ID = ivR.RecTypeID
-  where ivR.NeedsWork = 0"
+  WHERE 1 = 1 "
 
 if (!multiple) {
   sql_statement <- glue_sql(common_part,

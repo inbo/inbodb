@@ -76,7 +76,7 @@ The function can only be used from within the INBO network." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">inbodb</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@ The function can only be used from within the INBO network." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -110,7 +110,7 @@ The function can only be used from within the INBO network." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/inbo/inbodb/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -138,7 +138,7 @@ argument.
 The function can only be used from within the INBO network.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>connect_inbo_dbase</span>(<span class='no'>database_name</span>, <span class='kw'>autoconvert_utf8</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>connect_inbo_dbase</span><span class='op'>(</span><span class='va'>database_name</span>, autoconvert_utf8 <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,12 +161,17 @@ from the database be adapted to ensure correct presentation?  Defaults to TRUE.<
 
     <p>For more information, refer to
 <a href='https://inbo.github.io/tutorials/tutorials/r_database_access/'>this tutorial</a>.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Stijn Van Hoey <a href='mailto:stijnvanhoey@gmail.com'>stijnvanhoey@gmail.com</a></p>
+<p>Els Lommelen <a href='mailto:els.lommelen@inbo.be'>els.lommelen@inbo.be</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>connection</span> <span class='kw'>&lt;-</span> <span class='fu'>connect_inbo_dbase</span>(<span class='st'>"D0021_00_userFlora"</span>)
-<span class='no'>connection</span> <span class='kw'>&lt;-</span> <span class='fu'>connect_inbo_dbase</span>(<span class='st'>"W0003_00_Lims"</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>connection</span> <span class='op'>&lt;-</span> <span class='fu'>connect_inbo_dbase</span><span class='op'>(</span><span class='st'>"D0021_00_userFlora"</span><span class='op'>)</span>
+<span class='va'>connection</span> <span class='op'>&lt;-</span> <span class='fu'>connect_inbo_dbase</span><span class='op'>(</span><span class='st'>"W0003_00_Lims"</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -182,7 +187,7 @@ from the database be adapted to ensure correct presentation?  Defaults to TRUE.<
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

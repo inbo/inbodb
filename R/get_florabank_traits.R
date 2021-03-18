@@ -22,8 +22,9 @@ globalVariables("%LIKE%")
 #' = TRUE) containing the trait values for each species and for all
 #' partially matched traits. The dataframe contains the variables TaxonID,
 #' TaxonAfkorting, TaxonWetenschappelijk, TaxonNederlands, Kenmerk, Code,
-#' Omschrijving en Rekenwaarde. The first four variables identify the taxon,
-#' the latter four variables relate to the taxon traits.
+#' Omschrijving, Rekenwaarde, Bron and ExtraOmschrijving.
+#' The first four variables identify the taxon, the latter five variables relate
+#' to the taxon traits.
 #'
 #' @importFrom dplyr
 #' tbl
@@ -98,9 +99,9 @@ get_florabank_traits <- function(connection, trait_name, collect = FALSE) {
     inner_join(fb_taxon_kenmerk %>%
                  filter(tolower(.data$Naam) %LIKE%
                           paste0("%", trait_name, "%")) %>%
-                 select(.data$ID, .data$Naam),
+                 select(.data$ID, .data$Naam, .data$Bron),
                by = c("TaxonKenmerkID" = "ID")) %>%
-    select(-.data$Omschrijving) %>%
+    rename(ExtraOmschrijving = .data$Omschrijving) %>%
     left_join(fb_taxon_kenmerk_waarde %>%
                 distinct(.data$ID, .data$Code, .data$TaxonKenmerkID,
                          .data$Omschrijving, .data$Rekenwaarde),
@@ -116,7 +117,9 @@ get_florabank_traits <- function(connection, trait_name, collect = FALSE) {
              Kenmerk = .data$Naam,
              .data$Code,
              .data$Omschrijving,
-             .data$Rekenwaarde
+             .data$Rekenwaarde,
+             .data$Bron,
+             .data$ExtraOmschrijving
     )
   if (!isTRUE(collect)) {
     return(query_result)

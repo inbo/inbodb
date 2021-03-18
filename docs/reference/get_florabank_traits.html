@@ -75,7 +75,7 @@ and returns the taxon trait values in a tidy data format" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">inbodb</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@ and returns the taxon trait values in a tidy data format" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@ and returns the taxon trait values in a tidy data format" />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/inbo/inbodb/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -136,7 +136,7 @@ and returns the taxon trait values in a tidy data format" />
 and returns the taxon trait values in a tidy data format</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_florabank_traits</span>(<span class='no'>connection</span>, <span class='no'>trait_name</span>, <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>get_florabank_traits</span><span class='op'>(</span><span class='va'>connection</span>, <span class='va'>trait_name</span>, collect <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,8 +168,9 @@ environment.</p></td>
 = TRUE) containing the trait values for each species and for all
 partially matched traits. The dataframe contains the variables TaxonID,
 TaxonAfkorting, TaxonWetenschappelijk, TaxonNederlands, Kenmerk, Code,
-Omschrijving en Rekenwaarde. The first four variables identify the taxon,
-the latter four variables relate to the taxon traits.</p>
+Omschrijving, Rekenwaarde, Bron and ExtraOmschrijving.
+The first four variables identify the taxon, the latter five variables relate
+to the taxon traits.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other florabank: 
@@ -177,33 +178,34 @@ the latter four variables relate to the taxon traits.</p>
 <code><a href='get_florabank_taxon_ifbl_year.html'>get_florabank_taxon_ifbl_year</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>inbodb</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>DBI</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>odbc</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/inbo/inbodb'>inbodb</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dbi.r-dbi.org'>DBI</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/r-dbi/odbc'>odbc</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
 <span class='co'># connect to florabank</span>
-<span class='no'>db_connectie</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='connect_inbo_dbase.html'>connect_inbo_dbase</a></span>(<span class='st'>"D0021_00_userFlora"</span>)
+<span class='va'>db_connectie</span> <span class='op'>&lt;-</span> <span class='fu'><a href='connect_inbo_dbase.html'>connect_inbo_dbase</a></span><span class='op'>(</span><span class='st'>"D0021_00_userFlora"</span><span class='op'>)</span>
 
 <span class='co'># get all Ellenberg values via partial matching, return as lazy query</span>
-<span class='no'>fb_ellenberg</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_traits</span>(<span class='no'>db_connectie</span>, <span class='st'>"llenberg"</span>)
+<span class='va'>fb_ellenberg</span> <span class='op'>&lt;-</span> <span class='fu'>get_florabank_traits</span><span class='op'>(</span><span class='va'>db_connectie</span>, <span class='st'>"llenberg"</span><span class='op'>)</span>
 <span class='co'># collect the data</span>
-<span class='no'>fb_ellenberg</span> <span class='kw'>&lt;-</span> <span class='no'>fb_ellenberg</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/compute.html'>collect</a></span>()
+<span class='va'>fb_ellenberg</span> <span class='op'>&lt;-</span> <span class='va'>fb_ellenberg</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/compute.html'>collect</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='co'># the same can be done by using the collect parameter</span>
-<span class='no'>fb_ellenberg</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_traits</span>(<span class='no'>db_connectie</span>, <span class='st'>"llenberg"</span>, <span class='kw'>collect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>fb_ellenberg</span> <span class='op'>&lt;-</span> <span class='fu'>get_florabank_traits</span><span class='op'>(</span><span class='va'>db_connectie</span>, <span class='st'>"llenberg"</span>, collect <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># get all red lists via partial matching</span>
-<span class='no'>fb_rodelijsten</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_traits</span>(<span class='no'>db_connectie</span>, <span class='st'>"rode"</span>)
+<span class='va'>fb_rodelijsten</span> <span class='op'>&lt;-</span> <span class='fu'>get_florabank_traits</span><span class='op'>(</span><span class='va'>db_connectie</span>, <span class='st'>"rode"</span><span class='op'>)</span>
 
 <span class='co'># get only the red list for vascular plant species</span>
-<span class='no'>fb_rodelijstvaatplanten</span> <span class='kw'>&lt;-</span> <span class='fu'>get_florabank_traits</span>(<span class='no'>db_connectie</span>, <span class='st'>"Rode lijst Vaatplanten"</span>)
+<span class='va'>fb_rodelijstvaatplanten</span> <span class='op'>&lt;-</span> <span class='fu'>get_florabank_traits</span><span class='op'>(</span><span class='va'>db_connectie</span>, <span class='st'>"Rode lijst Vaatplanten"</span><span class='op'>)</span>
 
 <span class='co'>#if the trait_name argument is missing, a list of possible names is printed</span>
-<span class='fu'>get_florabank_traits</span>(<span class='no'>db_connectie</span>)
+<span class='fu'>get_florabank_traits</span><span class='op'>(</span><span class='va'>db_connectie</span><span class='op'>)</span>
 
 <span class='co'>#disconnect from florabank</span>
-<span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>db_connectie</span>)
-}</div></pre>
+<span class='fu'><a href='https://rdrr.io/pkg/DBI/man/dbDisconnect.html'>dbDisconnect</a></span><span class='op'>(</span><span class='va'>db_connectie</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -219,7 +221,7 @@ the latter four variables relate to the taxon traits.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

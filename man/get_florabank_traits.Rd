@@ -25,8 +25,9 @@ A remote tbl object (collect = FALSE) or a tibble dataframe (collect
 = TRUE) containing the trait values for each species and for all
 partially matched traits. The dataframe contains the variables TaxonID,
 TaxonAfkorting, TaxonWetenschappelijk, TaxonNederlands, Kenmerk, Code,
-Omschrijving en Rekenwaarde. The first four variables identify the taxon,
-the latter four variables relate to the taxon traits.
+Omschrijving, Rekenwaarde, Bron and ExtraOmschrijving.
+The first four variables identify the taxon, the latter five variables relate
+to the taxon traits.
 }
 \description{
 This function takes as input (part of) a taxon trait name, queries the florabank
