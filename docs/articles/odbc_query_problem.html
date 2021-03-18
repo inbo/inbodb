@@ -111,7 +111,7 @@
 <p>The native data types can be consulted:</p>
 <ul>
 <li>directly in SQL Server via applications such as Microsoft SQL Server Management Studio or Azure Data Studio</li>
-<li>in R by querying separate tables with <code><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html">dbGetQuery(con, "sp_columns 'table_name'")</a></code> (with <code>con</code> the connection to the database and <code>table_name</code> the name of the table)</li>
+<li>in R by querying separate tables with <code><a href="https://rdrr.io/pkg/DBI/man/dbGetQuery.html">dbGetQuery(con, "sp_columns 'table_name'")</a></code> (with <code>con</code> the connection to the database and <code>table_name</code> the name of the table)</li>
 </ul>
 <p>The odbc data types can be consulted:</p>
 <ul>
@@ -120,7 +120,7 @@
 <li>once you know the corresponding ID’s in column <code>data_type</code>, these ID’s can be consulted for a specific query using the following code:</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dbi.r-dbi.org/reference/dbSendQuery.html">dbSendQuery</a></span><span class="op">(</span><span class="va">con</span>, <span class="va">query</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">rs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/DBI/man/dbSendQuery.html">dbSendQuery</a></span><span class="op">(</span><span class="va">con</span>, <span class="va">query</span><span class="op">)</span>
 <span class="fu">odbc</span><span class="fu">::</span><span class="fu">dbColumnInfo</span><span class="op">(</span><span class="va">rs</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
