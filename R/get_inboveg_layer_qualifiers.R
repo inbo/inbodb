@@ -40,8 +40,7 @@
 #' "MILKLIM_Heischraal2012")
 #'
 #' # get all layer qualifiers from MILKLIM surveys (partial matching)
-#' qualifiers_milkim <- get_inboveg_layer(con, survey_name = "%MILKLIM%",
-#' qualifier_type = "SQ")
+#' qualifiers_milkim <- get_inboveg_layer(con, survey_name = "%MILKLIM%")
 #'
 #' # get layer qualifiers from several specific surveys
 #' qualifiers_severalsurveys <- get_inboveg_layer(con, survey_name =
@@ -81,80 +80,23 @@ get_inboveg_layer <- function(connection,
     }
   }
 
-common_part <- "SELECT ivRecording.RecordingGivid
-  , ivRecording.UserReference
-  , ivRecording.Observer
-  , ivRLLayer.LayerCode
-  , qry_01ACvalues_1.oms
-  , ivRLQualifier.QualifierCode
-  , qry_01ACvalues.oms
-  , ivRLQualifier.Elucidation
-  , ivRLQualifier.NotSure
-FROM ivRLLayer
-RIGHT JOIN ivRecording ON ivRLLayer.RecordingID = ivRecording.Id
+common_part <- "SELECT ivS.Name
+, ivRecording.RecordingGivid
+, ivRecording.UserReference
+, ivRLLayer.LayerCode
+, ftAGV.Description as LayerDescription
+, ivRLQualifier.QualifierCode
+, ftAGV.Description as QualifierDescription
+, ivRLQualifier.Elucidation
+, ivRLQualifier.NotSure
+FROM ivRecording
+INNER JOIN ivSurvey ivS on ivS.Id = ivRecording.SurveyId
+LEFT JOIN  ivRLLayer on ivRLLayer.RecordingID = ivRecording.Id
 LEFT JOIN ivRLQualifier ON ivRLLayer.ID = ivRLQualifier.LayerID
-LEFT JOIN (SELECT ivRLResources.ResourceGIVID
-    , ivRLResources.ActionGroup
-    , ivRLResources.ListName
-    , ftActionGroupList.ListGIVID
-    , qry_00ActionGroups.Code
-    , qry_00ActionGroups.oms
-    FROM (ivRLResources
-    LEFT JOIN ftActionGroupList ON (ivRLResources.ListName = ftActionGroupList.ListName)
-    AND (ivRLResources.ActionGroup = ftActionGroupList.ActionGroup))
-    LEFT JOIN (select [Code]
-    , [Description] as oms
-    , [ListGIVID]
-    from [ftQualifierValues] ---- > [syno].[Futon_dbo_ftActionGroupValues] ftACV
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], [Description] as oms, [ListGIVID] from [ftDQualifierValues]
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], [Description] as oms, [ListGIVID] from [ftAbiotiekValues]
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], [Description] as oms, [ListGIVID] from [ftBWKValues]
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], [PctValue] as oms, [ListGIVID] from [ftCoverValues]
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], [Description] as oms, [ListGIVID] from [ftFenoValues]
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], [Description] as oms, [ListGIVID] from [ftgebiedValues]
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], "-" as oms, [ListGIVID] from [ftGHCValues]
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], [Description] as oms, [ListGIVID] from [ftLayerValues]
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], [Description] as oms, [ListGIVID] from [ftLFValues]
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], [Description] as oms, [ListGIVID] from [ftMngmtValues]
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], [Description] as oms, [ListGIVID] from [ftN2kValues]
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], [Description] as oms, [ListGIVID] from [ftPatchValues]
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], [Description] as oms, [ListGIVID] from [ftSociaValues]
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], [Description] as oms, [ListGIVID] from [ftSoilValues]
-  ORDER BY  [ListGIVID],[Code]
-  UNION select [Code], [Description] as oms, [ListGIVID] from [ftVitaValues]
-  ORDER BY [ListGIVID], [Code]) qry_00ActionGroups ON ftActionGroupList.ListGIVID = qry_00ActionGroups.ListGIVID
-    ORDER BY ftActionGroupList.ListGIVID, qry_00ActionGroups.Code;
-    ) qry_01ACvalues ON ivRLQualifier.QualifierCode = qry_01ACvalues.Code
-    AND ivRLQualifier.QualifierResource = qry_01ACvalues.ResourceGIVID
-LEFT JOIN (SELECT ivRLResources.ResourceGIVID
-, ivRLResources.ActionGroup
-, ivRLResources.ListName
-, ftActionGroupList.ListGIVID
-, qry_00ActionGroups.Code
-, qry_00ActionGroups.oms
-FROM (ivRLResources
-LEFT JOIN ftActionGroupList ON (ivRLResources.ListName = ftActionGroupList.ListName)
-AND (ivRLResources.ActionGroup = ftActionGroupList.ActionGroup))
-LEFT JOIN qry_00ActionGroups ON ftActionGroupList.ListGIVID = qry_00ActionGroups.ListGIVID
-ORDER BY ftActionGroupList.ListGIVID, qry_00ActionGroups.Code;
-) AS qry_01ACvalues_1 ON
-  ivRLLayer.LayerCode = qry_01ACvalues_1.Code
-    AND ivRLLayer.LayerResource = qry_01ACvalues_1.ResourceGIVID
-"
+LEFT JOIN ivRLResources on ivRLResources.ResourceGIVID = ivRLLayer.LayerResource
+LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV ON ivRLResources.ListName = ftAGV.ListName COLLATE Latin1_General_CI_AI
+AND ivRLResources.ActionGroup = ftAGV.ActionGroup COLLATE Latin1_General_CI_AI
+WHERE 1 = 1"
 
 
   if (!multiple) {
