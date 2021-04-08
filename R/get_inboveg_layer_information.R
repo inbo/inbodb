@@ -1,7 +1,7 @@
-#' @title Query layer qualifier information of recordings (relevé) from INBOVEG
+#' @title Query layer information of recordings (relevé) from INBOVEG
 #'
 #' @description This function queries the INBOVEG database for layer
-#' qualifier information on recordings  for one or more surveys.
+#' information on recordings  for one or more surveys.
 #'
 #' @param survey_name A character string or a character vector, depending on
 #' multiple parameter, giving the name or names of the survey(s) for which you
@@ -14,8 +14,7 @@
 #' include wildcards to allow partial matches
 #'
 #' @return A dataframe with variables Name (of the survey), RecordingGivid (unique Id),
-#' UserReference, LayerCode, LayerDescription, QualifierCode, Qualifier Description,
-#' Elucidation and 'NotSure' in case the qualifier is doubtful, CoverCode and Cover percentage
+#' UserReference, LayerCode, LayerDescription, CoverCode, Coverpercentage and Mean hight (cm)
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery
@@ -31,19 +30,19 @@
 #' library(dplyr)
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
-#' # get the layer qualifiers from one survey
-#' qualifiers_heischraal2012 <- get_inboveg_layerqualifier(con, survey_name =
+#' # get the layer information from one survey
+#' qualifiers_heischraal2012 <- get_inboveg_layerinfo(con, survey_name =
 #' "MILKLIM_Heischraal2012")
 #'
 #' # get all layer qualifiers from MILKLIM surveys (partial matching)
-#' qualifiers_milkim <- get_inboveg_layerqualifier(con, survey_name = "%MILKLIM%")
+#' qualifiers_milkim <- get_inboveg_layerinfo(con, survey_name = "%MILKLIM%")
 #'
 #' # get layer qualifiers from several specific surveys
-#' qualifiers_severalsurveys <- get_inboveg_layerqualifier(con, survey_name =
+#' qualifiers_severalsurveys <- get_inboveg_layerinfo(con, survey_name =
 #' c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"), multiple = TRUE)
 #'
 #' # get all layer qualifiers of all surveys
-#' allqualifiers <- get_inboveg_layerqualifier(con)
+#' allqualifiers <- get_inboveg_layerinfo(con)
 #'
 #' # Close the connection when done
 #' dbDisconnect(con)
@@ -52,9 +51,9 @@
 #'
 
 
-get_inboveg_layerqualifier <- function(connection,
-                                   survey_name,
-                                   multiple = FALSE) {
+get_inboveg_layerinfo <- function(connection,
+                                       survey_name,
+                                       multiple = FALSE) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
@@ -76,24 +75,24 @@ get_inboveg_layerqualifier <- function(connection,
     }
   }
 
-common_part <- "SELECT ivS.Name
-, ivRecording.RecordingGivid
-, ivRecording.UserReference
-, ivRLLayer.LayerCode
-, ftAGV.Description as LayerDescription
-, ivRLQualifier.QualifierCode
-, ftAGV.Description as QualifierDescription
-, ivRLQualifier.Elucidation
-, ivRLQualifier.NotSure
-FROM ivRecording
-INNER JOIN ivSurvey ivS on ivS.Id = ivRecording.SurveyId
-LEFT JOIN  ivRLLayer on ivRLLayer.RecordingID = ivRecording.Id
-LEFT JOIN ivRLQualifier ON ivRLLayer.ID = ivRLQualifier.LayerID
-LEFT JOIN ivRLResources on ivRLResources.ResourceGIVID = ivRLLayer.LayerResource
-LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV ON ivRLResources.ListName = ftAGV.ListName COLLATE Latin1_General_CI_AI
-AND ivRLResources.ActionGroup = ftAGV.ActionGroup COLLATE Latin1_General_CI_AI
-WHERE 1 = 1"
-
+## doesn't work yet
+  # common_part <- "SELECT ivSurvey.Name
+  # , ivRecording.RecordingGivid
+  # , ivRecording.UserReference
+  # , ivRLLayer.LayerCode
+  # , ftAGV.oms
+  # , ivRLLayer.CoverCode
+  # --, ftAGV_1.oms
+  # , ivRLLayer.MeanHeightCM
+  # FROM ivRecording
+  # INNER JOIN ivSurvey ON ivRecording.SurveyId = ivSurvey.Id
+  # INNER JOIN ivRLLayer ON ivRecording.Id = ivRLLayer.RecordingID
+  # INNER JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV ON ftAGV.Code = ivRLLayer.LayerCode
+  # AND ivRLLayer.LayerResource = ftAGV.ResourceGIVID
+  # INNER JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV_1 ON ivRLLayer.CoverCode = ftAGV_1.Code
+  # AND ivRLLayer.CoverResource = ftAGV_1.ResourceGIVID
+  # WHERE 1 = 1"
+  #
 
   if (!multiple) {
     sql_statement <- glue_sql(common_part,
@@ -110,7 +109,7 @@ WHERE 1 = 1"
 
   sql_statement <- glue_sql(
     sql_statement,
-   "ORDER BY ivRecording.RecordingGivid, ivRLLayer.LayerCode",
+    "ORDER BY ivRecording.RecordingGivid, ivRLLayer.LayerCode",
     .con = connection)
 
   #sql_statement <- iconv(sql_statement, from =  "UTF-8", to = "latin1")
