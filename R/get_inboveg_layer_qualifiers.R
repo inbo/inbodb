@@ -121,4 +121,3 @@ common_part <- "SELECT ivS.Name
 
 }
 
-qualifiers_heischraal2012 <- get_inboveg_layerqualifier(con, survey_name ="MILKLIM_Heischraal2012")
