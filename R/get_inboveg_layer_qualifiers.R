@@ -77,22 +77,22 @@ get_inboveg_layerqualifier <- function(connection,
   }
 
 common_part <- "SELECT ivS.Name
-, ivRecording.RecordingGivid
-, ivRecording.UserReference
-, ivRLLayer.LayerCode
-, ftAGV.Description as LayerDescription
-, ivRLQualifier.QualifierCode
-, ftAGV.Description as QualifierDescription
-, ivRLQualifier.Elucidation
-, ivRLQualifier.NotSure
-FROM ivRecording
-INNER JOIN ivSurvey ivS on ivS.Id = ivRecording.SurveyId
-LEFT JOIN  ivRLLayer on ivRLLayer.RecordingID = ivRecording.Id
-LEFT JOIN ivRLQualifier ON ivRLLayer.ID = ivRLQualifier.LayerID
-LEFT JOIN ivRLResources on ivRLResources.ResourceGIVID = ivRLLayer.LayerResource
-LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV ON ivRLResources.ListName = ftAGV.ListName COLLATE Latin1_General_CI_AI
-AND ivRLResources.ActionGroup = ftAGV.ActionGroup COLLATE Latin1_General_CI_AI
-WHERE 1 = 1"
+        , ivRecording.RecordingGivid
+        , ivRecording.UserReference
+        , ivRLLayer.LayerCode
+        , ftAGV.Description as LayerDescription
+        , ivRLQualifier.QualifierCode
+        , ivRLQualifier.Elucidation
+        , ivRLQualifier.NotSure
+    FROM ivRecording
+        INNER JOIN ivSurvey ivS on ivS.Id = ivRecording.SurveyId
+        LEFT JOIN  ivRLLayer on ivRLLayer.RecordingID = ivRecording.Id
+        LEFT JOIN ivRLQualifier ON ivRLLayer.ID = ivRLQualifier.LayerID
+        LEFT JOIN ivRLResources on ivRLResources.ResourceGIVID = ivRLLayer.LayerResource
+        LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV ON ivRLResources.ListName = ftAGV.ListName COLLATE Latin1_General_CI_AI
+            AND ivRLResources.ActionGroup = ftAGV.ActionGroup COLLATE Latin1_General_CI_AI
+            AND ivRLLayer.LayerCode = ftAGV.Code COLLATE Latin1_General_CI_AI
+    WHERE 1 = 1"
 
 
   if (!multiple) {
@@ -121,3 +121,4 @@ WHERE 1 = 1"
 
 }
 
+qualifiers_heischraal2012 <- get_inboveg_layerqualifier(con, survey_name ="MILKLIM_Heischraal2012")
