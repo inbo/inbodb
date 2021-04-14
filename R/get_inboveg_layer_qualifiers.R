@@ -103,7 +103,7 @@ common_part <- "SELECT ivS.Name
 
   } else {
     sql_statement <- glue_sql(common_part,
-                              "AND ivS.Name IN {survey_name*}",
+                              "AND ivS.Name IN ({survey_name*})",
                               survey_name = survey_name,
                               .con = connection)
   }
@@ -120,4 +120,3 @@ common_part <- "SELECT ivS.Name
   return(query_result)
 
 }
-
