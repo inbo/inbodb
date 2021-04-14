@@ -74,6 +74,8 @@ rm(con)
 \seealso{
 Other inboveg: 
 \code{\link{get_inboveg_header}()},
+\code{\link{get_inboveg_layerinfo}()},
+\code{\link{get_inboveg_layerqualifier}()},
 \code{\link{get_inboveg_qualifiers}()},
 \code{\link{get_inboveg_recordings}()},
 \code{\link{get_inboveg_relation}()},
