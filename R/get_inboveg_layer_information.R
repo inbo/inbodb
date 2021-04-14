@@ -35,7 +35,7 @@
 #' "MILKLIM_Heischraal2012")
 #'
 #' # get all layer qualifiers from MILKLIM surveys (partial matching)
-#' qualifiers_milkim <- get_inboveg_layerinfo(con, survey_name = "%MILKLIM%")
+#' layerinfo_milkim <- get_inboveg_layerinfo(con, survey_name = "%MILKLIM%")
 #'
 #' # get layer qualifiers from several specific surveys
 #' qualifiers_severalsurveys <- get_inboveg_layerinfo(con, survey_name =
