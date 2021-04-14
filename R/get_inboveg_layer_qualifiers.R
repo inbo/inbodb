@@ -29,18 +29,18 @@
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
 #' # get the layer qualifiers from one survey
-#' qualifiers_heischraal2012 <- get_inboveg_layerqualifier(con, survey_name =
+#' layerqualifiers_heischraal2012 <- get_inboveg_layerqualifier(con, survey_name =
 #' "MILKLIM_Heischraal2012")
 #'
 #' # get all layer qualifiers from MILKLIM surveys (partial matching)
-#' qualifiers_milkim <- get_inboveg_layerqualifier(con, survey_name = "%MILKLIM%")
+#' layerqualifiers_milkim <- get_inboveg_layerqualifier(con, survey_name = "%MILKLIM%")
 #'
 #' # get layer qualifiers from several specific surveys
-#' qualifiers_severalsurveys <- get_inboveg_layerqualifier(con, survey_name =
+#' layerqualifiers_severalsurveys <- get_inboveg_layerqualifier(con, survey_name =
 #' c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"), multiple = TRUE)
 #'
 #' # get all layer qualifiers of all surveys
-#' allqualifiers <- get_inboveg_layerqualifier(con)
+#' alllayerqualifiers <- get_inboveg_layerqualifier(con)
 #'
 #' # Close the connection when done
 #' dbDisconnect(con)

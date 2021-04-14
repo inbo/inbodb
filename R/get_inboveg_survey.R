@@ -27,9 +27,6 @@
 #' @examples
 #' \dontrun{
 #' library(inbodb)
-#' library(DBI)
-#' library(odbc)
-#' library(dplyr)
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
 #' # get information of a specific survey and collect data

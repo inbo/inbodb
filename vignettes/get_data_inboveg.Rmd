@@ -205,7 +205,6 @@ classif_info <- get_inboveg_classification(con,
 classif_info
 ```
 
-
 Get all surveys, all classifications without collecting the data:
 
 ```{r, eval = FALSE}
@@ -225,7 +224,6 @@ qualifiers_heischraal2012 <- get_inboveg_qualifiers(con,
 head(qualifiers_heischraal2012)
 ```
 
-
 Get all site qualifiers (SQ) from MILKLIM surveys (partial matching):
 
 ```{r, eval = FALSE}
@@ -242,13 +240,74 @@ qualifiers_severalsurveys <- get_inboveg_qualifiers(con,
                 multiple = TRUE)
 ```
 
-
 Get all qualifiers of all surveys:
 
 ```{r, eval = FALSE}
 allqualifiers <- get_inboveg_qualifiers(con)
 ```
 
+## Layer information
+This function `get_inboveg_layerinfo` queries the INBOVEG database for layer information on recordings  for one or more surveys.
+
+Get the layer information from one survey
+
+```{r, eval = FALSE}
+layerinfo_heischraal2012 <- get_inboveg_layerinfo(con, 
+                                          survey_name = "MILKLIM_Heischraal2012")
+```
+
+Get all layer qualifiers from MILKLIM surveys (partial matching)
+
+```{r, eval = FALSE}
+layerinfo_milkim <- get_inboveg_layerinfo(con, 
+                                          survey_name = "%MILKLIM%")
+```
+
+Get layer qualifiers from several specific surveys
+
+```{r, eval = FALSE}
+layerinfo_severalsurveys <- get_inboveg_layerinfo(con, 
+                                        survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+                                        multiple = TRUE)
+```
+
+Get all layer qualifiers of all surveys
+
+```{r, eval = FALSE}
+all_layerinfo <- get_inboveg_layerinfo(con)
+```
+
+## Layer qualifiers
+This function `get_inboveg_layerqualifier`queries the INBOVEG database for layer qualifier information on recordings  for one or more surveys.
+
+Get the layer qualifiers from one survey
+
+```{r, eval = FALSE}
+layerqualifiers_heischraal2012 <- get_inboveg_layerqualifier(con, 
+                                                      survey_name = "MILKLIM_Heischraal2012")
+```
+
+Get all layer qualifiers from MILKLIM surveys (partial matching)
+
+
+```{r, eval = FALSE}
+layerqualifiers_milkim <- get_inboveg_layerqualifier(con, 
+                                                survey_name = "%MILKLIM%")
+```
+
+Get layer qualifiers from several specific surveys
+
+```{r, eval = FALSE}
+layerqualifiers_severalsurveys <- get_inboveg_layerqualifier(con, 
+                                                  survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+                                                  multiple = TRUE)
+```
+
+Get all layer qualifiers of all surveys
+
+```{r, eval = FALSE}
+alllayerqualifiers <- get_inboveg_layerqualifier(con)
+```
 
 ## Parent-child relationships between recordings
 
@@ -261,7 +320,6 @@ relations_N2000meetnet <- get_inboveg_relation(con, survey_name = "%N2000meetnet
 
 relations_N2000meetnet
 ```
-
 
 Get the parent-child-relations from several specific surveys:
 
