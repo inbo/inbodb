@@ -42,7 +42,7 @@
 #' c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"), multiple = TRUE)
 #'
 #' # get all layer qualifiers of all surveys
-#' allqualifiers <- get_inboveg_layerinfo(con)
+#' all_layerinfo <- get_inboveg_layerinfo(con)
 #'
 #' # Close the connection when done
 #' dbDisconnect(con)
