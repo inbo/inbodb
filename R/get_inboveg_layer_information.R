@@ -31,7 +31,7 @@
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
 #' # get the layer information from one survey
-#' qualifiers_heischraal2012 <- get_inboveg_layerinfo(con, survey_name =
+#' layerinfo_heischraal2012 <- get_inboveg_layerinfo(con, survey_name =
 #' "MILKLIM_Heischraal2012")
 #'
 #' # get all layer qualifiers from MILKLIM surveys (partial matching)
