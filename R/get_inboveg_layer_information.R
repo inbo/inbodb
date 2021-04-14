@@ -38,7 +38,7 @@
 #' layerinfo_milkim <- get_inboveg_layerinfo(con, survey_name = "%MILKLIM%")
 #'
 #' # get layer qualifiers from several specific surveys
-#' qualifiers_severalsurveys <- get_inboveg_layerinfo(con, survey_name =
+#' layerinfo_severalsurveys <- get_inboveg_layerinfo(con, survey_name =
 #' c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"), multiple = TRUE)
 #'
 #' # get all layer qualifiers of all surveys
