@@ -31,9 +31,6 @@ qualifier information on recordings  for one or more surveys.
 \examples{
 \dontrun{
 library(inbodb)
-library(DBI)
-library(odbc)
-library(dplyr)
 con <- connect_inbo_dbase("D0010_00_Cydonia")
 
 # get the layer qualifiers from one survey
