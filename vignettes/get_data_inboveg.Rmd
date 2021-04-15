@@ -278,7 +278,7 @@ all_layerinfo <- get_inboveg_layerinfo(con)
 ```
 
 ## Layer qualifiers
-This function `get_inboveg_layerqualifier`queries the INBOVEG database for layer qualifier information on recordings  for one or more surveys.
+The function `get_inboveg_layerqualifier`queries the INBOVEG database for layer qualifier information on recordings  for one or more surveys.
 
 Get the layer qualifiers from one survey
 
@@ -347,4 +347,3 @@ Close the connection when done
 dbDisconnect(con)
 rm(con)
 ```
-
