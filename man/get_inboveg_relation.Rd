@@ -43,9 +43,6 @@ Parent (classic-chain/bucket) and Child (classic) relationship.
 \examples{
 \dontrun{
 library(inbodb)
-library(DBI)
-library(odbc)
-library(dplyr)
 con <- connect_inbo_dbase("D0010_00_Cydonia")
 
 # get the Parent-Child-relations from one survey

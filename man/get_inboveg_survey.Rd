@@ -31,9 +31,6 @@ See the examples for how to get information for all surveys.
 \examples{
 \dontrun{
 library(inbodb)
-library(DBI)
-library(odbc)
-library(dplyr)
 con <- connect_inbo_dbase("D0010_00_Cydonia")
 
 # get information of a specific survey and collect data

@@ -205,6 +205,15 @@ classif_info <- get_inboveg_classification(con,
 classif_info
 ```
 
+Get the classification from several specific surveys
+
+```{r, eval = FALSE}
+ classif_info <- get_inboveg_classification(con,
+                  survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+                  multiple = TRUE)
+classif_info
+```
+
 Get all surveys, all classifications without collecting the data:
 
 ```{r, eval = FALSE}
