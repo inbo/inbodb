@@ -184,6 +184,8 @@ qualifier is 'NotSure', ParentID, QualifierResource</p>
     <div class='dont-index'><p>Other inboveg: 
 <code><a href='get_inboveg_classification.html'>get_inboveg_classification</a>()</code>,
 <code><a href='get_inboveg_header.html'>get_inboveg_header</a>()</code>,
+<code><a href='get_inboveg_layerinfo.html'>get_inboveg_layerinfo</a>()</code>,
+<code><a href='get_inboveg_layerqualifier.html'>get_inboveg_layerqualifier</a>()</code>,
 <code><a href='get_inboveg_recordings.html'>get_inboveg_recordings</a>()</code>,
 <code><a href='get_inboveg_relation.html'>get_inboveg_relation</a>()</code>,
 <code><a href='get_inboveg_survey.html'>get_inboveg_survey</a>()</code></p></div>
@@ -191,9 +193,6 @@ qualifier is 'NotSure', ParentID, QualifierResource</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/inbo/inbodb'>inbodb</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dbi.r-dbi.org'>DBI</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/r-dbi/odbc'>odbc</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
 <span class='va'>con</span> <span class='op'>&lt;-</span> <span class='fu'><a href='connect_inbo_dbase.html'>connect_inbo_dbase</a></span><span class='op'>(</span><span class='st'>"D0010_00_Cydonia"</span><span class='op'>)</span>
 
 <span class='co'># get the qualifiers from one survey</span>
@@ -201,7 +200,7 @@ qualifier is 'NotSure', ParentID, QualifierResource</p>
 <span class='st'>"MILKLIM_Heischraal2012"</span><span class='op'>)</span>
 
 <span class='co'># get all site qualifiers (SQ) from MILKLIM surveys (partial matching)</span>
-<span class='va'>qualifiers_milkim</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_qualifiers2</span><span class='op'>(</span><span class='va'>con</span>, survey_name <span class='op'>=</span> <span class='st'>"%MILKLIM%"</span>,
+<span class='va'>qualifiers_milkim</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_qualifiers</span><span class='op'>(</span><span class='va'>con</span>, survey_name <span class='op'>=</span> <span class='st'>"%MILKLIM%"</span>,
 qualifier_type <span class='op'>=</span> <span class='st'>"SQ"</span><span class='op'>)</span>
 
 <span class='co'># get qualifiers from several specific surveys</span>
@@ -212,7 +211,7 @@ qualifier_type <span class='op'>=</span> <span class='st'>"SQ"</span><span class
 <span class='va'>allqualifiers</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_qualifiers</span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
 
 <span class='co'># Close the connection when done</span>
-<span class='fu'><a href='https://rdrr.io/pkg/DBI/man/dbDisconnect.html'>dbDisconnect</a></span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
+<span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
 <span class='op'>}</span>
 

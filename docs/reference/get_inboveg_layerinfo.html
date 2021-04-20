@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Query header information from INBOVEG — get_inboveg_header • inbodb</title>
+<title>Query layer information of recordings (relevé) from INBOVEG — get_inboveg_layerinfo • inbodb</title>
 
 
 <!-- jquery -->
@@ -41,11 +41,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Query header information from INBOVEG — get_inboveg_header" />
-<meta property="og:description" content="This function queries the INBOVEG database for header
-information (metadata for a vegetation-recording or releve) for one or more surveys and
-the recorder type. All records, also with 'work needed' are selected.
-See the examples for how to get information for all surveys." />
+<meta property="og:title" content="Query layer information of recordings (relevé) from INBOVEG — get_inboveg_layerinfo" />
+<meta property="og:description" content="This function queries the INBOVEG database for layer
+information on recordings  for one or more surveys." />
 
 
 
@@ -128,25 +126,17 @@ See the examples for how to get information for all surveys." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Query header information from INBOVEG</h1>
-    <small class="dont-index">Source: <a href='https://github.com/inbo/inbodb/blob/master/R/get_inboveg_header.R'><code>R/get_inboveg_header.R</code></a></small>
-    <div class="hidden name"><code>get_inboveg_header.Rd</code></div>
+    <h1>Query layer information of recordings (relevé) from INBOVEG</h1>
+    <small class="dont-index">Source: <a href='https://github.com/inbo/inbodb/blob/master/R/get_inboveg_layer_information.R'><code>R/get_inboveg_layer_information.R</code></a></small>
+    <div class="hidden name"><code>get_inboveg_layerinfo.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function queries the INBOVEG database for header
-information (metadata for a vegetation-recording or releve) for one or more surveys and
-the recorder type. All records, also with 'work needed' are selected.
-See the examples for how to get information for all surveys.</p>
+    <p>This function queries the INBOVEG database for layer
+information on recordings  for one or more surveys.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_inboveg_header</span><span class='op'>(</span>
-  <span class='va'>connection</span>,
-  <span class='va'>survey_name</span>,
-  <span class='va'>rec_type</span>,
-  multiple <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  collect <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_inboveg_layerinfo</span><span class='op'>(</span><span class='va'>connection</span>, <span class='va'>survey_name</span>, multiple <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,15 +148,9 @@ on the inbo-sql07-prd server</p></td>
     </tr>
     <tr>
       <th>survey_name</th>
-      <td><p>A character string or a character vector
-giving the name or names of the survey(s) for which you want to extract header information.
-If missing, all surveys are returned.</p></td>
-    </tr>
-    <tr>
-      <th>rec_type</th>
-      <td><p>A character vector giving the name of record type for which
-you want to extract header information e.g. 'Classic', 'Classic-emmer',
-'Classic-ketting', 'BioHab', 'ABS'. If missing, all recording types are returned.</p></td>
+      <td><p>A character string or a character vector, depending on
+multiple parameter, giving the name or names of the survey(s) for which you
+want to extract recordings information. If missing, all surveys are returned.</p></td>
     </tr>
     <tr>
       <th>multiple</th>
@@ -175,27 +159,17 @@ multiple survey names that must match exactly. If FALSE (the default),
 survey_name must be a single character string (one survey name) that can
 include wildcards to allow partial matches</p></td>
     </tr>
-    <tr>
-      <th>collect</th>
-      <td><p>If FALSE (the default), a remote tbl object is returned.
-This is like a reference to the result of the query but the full result of
-the query is not brought into memory. If TRUE the full result of the query is
-collected (fetched) from the database and brought into memory of the working
-environment.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-= TRUE) with variables RecordingGivid, Name, UserReference, Observer, LocationCode,
-Latitude, Longitude, Area (in m2), Length (in cm), Width (in cm), VagueDateType,
-VagueDateBegin, VagueDateEnd, SurveyId, RecTypeID.</p>
+    <p>A dataframe with variables Name (of the survey), RecordingGivid (unique Id),
+UserReference, LayerCode, LayerDescription, CoverCode, Coverpercentage and Mean hight (cm)</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other inboveg: 
 <code><a href='get_inboveg_classification.html'>get_inboveg_classification</a>()</code>,
-<code><a href='get_inboveg_layerinfo.html'>get_inboveg_layerinfo</a>()</code>,
+<code><a href='get_inboveg_header.html'>get_inboveg_header</a>()</code>,
 <code><a href='get_inboveg_layerqualifier.html'>get_inboveg_layerqualifier</a>()</code>,
 <code><a href='get_inboveg_qualifiers.html'>get_inboveg_qualifiers</a>()</code>,
 <code><a href='get_inboveg_recordings.html'>get_inboveg_recordings</a>()</code>,
@@ -207,22 +181,25 @@ VagueDateBegin, VagueDateEnd, SurveyId, RecTypeID.</p>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/inbo/inbodb'>inbodb</a></span><span class='op'>)</span>
 <span class='va'>con</span> <span class='op'>&lt;-</span> <span class='fu'><a href='connect_inbo_dbase.html'>connect_inbo_dbase</a></span><span class='op'>(</span><span class='st'>"D0010_00_Cydonia"</span><span class='op'>)</span>
 
-<span class='co'># get header information from a specific survey and a specific recording type</span>
-<span class='co'># and collect the data</span>
-<span class='va'>header_info</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_header</span><span class='op'>(</span><span class='va'>con</span>, survey_name <span class='op'>=</span> <span class='st'>"OudeLanden_1979"</span>,
-rec_type <span class='op'>=</span> <span class='st'>"Classic"</span>, collect <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='co'># get the layer information from one survey</span>
+<span class='va'>layerinfo_heischraal2012</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_layerinfo</span><span class='op'>(</span><span class='va'>con</span>, survey_name <span class='op'>=</span>
+<span class='st'>"MILKLIM_Heischraal2012"</span><span class='op'>)</span>
 
-<span class='co'># get header information from several specific surveys</span>
-<span class='va'>header_severalsurveys</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_header</span><span class='op'>(</span><span class='va'>con</span>, survey_name <span class='op'>=</span>
+<span class='co'># get all layer qualifiers from MILKLIM surveys (partial matching)</span>
+<span class='va'>layerinfo_milkim</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_layerinfo</span><span class='op'>(</span><span class='va'>con</span>, survey_name <span class='op'>=</span> <span class='st'>"%MILKLIM%"</span><span class='op'>)</span>
+
+<span class='co'># get layer qualifiers from several specific surveys</span>
+<span class='va'>layerinfo_severalsurveys</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_layerinfo</span><span class='op'>(</span><span class='va'>con</span>, survey_name <span class='op'>=</span>
 <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"MILKLIM_Heischraal2012"</span>, <span class='st'>"NICHE Vlaanderen"</span><span class='op'>)</span>, multiple <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='co'># get header information of all surveys,  don't collect the data</span>
-<span class='va'>all_header_info</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_header</span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
+<span class='co'># get all layer qualifiers of all surveys</span>
+<span class='va'>all_layerinfo</span> <span class='op'>&lt;-</span> <span class='fu'>get_inboveg_layerinfo</span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
 
-<span class='co'># close the connection when done</span>
+<span class='co'># Close the connection when done</span>
 <span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
 <span class='op'>}</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
