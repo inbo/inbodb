@@ -8,5 +8,5 @@ To install `inbodb` from Github, start a new R session and run this code (before
 
 ```r
 #install.packages("remotes")
-remotes::install_github("inbo/inbodb", build_vignettes = TRUE)
+remotes::install_github("inbo/inbodb")
 ```
