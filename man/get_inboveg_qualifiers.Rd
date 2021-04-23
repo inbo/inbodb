@@ -42,9 +42,6 @@ qualifier information on recordings  for one or more surveys.
 \examples{
 \dontrun{
 library(inbodb)
-library(DBI)
-library(odbc)
-library(dplyr)
 con <- connect_inbo_dbase("D0010_00_Cydonia")
 
 # get the qualifiers from one survey
@@ -52,7 +49,7 @@ qualifiers_heischraal2012 <- get_inboveg_qualifiers(con, survey_name =
 "MILKLIM_Heischraal2012")
 
 # get all site qualifiers (SQ) from MILKLIM surveys (partial matching)
-qualifiers_milkim <- get_inboveg_qualifiers2(con, survey_name = "\%MILKLIM\%",
+qualifiers_milkim <- get_inboveg_qualifiers(con, survey_name = "\%MILKLIM\%",
 qualifier_type = "SQ")
 
 # get qualifiers from several specific surveys
@@ -72,6 +69,8 @@ rm(con)
 Other inboveg: 
 \code{\link{get_inboveg_classification}()},
 \code{\link{get_inboveg_header}()},
+\code{\link{get_inboveg_layerinfo}()},
+\code{\link{get_inboveg_layerqualifier}()},
 \code{\link{get_inboveg_recordings}()},
 \code{\link{get_inboveg_relation}()},
 \code{\link{get_inboveg_survey}()}

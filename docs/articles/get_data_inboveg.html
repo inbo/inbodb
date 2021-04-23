@@ -98,7 +98,7 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>The Flemish vegetation database, INBOVEG, is an application developed to provide a repository of relevés and makes the relevés available for future use.</p>
+<p>The Flemish vegetation database, INBOVEG, is an application developed to provide a repository of relevés and makes the relevés available for future use. More information? Check out <a href="https://www.vlaanderen.be/inbo/en-gb/data-applications/inboveg/" class="uri">https://www.vlaanderen.be/inbo/en-gb/data-applications/inboveg/</a></p>
 <p>INBOVEG supports different types of recordings: BioHab recordings (protocol of Natura 2000 monitoring) and the classic relevés. The classic relevés can stand alone, be an element of a collection or element of a chain where the linkage is used to give information about the relative position of recording within a series. Ample selection and export functions toward analysis tools are provided. It also provides standardized lists of species, habitats, life forms, scales etc. Original observations are preserved and a full history of subsequent identifications is saved.</p>
 <p>More information? Check out <a href="https://www.vlaanderen.be/inbo/en-gb/data-applications/inboveg/">inboveg-website</a></p>
 </div>
@@ -186,18 +186,18 @@
                               collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">header_info</span>, <span class="fl">10</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 10 x 16</span>
-<span class="co">#&gt;    RecordingGivid NeedsWork Name  UserReference Observer LocationCode Latitude</span>
-<span class="co">#&gt;    &lt;chr&gt;              &lt;int&gt; &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;           &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 IV20160210121~         0 Oude~ 5             Alex Ve~ Ekeren           51.3</span>
-<span class="co">#&gt;  2 IV20160210140~         0 Oude~ 1             Alex Ve~ Ekeren           51.3</span>
-<span class="co">#&gt;  3 IV20160210142~         0 Oude~ 2             Alex Ve~ Ekeren           51.3</span>
-<span class="co">#&gt;  4 IV20160210153~         0 Oude~ 4             Alex Ve~ Ekeren           51.3</span>
-<span class="co">#&gt;  5 IV20160210155~         0 Oude~ 81            Alex Ve~ Ekeren           51.3</span>
-<span class="co">#&gt;  6 IV20160210160~         0 Oude~ 20            Alex Ve~ Ekeren           51.3</span>
-<span class="co">#&gt;  7 IV20160210161~         0 Oude~ 17            Alex Ve~ Ekeren           51.3</span>
-<span class="co">#&gt;  8 IV20160210162~         0 Oude~ 19            Alex Ve~ Ekeren           51.3</span>
-<span class="co">#&gt;  9 IV20160210163~         0 Oude~ 18            Alex Ve~ Ekeren           51.3</span>
-<span class="co">#&gt; 10 IV20160210164~         0 Oude~ 23            Alex Ve~ Ekeren           51.3</span>
+<span class="co">#&gt;    RecordingGivid  NeedsWork Name   UserReference Observer LocationCode Latitude</span>
+<span class="co">#&gt;    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;           &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 IV201602101214~         0 OudeL~ 5             Alex Ve~ Ekeren           51.3</span>
+<span class="co">#&gt;  2 IV201602101406~         0 OudeL~ 1             Alex Ve~ Ekeren           51.3</span>
+<span class="co">#&gt;  3 IV201602101424~         0 OudeL~ 2             Alex Ve~ Ekeren           51.3</span>
+<span class="co">#&gt;  4 IV201602101531~         0 OudeL~ 4             Alex Ve~ Ekeren           51.3</span>
+<span class="co">#&gt;  5 IV201602101551~         0 OudeL~ 81            Alex Ve~ Ekeren           51.3</span>
+<span class="co">#&gt;  6 IV201602101607~         0 OudeL~ 20            Alex Ve~ Ekeren           51.3</span>
+<span class="co">#&gt;  7 IV201602101614~         0 OudeL~ 17            Alex Ve~ Ekeren           51.3</span>
+<span class="co">#&gt;  8 IV201602101620~         0 OudeL~ 19            Alex Ve~ Ekeren           51.3</span>
+<span class="co">#&gt;  9 IV201602101633~         0 OudeL~ 18            Alex Ve~ Ekeren           51.3</span>
+<span class="co">#&gt; 10 IV201602101648~         0 OudeL~ 23            Alex Ve~ Ekeren           51.3</span>
 <span class="co">#&gt; # ... with 9 more variables: Longitude &lt;dbl&gt;, Area &lt;dbl&gt;, Length &lt;int&gt;,</span>
 <span class="co">#&gt; #   Width &lt;int&gt;, VagueDateType &lt;chr&gt;, VagueDateBegin &lt;chr&gt;, VagueDateEnd &lt;chr&gt;,</span>
 <span class="co">#&gt; #   SurveyId &lt;int&gt;, RecTypeID &lt;int&gt;</span></code></pre></div>
@@ -222,18 +222,18 @@
                                       collect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">recording_heischraal2012</span>
 <span class="co">#&gt; # A tibble: 3,288 x 11</span>
-<span class="co">#&gt;    Name  RecordingGivid UserReference LayerCode CoverCode OrignalName</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;      </span>
-<span class="co">#&gt;  1 MILK~ IV20120816113~ HS_1001       M         5         Rhytidiade~</span>
-<span class="co">#&gt;  2 MILK~ IV20120816113~ HS_1001       M         5         Pseudoscle~</span>
-<span class="co">#&gt;  3 MILK~ IV20120816113~ HS_1001       K         90        Juncus acu~</span>
-<span class="co">#&gt;  4 MILK~ IV20120816113~ HS_1001       K         90        Nardus str~</span>
-<span class="co">#&gt;  5 MILK~ IV20120816113~ HS_1001       K         90        Potentilla~</span>
-<span class="co">#&gt;  6 MILK~ IV20120816113~ HS_1001       K         90        Anthoxanth~</span>
-<span class="co">#&gt;  7 MILK~ IV20120816113~ HS_1001       K         90        Molinia ca~</span>
-<span class="co">#&gt;  8 MILK~ IV20120816113~ HS_1001       K         90        Lysimachia~</span>
-<span class="co">#&gt;  9 MILK~ IV20120816113~ HS_1001       K         90        Luzula mul~</span>
-<span class="co">#&gt; 10 MILK~ IV20120816113~ HS_1001       K         90        Carex pilu~</span>
+<span class="co">#&gt;    Name      RecordingGivid  UserReference LayerCode CoverCode OrignalName      </span>
+<span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;           &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;            </span>
+<span class="co">#&gt;  1 MILKLIM_~ IV201208161138~ HS_1001       M         5         Rhytidiadelphus ~</span>
+<span class="co">#&gt;  2 MILKLIM_~ IV201208161138~ HS_1001       M         5         Pseudoscleropodi~</span>
+<span class="co">#&gt;  3 MILKLIM_~ IV201208161138~ HS_1001       K         90        Juncus acutiflor~</span>
+<span class="co">#&gt;  4 MILKLIM_~ IV201208161138~ HS_1001       K         90        Nardus stricta L.</span>
+<span class="co">#&gt;  5 MILKLIM_~ IV201208161138~ HS_1001       K         90        Potentilla erect~</span>
+<span class="co">#&gt;  6 MILKLIM_~ IV201208161138~ HS_1001       K         90        Anthoxanthum odo~</span>
+<span class="co">#&gt;  7 MILKLIM_~ IV201208161138~ HS_1001       K         90        Molinia caerulea~</span>
+<span class="co">#&gt;  8 MILKLIM_~ IV201208161138~ HS_1001       K         90        Lysimachia vulga~</span>
+<span class="co">#&gt;  9 MILKLIM_~ IV201208161138~ HS_1001       K         90        Luzula multiflor~</span>
+<span class="co">#&gt; 10 MILKLIM_~ IV201208161138~ HS_1001       K         90        Carex pilulifera~</span>
 <span class="co">#&gt; # ... with 3,278 more rows, and 5 more variables: ScientificName &lt;chr&gt;,</span>
 <span class="co">#&gt; #   PhenologyCode &lt;chr&gt;, CoverageCode &lt;chr&gt;, PctValue &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   RecordingScale &lt;chr&gt;</span></code></pre></div>
@@ -285,8 +285,14 @@
 <span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt;      </span>
 <span class="co">#&gt; 1 IV20130318144~ MILK~ 4010    N2k         Habitat~ &lt;NA&gt;             Noord-Atla~</span>
 <span class="co">#&gt; # ... with 2 more variables: Cover &lt;chr&gt;, PctValue &lt;dbl&gt;</span></code></pre></div>
-<p>Get all surveys, all classifications without collecting the data:</p>
+<p>Get the classification from several specific surveys</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"> <span class="va">classif_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_classification.html">get_inboveg_classification</a></span><span class="op">(</span><span class="va">con</span>,
+                  survey_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"MILKLIM_Heischraal2012"</span>, <span class="st">"NICHE Vlaanderen"</span><span class="op">)</span>,
+                  multiple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">classif_info</span></code></pre></div>
+<p>Get all surveys, all classifications without collecting the data:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">all_codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_classification.html">get_inboveg_classification</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="qualifiers-information" class="section level2">
@@ -294,7 +300,7 @@
 <a href="#qualifiers-information" class="anchor"></a>Qualifiers information</h2>
 <p>The function <code>get_inboveg_qualifiers</code>queries the INBOVEG database for qualifier information on recordings for one or more surveys. These qualifiers give information on management (management qualifier ‘MQ’) or location description (site qualifier’SQ’).</p>
 <p>Get the qualifiers from one survey:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">qualifiers_heischraal2012</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_qualifiers.html">get_inboveg_qualifiers</a></span><span class="op">(</span><span class="va">con</span>,
                                   survey_name <span class="op">=</span> <span class="st">"MILKLIM_Heischraal2012"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">qualifiers_heischraal2012</span><span class="op">)</span>
@@ -327,46 +333,88 @@
 <span class="co">#&gt; 5       NA               &lt;NA&gt;</span>
 <span class="co">#&gt; 6       NA               &lt;NA&gt;</span></code></pre></div>
 <p>Get all site qualifiers (SQ) from MILKLIM surveys (partial matching):</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">qualifiers_milkim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_qualifiers.html">get_inboveg_qualifiers</a></span><span class="op">(</span><span class="va">con</span>,
                                         survey_name <span class="op">=</span> <span class="st">"%MILKLIM%"</span>,
                                         qualifier_type <span class="op">=</span> <span class="st">"SQ"</span><span class="op">)</span></code></pre></div>
 <p>Get qualifiers from several specific surveys with <code>multiple = TRUE</code>:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">qualifiers_severalsurveys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_qualifiers.html">get_inboveg_qualifiers</a></span><span class="op">(</span><span class="va">con</span>, 
                 survey_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"MILKLIM_Heischraal2012"</span>, <span class="st">"NICHE Vlaanderen"</span><span class="op">)</span>,
                 multiple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Get all qualifiers of all surveys:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">allqualifiers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_qualifiers.html">get_inboveg_qualifiers</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="layer-information" class="section level2">
+<h2 class="hasAnchor">
+<a href="#layer-information" class="anchor"></a>Layer information</h2>
+<p>The function <code>get_inboveg_layerinfo</code> queries the INBOVEG database for layer information on recordings for one or more surveys.</p>
+<p>Get the layer information from one survey</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">layerinfo_heischraal2012</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_layerinfo.html">get_inboveg_layerinfo</a></span><span class="op">(</span><span class="va">con</span>, 
+                                          survey_name <span class="op">=</span> <span class="st">"MILKLIM_Heischraal2012"</span><span class="op">)</span></code></pre></div>
+<p>Get all layer qualifiers from MILKLIM surveys (partial matching)</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">layerinfo_milkim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_layerinfo.html">get_inboveg_layerinfo</a></span><span class="op">(</span><span class="va">con</span>, 
+                                          survey_name <span class="op">=</span> <span class="st">"%MILKLIM%"</span><span class="op">)</span></code></pre></div>
+<p>Get layer qualifiers from several specific surveys</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">layerinfo_severalsurveys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_layerinfo.html">get_inboveg_layerinfo</a></span><span class="op">(</span><span class="va">con</span>, 
+                                        survey_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"MILKLIM_Heischraal2012"</span>, <span class="st">"NICHE Vlaanderen"</span><span class="op">)</span>,
+                                        multiple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p>Get all layer qualifiers of all surveys</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">all_layerinfo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_layerinfo.html">get_inboveg_layerinfo</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="layer-qualifiers" class="section level2">
+<h2 class="hasAnchor">
+<a href="#layer-qualifiers" class="anchor"></a>Layer qualifiers</h2>
+<p>The function <code>get_inboveg_layerqualifier</code>queries the INBOVEG database for layer qualifier information on recordings for one or more surveys.</p>
+<p>Get the layer qualifiers from one survey</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">layerqualifiers_heischraal2012</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_layerqualifier.html">get_inboveg_layerqualifier</a></span><span class="op">(</span><span class="va">con</span>, 
+                                                      survey_name <span class="op">=</span> <span class="st">"MILKLIM_Heischraal2012"</span><span class="op">)</span></code></pre></div>
+<p>Get all layer qualifiers from MILKLIM surveys (partial matching)</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">layerqualifiers_milkim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_layerqualifier.html">get_inboveg_layerqualifier</a></span><span class="op">(</span><span class="va">con</span>, 
+                                                survey_name <span class="op">=</span> <span class="st">"%MILKLIM%"</span><span class="op">)</span></code></pre></div>
+<p>Get layer qualifiers from several specific surveys</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">layerqualifiers_severalsurveys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_layerqualifier.html">get_inboveg_layerqualifier</a></span><span class="op">(</span><span class="va">con</span>, 
+                                                  survey_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"MILKLIM_Heischraal2012"</span>, <span class="st">"NICHE Vlaanderen"</span><span class="op">)</span>,
+                                                  multiple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p>Get all layer qualifiers of all surveys</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">alllayerqualifiers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_layerqualifier.html">get_inboveg_layerqualifier</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="parent-child-relationships-between-recordings" class="section level2">
 <h2 class="hasAnchor">
 <a href="#parent-child-relationships-between-recordings" class="anchor"></a>Parent-child relationships between recordings</h2>
 <p>The function <code>get_inboveg_relation</code> queries the INBOVEG database for relational information on recordings for one or more surveys based on parent (classic-chain/bucket) and Child (classic) relationships.</p>
 <p>Get all parent-child-relations from N2000meetnet surveys (partial matching):</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relations_N2000meetnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_relation.html">get_inboveg_relation</a></span><span class="op">(</span><span class="va">con</span>, survey_name <span class="op">=</span> <span class="st">"%N2000meetnet%"</span><span class="op">)</span>
 
 <span class="va">relations_N2000meetnet</span>
 <span class="co">#&gt; # Source:   SQL [?? x 7]</span>
 <span class="co">#&gt; # Database: Microsoft SQL Server</span>
-<span class="co">#&gt; #   13.00.5820[INBO\els_lommelen@INBO-SQL07-PRD\LIVE/D0010_00_Cydonia]</span>
-<span class="co">#&gt;    Name  RecordingId Child_GIVID Child_UserRef ParentId Parent_GIVID</span>
-<span class="co">#&gt;    &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;       </span>
-<span class="co">#&gt;  1 N200~       44283 IV20190218~ 13594417_2170    44282 IV201902180~</span>
-<span class="co">#&gt;  2 N200~       44285 IV20190218~ 10334001_2190    44284 IV201902181~</span>
-<span class="co">#&gt;  3 N200~       44287 IV20190218~ 10186545_213~    44286 IV201902181~</span>
-<span class="co">#&gt;  4 N200~       44290 IV20190218~ 10186545_2170    44289 IV201902181~</span>
-<span class="co">#&gt;  5 N200~       44292 IV20190218~ 13561649_2170    44291 IV201902181~</span>
-<span class="co">#&gt;  6 N200~       44294 IV20190218~ 11595569_2170    44293 IV201902181~</span>
-<span class="co">#&gt;  7 N200~       44296 IV20190218~ 1240881_2170     44295 IV201902181~</span>
-<span class="co">#&gt;  8 N200~       44298 IV20190218~ 13823793_2170    44297 IV201902181~</span>
-<span class="co">#&gt;  9 N200~       44300 IV20190218~ 12644145_2170    44299 IV201902181~</span>
-<span class="co">#&gt; 10 N200~       44302 IV20190218~ 10260273_213~    44301 IV201902181~</span>
+<span class="co">#&gt; #   13.00.5820[INBO\els_debie@INBO-SQL07-PRD\LIVE/D0010_00_Cydonia]</span>
+<span class="co">#&gt;    Name         RecordingId Child_GIVID   Child_UserRef  ParentId Parent_GIVID  </span>
+<span class="co">#&gt;    &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;         </span>
+<span class="co">#&gt;  1 N2000meetne~       44283 IV2019021809~ 13594417_2170     44282 IV20190218095~</span>
+<span class="co">#&gt;  2 N2000meetne~       44285 IV2019021810~ 10334001_2190     44284 IV20190218103~</span>
+<span class="co">#&gt;  3 N2000meetne~       44287 IV2019021811~ 10186545_2130~    44286 IV20190218111~</span>
+<span class="co">#&gt;  4 N2000meetne~       44290 IV2019021812~ 10186545_2170     44289 IV20190218114~</span>
+<span class="co">#&gt;  5 N2000meetne~       44292 IV2019021813~ 13561649_2170     44291 IV20190218134~</span>
+<span class="co">#&gt;  6 N2000meetne~       44294 IV2019021815~ 11595569_2170     44293 IV20190218151~</span>
+<span class="co">#&gt;  7 N2000meetne~       44296 IV2019021815~ 1240881_2170      44295 IV20190218154~</span>
+<span class="co">#&gt;  8 N2000meetne~       44298 IV2019021816~ 13823793_2170     44297 IV20190218161~</span>
+<span class="co">#&gt;  9 N2000meetne~       44300 IV2019021816~ 12644145_2170     44299 IV20190218164~</span>
+<span class="co">#&gt; 10 N2000meetne~       44302 IV2019021817~ 10260273_2130~    44301 IV20190218170~</span>
 <span class="co">#&gt; # ... with more rows, and 1 more variable: Parent_UserRef &lt;chr&gt;</span></code></pre></div>
 <p>Get the parent-child-relations from several specific surveys:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relations_severalsurveys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_inboveg_relation.html">get_inboveg_relation</a></span><span class="op">(</span><span class="va">con</span>, 
           survey_name <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"DeBlankaart-1985-Beheer"</span>, <span class="st">"N2000meetnet_Grasland"</span><span class="op">)</span>, 
           multiple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
@@ -381,8 +429,8 @@
 <h1 class="hasAnchor">
 <a href="#closing-the-connection" class="anchor"></a>Closing the connection</h1>
 <p>Close the connection when done</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/DBI/man/dbDisconnect.html">dbDisconnect</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html">dbDisconnect</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></code></pre></div>
 </div>
   </div>

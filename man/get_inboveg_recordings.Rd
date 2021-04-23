@@ -56,9 +56,6 @@ or in combination with the unique ID (recordingGIVID) or user reference
 \examples{
 \dontrun{
 library(inbodb)
-library(DBI)
-library(odbc)
-library(dplyr)
 con <- connect_inbo_dbase("D0010_00_Cydonia")
 
 # get the recordings from one survey and collect the data
@@ -91,6 +88,8 @@ rm(con)
 Other inboveg: 
 \code{\link{get_inboveg_classification}()},
 \code{\link{get_inboveg_header}()},
+\code{\link{get_inboveg_layerinfo}()},
+\code{\link{get_inboveg_layerqualifier}()},
 \code{\link{get_inboveg_qualifiers}()},
 \code{\link{get_inboveg_relation}()},
 \code{\link{get_inboveg_survey}()}

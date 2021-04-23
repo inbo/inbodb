@@ -50,9 +50,6 @@ for how to get information for all surveys.
 \examples{
 \dontrun{
 library(inbodb)
-library(DBI)
-library(odbc)
-library(dplyr)
 con <- connect_inbo_dbase("D0010_00_Cydonia")
 
 # get a specific classification from a survey and collect the data
@@ -61,7 +58,7 @@ survey_name = "MILKLIM_Heischraal2012", classif = "4010", collect = TRUE)
 
 # get the classification from several specific surveys
 classif_info <- get_inboveg_classification(con,
-survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen" ))
+survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen" ), multiple = TRUE)
 
 # get all surveys, all classifications,  don't collect the data
 allecodes <- get_inboveg_classification(con)
@@ -74,6 +71,8 @@ rm(con)
 \seealso{
 Other inboveg: 
 \code{\link{get_inboveg_header}()},
+\code{\link{get_inboveg_layerinfo}()},
+\code{\link{get_inboveg_layerqualifier}()},
 \code{\link{get_inboveg_qualifiers}()},
 \code{\link{get_inboveg_recordings}()},
 \code{\link{get_inboveg_relation}()},
