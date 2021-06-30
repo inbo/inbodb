@@ -58,13 +58,38 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
     }
 
     # connect to database
-    conn <- dbConnect(odbc(),
-                      driver = sql_driver,
-                      server = server,
-                      port = 1433,
-                      database = database_name,
-                      encoding = encoding,
-                      trusted_connection = "YES")
+    tryCatch(
+        conn <- dbConnect(odbc(),
+                          driver = sql_driver,
+                          server = server,
+                          port = 1433,
+                          database = database_name,
+                          encoding = encoding,
+                          trusted_connection = "YES"),
+        error = function(e) {
+            if (grepl("connection to SQL Server", e)) {
+                stop(
+                    paste(
+                        e,
+                        "[INBO] Are you connected to the internet?",
+                        "Are you connected to the INBO network?",
+                        "Is the VPN connection active when not @ INBO?",
+                        "Did you open a tunnel through the bastion?"
+                    )
+                )
+            } else if (grepl("login failed", e)) {
+                stop(
+                    paste(
+                        e,
+                        "[INBO] Is the database name written correct?",
+                        "Do you have read permissions on the database?"
+                    )
+                )
+            } else {
+                stop(e)
+            }
+        }
+    )
 
     # derived from the odbc package Viewer setup to activate the Rstudio Viewer
     code_call <- c(match.call())
