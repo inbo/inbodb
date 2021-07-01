@@ -10,9 +10,17 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+database_access <- "TRUE"
+tryCatch(
+  connect_inbo_dbase("D0010_00_Cydonia"),
+  error = function(e) {
+    database_access <- "FALSE"
+  }
+)
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = database_access
 )
 ```
 
