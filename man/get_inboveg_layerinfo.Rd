@@ -20,8 +20,9 @@ survey_name must be a single character string (one survey name) that can
 include wildcards to allow partial matches}
 }
 \value{
-A dataframe with variables Name (of the survey), RecordingGivid (unique Id),
-UserReference, LayerCode, LayerDescription, CoverCode, Coverpercentage and Mean hight (cm)
+A dataframe with variables Name (of the survey), RecordingGivid
+(unique Id), UserReference, LayerCode, LayerDescription, CoverCode,
+Coverpercentage and Mean hight (cm)
 }
 \description{
 This function queries the INBOVEG database for layer

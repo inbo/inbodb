@@ -1,8 +1,8 @@
 #' @title Query classification information from INBOVEG
 #'
 #' @description This function queries the INBOVEG database for information
-#' on the field classification (N2000 or BWK-code) of the releve (recording) for one
-#' or more survey(s) by the name of the survey. See the examples
+#' on the field classification (N2000 or BWK-code) of the releve (recording)
+#' for one or more survey(s) by the name of the survey. See the examples
 #' for how to get information for all surveys.
 #'
 #' @param survey_name A character string or a character vector
@@ -46,7 +46,8 @@
 #'
 #' # get the classification from several specific surveys
 #' classif_info <- get_inboveg_classification(con,
-#' survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen" ), multiple = TRUE)
+#'   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen" ),
+#'   multiple = TRUE)
 #'
 #' # get all surveys, all classifications,  don't collect the data
 #' allecodes <- get_inboveg_classification(con)
@@ -99,19 +100,29 @@ get_inboveg_classification <- function(connection,
     , ftC.PctValue
     FROM ivRecording ivR
     INNER JOIN ivSurvey ivS on ivS.Id = ivR.surveyId
-    LEFT JOIN [dbo].[ivRLClassification] ivRLClas on ivRLClas.RecordingID = ivR.Id
-    LEFT JOIN [dbo].[ivRLResources] ivRLRes_Class on ivRLRes_Class.ResourceGIVID = ivRLClas.ClassifResource
-    LEFT JOIN [syno].[Futon_dbo_ftActionGroupList] ftAGL_Class on ftAGL_Class.ActionGroup = ivRLRes_Class.ActionGroup collate Latin1_General_CI_AI
-    AND ftAGL_Class.ListName = ivRLRes_Class.ListName collate Latin1_General_CI_AI
-    LEFT JOIN [syno].[Futon_dbo_ftBWKValues] ftBWK on ftBWK.Code = ivRLClas.Classif collate Latin1_General_CI_AI
-    AND ftBWK.ListGIVID = ftAGL_Class.ListGIVID
-    LEFT JOIN [syno].[Futon_dbo_ftN2kValues] ftN2K on ftN2K.Code = ivRLClas.Classif collate Latin1_General_CI_AI
-    AND ftN2K.ListGIVID = ftAGL_Class.ListGIVID
-    LEFT JOIN [dbo].[ivRLResources] ivRLR_C on ivRLR_C.ResourceGIVID = ivRLClas.CoverResource
-    LEFT JOIN [syno].[Futon_dbo_ftActionGroupList] ftAGL_C on ftAGL_C.ActionGroup = ivRLR_C.ActionGroup collate Latin1_General_CI_AI
-    AND ftAGL_C.ListName = ivRLR_C.ListName collate Latin1_General_CI_AI
-    LEFT JOIN [syno].[Futon_dbo_ftCoverValues] ftC on ftC.Code = ivRLClas.Cover collate Latin1_General_CI_AI
-    AND ftAGL_C.ListGIVID = ftC.ListGIVID
+    LEFT JOIN [dbo].[ivRLClassification] ivRLClas
+      on ivRLClas.RecordingID = ivR.Id
+    LEFT JOIN [dbo].[ivRLResources] ivRLRes_Class
+      on ivRLRes_Class.ResourceGIVID = ivRLClas.ClassifResource
+    LEFT JOIN [syno].[Futon_dbo_ftActionGroupList] ftAGL_Class
+      on ftAGL_Class.ActionGroup = ivRLRes_Class.ActionGroup
+          collate Latin1_General_CI_AI
+      AND ftAGL_Class.ListName = ivRLRes_Class.ListName
+          collate Latin1_General_CI_AI
+    LEFT JOIN [syno].[Futon_dbo_ftBWKValues] ftBWK
+      on ftBWK.Code = ivRLClas.Classif collate Latin1_General_CI_AI
+      AND ftBWK.ListGIVID = ftAGL_Class.ListGIVID
+    LEFT JOIN [syno].[Futon_dbo_ftN2kValues] ftN2K
+      on ftN2K.Code = ivRLClas.Classif collate Latin1_General_CI_AI
+      AND ftN2K.ListGIVID = ftAGL_Class.ListGIVID
+    LEFT JOIN [dbo].[ivRLResources] ivRLR_C
+      on ivRLR_C.ResourceGIVID = ivRLClas.CoverResource
+    LEFT JOIN [syno].[Futon_dbo_ftActionGroupList] ftAGL_C
+      on ftAGL_C.ActionGroup = ivRLR_C.ActionGroup collate Latin1_General_CI_AI
+      AND ftAGL_C.ListName = ivRLR_C.ListName collate Latin1_General_CI_AI
+    LEFT JOIN [syno].[Futon_dbo_ftCoverValues] ftC
+      on ftC.Code = ivRLClas.Cover collate Latin1_General_CI_AI
+      AND ftAGL_C.ListGIVID = ftC.ListGIVID
     WHERE 1 = 1"
 
   if (!multiple) {

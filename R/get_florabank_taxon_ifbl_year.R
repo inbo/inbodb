@@ -2,14 +2,16 @@
 #'
 #' This functions queries all validated observations of the florabank database
 #' and returns unique combinations of taxon, IFBL-square and year. Either a 1 km
-#' by 1 km or a 4 km x 4 km resolution can be chosen and a begin year can be set.
+#' by 1 km or a 4 km x 4 km resolution can be chosen and a begin year can be
+#' set.
 #' Observations of taxa at genus level or higher are excluded. The taxonomic
 #' group can be chosen.
 #'
-#' @param connection A connection to the florabank database. See the example section
-#' for how to connect and disconnect to the database.
+#' @param connection A connection to the florabank database. See the example
+#' section for how to connect and disconnect to the database.
 #'
-#' @param starting_year Filter for observations that start from this year onwards.
+#' @param starting_year Filter for observations that start from this year
+#' onwards.
 #' Default is 2010.
 #'
 #' @param ifbl_resolution The requested spatial resolution can be either
@@ -28,14 +30,14 @@
 #' @return A dataframe with one line for each combination of taxon, IFBL-square
 #' (either at 1 km x 1 km or 4 km x 4 km resolution) and year. In case the
 #' resolution is 1 km x 1 km, a variable ifbl_4by4 gives the corresponding
-#' ifbl_4by4 identifier within which the ifbl_1by1 square is located. In case the
-#' resolution is 4 km x 4 km, the variable ifbl_squares is a concatenation of
-#' all nested squares with observations for the taxon in the corresponding year.
-#' This can be nested 1 x 1 squares as well as the corresponding 4 x 4 square
-#' (the latter is the case if the original resolution of the observation is at
-#' 4 x 4 resolution). In addition, the variable ifbl_number_squares gives the
-#' number of unique nested squares where the taxon was observed for that year
-#' and 4 x 4 square combination.
+#' ifbl_4by4 identifier within which the ifbl_1by1 square is located. In case
+#' the resolution is 4 km x 4 km, the variable ifbl_squares is a concatenation
+#' of all nested squares with observations for the taxon in the corresponding
+#' year. This can be nested 1 x 1 squares as well as the corresponding 4 x 4
+#' square (the latter is the case if the original resolution of the observation
+#' is at 4 x 4 resolution). In addition, the variable ifbl_number_squares gives
+#' the number of unique nested squares where the taxon was observed for that
+#' year and 4 x 4 square combination.
 #'
 #' @importFrom glue glue_sql
 #' @importFrom assertthat assert_that
@@ -82,10 +84,10 @@ get_florabank_taxon_ifbl_year <- function(connection,
   assert_that(connection@info$dbname == "D0021_00_userFlora")
 
   assert_that(is.numeric(starting_year))
-  assert_that(starting_year <= as.numeric(format(Sys.Date(), '%Y')))
+  assert_that(starting_year <= as.numeric(format(Sys.Date(), "%Y")))
 
-  ifbl_resolution = match.arg(ifbl_resolution)
-  taxongroup = match.arg(taxongroup)
+  ifbl_resolution <- match.arg(ifbl_resolution)
+  taxongroup <- match.arg(taxongroup)
 
 
 
@@ -99,12 +101,14 @@ get_florabank_taxon_ifbl_year <- function(connection,
     , tblTaxon.Code AS Taxoncode
     FROM
     (((tblMeting INNER JOIN
-    (tblIFBLHok INNER JOIN tblWaarneming ON tblIFBLHok.ID = tblWaarneming.IFBLHokID)
-    ON tblMeting.WaarnemingID = tblWaarneming.ID)
+      (tblIFBLHok INNER JOIN tblWaarneming
+        ON tblIFBLHok.ID = tblWaarneming.IFBLHokID)
+      ON tblMeting.WaarnemingID = tblWaarneming.ID)
     INNER JOIN relTaxonTaxon ON tblMeting.TaxonID = relTaxonTaxon.TaxonIDChild)
     INNER JOIN tblTaxon ON relTaxonTaxon.TaxonIDParent = tblTaxon.ID)
     INNER JOIN relTaxonTaxonGroep ON tblTaxon.ID = relTaxonTaxonGroep.TaxonID
-    INNER JOIN tblTaxonGroep ON relTaxonTaxonGroep.TaxonGroepID = tblTaxonGroep.ID
+    INNER JOIN tblTaxonGroep
+      ON relTaxonTaxonGroep.TaxonGroepID = tblTaxonGroep.ID
     WHERE
     tblIFBLHok.Code LIKE '%-%' AND
     tblTaxon.Code NOT LIKE '%-sp' AND
@@ -150,12 +154,14 @@ get_florabank_taxon_ifbl_year <- function(connection,
     , tblTaxon.Code AS Taxoncode
     FROM
     (((tblMeting INNER JOIN
-    (tblIFBLHok INNER JOIN tblWaarneming ON tblIFBLHok.ID = tblWaarneming.IFBLHokID)
-    ON tblMeting.WaarnemingID = tblWaarneming.ID)
+      (tblIFBLHok INNER JOIN tblWaarneming
+        ON tblIFBLHok.ID = tblWaarneming.IFBLHokID)
+      ON tblMeting.WaarnemingID = tblWaarneming.ID)
     INNER JOIN relTaxonTaxon ON tblMeting.TaxonID = relTaxonTaxon.TaxonIDChild)
     INNER JOIN tblTaxon ON relTaxonTaxon.TaxonIDParent = tblTaxon.ID)
     INNER JOIN relTaxonTaxonGroep ON tblTaxon.ID = relTaxonTaxonGroep.TaxonID
-    INNER JOIN tblTaxonGroep ON relTaxonTaxonGroep.TaxonGroepID = tblTaxonGroep.ID
+    INNER JOIN tblTaxonGroep
+      ON relTaxonTaxonGroep.TaxonGroepID = tblTaxonGroep.ID
     WHERE
     tblIFBLHok.Code LIKE '%-%-%' AND
     tblTaxon.Code NOT LIKE '%-sp' AND

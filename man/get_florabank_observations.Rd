@@ -2,7 +2,8 @@
 % Please edit documentation in R/get_florabank_observations.R
 \name{get_florabank_observations}
 \alias{get_florabank_observations}
-\title{Get all validated observations for one or more taxa from the florabank database}
+\title{Get all validated observations for one or more taxa from the florabank
+database}
 \usage{
 get_florabank_observations(connection, names, fixed = FALSE, collect = FALSE)
 }
@@ -11,10 +12,11 @@ get_florabank_observations(connection, names, fixed = FALSE, collect = FALSE)
 section for how to connect and disconnect to the database.}
 
 \item{names}{Default missing. A character vector with scientific names
-and/or Dutch names. If fixed = TRUE, character strings are matched exactly and
-scientific names must include authorship in order to match.}
+and/or Dutch names. If fixed = TRUE, character strings are matched exactly
+and scientific names must include authorship in order to match.}
 
-\item{fixed}{Logical. If TRUE, names is to be matched as is (no partial matching)
+\item{fixed}{Logical. If TRUE, names is to be matched as is (no partial
+matching)
 .}
 
 \item{collect}{If FALSE (the default), a remote tbl object is returned. This
@@ -31,8 +33,9 @@ A dataframe with the following variables: "NaamNederlands",
 }
 \description{
 This function takes as input a character vector with one or more names of
-species either as scientific names and/or Dutch names. By default (fixed = FALSE),
-partial matching will be used (the names are prepended with appended with \%).
+species either as scientific names and/or Dutch names. By default (fixed =
+FALSE), partial matching will be used (the names are prepended with appended
+with \%).
 The function queries the florabank, and returns a dataframe with observation
 level information about the matching taxa.
 }
@@ -79,7 +82,8 @@ myspecies3 <-	get_florabank_observations(db_connectie,
 names = c('Succisa pratensis Moench', 'Gevlekte orchis'),
 fixed = TRUE)
 
-# to collect the data for a lazy query you can also use the collect() function:
+# to collect the data for a lazy query you can also use the collect()
+# function:
 myspecies3 <- dplyr::collect(myspecies3)
 
 # disconnect from florabank

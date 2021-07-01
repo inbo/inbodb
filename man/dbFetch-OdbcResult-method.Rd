@@ -18,5 +18,8 @@ special values.}
 \item{...}{Other arguments passed on to methods.}
 }
 \description{
-This method is an adaptation from the eponymous function in the \code{odbc} package and is an implementation of the method \code{dbFetch} defined in the \code{DBI} package.  Additional to the \code{odbc} package, it replaces a cryptic error message by an informative error message.
+This method is an adaptation from the eponymous function in the \code{odbc}
+package and is an implementation of the method \code{dbFetch} defined in the
+\code{DBI} package.  Additional to the \code{odbc} package, it replaces a cryptic
+error message by an informative error message.
 }

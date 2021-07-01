@@ -13,8 +13,9 @@
 #' survey_name must be a single character string (one survey name) that can
 #' include wildcards to allow partial matches
 #'
-#' @return A dataframe with variables Name (of the survey), RecordingGivid (unique Id),
-#' UserReference, LayerCode, LayerDescription, CoverCode, Coverpercentage and Mean hight (cm)
+#' @return A dataframe with variables Name (of the survey), RecordingGivid
+#' (unique Id), UserReference, LayerCode, LayerDescription, CoverCode,
+#' Coverpercentage and Mean hight (cm)
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery
@@ -72,25 +73,33 @@ get_inboveg_layerinfo <- function(connection,
     }
   }
 
-common_part <- "SELECT ivS.Name
-                        , ivRecording.RecordingGivid
-                        , ivRecording.UserReference
-                        , ivRLLayer.LayerCode
-                        , ftAGV.Description as LayerDescription
-                        , ivRLLayer.CoverCode
-                        , ftAGV_01.Description as Percentage
-              FROM ivRecording
-              INNER JOIN ivSurvey ivS on ivS.Id = ivRecording.SurveyId
-              INNER JOIN  ivRLLayer on ivRLLayer.RecordingID = ivRecording.Id
-                  INNER JOIN ivRLResources on ivRLResources.ResourceGIVID = ivRLLayer.LayerResource
-                      LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV ON ivRLResources.ListName = ftAGV.ListName COLLATE Latin1_General_CI_AI
-                      AND ivRLResources.ActionGroup = ftAGV.ActionGroup COLLATE Latin1_General_CI_AI
-                      AND ivRLLayer.LayerCode = ftAGV.code COLLATE Latin1_General_CI_AI
-                  INNER JOIN ivRLResources ivRLR_01 on ivRLR_01.ResourceGIVID = ivRLLayer.CoverResource
-                      LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV_01 ON ivRLR_01.ListName = ftAGV_01.ListName COLLATE Latin1_General_CI_AI
-                      AND ivRLR_01.ActionGroup = ftAGV_01.ActionGroup COLLATE Latin1_General_CI_AI
-                      AND ivRLLayer.CoverCode = ftAGV_01.code COLLATE Latin1_General_CI_AI
-              WHERE 1 = 1"
+common_part <-
+  "SELECT ivS.Name
+    , ivRecording.RecordingGivid
+    , ivRecording.UserReference
+    , ivRLLayer.LayerCode
+    , ftAGV.Description as LayerDescription
+    , ivRLLayer.CoverCode
+    , ftAGV_01.Description as Percentage
+  FROM ivRecording
+    INNER JOIN ivSurvey ivS on ivS.Id = ivRecording.SurveyId
+    INNER JOIN  ivRLLayer on ivRLLayer.RecordingID = ivRecording.Id
+      INNER JOIN ivRLResources
+          on ivRLResources.ResourceGIVID = ivRLLayer.LayerResource
+        LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV
+        ON ivRLResources.ListName = ftAGV.ListName COLLATE Latin1_General_CI_AI
+        AND ivRLResources.ActionGroup = ftAGV.ActionGroup
+            COLLATE Latin1_General_CI_AI
+        AND ivRLLayer.LayerCode = ftAGV.code COLLATE Latin1_General_CI_AI
+      INNER JOIN ivRLResources ivRLR_01
+        on ivRLR_01.ResourceGIVID = ivRLLayer.CoverResource
+          LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV_01
+            ON ivRLR_01.ListName = ftAGV_01.ListName
+                COLLATE Latin1_General_CI_AI
+          AND ivRLR_01.ActionGroup = ftAGV_01.ActionGroup
+              COLLATE Latin1_General_CI_AI
+          AND ivRLLayer.CoverCode = ftAGV_01.code COLLATE Latin1_General_CI_AI
+  WHERE 1 = 1"
 
   if (!multiple) {
     sql_statement <- glue_sql(common_part,
@@ -109,8 +118,6 @@ common_part <- "SELECT ivS.Name
     sql_statement,
     "ORDER BY ivRecording.RecordingGivid, ivRLLayer.LayerCode",
     .con = connection)
-
-  #sql_statement <- iconv(sql_statement, from =  "UTF-8", to = "latin1")
 
   query_result <- dbGetQuery(connection, sql_statement)
 

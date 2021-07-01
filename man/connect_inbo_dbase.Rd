@@ -10,7 +10,8 @@ connect_inbo_dbase(database_name, autoconvert_utf8 = TRUE)
 \item{database_name}{char Name of the INBO database you want to connect}
 
 \item{autoconvert_utf8}{Should the encoding of the tables that are retrieved
-from the database be adapted to ensure correct presentation?  Defaults to TRUE.}
+from the database be adapted to ensure correct presentation?  Defaults to
+TRUE.}
 }
 \value{
 odbc connection
@@ -22,7 +23,8 @@ The function can only be used from within the INBO network.
 }
 \details{
 For more information, refer to
-\href{https://inbo.github.io/tutorials/tutorials/r_database_access/}{this tutorial}.
+\href{https://inbo.github.io/tutorials/tutorials/r_database_access/}{this
+tutorial}.
 }
 \examples{
 \dontrun{

@@ -1,4 +1,5 @@
-#' @title Query relation (Parent - Child) information of recordings (releve) from INBOVEG
+#' @title Query relation (Parent - Child) information of recordings (releve)
+#' from INBOVEG
 #'
 #' @description This function queries the INBOVEG database for
 #' relation information on recordings for one or more surveys based on
@@ -6,8 +7,8 @@
 #'
 #' @param survey_name A character string or a character vector, depending on
 #' multiple parameter, giving the name or names of the
-#' survey(s) for which you want to extract recordings information. If missing, all
-#' surveys are returned.
+#' survey(s) for which you want to extract recordings information. If missing,
+#' all surveys are returned.
 #' @param connection dbconnection with the database 'Cydonia'
 #' on the inbo-sql07-prd server
 #' @param multiple If TRUE, survey_name can take a character vector with
@@ -20,8 +21,9 @@
 #' collected (fetched) from the database and brought into memory of the working
 #' environment.
 #'
-#' @return A dataframe with variables RecordingId, Child_GIVID (unique RecordingGIVID), Child_UserRef (UserReference),
-#' ParentId (RecordingId), Parent_GIVID (uniek RecordingGIVID) and Parent_UserRef (UserReference)
+#' @return A dataframe with variables RecordingId, Child_GIVID (unique
+#' RecordingGIVID), Child_UserRef (UserReference), ParentId (RecordingId),
+#' Parent_GIVID (uniek RecordingGIVID) and Parent_UserRef (UserReference)
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery
@@ -39,7 +41,8 @@
 #' survey_name = "N2000meetnet_Grasland")
 #'
 #' # get all Parent-Child-relations from N2000meetnet surveys (partial matching)
-#' relations_N2000meetnet <- get_inboveg_relation(con, survey_name = "%N2000meetnet%")
+#' relations_N2000meetnet <-
+#'     get_inboveg_relation(con, survey_name = "%N2000meetnet%")
 #'
 #' # get Parent-Child-relations from several specific surveys
 #' relations_severalsurveys <- get_inboveg_relation(con, survey_name =
@@ -91,7 +94,8 @@ get_inboveg_relation <- function(connection,
   FROM (
   (ivRecordingRelation
   RIGHT JOIN ivRecording ON ivRecordingRelation.RecordingId = ivRecording.Id)
-  LEFT JOIN ivRecording AS ivRecording_1 ON ivRecordingRelation.ParentId = ivRecording_1.Id
+  LEFT JOIN ivRecording AS ivRecording_1
+      ON ivRecordingRelation.ParentId = ivRecording_1.Id
   )
   INNER JOIN ivSurvey ON ivRecording.SurveyId = ivSurvey.Id
   WHERE (((ivRecordingRelation.ParentId) Is Not Null))"
@@ -118,4 +122,3 @@ if (!isTRUE(collect)) {
   return(query_result)
 }
 }
-

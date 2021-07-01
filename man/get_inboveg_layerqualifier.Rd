@@ -20,9 +20,10 @@ survey_name must be a single character string (one survey name) that can
 include wildcards to allow partial matches}
 }
 \value{
-A dataframe with variables Name (of the survey), RecordingGivid (unique Id),
-UserReference, LayerCode, LayerDescription, QualifierCode, Qualifier Description,
-Elucidation and 'NotSure' in case the qualifier is doubtful, CoverCode and Cover percentage
+A dataframe with variables Name (of the survey), RecordingGivid
+(unique Id), UserReference, LayerCode, LayerDescription, QualifierCode,
+Qualifier Description, Elucidation and 'NotSure' in case the qualifier is
+doubtful, CoverCode and Cover percentage
 }
 \description{
 This function queries the INBOVEG database for layer
@@ -34,15 +35,17 @@ library(inbodb)
 con <- connect_inbo_dbase("D0010_00_Cydonia")
 
 # get the layer qualifiers from one survey
-layerqualifiers_heischraal2012 <- get_inboveg_layerqualifier(con, survey_name =
-"MILKLIM_Heischraal2012")
+layerqualifiers_heischraal2012 <-
+    get_inboveg_layerqualifier(con, survey_name = "MILKLIM_Heischraal2012")
 
 # get all layer qualifiers from MILKLIM surveys (partial matching)
-layerqualifiers_milkim <- get_inboveg_layerqualifier(con, survey_name = "\%MILKLIM\%")
+layerqualifiers_milkim <-
+  get_inboveg_layerqualifier(con, survey_name = "\%MILKLIM\%")
 
 # get layer qualifiers from several specific surveys
-layerqualifiers_severalsurveys <- get_inboveg_layerqualifier(con, survey_name =
-c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"), multiple = TRUE)
+layerqualifiers_severalsurveys <- get_inboveg_layerqualifier(con,
+  survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+  multiple = TRUE)
 
 # get all layer qualifiers of all surveys
 alllayerqualifiers <- get_inboveg_layerqualifier(con)

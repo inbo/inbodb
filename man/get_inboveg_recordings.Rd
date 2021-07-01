@@ -21,12 +21,13 @@ on the inbo-sql07-prd server}
 multiple parameter, giving the name or names of the survey(s) for which you
 want to extract releve information. If missing, all surveys are returned.}
 
-\item{user_reference}{A character string or a character vector giving the name
-of a recording for which you want to extract releve information. If missing, all
-user-references are returned.}
+\item{user_reference}{A character string or a character vector giving the
+name of a recording for which you want to extract releve information. If
+missing, all user-references are returned.}
 
 \item{recording_givid}{A character string or a character vector giving
-the unique id of a recording for which you want to extract releve information.
+the unique id of a recording for which you want to extract releve
+information.
 If missing, all recording_givids are returned.}
 
 \item{collect}{If FALSE (the default), a remote tbl object is returned.
@@ -39,13 +40,15 @@ environment.}
 take a character vector with multiple survey names that must match exactly.
 If FALSE (the default), survey_name , user_reference or recording_givid must
 be a single character string (one survey name, or one user_reference or one
-recording_givid). Only survey_name can include wildcarts to allow partial matches.}
+recording_givid). Only survey_name can include wildcarts to allow partial
+matches.}
 }
 \value{
 A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-= TRUE) with variables RecordingGivid (unique ID), User reference, LayerCode, CoverCode,
-OriginalName, ScientificName, PhenologyCode, CoverageCode, PctValue
-(percentage coverage), RecordingScale (name of the scale of coverage)
+= TRUE) with variables RecordingGivid (unique ID), User reference, LayerCode,
+CoverCode, OriginalName, ScientificName, PhenologyCode, CoverageCode,
+PctValue (percentage coverage), RecordingScale (name of the scale of
+coverage)
 }
 \description{
 This function queries the INBOVEG database for

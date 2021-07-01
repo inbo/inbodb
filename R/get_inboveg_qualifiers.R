@@ -5,10 +5,11 @@
 #'
 #' @param survey_name A character string or a character vector, depending on
 #' multiple parameter, giving the name or names of the
-#' survey(s) for which you want to extract recordings information. If missing, all
-#' surveys are returned.
-#' @param qualifier_type A character vector giving the name of qualifier type for which
-#' you want to extract  information e.g. 'SQ' (site qualifier), 'MQ' (management qualifier).
+#' survey(s) for which you want to extract recordings information. If missing,
+#' all surveys are returned.
+#' @param qualifier_type A character vector giving the name of qualifier type
+#' for which you want to extract  information e.g. 'SQ' (site qualifier), 'MQ'
+#' (management qualifier).
 #' If missing, all qualifier types are returned.
 #' @param connection dbconnection with the database 'Cydonia'
 #' on the inbo-sql07-prd server
@@ -151,7 +152,8 @@ get_inboveg_qualifiers <- function(connection,
 
   sql_statement <- glue_sql(
     sql_statement,
-    "ORDER BY ivR.UserReference, ivRLQ.QualifierType, ivRLQ.QualifierCode OFFSET 0 ROWS",
+    "ORDER BY ivR.UserReference, ivRLQ.QualifierType, ivRLQ.QualifierCode
+    OFFSET 0 ROWS",
     .con = connection)
 
   sql_statement <- iconv(sql_statement, from =  "UTF-8", to = "latin1")
@@ -161,5 +163,3 @@ get_inboveg_qualifiers <- function(connection,
   return(query_result)
 
 }
-
-

@@ -13,9 +13,10 @@
 #' survey_name must be a single character string (one survey name) that can
 #' include wildcards to allow partial matches
 #'
-#' @return A dataframe with variables Name (of the survey), RecordingGivid (unique Id),
-#' UserReference, LayerCode, LayerDescription, QualifierCode, Qualifier Description,
-#' Elucidation and 'NotSure' in case the qualifier is doubtful, CoverCode and Cover percentage
+#' @return A dataframe with variables Name (of the survey), RecordingGivid
+#' (unique Id), UserReference, LayerCode, LayerDescription, QualifierCode,
+#' Qualifier Description, Elucidation and 'NotSure' in case the qualifier is
+#' doubtful, CoverCode and Cover percentage
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery
@@ -29,15 +30,17 @@
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
 #' # get the layer qualifiers from one survey
-#' layerqualifiers_heischraal2012 <- get_inboveg_layerqualifier(con, survey_name =
-#' "MILKLIM_Heischraal2012")
+#' layerqualifiers_heischraal2012 <-
+#'     get_inboveg_layerqualifier(con, survey_name = "MILKLIM_Heischraal2012")
 #'
 #' # get all layer qualifiers from MILKLIM surveys (partial matching)
-#' layerqualifiers_milkim <- get_inboveg_layerqualifier(con, survey_name = "%MILKLIM%")
+#' layerqualifiers_milkim <-
+#'   get_inboveg_layerqualifier(con, survey_name = "%MILKLIM%")
 #'
 #' # get layer qualifiers from several specific surveys
-#' layerqualifiers_severalsurveys <- get_inboveg_layerqualifier(con, survey_name =
-#' c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"), multiple = TRUE)
+#' layerqualifiers_severalsurveys <- get_inboveg_layerqualifier(con,
+#'   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+#'   multiple = TRUE)
 #'
 #' # get all layer qualifiers of all surveys
 #' alllayerqualifiers <- get_inboveg_layerqualifier(con)
@@ -73,23 +76,27 @@ get_inboveg_layerqualifier <- function(connection,
     }
   }
 
-common_part <- "SELECT ivS.Name
-        , ivRecording.RecordingGivid
-        , ivRecording.UserReference
-        , ivRLLayer.LayerCode
-        , ftAGV.Description as LayerDescription
-        , ivRLQualifier.QualifierCode
-        , ivRLQualifier.Elucidation
-        , ivRLQualifier.NotSure
-    FROM ivRecording
-        INNER JOIN ivSurvey ivS on ivS.Id = ivRecording.SurveyId
-        LEFT JOIN  ivRLLayer on ivRLLayer.RecordingID = ivRecording.Id
-        LEFT JOIN ivRLQualifier ON ivRLLayer.ID = ivRLQualifier.LayerID
-        LEFT JOIN ivRLResources on ivRLResources.ResourceGIVID = ivRLLayer.LayerResource
-        LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV ON ivRLResources.ListName = ftAGV.ListName COLLATE Latin1_General_CI_AI
-            AND ivRLResources.ActionGroup = ftAGV.ActionGroup COLLATE Latin1_General_CI_AI
-            AND ivRLLayer.LayerCode = ftAGV.Code COLLATE Latin1_General_CI_AI
-    WHERE 1 = 1"
+common_part <-
+  "SELECT ivS.Name
+    , ivRecording.RecordingGivid
+    , ivRecording.UserReference
+    , ivRLLayer.LayerCode
+    , ftAGV.Description as LayerDescription
+    , ivRLQualifier.QualifierCode
+    , ivRLQualifier.Elucidation
+    , ivRLQualifier.NotSure
+  FROM ivRecording
+    INNER JOIN ivSurvey ivS on ivS.Id = ivRecording.SurveyId
+    LEFT JOIN  ivRLLayer on ivRLLayer.RecordingID = ivRecording.Id
+    LEFT JOIN ivRLQualifier ON ivRLLayer.ID = ivRLQualifier.LayerID
+    LEFT JOIN ivRLResources
+        on ivRLResources.ResourceGIVID = ivRLLayer.LayerResource
+    LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV
+        ON ivRLResources.ListName = ftAGV.ListName COLLATE Latin1_General_CI_AI
+        AND ivRLResources.ActionGroup = ftAGV.ActionGroup
+            COLLATE Latin1_General_CI_AI
+        AND ivRLLayer.LayerCode = ftAGV.Code COLLATE Latin1_General_CI_AI
+  WHERE 1 = 1"
 
 
   if (!multiple) {
@@ -109,8 +116,6 @@ common_part <- "SELECT ivS.Name
     sql_statement,
    "ORDER BY ivRecording.RecordingGivid, ivRLLayer.LayerCode",
     .con = connection)
-
-  #sql_statement <- iconv(sql_statement, from =  "UTF-8", to = "latin1")
 
   query_result <- dbGetQuery(connection, sql_statement)
 

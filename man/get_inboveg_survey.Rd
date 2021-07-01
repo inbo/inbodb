@@ -24,8 +24,9 @@ A remote tbl object (collect = FALSE) or a tibble dataframe (collect
 = TRUE) with variables Id, Name, Description, Owner and Creator.
 }
 \description{
-This function queries the INBOVEG database for survey information
-(metadata about surveys) for one or more survey(s) by the name of the survey.
+This function queries the INBOVEG database for survey
+information (metadata about surveys) for one or more survey(s) by the name
+of the survey.
 See the examples for how to get information for all surveys.
 }
 \examples{
