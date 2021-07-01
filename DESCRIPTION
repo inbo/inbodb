@@ -32,7 +32,8 @@ Authors@R:
              email = "info@inbo.be"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
-URL: https://github.com/inbo/inbodb, https://inbo.github.io/inbodb
+URL: https://github.com/inbo/inbodb, https://inbo.github.io/inbodb/
+BugReports: https://github.com/inbo/inbodb/issues
 Imports:
     DBI,
     assertthat,
@@ -47,7 +48,6 @@ Suggests:
     rmarkdown
 VignetteBuilder: 
     knitr
-Bugreports: https://github.com/inbo/inbodb/issues
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
