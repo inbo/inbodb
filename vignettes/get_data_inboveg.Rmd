@@ -20,7 +20,7 @@ tryCatch(
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  eval = database_access
+  eval = nzchar(database_access)
 )
 ```
 
