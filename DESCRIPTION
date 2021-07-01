@@ -30,7 +30,9 @@ Authors@R:
       person(given = "Research Institute for Nature and Forest",
              role = c("cph", "fnd"),
              email = "info@inbo.be"))
-Description: What the package does (one paragraph).
+Description: A bundle of functions to connect to and retrieve data from
+    databases on the INBO server, with dedicated functions to query some
+    of these databases.
 License: MIT + file LICENSE
 URL: https://github.com/inbo/inbodb, https://inbo.github.io/inbodb/
 BugReports: https://github.com/inbo/inbodb/issues
