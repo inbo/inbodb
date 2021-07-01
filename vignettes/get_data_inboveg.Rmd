@@ -13,14 +13,13 @@ vignette: >
 database_access <- "TRUE"
 tryCatch(
   connect_inbo_dbase("D0010_00_Cydonia"),
-  error = function(e) {
-    database_access <- "FALSE"
-  }
+  error = function(e) e,
+  finally = database_access <- "FALSE"
 )
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  eval = nzchar(database_access)
+  eval = as.logical(database_access)
 )
 ```
 
