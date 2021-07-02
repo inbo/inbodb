@@ -69,8 +69,9 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
                           encoding = encoding,
                           trusted_connection = "YES"),
         error = function(e) {
-            if (grepl("connection to SQL Server", e)) {
-                stop(
+            assert_that(
+                !grepl("connection to SQL Server", e),
+                msg =
                     paste(
                         e,
                         "[INBO] Are you connected to the internet?",
@@ -78,18 +79,17 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
                         "Is the VPN connection active when not @ INBO?",
                         "Did you open a tunnel through the bastion?"
                     )
-                )
-            } else if (grepl("login failed", e)) {
-                stop(
+            )
+            assert_that(
+                !grepl("login failed", e),
+                msg =
                     paste(
                         e,
                         "[INBO] Is the database name written correct?",
                         "Do you have read permissions on the database?"
                     )
-                )
-            } else {
-                stop(e)
-            }
+            )
+            stop(e)
         }
     )
 
