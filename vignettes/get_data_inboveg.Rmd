@@ -10,17 +10,20 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-database_access <- "TRUE"
 tryCatch(
-  connect_inbo_dbase("D0010_00_Cydonia"),
+  con <- inbodb::connect_inbo_dbase("D0010_00_Cydonia"),
   error = function(e) e,
-  finally = database_access <- "FALSE"
+  finally = database_access <- exists("con")
 )
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  eval = as.logical(database_access)
+  eval = database_access,
+  cache = FALSE
 )
+if (!database_access) {
+  load("get_data_inboveg_results.RData")
+}
 ```
 
 # Introduction
@@ -79,6 +82,9 @@ Get information of a specific survey and collect data.
 survey_info <- get_inboveg_survey(con, 
                               survey_name = "OudeLanden_1979", 
                               collect = TRUE)
+```
+
+```{r eval=TRUE}
 survey_info
 ```
 
@@ -87,6 +93,9 @@ This time we will not use `collect = TRUE`, which will return a [lazy query](htt
 
 ```{r}
 allsurveys <- get_inboveg_survey(con)
+```
+
+```{r eval=TRUE}
 class(allsurveys)
 ```
 
@@ -97,6 +106,9 @@ If only a part of the survey name is known, you can make use of wildcards such a
 partsurveys <- get_inboveg_survey(con, 
                               survey_name = "%MILKLIM%",
                               collect = TRUE)
+```
+
+```{r eval=TRUE}
 partsurveys
 ```
 
@@ -113,6 +125,9 @@ header_info <- get_inboveg_header(con,
                               survey_name = "OudeLanden_1979",
                               rec_type = "Classic",
                               collect = TRUE)
+```
+
+```{r eval=TRUE}
 head(header_info, 10)
 ```
 
@@ -142,6 +157,9 @@ First, we show how to get the relevés from one survey and collect the data:
 recording_heischraal2012 <- get_inboveg_recordings(con, 
                                       survey_name = "MILKLIM_Heischraal2012",
                                       collect = TRUE)
+```
+
+```{r eval=TRUE}
 recording_heischraal2012
 ```
 
@@ -209,6 +227,9 @@ classif_info <- get_inboveg_classification(con,
                               survey_name = "MILKLIM_Heischraal2012",
                               classif = "4010",
                               collect = TRUE)
+```
+
+```{r eval=TRUE}
 classif_info
 ```
 
@@ -237,6 +258,9 @@ Get the qualifiers from one survey:
 ```{r examples_qualifiers}
 qualifiers_heischraal2012 <- get_inboveg_qualifiers(con,
                                   survey_name = "MILKLIM_Heischraal2012")
+```
+
+```{r eval=TRUE}
 head(qualifiers_heischraal2012)
 ```
 
@@ -337,6 +361,16 @@ relations_N2000meetnet <- get_inboveg_relation(con, survey_name = "%N2000meetnet
 relations_N2000meetnet
 ```
 
+```{r echo=FALSE}
+output_relations_N2000meetnet <- capture.output(relations_N2000meetnet)
+```
+
+```{r echo=FALSE, eval=TRUE}
+if (!database_access) {
+  output_relations_N2000meetnet
+}
+```
+
 Get the parent-child-relations from several specific surveys:
 
 ```{r, eval = FALSE}
@@ -363,3 +397,9 @@ Close the connection when done
 dbDisconnect(con)
 rm(con)
 ```
+
+```{r echo=FALSE, include=FALSE}
+rm(database_access)
+save.image(file = "get_data_inboveg_results.RData")
+```
+
