@@ -367,7 +367,7 @@ output_relations_N2000meetnet <- capture.output(relations_N2000meetnet)
 
 ```{r echo=FALSE, eval=TRUE}
 if (!database_access) {
-  output_relations_N2000meetnet
+  cat(output_relations_N2000meetnet, sep = "\n")
 }
 ```
 
