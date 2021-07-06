@@ -2,7 +2,8 @@
 % Please edit documentation in R/get_inboveg_relation_recordings.R
 \name{get_inboveg_relation}
 \alias{get_inboveg_relation}
-\title{Query relation (Parent - Child) information of recordings (releve) from INBOVEG}
+\title{Query relation (Parent - Child) information of recordings (releve)
+from INBOVEG}
 \usage{
 get_inboveg_relation(
   connection,
@@ -17,8 +18,8 @@ on the inbo-sql07-prd server}
 
 \item{survey_name}{A character string or a character vector, depending on
 multiple parameter, giving the name or names of the
-survey(s) for which you want to extract recordings information. If missing, all
-surveys are returned.}
+survey(s) for which you want to extract recordings information. If missing,
+all surveys are returned.}
 
 \item{multiple}{If TRUE, survey_name can take a character vector with
 multiple survey names that must match exactly. If FALSE (the default),
@@ -32,8 +33,9 @@ collected (fetched) from the database and brought into memory of the working
 environment.}
 }
 \value{
-A dataframe with variables RecordingId, Child_GIVID (unique RecordingGIVID), Child_UserRef (UserReference),
-ParentId (RecordingId), Parent_GIVID (uniek RecordingGIVID) and Parent_UserRef (UserReference)
+A dataframe with variables RecordingId, Child_GIVID (unique
+RecordingGIVID), Child_UserRef (UserReference), ParentId (RecordingId),
+Parent_GIVID (uniek RecordingGIVID) and Parent_UserRef (UserReference)
 }
 \description{
 This function queries the INBOVEG database for
@@ -50,7 +52,8 @@ relations_N2000meetnet_Grasland <- get_inboveg_relation(con,
 survey_name = "N2000meetnet_Grasland")
 
 # get all Parent-Child-relations from N2000meetnet surveys (partial matching)
-relations_N2000meetnet <- get_inboveg_relation(con, survey_name = "\%N2000meetnet\%")
+relations_N2000meetnet <-
+    get_inboveg_relation(con, survey_name = "\%N2000meetnet\%")
 
 # get Parent-Child-relations from several specific surveys
 relations_severalsurveys <- get_inboveg_relation(con, survey_name =

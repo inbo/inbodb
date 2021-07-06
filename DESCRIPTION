@@ -1,6 +1,6 @@
 Package: inbodb
 Title: Connect to and retrieve data from databases on the INBO server
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
     c(person(given = "Els",
              family = "Lommelen",
@@ -9,46 +9,49 @@ Authors@R:
              comment = c(ORCID = "0000-0002-3481-5684")),
       person(given = "Hans",
              family = "Van Calster",
-             role = c("aut"),
+             role = "aut",
              email = "hans.vancalster@inbo.be",
              comment = c(ORCID = "0000-0001-8595-8426")),
       person(given = "Els",
              family = "De Bie",
-             role = c("aut"),
+             role = "aut",
              email = "els.debie@inbo.be",
              comment = c(ORCID = "0000-0001-7679-743X")),
       person(given = "Floris",
              family = "Vanderhaeghe",
-             role = c("aut"),
+             role = "aut",
              email = "floris.vanderhaeghe@inbo.be",
              comment = c(ORCID = "0000-0002-6378-6229")),
       person(given = "Stijn",
              family = "Van Hoey",
-             role = c("ctb"),
+             role = "ctb",
              email = "stijnvanhoey@gmail.com",
              comment = c(ORCID = "0000-0001-6413-3185")),
       person(given = "Research Institute for Nature and Forest",
              role = c("cph", "fnd"),
              email = "info@inbo.be"))
-Description: What the package does (one paragraph).
+Description: A bundle of functions to connect to and retrieve data from
+    databases on the INBO server, with dedicated functions to query some
+    of these databases.
 License: MIT + file LICENSE
-URL: https://github.com/inbo/inbodb, https://inbo.github.io/inbodb
-Bugreports: https://github.com/inbo/inbodb/issues
+URL: https://github.com/inbo/inbodb, https://inbo.github.io/inbodb/
+BugReports: https://github.com/inbo/inbodb/issues
+Imports:
+    DBI,
+    assertthat,
+    dbplyr,
+    dplyr,
+    glue,
+    methods,
+    odbc,
+    rlang
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
-Imports:
-  assertthat,
-  DBI,
-  dbplyr,
-  dplyr,
-  glue,
-  methods,
-  odbc,
-  rlang
 RoxygenNote: 7.1.1
-Suggests: 
-    knitr,
-    rmarkdown
-VignetteBuilder: knitr

@@ -5,11 +5,12 @@
 #' which vegetation layers with which cover) for one or more surveys,
 #' or in combination with the unique ID (recordingGIVID) or user reference
 #'
-#' @param user_reference A character string or a character vector giving the name
-#' of a recording for which you want to extract releve information. If missing, all
-#' user-references are returned.
+#' @param user_reference A character string or a character vector giving the
+#' name of a recording for which you want to extract releve information. If
+#' missing, all user-references are returned.
 #' @param recording_givid A character string or a character vector giving
-#' the unique id of a recording for which you want to extract releve information.
+#' the unique id of a recording for which you want to extract releve
+#' information.
 #' If missing, all recording_givids are returned.
 #' @param survey_name A character string or a character vector, depending on
 #' multiple parameter, giving the name or names of the survey(s) for which you
@@ -25,12 +26,14 @@
 #' take a character vector with multiple survey names that must match exactly.
 #' If FALSE (the default), survey_name , user_reference or recording_givid must
 #' be a single character string (one survey name, or one user_reference or one
-#' recording_givid). Only survey_name can include wildcarts to allow partial matches.
+#' recording_givid). Only survey_name can include wildcarts to allow partial
+#' matches.
 #'
 #' @return A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-#' = TRUE) with variables RecordingGivid (unique ID), User reference, LayerCode, CoverCode,
-#' OriginalName, ScientificName, PhenologyCode, CoverageCode, PctValue
-#' (percentage coverage), RecordingScale (name of the scale of coverage)
+#' = TRUE) with variables RecordingGivid (unique ID), User reference, LayerCode,
+#' CoverCode, OriginalName, ScientificName, PhenologyCode, CoverageCode,
+#' PctValue (percentage coverage), RecordingScale (name of the scale of
+#' coverage)
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery
@@ -84,19 +87,16 @@ get_inboveg_recordings <- function(
   if (!multiple) {
     if (missing(survey_name)) {
       survey_name <- "%"
-    } else {
-      assert_that(is.character(survey_name))
     }
+    assert_that(is.character(survey_name))
     if (missing(user_reference)) {
       user_reference <- "%"
-    } else {
-      assert_that(is.character(user_reference))
     }
+    assert_that(is.character(user_reference))
     if (missing(recording_givid)) {
       recording_givid <- "%"
-    } else {
-      assert_that(is.character(recording_givid))
     }
+    assert_that(is.character(recording_givid))
   } else {
     if (missing(survey_name) & missing(recording_givid) &
         missing(user_reference)) {
@@ -188,7 +188,8 @@ get_inboveg_recordings <- function(
         !missing(recording_givid)) {
       sql_statement <- glue_sql(common_part,
                                 "AND ivS.Name IN ({survey_name*})
-                                AND (ivR.[RecordingGivid] IN ({recording_givid*})
+                                AND (ivR.[RecordingGivid] IN
+                                    ({recording_givid*})
                                 OR ivR.UserReference IN ({user_reference*}))",
                                 survey_name = survey_name,
                                 user_reference = user_reference,
@@ -198,7 +199,8 @@ get_inboveg_recordings <- function(
     if (missing(survey_name) & !missing(user_reference) &
         !missing(recording_givid)) {
       sql_statement <- glue_sql(common_part,
-                                "AND (ivR.[RecordingGivid] IN ({recording_givid*})
+                                "AND (ivR.[RecordingGivid] IN
+                                    ({recording_givid*})
                                 OR ivR.UserReference IN ({user_reference*}))",
                                 survey_name = survey_name,
                                 user_reference = user_reference,
@@ -208,7 +210,8 @@ get_inboveg_recordings <- function(
     if (missing(survey_name) & missing(user_reference) &
         !missing(recording_givid)) {
       sql_statement <- glue_sql(common_part,
-                                "AND ivR.[RecordingGivid] IN ({recording_givid*})",
+                                "AND ivR.[RecordingGivid] IN
+                                   ({recording_givid*})",
                                 survey_name = survey_name,
                                 user_reference = user_reference,
                                 recording_givid = recording_givid,
@@ -236,7 +239,8 @@ get_inboveg_recordings <- function(
         !missing(recording_givid)) {
       sql_statement <- glue_sql(common_part,
                                 "AND ivS.Name IN ({survey_name*})
-                                AND ivR.[RecordingGivid] IN ({recording_givid*})",
+                                AND ivR.[RecordingGivid] IN
+                                    ({recording_givid*})",
                                 survey_name = survey_name,
                                 user_reference = user_reference,
                                 recording_givid = recording_givid,
@@ -257,12 +261,8 @@ get_inboveg_recordings <- function(
 
   query_result <- tbl(connection, sql(sql_statement))
 
-  if (!isTRUE(collect)) {
-    return(query_result)
-  } else {
+  if (isTRUE(collect)) {
     query_result <- collect(query_result)
-    return(query_result)
   }
+  return(query_result)
 }
-
-
