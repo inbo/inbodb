@@ -22,9 +22,9 @@
 #' the query is not brought into memory. If TRUE the full result of the query is
 #' collected (fetched) from the database and brought into memory of the working
 #' environment.
-#' @param multiple If TRUE, survey_name, user_reference or recording_givid can
+#' @param multiple If TRUE survey_name, user_reference or recording_givid can
 #' take a character vector with multiple survey names that must match exactly.
-#' If FALSE (the default), survey_name , user_reference or recording_givid must
+#' If FALSE (the default) survey_name , user_reference or recording_givid must
 #' be a single character string (one survey name, or one user_reference or one
 #' recording_givid). Only survey_name can include wildcarts to allow partial
 #' matches.
@@ -83,35 +83,6 @@ get_inboveg_recordings <- function(
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
-
-  if (!multiple) {
-
-    assert_that(is.character(survey_name))
-
-    assert_that(is.character(user_reference))
-    if (missing(recording_givid)) {
-      recording_givid <- "%"
-    }
-    assert_that(is.character(recording_givid))
-  } else {
-    if (missing(survey_name) & missing(recording_givid) &
-        missing(user_reference)) {
-      stop("Please provide one or more values to either survey_name or to user_reference or recording_givid when multiple = TRUE") #nolint
-    }
-    if (missing(survey_name) & !missing(user_reference)) {
-      warning("The same user_reference might have been used in different surveys. Consider also providing one or more values to survey_name when multiple = TRUE") #nolint
-    }
-    if (!missing(survey_name)) {
-      assert_that(is.vector(survey_name, mode = "character"))
-    }
-    if (!missing(user_reference)) {
-      assert_that(is.vector(user_reference, mode = "character"))
-    }
-    if (!missing(recording_givid)) {
-      assert_that(is.vector(recording_givid, mode = "character"))
-    }
-  }
-
 
   common_part <- "SELECT ivS.Name
   , ivR.[RecordingGivid]
@@ -198,7 +169,7 @@ get_inboveg_recordings <- function(
                                 "AND (ivR.[RecordingGivid] IN
                                     ({recording_givid*})
                                 OR ivR.UserReference IN ({user_reference*}))",
-                                survey_name = survey_name,
+                                survey_name = "%",
                                 user_reference = user_reference,
                                 recording_givid = recording_givid,
                                 .con = connection)
@@ -208,8 +179,8 @@ get_inboveg_recordings <- function(
       sql_statement <- glue_sql(common_part,
                                 "AND ivR.[RecordingGivid] IN
                                    ({recording_givid*})",
-                                survey_name = survey_name,
-                                user_reference = user_reference,
+                                survey_name = "%",
+                                user_reference = "%",
                                 recording_givid = recording_givid,
                                 .con = connection)
     }
@@ -217,9 +188,9 @@ get_inboveg_recordings <- function(
         missing(recording_givid)) {
       sql_statement <- glue_sql(common_part,
                                 "AND ivR.UserReference IN ({user_reference*})",
-                                survey_name = survey_name,
+                                survey_name = "%",
                                 user_reference = user_reference,
-                                recording_givid = recording_givid,
+                                recording_givid = "%",
                                 .con = connection)
     }
     if (!missing(survey_name) & missing(user_reference) &
@@ -227,8 +198,8 @@ get_inboveg_recordings <- function(
       sql_statement <- glue_sql(common_part,
                                 "AND ivS.Name IN ({survey_name*})",
                                 survey_name = survey_name,
-                                user_reference = user_reference,
-                                recording_givid = recording_givid,
+                                user_reference = "%",
+                                recording_givid = "%",
                                 .con = connection)
     }
     if (!missing(survey_name) & missing(user_reference) &
@@ -238,7 +209,7 @@ get_inboveg_recordings <- function(
                                 AND ivR.[RecordingGivid] IN
                                     ({recording_givid*})",
                                 survey_name = survey_name,
-                                user_reference = user_reference,
+                                user_reference = "%",
                                 recording_givid = recording_givid,
                                 .con = connection)
     }
@@ -249,7 +220,7 @@ get_inboveg_recordings <- function(
                                 AND ivR.UserReference IN ({user_reference*})",
                                 survey_name = survey_name,
                                 user_reference = user_reference,
-                                recording_givid = recording_givid,
+                                recording_givid = "%",
                                 .con = connection)
     }
 
