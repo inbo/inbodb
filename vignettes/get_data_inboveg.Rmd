@@ -400,6 +400,6 @@ rm(con)
 
 ```{r echo=FALSE, include=FALSE}
 rm(database_access)
-save.image(file = "get_data_inboveg_results.RData")
+save.image(file = "get_data_inboveg_results.Rda")
 ```
 
