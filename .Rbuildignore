@@ -14,5 +14,7 @@
 ^LICENSE.md$
 ^man-roxygen$
 ^Meta$
+^NEWS.md$
 ^pkgdown$
+^README\.md$
 ^README\.Rmd$
