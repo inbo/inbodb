@@ -84,6 +84,7 @@ get_inboveg_recordings <- function(
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
 
+
   common_part <- "SELECT ivS.Name
   , ivR.[RecordingGivid]
   , ivR.UserReference
@@ -141,6 +142,14 @@ get_inboveg_recordings <- function(
   AND ivRL_Iden.Preferred = 1"
 
   if (!multiple) {
+
+    assert_that(length(survey_name) == 1,
+                msg = "If you want to give multiple survey names, please change multiple  into RUE")
+    assert_that(length(recording_givid) == 1,
+                msg = "If you want to give multiple recording givid, please change multiple  into RUE")
+    assert_that(length(user_reference) == 1,
+                msg = "If you want to give multiple user reference, please change multiple  into RUE")
+
     sql_statement <- glue_sql(common_part,
                               "AND ivS.Name LIKE {survey_name}
                               AND ivR.[RecordingGivid] LIKE {recording_givid}
@@ -151,8 +160,8 @@ get_inboveg_recordings <- function(
                               .con = connection)
 
   } else {
-    if (!missing(survey_name) & !missing(user_reference) &
-        !missing(recording_givid)) {
+    if ((survey_name != "%") & (user_reference != "%") &
+        (recording_givid != "%")) {
       sql_statement <- glue_sql(common_part,
                                 "AND ivS.Name IN ({survey_name*})
                                 AND (ivR.[RecordingGivid] IN
@@ -163,64 +172,55 @@ get_inboveg_recordings <- function(
                                 recording_givid = recording_givid,
                                 .con = connection)
     }
-    if (missing(survey_name) & !missing(user_reference) &
-        !missing(recording_givid)) {
+    if ((survey_name == "%") & (user_reference != "%") &
+        (recording_givid != "%")) {
       sql_statement <- glue_sql(common_part,
                                 "AND (ivR.[RecordingGivid] IN
                                     ({recording_givid*})
                                 OR ivR.UserReference IN ({user_reference*}))",
-                                survey_name = "%",
                                 user_reference = user_reference,
                                 recording_givid = recording_givid,
                                 .con = connection)
     }
-    if (missing(survey_name) & missing(user_reference) &
-        !missing(recording_givid)) {
+    if ((survey_name == "%") & (user_reference == "%") &
+        (recording_givid != "%")) {
       sql_statement <- glue_sql(common_part,
                                 "AND ivR.[RecordingGivid] IN
                                    ({recording_givid*})",
-                                survey_name = "%",
-                                user_reference = "%",
                                 recording_givid = recording_givid,
                                 .con = connection)
     }
-    if (missing(survey_name) & !missing(user_reference) &
-        missing(recording_givid)) {
+    if ((survey_name == "%") & (user_reference != "%") &
+        (recording_givid == "%")) {
       sql_statement <- glue_sql(common_part,
                                 "AND ivR.UserReference IN ({user_reference*})",
-                                survey_name = "%",
                                 user_reference = user_reference,
-                                recording_givid = "%",
                                 .con = connection)
     }
-    if (!missing(survey_name) & missing(user_reference) &
-        missing(recording_givid)) {
+    if ((survey_name != "%") & (user_reference == "%") &
+        (recording_givid == "%")) {
       sql_statement <- glue_sql(common_part,
                                 "AND ivS.Name IN ({survey_name*})",
                                 survey_name = survey_name,
-                                user_reference = "%",
-                                recording_givid = "%",
-                                .con = connection)
+                              .con = connection)
     }
-    if (!missing(survey_name) & missing(user_reference) &
-        !missing(recording_givid)) {
+    if ((survey_name != "%") & (user_reference == "%") &
+        (recording_givid != "%")) {
       sql_statement <- glue_sql(common_part,
                                 "AND ivS.Name IN ({survey_name*})
                                 AND ivR.[RecordingGivid] IN
                                     ({recording_givid*})",
                                 survey_name = survey_name,
-                                user_reference = "%",
                                 recording_givid = recording_givid,
                                 .con = connection)
     }
-    if (!missing(survey_name) & !missing(user_reference) &
-        missing(recording_givid)) {
+    if ((survey_name != "%") & (user_reference != "%") &
+       (recording_givid  == "%")) {
       sql_statement <- glue_sql(common_part,
                                 "AND ivS.Name IN ({survey_name*})
                                 AND ivR.UserReference IN ({user_reference*})",
                                 survey_name = survey_name,
                                 user_reference = user_reference,
-                                recording_givid = "%",
                                 .con = connection)
     }
 
