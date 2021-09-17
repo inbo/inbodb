@@ -146,11 +146,11 @@ get_inboveg_recordings <- function(
   if (!multiple) {
 
     assert_that(length(survey_name) == 1,
-                msg = "If you want to give multiple survey names, please change multiple  into RUE")
+                msg = "If you want to give multiple survey names, please change multiple  into TRUE")
     assert_that(length(recording_givid) == 1,
-                msg = "If you want to give multiple recording givid, please change multiple  into RUE")
+                msg = "If you want to give multiple recording givid, please change multiple  into TRUE")
     assert_that(length(user_reference) == 1,
-                msg = "If you want to give multiple user reference, please change multiple  into RUE")
+                msg = "If you want to give multiple user reference, please change multiple  into TRUE")
 
     sql_statement <- glue_sql(common_part,
                               "AND ivS.Name LIKE {survey_name}
