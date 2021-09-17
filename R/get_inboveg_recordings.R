@@ -83,7 +83,9 @@ get_inboveg_recordings <- function(
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
-
+  assert_that(is.character(survey_name))
+  assert_that(is.character(user_reference))
+  assert_that(is.character(recording_givid))
 
   common_part <- "SELECT ivS.Name
   , ivR.[RecordingGivid]
