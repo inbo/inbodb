@@ -34,12 +34,12 @@
 #'     get_inboveg_layerqualifier(con, survey_name = "MILKLIM_Heischraal2012")
 #'
 #' # get all layer qualifiers from MILKLIM surveys (partial matching)
-#' layerqualifiers_milkim <-
-#'   get_inboveg_layerqualifier(con, survey_name = "%MILKLIM%")
+#' layerqualifiers_HT31xx <-
+#'   get_inboveg_layerqualifier(con, survey_name = "%HT31%")
 #'
 #' # get layer qualifiers from several specific surveys
 #' layerqualifiers_severalsurveys <- get_inboveg_layerqualifier(con,
-#'   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+#'   survey_name = c("MILKLIM_Heischraal2012", "HT31xx_Plassen"),
 #'   multiple = TRUE)
 #'
 #' # get all layer qualifiers of all surveys
@@ -77,7 +77,7 @@ get_inboveg_layerqualifier <- function(connection,
   }
 
   common_part <-
-    "SELECT ivSurveyName
+    "SELECT ivSurvey.Name
   , ivRecording.RecordingGivid
   , ivRecording.UserReference
   , ivRLLayer.LayerCode
@@ -85,7 +85,7 @@ get_inboveg_layerqualifier <- function(connection,
   , ivRLLayer.CoverCode
   , ftAGV_01.Description as Percentage
   FROM ivRecording
-  INNER JOIN ivSurvey ivS on ivS.Id = ivRecording.SurveyId
+  INNER JOIN ivSurvey on ivSurvey.Id = ivRecording.SurveyId
   INNER JOIN  ivRLLayer on ivRLLayer.RecordingID = ivRecording.Id
   INNER JOIN ivRLResources on ivRLResources.ResourceGIVID = ivRLLayer.LayerResource
   LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV ON ivRLResources.ListName = ftAGV.ListName COLLATE Latin1_General_CI_AI
@@ -100,13 +100,13 @@ get_inboveg_layerqualifier <- function(connection,
 
   if (!multiple) {
     sql_statement <- glue_sql(common_part,
-                              "AND ivS.Name LIKE {survey_name}",
+                              "AND ivSurvey.Name LIKE {survey_name}",
                               survey_name = survey_name,
                               .con = connection)
 
   } else {
     sql_statement <- glue_sql(common_part,
-                              "AND ivS.Name IN ({survey_name*})",
+                              "AND ivSurvey.Name IN ({survey_name*})",
                               survey_name = survey_name,
                               .con = connection)
   }
