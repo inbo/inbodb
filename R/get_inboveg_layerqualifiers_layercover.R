@@ -77,27 +77,24 @@ get_inboveg_layerqualifier <- function(connection,
   }
 
   common_part <-
-    "SELECT ivS.Name
-    , ivRecording.RecordingGivid
-    , ivRecording.UserReference
-    , ivRLLayer.LayerCode
-    , ftAGV.Description as LayerDescription
-    , ivRLQualifier.QualifierCode
-    , ivRLQualifier.Elucidation
-    , ivRLQualifier.NotSure
+    "SELECT ivSurveyName
+  , ivRecording.RecordingGivid
+  , ivRecording.UserReference
+  , ivRLLayer.LayerCode
+  , ftAGV.Description as LayerDescription
+  , ivRLLayer.CoverCode
+  , ftAGV_01.Description as Percentage
   FROM ivRecording
-    INNER JOIN ivSurvey ivS on ivS.Id = ivRecording.SurveyId
-    LEFT JOIN  ivRLLayer on ivRLLayer.RecordingID = ivRecording.Id
-    LEFT JOIN ivRLQualifier ON ivRLLayer.ID = ivRLQualifier.LayerID
-    LEFT JOIN ivRLResources
-        on ivRLResources.ResourceGIVID = ivRLLayer.LayerResource
-    LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV
-        ON ivRLResources.ListName = ftAGV.ListName COLLATE Latin1_General_CI_AI
-        AND ivRLResources.ActionGroup = ftAGV.ActionGroup
-            COLLATE Latin1_General_CI_AI
-        AND ivRLLayer.LayerCode = ftAGV.Code COLLATE Latin1_General_CI_AI
-        --missing part Layer cover
-
+  INNER JOIN ivSurvey ivS on ivS.Id = ivRecording.SurveyId
+  INNER JOIN  ivRLLayer on ivRLLayer.RecordingID = ivRecording.Id
+  INNER JOIN ivRLResources on ivRLResources.ResourceGIVID = ivRLLayer.LayerResource
+  LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV ON ivRLResources.ListName = ftAGV.ListName COLLATE Latin1_General_CI_AI
+  AND ivRLResources.ActionGroup = ftAGV.ActionGroup COLLATE Latin1_General_CI_AI
+  AND ivRLLayer.LayerCode = ftAGV.code COLLATE Latin1_General_CI_AI
+  INNER JOIN ivRLResources ivRLR_01 on ivRLR_01.ResourceGIVID = ivRLLayer.CoverResource
+  LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV_01 ON ivRLR_01.ListName = ftAGV_01.ListName COLLATE Latin1_General_CI_AI
+  AND ivRLR_01.ActionGroup = ftAGV_01.ActionGroup COLLATE Latin1_General_CI_AI
+  AND ivRLLayer.CoverCode = ftAGV_01.code COLLATE Latin1_General_CI_AI
   WHERE 1 = 1"
 
 
