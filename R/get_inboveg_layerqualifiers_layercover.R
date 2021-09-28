@@ -52,7 +52,7 @@
 #'
 
 
-get_inboveg_layerqualifier <- function(connection,
+get_inboveg_layerqualifier_cover <- function(connection,
                                        survey_name,
                                        multiple = FALSE) {
 
@@ -87,12 +87,16 @@ get_inboveg_layerqualifier <- function(connection,
   FROM ivRecording
   INNER JOIN ivSurvey on ivSurvey.Id = ivRecording.SurveyId
   INNER JOIN  ivRLLayer on ivRLLayer.RecordingID = ivRecording.Id
-  INNER JOIN ivRLResources on ivRLResources.ResourceGIVID = ivRLLayer.LayerResource
-  LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV ON ivRLResources.ListName = ftAGV.ListName COLLATE Latin1_General_CI_AI
+  INNER JOIN ivRLResources
+        on ivRLResources.ResourceGIVID = ivRLLayer.LayerResource
+  LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV
+        ON ivRLResources.ListName = ftAGV.ListName COLLATE Latin1_General_CI_AI
   AND ivRLResources.ActionGroup = ftAGV.ActionGroup COLLATE Latin1_General_CI_AI
   AND ivRLLayer.LayerCode = ftAGV.code COLLATE Latin1_General_CI_AI
-  INNER JOIN ivRLResources ivRLR_01 on ivRLR_01.ResourceGIVID = ivRLLayer.CoverResource
-  LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV_01 ON ivRLR_01.ListName = ftAGV_01.ListName COLLATE Latin1_General_CI_AI
+  INNER JOIN ivRLResources ivRLR_01
+        on ivRLR_01.ResourceGIVID = ivRLLayer.CoverResource
+  LEFT JOIN [syno].[Futon_dbo_ftActionGroupValues] ftAGV_01
+        ON ivRLR_01.ListName = ftAGV_01.ListName COLLATE Latin1_General_CI_AI
   AND ivRLR_01.ActionGroup = ftAGV_01.ActionGroup COLLATE Latin1_General_CI_AI
   AND ivRLLayer.CoverCode = ftAGV_01.code COLLATE Latin1_General_CI_AI
   WHERE 1 = 1"
