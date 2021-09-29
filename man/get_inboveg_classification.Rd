@@ -73,6 +73,7 @@ rm(con)
 Other inboveg: 
 \code{\link{get_inboveg_header}()},
 \code{\link{get_inboveg_layerinfo}()},
+\code{\link{get_inboveg_layerqualifier_cover}()},
 \code{\link{get_inboveg_layerqualifier}()},
 \code{\link{get_inboveg_qualifiers}()},
 \code{\link{get_inboveg_recordings}()},
