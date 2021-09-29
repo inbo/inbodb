@@ -1,0 +1,12 @@
+citHeader("To cite `inbodb` in publications please use:")
+# begin checklist entry
+citEntry(
+  entry = "Manual",
+  title = "inbodb: Connect to and retrieve data from databases on the INBO server. Version 0.0.2",
+  author = c(person(given = "Els", family = "Lommelen"), person(given = "Hans", family = "Van Calster"), person(given = "Els", family = "De Bie"), person(given = "Floris", family = "Vanderhaeghe")),
+  year = 2021,
+  url = "https://github.com/inbo/inbodb",
+  abstract = "A bundle of functions to connect to and retrieve data from databases on the INBO server, with dedicated functions to query some of these databases.",
+  textVersion = "Lommelen, Els; Van Calster, Hans; De Bie, Els; Vanderhaeghe, Floris (2021) inbodb: Connect to and retrieve data from databases on the INBO server. Version 0.0.2. https://github.com/inbo/inbodb, https://inbo.github.io/inbodb/",
+)
+# end checklist entry

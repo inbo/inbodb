@@ -4,8 +4,9 @@
 .Rhistory
 .Rproj.user
 .Ruserdata
+/doc/
+/Meta/
+docs
 inst/doc
 vignettes/*.html
 vignettes/*.R
-/doc/
-/Meta/
