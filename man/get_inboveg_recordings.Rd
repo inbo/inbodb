@@ -19,11 +19,12 @@ on the inbo-sql07-prd server}
 
 \item{survey_name}{A character string or a character vector, depending on
 multiple parameter, giving the name or names of the survey(s) for which you
-want to extract releve information. As default (surey_name = "\%") all surveys are returned.}
+want to extract releve information. As default (surey_name = "\%") all surveys
+are returned.}
 
 \item{user_reference}{A character string or a character vector giving the
-name of a recording for which you want to extract releve information. As default
-(user_reference = "\%") all user-references are returned.}
+name of a recording for which you want to extract releve information.
+As default (user_reference = "\%") all user-references are returned.}
 
 \item{recording_givid}{A character string or a character vector giving
 the unique id of a recording for which you want to extract releve

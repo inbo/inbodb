@@ -6,15 +6,16 @@
 #' or in combination with the unique ID (recordingGIVID) or user reference
 #'
 #' @param user_reference A character string or a character vector giving the
-#' name of a recording for which you want to extract releve information. As default
-#' (user_reference = "%") all user-references are returned.
+#' name of a recording for which you want to extract releve information.
+#' As default (user_reference = "%") all user-references are returned.
 #' @param recording_givid A character string or a character vector giving
 #' the unique id of a recording for which you want to extract releve
 #' information.
 #' As default (recording_givids = "%") all recording_givids are returned.
 #' @param survey_name A character string or a character vector, depending on
 #' multiple parameter, giving the name or names of the survey(s) for which you
-#' want to extract releve information. As default (surey_name = "%") all surveys are returned.
+#' want to extract releve information. As default (surey_name = "%") all surveys
+#' are returned.
 #' @param connection dbconnection with the database 'Cydonia'
 #' on the inbo-sql07-prd server
 #' @param collect If FALSE (the default), a remote tbl object is returned.
@@ -146,11 +147,11 @@ get_inboveg_recordings <- function(
   if (!multiple) {
 
     assert_that(length(survey_name) == 1,
-                msg = "If you want to give multiple survey names, please change multiple  into TRUE")
+                msg = "If you want to give multiple survey names, please change multiple  into TRUE") #nolint
     assert_that(length(recording_givid) == 1,
-                msg = "If you want to give multiple recording givid, please change multiple  into TRUE")
+                msg = "If you want to give multiple recording givid, please change multiple  into TRUE") #nolint
     assert_that(length(user_reference) == 1,
-                msg = "If you want to give multiple user reference, please change multiple  into TRUE")
+                msg = "If you want to give multiple user reference, please change multiple into TRUE") #nolint
 
     sql_statement <- glue_sql(common_part,
                               "AND ivS.Name LIKE {survey_name}

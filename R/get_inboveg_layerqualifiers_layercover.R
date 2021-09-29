@@ -1,11 +1,13 @@
-#' @title Query layer qualifier and cover information of recordings (relevé) from INBOVEG
+#' @title Query layer qualifier and cover information of recordings (relevé)
+#' from INBOVEG
 #'
 #' @description This function queries the INBOVEG database for layer
 #' qualifier and cover information on recordings  for one or more surveys.
 #'
 #' @param survey_name A character string or a character vector, depending on
 #' multiple parameter, giving the name or names of the survey(s) for which you
-#' want to extract layer and cover information. If missing, all surveys are returned.
+#' want to extract layer and cover information. If missing, all surveys are
+#' returned.
 #' @param connection dbconnection with the database 'Cydonia'
 #' on the inbo-sql07-prd server
 #' @param multiple If TRUE, survey_name can take a character vector with

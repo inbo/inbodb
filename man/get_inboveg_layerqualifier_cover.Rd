@@ -2,7 +2,8 @@
 % Please edit documentation in R/get_inboveg_layerqualifiers_layercover.R
 \name{get_inboveg_layerqualifier_cover}
 \alias{get_inboveg_layerqualifier_cover}
-\title{Query layer qualifier and cover information of recordings (relevé) from INBOVEG}
+\title{Query layer qualifier and cover information of recordings (relevé)
+from INBOVEG}
 \usage{
 get_inboveg_layerqualifier_cover(connection, survey_name, multiple = FALSE)
 }
@@ -12,7 +13,8 @@ on the inbo-sql07-prd server}
 
 \item{survey_name}{A character string or a character vector, depending on
 multiple parameter, giving the name or names of the survey(s) for which you
-want to extract layer and cover information. If missing, all surveys are returned.}
+want to extract layer and cover information. If missing, all surveys are
+returned.}
 
 \item{multiple}{If TRUE, survey_name can take a character vector with
 multiple survey names that must match exactly. If FALSE (the default),
