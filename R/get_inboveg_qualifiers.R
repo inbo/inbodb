@@ -1,7 +1,8 @@
 #' @title Query qualifier information of recordings (releve) from INBOVEG
 #'
 #' @description This function queries the INBOVEG database for
-#' qualifier information on recordings  for one or more surveys.
+#' qualifier information (site qualifier or management qualifier)on recordings
+#' for one or more surveys.
 #'
 #' @param survey_name A character string or a character vector, depending on
 #' multiple parameter, giving the name or names of the

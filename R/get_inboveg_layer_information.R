@@ -1,7 +1,7 @@
 #' @title Query layer information of recordings (relevé) from INBOVEG
 #'
 #' @description This function queries the INBOVEG database for layer
-#' information on recordings  for one or more surveys.
+#' information (layer and cover) on recordings  for one or more surveys.
 #'
 #' @param survey_name A character string or a character vector, depending on
 #' multiple parameter, giving the name or names of the survey(s) for which you
