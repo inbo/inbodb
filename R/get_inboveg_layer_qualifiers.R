@@ -30,8 +30,8 @@
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
 #' # get the layer qualifiers from one survey
-#' layerqualifiers_heischraal2012 <-
-#'     get_inboveg_layerqualifier(con, survey_name = "MILKLIM_Heischraal2012")
+#' layerqualifiers_Gagealutea <-
+#'     get_inboveg_layerqualifier(con, survey_name = "GageaLutea_1980")
 #'
 #' # get all layer qualifiers from MILKLIM surveys (partial matching)
 #' layerqualifiers_milkim <-
@@ -39,7 +39,7 @@
 #'
 #' # get layer qualifiers from several specific surveys
 #' layerqualifiers_severalsurveys <- get_inboveg_layerqualifier(con,
-#'   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+#'   survey_name = c("MILKLIM_Overstroming", "NICHE Vlaanderen"),
 #'   multiple = TRUE)
 #'
 #' # get all layer qualifiers of all surveys
