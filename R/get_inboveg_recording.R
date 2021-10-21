@@ -49,32 +49,32 @@
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
 #' # get the recordings from one survey and collect the data
-#' recording_heischraal2012 <- get_inboveg_recordings(con, survey_name =
+#' recording_heischraal2012 <- get_inboveg_recording(con, survey_name =
 #' "MILKLIM_Heischraal2012", collect = TRUE)
 #'
 #' # get all recordings from MILKLIM surveys (partial matching), don't collect
-#' recording_milkim <- get_inboveg_recordings(con, survey_name = "%MILKLIM%",
+#' recording_milkim <- get_inboveg_recording(con, survey_name = "%MILKLIM%",
 #' collect = FALSE)
 #'
 #' # get recordings from several specific surveys
-#' recording_severalsurveys <- get_inboveg_recordings(con, survey_name =
+#' recording_severalsurveys <- get_inboveg_recording(con, survey_name =
 #' c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"), multiple = TRUE,
 #' collect = TRUE)
 #'
 #' # get recordings from several specific recordinggivid
-#' recording_severalgivids <- get_inboveg_recordings(con,
+#' recording_severalgivids <- get_inboveg_recording(con,
 #' recording_givid = c("IV2012081609450300","IV2012081610204607"),
 #' multiple = TRUE, collect = TRUE)
 #'
 #' # get all recordings of all surveys,  don't collect the data
-#' allrecordings <- get_inboveg_recordings(con)
+#' allrecordings <- get_inboveg_recording(con)
 #'
 #' # Close the connection when done
 #' dbDisconnect(con)
 #' rm(con)
 #' }
 
-get_inboveg_recordings <- function(
+get_inboveg_recording <- function(
   connection,
   survey_name = "%",
   user_reference = "%",

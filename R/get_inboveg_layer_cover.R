@@ -29,18 +29,18 @@
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
 #' # get the layer information from one survey
-#' layerinfo_heischraal2012 <- get_inboveg_layerinfo(con, survey_name =
+#' layerinfo_heischraal2012 <- get_inboveg_layer_cover(con, survey_name =
 #' "MILKLIM_Heischraal2012")
 #'
 #' # get all layer qualifiers from MILKLIM surveys (partial matching)
-#' layerinfo_milkim <- get_inboveg_layerinfo(con, survey_name = "%MILKLIM%")
+#' layerinfo_milkim <- get_inboveg_layer_cover(con, survey_name = "%MILKLIM%")
 #'
 #' # get layer qualifiers from several specific surveys
-#' layerinfo_severalsurveys <- get_inboveg_layerinfo(con, survey_name =
+#' layerinfo_severalsurveys <- get_inboveg_layer_cover(con, survey_name =
 #' c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"), multiple = TRUE)
 #'
 #' # get all layer qualifiers of all surveys
-#' all_layerinfo <- get_inboveg_layerinfo(con)
+#' all_layerinfo <- get_inboveg_layer_cover(con)
 #'
 #' # Close the connection when done
 #' dbDisconnect(con)
@@ -49,7 +49,7 @@
 #'
 
 
-get_inboveg_layerinfo <- function(connection,
+get_inboveg_layer_cover <- function(connection,
                                        survey_name,
                                        multiple = FALSE) {
 
