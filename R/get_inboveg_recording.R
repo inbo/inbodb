@@ -236,3 +236,20 @@ get_inboveg_recording <- function(
   }
   return(query_result)
 }
+
+get_inboveg_recordings <- function(
+  connection,
+  survey_name = "%",
+  user_reference = "%",
+  recording_givid = "%",
+  collect = FALSE,
+  multiple = FALSE) {
+
+  .Deprecated("get_inboveg_recording")
+  get_inboveg_recording(connection = connection,
+                        survey_name = survey_name,
+                        user_reference = user_reference,
+                        recording_givid = recording_givid,
+                        collect = collect,
+                        multiple = multiple)
+}
