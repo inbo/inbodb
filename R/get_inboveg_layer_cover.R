@@ -80,7 +80,7 @@ common_part <-
     , ivRLLayer.LayerCode
     , ftAGV.Description as LayerDescription
     , ivRLLayer.CoverCode
-    , ftAGV_01.Description as Percentage,
+    , ftAGV_01.Description as Percentage
     , ivRLLayer.MeanHeightCM
   FROM ivRecording
     INNER JOIN ivSurvey ivS on ivS.Id = ivRecording.SurveyId
