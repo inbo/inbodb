@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_inboveg_layer_cover.R
 \name{get_inboveg_layer_cover}
 \alias{get_inboveg_layer_cover}
-\title{Query layer information of recordings (relevé) from INBOVEG}
+\title{Query layer information of the cover for recordings (relevé) from INBOVEG}
 \usage{
 get_inboveg_layer_cover(connection, survey_name, multiple = FALSE)
 }
@@ -26,7 +26,7 @@ Coverpercentage and Mean hight (cm)
 }
 \description{
 This function queries the INBOVEG database for layer
-information (layer and cover) on recordings  for one or more surveys.
+information (layer and cover) on recordings for one or more surveys.
 }
 \examples{
 \dontrun{

@@ -12,7 +12,7 @@ on the inbo-sql07-prd server}
 
 \item{survey_name}{A character string or a character vector, depending on
 multiple parameter, giving the name or names of the survey(s) for which you
-want to extract recordings information. If missing, all surveys are returned.}
+want to extract information. If missing, all surveys are returned.}
 
 \item{multiple}{If TRUE, survey_name can take a character vector with
 multiple survey names that must match exactly. If FALSE (the default),
