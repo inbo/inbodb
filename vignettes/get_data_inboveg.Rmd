@@ -167,7 +167,7 @@ recording_heischraal2012
 Here is how to get the relevé for a specific RecordingGivid:
 
 ```{r, eval = FALSE}
-recording_specific_givid <- get_inboveg_recordings(con, 
+recording_specific_givid <- get_inboveg_recording(con, 
                                     recording_givid = "IV2012080609161322",
                                     collect = TRUE)
 ```
@@ -175,7 +175,7 @@ recording_specific_givid <- get_inboveg_recordings(con,
 Or for multiple RecordingGivid, make sure to set `multiple = TRUE`. 
 
 ```{r}
-recording_specific_givid <- get_inboveg_recordings(con, 
+recording_specific_givid <- get_inboveg_recording(con, 
                  recording_givid = c("IV2012080609161322", "IV2012081611384756"),
                  multiple = TRUE,
                  collect = TRUE)
