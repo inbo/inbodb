@@ -5,7 +5,7 @@
 #'
 #' @param survey_name A character string or a character vector, depending on
 #' multiple parameter, giving the name or names of the survey(s) for which you
-#' want to extract recordings information. If missing, all surveys are returned.
+#' want to extract information. If missing, all surveys are returned.
 #' @param connection dbconnection with the database 'Cydonia'
 #' on the inbo-sql07-prd server
 #' @param multiple If TRUE, survey_name can take a character vector with

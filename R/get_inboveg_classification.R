@@ -1,9 +1,9 @@
 #' @title Query classification information from INBOVEG
 #'
 #' @description This function queries the INBOVEG database for information
-#' on the field classification (N2000 or BWK-code) of the releve (recording)
-#' for one or more survey(s) by the name of the survey. See the examples
-#' for how to get information for all surveys.
+#' on the field classification (N2000 or local vegetation ype, e.g. BWK-code)
+#' of the releve (recording) for one or more survey(s) by the name of the survey.
+#' See the examples for how to get information for all surveys.
 #'
 #' @param survey_name A character string or a character vector
 #' giving the name or names of the survey(s) for which you want to extract
@@ -24,8 +24,8 @@
 #' environment.
 #'
 #' @return A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-#' = TRUE) with variables Id, SurveyName, Classification-code, BWK or
-#' N2000-list, LocalClassification, Description of the Habitattype, Cover-code,
+#' = TRUE) with variables Id, SurveyName, Classification-code, vegetation type/BWK
+#' or N2000-list, LocalClassification, Description of the Habitattype, Cover-code,
 #' Cover in percentage.
 #'
 #' @importFrom glue glue_sql
