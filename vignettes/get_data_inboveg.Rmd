@@ -80,8 +80,8 @@ Three examples are given, this can be used as base to continue selecting the dat
 Get information of a specific survey and collect data.
 
 ```{r examples_survey}
-survey_info <- get_inboveg_survey(con, 
-                              survey_name = "OudeLanden_1979", 
+survey_info <- get_inboveg_survey(con,
+                              survey_name = "OudeLanden_1979",
                               collect = TRUE)
 ```
 
@@ -104,7 +104,7 @@ class(allsurveys)
 If only a part of the survey name is known, you can make use of wildcards such as `%`.
 
 ```{r}
-partsurveys <- get_inboveg_survey(con, 
+partsurveys <- get_inboveg_survey(con,
                               survey_name = "%MILKLIM%",
                               collect = TRUE)
 ```
@@ -122,7 +122,7 @@ Three examples are given, this can be used as base to continue selecting the dat
 Get header information from a specific survey and a specific recording type and collect the data:
 
 ```{r examples_header}
-header_info <- get_inboveg_header(con, 
+header_info <- get_inboveg_header(con,
                               survey_name = "OudeLanden_1979",
                               rec_type = "Classic",
                               collect = TRUE)
