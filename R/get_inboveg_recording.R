@@ -176,7 +176,8 @@ get_inboveg_recording <- function(
                                 recording_givid = recording_givid,
                                 .con = connection)
     }
-    if ((survey_name == "%") & !(length(user_reference) == 1 & user_reference[1] == "%") &
+    if ((length(survey_name) == 1 & survey_name[1] == "%") &
+        !(length(user_reference) == 1 & user_reference[1] == "%") &
         !(length(recording_givid) == 1 & recording_givid[1] == "%")) {
       sql_statement <- glue_sql(common_part,
                                 "AND (ivR.[RecordingGivid] IN
@@ -186,7 +187,8 @@ get_inboveg_recording <- function(
                                 recording_givid = recording_givid,
                                 .con = connection)
     }
-    if ((survey_name == "%") & (user_reference == "%") &
+    if ((length(survey_name) == 1 & survey_name[1] == "%") &
+        (length(user_reference) == 1 & user_reference[1] == "%") &
         !(length(recording_givid) == 1 & recording_givid[1] == "%")) {
       sql_statement <- glue_sql(common_part,
                                 "AND ivR.[RecordingGivid] IN
@@ -194,22 +196,24 @@ get_inboveg_recording <- function(
                                 recording_givid = recording_givid,
                                 .con = connection)
     }
-    if ((survey_name == "%") & !(length(user_reference) == 1 & user_reference[1] == "%") &
-        (recording_givid == "%")) {
+    if ((length(survey_name) == 1 & survey_name[1] == "%") & !(length(user_reference) == 1 & user_reference[1] == "%") &
+        (length(recording_givid) == 1 & recording_givid[1] == "%")) {
       sql_statement <- glue_sql(common_part,
                                 "AND ivR.UserReference IN ({user_reference*})",
                                 user_reference = user_reference,
                                 .con = connection)
     }
-    if ( !(length(survey_name) == 1 & survey_name[1] == "%") & (user_reference == "%") &
-        (recording_givid == "%")) {
+    if (!(length(survey_name) == 1 & survey_name[1] == "%") &
+        (length(user_reference) == 1 & user_reference[1] == "%") &
+        (length(recording_givid) == 1 & recording_givid[1] == "%")) {
       sql_statement <- glue_sql(common_part,
                                 "AND ivS.Name IN ({survey_name*})",
                                 survey_name = survey_name,
                               .con = connection)
     }
-    if ( !(length(survey_name) == 1 & survey_name[1] == "%") & (user_reference == "%") &
-         !(length(recording_givid) == 1 & recording_givid[1] == "%")) {
+    if (!(length(survey_name) == 1 & survey_name[1] == "%") &
+        (length(user_reference) == 1 & user_reference[1] == "%") &
+        !(length(recording_givid) == 1 & recording_givid[1] == "%")) {
       sql_statement <- glue_sql(common_part,
                                 "AND ivS.Name IN ({survey_name*})
                                 AND ivR.[RecordingGivid] IN
@@ -219,7 +223,7 @@ get_inboveg_recording <- function(
                                 .con = connection)
     }
     if ( !(length(survey_name) == 1 & survey_name[1] == "%") & !(length(user_reference) == 1 & user_reference[1] == "%") &
-       (recording_givid  == "%")) {
+        (length(recording_givid) == 1 & recording_givid[1] == "%")) {
       sql_statement <- glue_sql(common_part,
                                 "AND ivS.Name IN ({survey_name*})
                                 AND ivR.UserReference IN ({user_reference*})",
