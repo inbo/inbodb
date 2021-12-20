@@ -1,4 +1,5 @@
-#' @title Query layer information of the cover for recordings (relevé) from INBOVEG
+#' @title Query layer information of the cover for recordings (relevé)
+#' from INBOVEG
 #'
 #' @description This function queries the INBOVEG database for layer
 #' information (layer and cover) on recordings for one or more surveys.
