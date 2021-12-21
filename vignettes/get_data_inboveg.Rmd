@@ -356,19 +356,19 @@ The function `get_inboveg_relation_recording` queries the INBOVEG database for r
 Get all parent-child-relations from N2000meetnet surveys (partial matching):
 
 ```{r}
-relations_N2000meetnet <- get_inboveg_relation_recording(con,
+relations_n2000meetnet <- get_inboveg_relation_recording(con,
                                                 survey_name = "%N2000meetnet%")
 
-relations_N2000meetnet
+relations_n2000meetnet
 ```
 
 ```{r echo=FALSE}
-output_relations_N2000meetnet <- capture.output(relations_N2000meetnet)
+output_relations_n2000meetnet <- capture.output(relations_n2000meetnet)
 ```
 
 ```{r echo=FALSE, eval=TRUE}
 if (!database_access) {
-  cat(output_relations_N2000meetnet, sep = "\n")
+  cat(output_relations_n2000meetnet, sep = "\n")
 }
 ```
 
@@ -403,4 +403,3 @@ rm(con)
 rm(database_access)
 save.image(file = "get_data_inboveg_results.Rda")
 ```
-
