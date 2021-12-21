@@ -234,6 +234,9 @@ get_inboveg_recording <- function(
                                 user_reference = user_reference,
                                 .con = connection)
     }
+    if (!exists("sql_statement")) {
+      stop("When choosing multiple = TRUE, please add a (vector of) value(s) for at least one of the following variables: survey_name, user_reference or recording_givid.") #nolint
+    }
 
   }
 
