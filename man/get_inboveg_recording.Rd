@@ -38,8 +38,8 @@ collected (fetched) from the database and brought into memory of the working
 environment.}
 
 \item{multiple}{If TRUE survey_name, user_reference or recording_givid can
-take a character vector with multiple survey names, user references or recording_givids
-that must match exactly.
+take a character vector with multiple survey names, user references or
+recording_givids that must match exactly.
 If FALSE (the default) survey_name , user_reference or recording_givid must
 be a single character string (one survey name, or one user_reference or one
 recording_givid). Only survey_name can include wildcarts to allow partial
