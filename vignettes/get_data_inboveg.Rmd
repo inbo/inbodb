@@ -155,7 +155,7 @@ Several examples are given, this can be used as base to continue selecting the d
 First, we show how to get the relevés from one survey and collect the data:
 
 ```{r examples_recordings}
-recording_heischraal2012 <- get_inboveg_recording(con, 
+recording_heischraal2012 <- get_inboveg_recording(con,
                                       survey_name = "MILKLIM_Heischraal2012",
                                       collect = TRUE)
 ```
@@ -167,7 +167,7 @@ recording_heischraal2012
 Here is how to get the relevé for a specific RecordingGivid:
 
 ```{r, eval = FALSE}
-recording_specific_givid <- get_inboveg_recording(con, 
+recording_specific_givid <- get_inboveg_recording(con,
                                     recording_givid = "IV2012080609161322",
                                     collect = TRUE)
 ```
@@ -175,7 +175,7 @@ recording_specific_givid <- get_inboveg_recording(con,
 Or for multiple RecordingGivid, make sure to set `multiple = TRUE`. 
 
 ```{r}
-recording_specific_givid <- get_inboveg_recording(con, 
+recording_specific_givid <- get_inboveg_recording(con,
                 recording_givid = c("IV2012080609161322", "IV2012081611384756"),
                 multiple = TRUE,
                 collect = TRUE)
@@ -187,7 +187,7 @@ The above is very useful in tandem with `get_inboveg_header()` to first search f
 Or based on a user reference:
 
 ```{r, eval = FALSE}
-recording_specific_userref <- get_inboveg_recording(con, 
+recording_specific_userref <- get_inboveg_recording(con,
                                                   user_reference = "HS_1001",
                                                   collect = TRUE)
 ```
@@ -224,7 +224,7 @@ Two  examples are given, this can be used as base to continue selecting the data
 Get a specific classification from a survey and collect the data:
 
 ```{r examples_classification}
-classif_info <- get_inboveg_classification(con, 
+classif_info <- get_inboveg_classification(con,
                               survey_name = "MILKLIM_Heischraal2012",
                               classif = "4010",
                               collect = TRUE)
@@ -276,7 +276,7 @@ qualifiers_milkim <- get_inboveg_qualifier(con,
 Get qualifiers from several specific surveys with `multiple = TRUE`:
 
 ```{r, eval = FALSE}
-qualifiers_severalsurveys <- get_inboveg_qualifier(con, 
+qualifiers_severalsurveys <- get_inboveg_qualifier(con,
                 survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
                 multiple = TRUE)
 ```
@@ -293,21 +293,21 @@ The function `get_inboveg_layer_cover` queries the INBOVEG database for cover in
 Get the layer cover information from one survey
 
 ```{r, eval = FALSE}
-layerinfo_heischraal2012 <- get_inboveg_layer_cover(con, 
+layerinfo_heischraal2012 <- get_inboveg_layer_cover(con,
                                         survey_name = "MILKLIM_Heischraal2012")
 ```
 
 Get all layer cover information from MILKLIM surveys (partial matching)
 
 ```{r, eval = FALSE}
-layerinfo_milkim <- get_inboveg_layer_cover(con, 
+layerinfo_milkim <- get_inboveg_layer_cover(con,
                                           survey_name = "%MILKLIM%")
 ```
 
 Get layer cover information from several specific surveys
 
 ```{r, eval = FALSE}
-layerinfo_severalsurveys <- get_inboveg_layer_cover(con, 
+layerinfo_severalsurveys <- get_inboveg_layer_cover(con,
                   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
                   multiple = TRUE)
 ```
@@ -324,21 +324,21 @@ The function `get_inboveg_layer_qualifier`queries the INBOVEG database for layer
 Get the layer qualifiers from one survey
 
 ```{r, eval = FALSE}
-layerqualifier_gagealutea <- get_inboveg_layer_qualifier(con, 
+layerqualifier_gagealutea <- get_inboveg_layer_qualifier(con,
                                               survey_name = "GageaLutea_1980")
 ```
 
 Get all layer qualifiers from MILKLIM surveys (partial matching)
 
 ```{r, eval = FALSE}
-layerqualifiers_milkim <- get_inboveg_layer_qualifier(con, 
+layerqualifiers_milkim <- get_inboveg_layer_qualifier(con,
                                                 survey_name = "%MILKLIM%")
 ```
 
 Get layer qualifiers from several specific surveys
 
 ```{r, eval = FALSE}
-layerqualifiers_severalsurveys <- get_inboveg_layer_qualifier(con, 
+layerqualifiers_severalsurveys <- get_inboveg_layer_qualifier(con,
                   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
                   multiple = TRUE)
 ```
@@ -356,7 +356,7 @@ The function `get_inboveg_relation_recording` queries the INBOVEG database for r
 Get all parent-child-relations from N2000meetnet surveys (partial matching):
 
 ```{r}
-relations_N2000meetnet <- get_inboveg_relation_recording(con, 
+relations_N2000meetnet <- get_inboveg_relation_recording(con,
                                                 survey_name = "%N2000meetnet%")
 
 relations_N2000meetnet
@@ -375,7 +375,7 @@ if (!database_access) {
 Get the parent-child-relations from several specific surveys:
 
 ```{r, eval = FALSE}
-relations_severalsurveys <- get_inboveg_relation_recording(con, 
+relations_severalsurveys <- get_inboveg_relation_recording(con,
           survey_name =  c("DeBlankaart-1985-Beheer", "N2000meetnet_Grasland"), 
           multiple = TRUE)
 ```
