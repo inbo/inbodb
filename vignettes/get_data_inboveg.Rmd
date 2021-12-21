@@ -376,7 +376,7 @@ Get the parent-child-relations from several specific surveys:
 
 ```{r, eval = FALSE}
 relations_severalsurveys <- get_inboveg_relation_recording(con,
-          survey_name =  c("DeBlankaart-1985-Beheer", "N2000meetnet_Grasland"), 
+          survey_name =  c("DeBlankaart-1985-Beheer", "N2000meetnet_Grasland"),
           multiple = TRUE)
 ```
 
