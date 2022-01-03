@@ -1,4 +1,4 @@
-# inbodb
+# inbodb <img src="man/figures/hexsticker.svg" align="right" alt="A hexagon with the word inbodb" width="120" />
 
 Connect to and retrieve data from databases on the INBO server
 
