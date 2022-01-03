@@ -1,5 +1,5 @@
 Package: inbodb
-Title: Connect to and retrieve data from databases on the INBO server
+Title: Connect to and Retrieve Data from Databases on the INBO Server
 Version: 0.0.2
 Authors@R: c(
     person("Els", "Lommelen", , "els.lommelen@inbo.be", role = c("aut", "cre"),
