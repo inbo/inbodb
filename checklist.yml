@@ -3,3 +3,6 @@ package: yes
 allowed:
   warnings: []
   notes: []
+citation_roles:
+- aut
+- cre
