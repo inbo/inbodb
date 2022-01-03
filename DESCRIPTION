@@ -17,7 +17,7 @@ Authors@R: c(
 Description: A bundle of functions to connect to and retrieve data from
     databases on the INBO server, with dedicated functions to query some
     of these databases.
-License: MIT + file LICENSE
+License: GPL-3
 URL: https://github.com/inbo/inbodb, https://inbo.github.io/inbodb/
 BugReports: https://github.com/inbo/inbodb/issues
 Imports:
