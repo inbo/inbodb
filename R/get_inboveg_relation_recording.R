@@ -37,19 +37,21 @@
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
 #' # get the Parent-Child-relations from one survey
-#' relations_N2000meetnet_Grasland <- get_inboveg_relation(con,
-#' survey_name = "N2000meetnet_Grasland")
+#' relations_N2000meetnet_Grasland <- get_inboveg_relation_recording(con,
+#'     survey_name = "N2000meetnet_Grasland")
 #'
 #' # get all Parent-Child-relations from N2000meetnet surveys (partial matching)
 #' relations_N2000meetnet <-
-#'     get_inboveg_relation(con, survey_name = "%N2000meetnet%")
+#'     get_inboveg_relation_recording(con, survey_name = "%N2000meetnet%")
 #'
 #' # get Parent-Child-relations from several specific surveys
-#' relations_severalsurveys <- get_inboveg_relation(con, survey_name =
-#' c("DeBlankaart-1985-Beheer", "N2000meetnet_Grasland"), multiple = TRUE)
+#' relations_severalsurveys <-
+#'    get_inboveg_relation_recording(con,
+#'    survey_name = c("DeBlankaart-1985-Beheer", "N2000meetnet_Grasland"),
+#'    multiple = TRUE)
 #'
 #' # get all Parent-Child-relations of all relevant surveys
-#' allrelations <- get_inboveg_relation(con)
+#' allrelations <- get_inboveg_relation_recording(con)
 #'
 #' # Close the connection when done
 #' dbDisconnect(con)
@@ -57,7 +59,7 @@
 #' }
 #'
 
-get_inboveg_relation <- function(connection,
+get_inboveg_relation_recording <- function(connection,
                              survey_name,
                              multiple = FALSE,
                              collect = FALSE) {
@@ -121,4 +123,16 @@ if (!isTRUE(collect)) {
   query_result <- collect(query_result)
   return(query_result)
 }
+}
+
+get_inboveg_relation <- function(connection,
+                                 survey_name,
+                                 multiple = FALSE,
+                                 collect = FALSE) {
+
+  .Deprecated("get_inboveg_relation_recording")
+  get_inboveg_relation_recording(connection = connection,
+                                 survey_name = survey_name,
+                                 multiple = multiple,
+                                 collect = collect)
 }

@@ -1,7 +1,8 @@
 #' @title Query qualifier information of recordings (releve) from INBOVEG
 #'
 #' @description This function queries the INBOVEG database for
-#' qualifier information on recordings  for one or more surveys.
+#' qualifier information (site qualifier or management qualifier)on recordings
+#' for one or more surveys.
 #'
 #' @param survey_name A character string or a character vector, depending on
 #' multiple parameter, giving the name or names of the
@@ -35,19 +36,19 @@
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
 #' # get the qualifiers from one survey
-#' qualifiers_heischraal2012 <- get_inboveg_qualifiers(con, survey_name =
+#' qualifiers_heischraal2012 <- get_inboveg_qualifier(con, survey_name =
 #' "MILKLIM_Heischraal2012")
 #'
 #' # get all site qualifiers (SQ) from MILKLIM surveys (partial matching)
-#' qualifiers_milkim <- get_inboveg_qualifiers(con, survey_name = "%MILKLIM%",
+#' qualifiers_milkim <- get_inboveg_qualifier(con, survey_name = "%MILKLIM%",
 #' qualifier_type = "SQ")
 #'
 #' # get qualifiers from several specific surveys
-#' qualifiers_severalsurveys <- get_inboveg_qualifiers(con, survey_name =
+#' qualifiers_severalsurveys <- get_inboveg_qualifier(con, survey_name =
 #' c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"), multiple = TRUE)
 #'
 #' # get all qualifiers of all surveys
-#' allqualifiers <- get_inboveg_qualifiers(con)
+#' allqualifiers <- get_inboveg_qualifier(con)
 #'
 #' # Close the connection when done
 #' dbDisconnect(con)
@@ -56,7 +57,7 @@
 #'
 
 
-get_inboveg_qualifiers <- function(connection,
+get_inboveg_qualifier <- function(connection,
                                survey_name,
                                qualifier_type,
                                multiple = FALSE) {
@@ -162,4 +163,17 @@ get_inboveg_qualifiers <- function(connection,
 
   return(query_result)
 
+}
+
+
+get_inboveg_qualifiers <- function(connection,
+                                   survey_name,
+                                   qualifier_type,
+                                   multiple = FALSE) {
+
+  .Deprecated("get_inboveg_qualifier")
+  get_inboveg_qualifier(connection = connection,
+                        survey_name = survey_name,
+                        qualifier_type = qualifier_type,
+                        multiple = multiple)
 }

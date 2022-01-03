@@ -46,8 +46,8 @@ cm), VagueDateType, VagueDateBegin, VagueDateEnd, SurveyId, RecTypeID.
 \description{
 This function queries the INBOVEG database for header
 information (metadata for a vegetation-recording or releve) for one or more
-surveys and
-the recorder type. All records, also with 'work needed' are selected.
+surveys and the recorder type. All records, also with 'work needed'
+are selected.
 See the examples for how to get information for all surveys.
 }
 \examples{
@@ -75,11 +75,11 @@ rm(con)
 \seealso{
 Other inboveg: 
 \code{\link{get_inboveg_classification}()},
-\code{\link{get_inboveg_layerinfo}()},
-\code{\link{get_inboveg_layerqualifier}()},
-\code{\link{get_inboveg_qualifiers}()},
-\code{\link{get_inboveg_recordings}()},
-\code{\link{get_inboveg_relation}()},
+\code{\link{get_inboveg_layer_cover}()},
+\code{\link{get_inboveg_layer_qualifier}()},
+\code{\link{get_inboveg_qualifier}()},
+\code{\link{get_inboveg_recording}()},
+\code{\link{get_inboveg_relation_recording}()},
 \code{\link{get_inboveg_survey}()}
 }
 \concept{inboveg}
