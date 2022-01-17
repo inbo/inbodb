@@ -1,3 +1,14 @@
+<!-- badges: start -->
+
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Lifecycle:maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing-1)
+![r-universe
+name](https://inbo.r-universe.dev/badges/:name?color=c04384)
+![r-universe package](https://inbo.r-universe.dev/badges/inbodb)
+<!-- badges: end -->
+
 # inbodb <img src="man/figures/hexsticker.svg" align="right" alt="A hexagon with the word inbodb" width="120" />
 
 Connect to and retrieve data from databases on the INBO server
