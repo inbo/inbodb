@@ -64,14 +64,13 @@ jobs:
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
-          gem uninstall curb
           sudo apt install libcurl4-openssl-dev
-          bundle install
 
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
+          install.packages("curl")
         shell: Rscript {0}
 
       - name: Session info
