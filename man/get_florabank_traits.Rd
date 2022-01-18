@@ -7,8 +7,8 @@
 get_florabank_traits(connection, trait_name, collect = FALSE)
 }
 \arguments{
-\item{connection}{A connection to the florabank database. See the example section
-for how to connect and disconnect to the database.}
+\item{connection}{A connection to the florabank database. See the example
+section for how to connect and disconnect to the database.}
 
 \item{trait_name}{A (part of) a trait name for which you want to get the
 associated taxon-specific trait values. If this is missing, the function
@@ -30,14 +30,12 @@ The first four variables identify the taxon, the latter five variables relate
 to the taxon traits.
 }
 \description{
-This function takes as input (part of) a taxon trait name, queries the florabank
-and returns the taxon trait values in a tidy data format
+This function takes as input (part of) a taxon trait name, queries the
+florabank and returns the taxon trait values in a tidy data format
 }
 \examples{
 \dontrun{
 library(inbodb)
-library(DBI)
-library(odbc)
 library(dplyr)
 # connect to florabank
 db_connectie <- connect_inbo_dbase("D0021_00_userFlora")
@@ -47,13 +45,15 @@ fb_ellenberg <- get_florabank_traits(db_connectie, "llenberg")
 # collect the data
 fb_ellenberg <- fb_ellenberg \%>\% collect()
 # the same can be done by using the collect parameter
-fb_ellenberg <- get_florabank_traits(db_connectie, "llenberg", collect = TRUE)
+fb_ellenberg <-
+  get_florabank_traits(db_connectie, "llenberg", collect = TRUE)
 
 # get all red lists via partial matching
 fb_rodelijsten <- get_florabank_traits(db_connectie, "rode")
 
 # get only the red list for vascular plant species
-fb_rodelijstvaatplanten <- get_florabank_traits(db_connectie, "Rode lijst Vaatplanten")
+fb_rodelijstvaatplanten <-
+  get_florabank_traits(db_connectie, "Rode lijst Vaatplanten")
 
 #if the trait_name argument is missing, a list of possible names is printed
 get_florabank_traits(db_connectie)

@@ -24,8 +24,9 @@ A remote tbl object (collect = FALSE) or a tibble dataframe (collect
 = TRUE) with variables Id, Name, Description, Owner and Creator.
 }
 \description{
-This function queries the INBOVEG database for survey information
-(metadata about surveys) for one or more survey(s) by the name of the survey.
+This function queries the INBOVEG database for survey
+information (metadata about surveys) for one or more survey(s) by the name
+of the survey.
 See the examples for how to get information for all surveys.
 }
 \examples{
@@ -49,10 +50,10 @@ rm(con)
 Other inboveg: 
 \code{\link{get_inboveg_classification}()},
 \code{\link{get_inboveg_header}()},
-\code{\link{get_inboveg_layerinfo}()},
-\code{\link{get_inboveg_layerqualifier}()},
-\code{\link{get_inboveg_qualifiers}()},
-\code{\link{get_inboveg_recordings}()},
-\code{\link{get_inboveg_relation}()}
+\code{\link{get_inboveg_layer_cover}()},
+\code{\link{get_inboveg_layer_qualifier}()},
+\code{\link{get_inboveg_qualifier}()},
+\code{\link{get_inboveg_recording}()},
+\code{\link{get_inboveg_relation_recording}()}
 }
 \concept{inboveg}

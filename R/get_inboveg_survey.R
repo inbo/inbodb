@@ -1,7 +1,8 @@
 #' @title Query survey information from INBOVEG
 #'
-#' @description This function queries the INBOVEG database for survey information
-#' (metadata about surveys) for one or more survey(s) by the name of the survey.
+#' @description This function queries the INBOVEG database for survey
+#' information (metadata about surveys) for one or more survey(s) by the name
+#' of the survey.
 #' See the examples for how to get information for all surveys.
 #'
 #' @param survey_name A character vector giving the names of the surveys for

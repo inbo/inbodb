@@ -1,9 +1,12 @@
-.Rproj.user
-.Rhistory
+*.html
+.httr-oauth
 .RData
+.Rhistory
+.Rproj.user
 .Ruserdata
+/doc/
+/Meta/
+docs
 inst/doc
-doc
-Meta
 vignettes/*.html
 vignettes/*.R
