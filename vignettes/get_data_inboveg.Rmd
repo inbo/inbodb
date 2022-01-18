@@ -351,7 +351,7 @@ alllayerqualifiers <- get_inboveg_layer_qualifier(con)
 
 ## Parent-child relationships between recordings
 
-The function `get_inboveg_relation_recording` queries the INBOVEG database for relational information on recordings for one or more surveys based on parent (classic-chain/bucket) and Child (classic) relationships.
+The function `get_inboveg_relation_recording()` queries the INBOVEG database for relational information on recordings for one or more surveys based on parent (classic-chain/bucket) and Child (classic) relationships.
 
 Get all parent-child-relations from N2000meetnet surveys (partial matching):
 
