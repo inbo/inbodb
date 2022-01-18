@@ -319,7 +319,7 @@ all_layerinfo <- get_inboveg_layer_cover(con)
 ```
 
 ## Layer qualifiers
-The function `get_inboveg_layer_qualifier`queries the INBOVEG database for layer qualifier information on recordings  for one or more surveys.
+The function `get_inboveg_layer_qualifier()`queries the INBOVEG database for layer qualifier information on recordings  for one or more surveys.
 
 Get the layer qualifiers from one survey
 
