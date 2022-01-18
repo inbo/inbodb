@@ -11,8 +11,8 @@
 #'
 #' @param database_name char Name of the INBO database you want to connect
 #' @param autoconvert_utf8 Should the encoding of the tables that are retrieved
-#' from the database be adapted to ensure correct presentation?  Defaults to
-#' TRUE.
+#' from the database be adapted to ensure correct presentation?
+#' Defaults to TRUE.
 #'
 #' @return odbc connection
 #'
