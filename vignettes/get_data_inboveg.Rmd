@@ -148,7 +148,7 @@ all_header_info <- get_inboveg_header(con)
 
 
 ## Recording information
-The function  `get_inboveg_recording` queries the INBOVEG database for relevé information (which species were recorded in which plots and in which vegetation layers with which cover) for one or more surveys.
+The function  `get_inboveg_recording()` queries the INBOVEG database for relevé information (which species were recorded in which plots and in which vegetation layers with which cover) for one or more surveys.
 
 Several examples are given, this can be used as base to continue selecting the data you require.
 
@@ -251,7 +251,7 @@ all_codes <- get_inboveg_classification(con)
 
 
 ## Qualifiers information
-The function `get_inboveg_qualifier`queries the INBOVEG database for qualifier information on recordings for one or more surveys. 
+The function `get_inboveg_qualifier()`queries the INBOVEG database for qualifier information on recordings for one or more surveys. 
 These qualifiers give information on management (management qualifier 'MQ') or location description (site qualifier'SQ').
 
 Get the qualifiers from one survey:
@@ -319,7 +319,7 @@ all_layerinfo <- get_inboveg_layer_cover(con)
 ```
 
 ## Layer qualifiers
-The function `get_inboveg_layer_qualifier`queries the INBOVEG database for layer qualifier information on recordings  for one or more surveys.
+The function `get_inboveg_layer_qualifier()`queries the INBOVEG database for layer qualifier information on recordings  for one or more surveys.
 
 Get the layer qualifiers from one survey
 
@@ -351,7 +351,7 @@ alllayerqualifiers <- get_inboveg_layer_qualifier(con)
 
 ## Parent-child relationships between recordings
 
-The function `get_inboveg_relation_recording` queries the INBOVEG database for relational information on recordings for one or more surveys based on parent (classic-chain/bucket) and Child (classic) relationships.
+The function `get_inboveg_relation_recording()` queries the INBOVEG database for relational information on recordings for one or more surveys based on parent (classic-chain/bucket) and Child (classic) relationships.
 
 Get all parent-child-relations from N2000meetnet surveys (partial matching):
 
