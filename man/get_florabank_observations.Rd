@@ -34,7 +34,7 @@ A dataframe with the following variables: "NaamNederlands",
 \description{
 This function takes as input a character vector with one or more names of
 species either as scientific names and/or Dutch names. By default (fixed =
-FALSE), partial matching will be used (the names are prepended with appended
+FALSE), partial matching will be used (the names are prepended and appended
 with \%).
 The function queries the florabank, and returns a dataframe with observation
 level information about the matching taxa.
