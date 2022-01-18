@@ -148,7 +148,7 @@ all_header_info <- get_inboveg_header(con)
 
 
 ## Recording information
-The function  `get_inboveg_recording` queries the INBOVEG database for relevé information (which species were recorded in which plots and in which vegetation layers with which cover) for one or more surveys.
+The function  `get_inboveg_recording()` queries the INBOVEG database for relevé information (which species were recorded in which plots and in which vegetation layers with which cover) for one or more surveys.
 
 Several examples are given, this can be used as base to continue selecting the data you require.
 
