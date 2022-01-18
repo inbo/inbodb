@@ -162,7 +162,7 @@ on_connection_opened <- function(connection, code, type) {
         },
 
         # table preview code
-        previewObject = function(rowLimit, ...) { #nolint
+        previewObject <- function(rowLimit, ...) { #nolint: object_name_linter.
             odbcPreviewObject(connection, rowLimit, ...)
         },
 
