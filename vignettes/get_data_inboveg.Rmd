@@ -251,7 +251,7 @@ all_codes <- get_inboveg_classification(con)
 
 
 ## Qualifiers information
-The function `get_inboveg_qualifier`queries the INBOVEG database for qualifier information on recordings for one or more surveys. 
+The function `get_inboveg_qualifier()`queries the INBOVEG database for qualifier information on recordings for one or more surveys. 
 These qualifiers give information on management (management qualifier 'MQ') or location description (site qualifier'SQ').
 
 Get the qualifiers from one survey:
