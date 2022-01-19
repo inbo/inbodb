@@ -59,6 +59,11 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
         warning("The 'ODBC Driver for SQL Server' is missing. Please install it or contact your system administrator.") #nolint
         drivers_sql_native <- drivers_sql[grepl("Native", drivers_sql)]
         sql_driver <- tail(sort(drivers_sql_native), 1)
+        if (length(sql_driver) == 0) {
+          warning("The 'SQL Server Native Client' driver is also missing.") #nolint
+          drivers_sql_server <- drivers_sql[grepl("SQL Server", drivers_sql)]
+          sql_driver <- tail(sort(drivers_sql_server), 1)
+        }
     }
 
     # connect to database
