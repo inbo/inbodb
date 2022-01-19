@@ -6,11 +6,13 @@
 #' The function can only be used from within the INBO network.
 #'
 #' For more information, refer to
-#' \href{https://inbo.github.io/tutorials/tutorials/r_database_access/}{this tutorial}.
+#' \href{https://inbo.github.io/tutorials/tutorials/r_database_access/}{this
+#' tutorial}.
 #'
 #' @param database_name char Name of the INBO database you want to connect
 #' @param autoconvert_utf8 Should the encoding of the tables that are retrieved
-#' from the database be adapted to ensure correct presentation?  Defaults to TRUE.
+#' from the database be adapted to ensure correct presentation?
+#' Defaults to TRUE.
 #'
 #' @return odbc connection
 #'
@@ -40,10 +42,10 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
     # datawarehouse databases (sql08) start with an M, S or W; most
     # transactional (sql07) with a D (by agreement with dba's)
     if (any(startsWith(database_name, c("M", "S", "W")))) {
-        server = "inbo-sql08-prd.inbo.be"  # DWH server
+        server <- "inbo-sql08-prd.inbo.be"  # DWH server
         type <- "INBO DWH Server"
     } else {
-        server = "inbo-sql07-prd.inbo.be"  # SQL transactional server
+        server <- "inbo-sql07-prd.inbo.be"  # SQL transactional server
         type <- "INBO PRD Server"
     }
 
@@ -60,13 +62,38 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
     }
 
     # connect to database
-    conn <- dbConnect(odbc(),
-                      driver = sql_driver,
-                      server = server,
-                      port = 1433,
-                      database = database_name,
-                      encoding = encoding,
-                      trusted_connection = "YES")
+    tryCatch(
+        conn <- dbConnect(odbc(),
+                          driver = sql_driver,
+                          server = server,
+                          port = 1433,
+                          database = database_name,
+                          encoding = encoding,
+                          trusted_connection = "YES"),
+        error = function(e) {
+            assert_that(
+                !grepl("connection to SQL Server", e),
+                msg =
+                    paste(
+                        e,
+                        "[INBO] Are you connected to the internet?",
+                        "Are you connected to the INBO network?",
+                        "Is the VPN connection active when not @ INBO?",
+                        "Did you open a tunnel through the bastion?"
+                    )
+            )
+            assert_that(
+                !grepl("login failed", e),
+                msg =
+                    paste(
+                        e,
+                        "[INBO] Is the database name written correct?",
+                        "Do you have read permissions on the database?"
+                    )
+            )
+            stop(e)
+        }
+    )
 
     # derived from the odbc package Viewer setup to activate the Rstudio Viewer
     code_call <- c(match.call())
@@ -81,7 +108,7 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
 
 #' Rstudio Viewer integration
 #'
-#' See https://stackoverflow.com/questions/48936851/calling-odbc-connection-within-function-does-not-display-in-rstudio-connection and https://rstudio.github.io/rstudio-extensions/connections-contract.html#persistence
+#' See https://stackoverflow.com/questions/48936851/calling-odbc-connection-within-function-does-not-display-in-rstudio-connection and https://rstudio.github.io/rstudio-extensions/connections-contract.html#persistence #nolint
 #' @param connection odbc connection
 #' @param code dbase connection code
 #' @param type INBO database server name
@@ -98,7 +125,6 @@ on_connection_opened <- function(connection, code, type) {
 
     # use the database name as the display name
     display_name <- paste("INBO Database -", connection@info$dbname)
-    server_name <- connection@info$servername
 
     # let observer know that connection has opened
     observer$connectionOpened(
@@ -138,7 +164,7 @@ on_connection_opened <- function(connection, code, type) {
         },
 
         # table preview code
-        previewObject = function(rowLimit, ...) {
+        previewObject = function(rowLimit, ...) { #nolint: object_name_linter.
             odbcPreviewObject(connection, rowLimit, ...)
         },
 

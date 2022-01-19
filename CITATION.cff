@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it as below.
+authors:
+- family-names: Lommelen
+  given-names: Els
+  orcid: https://orcid.org/0000-0002-3481-5684
+- family-names: Van Calster
+  given-names: Hans
+  orcid: https://orcid.org/0000-0001-8595-8426
+- family-names: De Bie
+  given-names: Els
+  orcid: https://orcid.org/0000-0001-7679-743X
+- family-names: Vanderhaeghe
+  given-names: Floris
+  orcid: https://orcid.org/0000-0002-6378-6229
+contact:
+- email: els.lommelen@inbo.be
+  family-names: Lommelen
+  given-names: Els
+- email: info@inbo.be
+  name: Research Institute for Nature and Forest
+title: 'inbodb: Connect to and Retrieve Data from Databases on the INBO Server'
+version: 0.0.2
+abstract: A bundle of functions to connect to and retrieve data from databases on
+  the INBO server, with dedicated functions to query some of these databases.
+license: GPL-3.0
+type: software
+repository-code: https://github.com/inbo/inbodb
+identifiers:
+- type: url
+  value: https://inbo.github.io/inbodb/

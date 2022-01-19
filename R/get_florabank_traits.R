@@ -2,11 +2,11 @@ globalVariables("%LIKE%")
 
 #' Query the florabank to get taxon trait values for (a) taxon trait(s)
 #'
-#' This function takes as input (part of) a taxon trait name, queries the florabank
-#' and returns the taxon trait values in a tidy data format
+#' This function takes as input (part of) a taxon trait name, queries the
+#' florabank and returns the taxon trait values in a tidy data format
 #'
-#' @param connection A connection to the florabank database. See the example section
-#' for how to connect and disconnect to the database.
+#' @param connection A connection to the florabank database. See the example
+#' section for how to connect and disconnect to the database.
 #'
 #' @param trait_name A (part of) a trait name for which you want to get the
 #' associated taxon-specific trait values. If this is missing, the function
@@ -22,8 +22,9 @@ globalVariables("%LIKE%")
 #' = TRUE) containing the trait values for each species and for all
 #' partially matched traits. The dataframe contains the variables TaxonID,
 #' TaxonAfkorting, TaxonWetenschappelijk, TaxonNederlands, Kenmerk, Code,
-#' Omschrijving en Rekenwaarde. The first four variables identify the taxon,
-#' the latter four variables relate to the taxon traits.
+#' Omschrijving, Rekenwaarde, Bron and ExtraOmschrijving.
+#' The first four variables identify the taxon, the latter five variables relate
+#' to the taxon traits.
 #'
 #' @importFrom dplyr
 #' tbl
@@ -44,8 +45,6 @@ globalVariables("%LIKE%")
 #' @examples
 #' \dontrun{
 #' library(inbodb)
-#' library(DBI)
-#' library(odbc)
 #' library(dplyr)
 #' # connect to florabank
 #' db_connectie <- connect_inbo_dbase("D0021_00_userFlora")
@@ -55,13 +54,15 @@ globalVariables("%LIKE%")
 #' # collect the data
 #' fb_ellenberg <- fb_ellenberg %>% collect()
 #' # the same can be done by using the collect parameter
-#' fb_ellenberg <- get_florabank_traits(db_connectie, "llenberg", collect = TRUE)
+#' fb_ellenberg <-
+#'   get_florabank_traits(db_connectie, "llenberg", collect = TRUE)
 #'
 #' # get all red lists via partial matching
 #' fb_rodelijsten <- get_florabank_traits(db_connectie, "rode")
 #'
 #' # get only the red list for vascular plant species
-#' fb_rodelijstvaatplanten <- get_florabank_traits(db_connectie, "Rode lijst Vaatplanten")
+#' fb_rodelijstvaatplanten <-
+#'   get_florabank_traits(db_connectie, "Rode lijst Vaatplanten")
 #'
 #' #if the trait_name argument is missing, a list of possible names is printed
 #' get_florabank_traits(db_connectie)
@@ -92,15 +93,16 @@ get_florabank_traits <- function(connection, trait_name, collect = FALSE) {
   fb_taxon <- tbl(connection, "tblTaxon")
   fb_taxon_kenmerk <- tbl(connection, "tblTaxonKenmerk")
   fb_taxon_kenmerk_waarde <- tbl(connection, "tblTaxonKenmerkWaarde")
-  rel_taxon_taxon_kenmerk_waarde <- tbl(connection, "relTaxonTaxonKenmerkWaarde")
+  rel_taxon_taxon_kenmerk_waarde <-
+    tbl(connection, "relTaxonTaxonKenmerkWaarde")
 
   query_result <- rel_taxon_taxon_kenmerk_waarde %>%
     inner_join(fb_taxon_kenmerk %>%
                  filter(tolower(.data$Naam) %LIKE%
                           paste0("%", trait_name, "%")) %>%
-                 select(.data$ID, .data$Naam),
+                 select(.data$ID, .data$Naam, .data$Bron),
                by = c("TaxonKenmerkID" = "ID")) %>%
-    select(-.data$Omschrijving) %>%
+    rename(ExtraOmschrijving = .data$Omschrijving) %>%
     left_join(fb_taxon_kenmerk_waarde %>%
                 distinct(.data$ID, .data$Code, .data$TaxonKenmerkID,
                          .data$Omschrijving, .data$Rekenwaarde),
@@ -116,7 +118,9 @@ get_florabank_traits <- function(connection, trait_name, collect = FALSE) {
              Kenmerk = .data$Naam,
              .data$Code,
              .data$Omschrijving,
-             .data$Rekenwaarde
+             .data$Rekenwaarde,
+             .data$Bron,
+             .data$ExtraOmschrijving
     )
   if (!isTRUE(collect)) {
     return(query_result)

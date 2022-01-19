@@ -1,0 +1,14 @@
+description: Configuration file for checklist::check_pkg()
+package: yes
+allowed:
+  warnings: []
+  notes:
+  - motivation: Only relevant when submitting to CRAN.
+    value: |-
+      checking CRAN incoming feasibility ... NOTE
+      Maintainer: 'Els Lommelen <els.lommelen@inbo.be>'
+
+      New submission
+citation_roles:
+- aut
+- cre

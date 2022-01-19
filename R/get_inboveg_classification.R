@@ -1,9 +1,10 @@
 #' @title Query classification information from INBOVEG
 #'
 #' @description This function queries the INBOVEG database for information
-#' on the field classification (N2000 or BWK-code) of the releve (recording) for one
-#' or more survey(s) by the name of the survey. See the examples
-#' for how to get information for all surveys.
+#' on the field classification (N2000 or local vegetation ype, e.g. BWK-code)
+#' of the releve (recording) for one or more survey(s) by the name of
+#' the survey.
+#' See the examples for how to get information for all surveys.
 #'
 #' @param survey_name A character string or a character vector
 #' giving the name or names of the survey(s) for which you want to extract
@@ -24,9 +25,9 @@
 #' environment.
 #'
 #' @return A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-#' = TRUE) with variables Id, SurveyName, Classification-code, BWK or
-#' N2000-list, LocalClassification, Description of the Habitattype, Cover-code,
-#' Cover in percentage.
+#' = TRUE) with variables Id, SurveyName, Classification-code,
+#' vegetation type/BWK or N2000-list, LocalClassification, Description of
+#' the Habitattype, Cover-code, Cover in percentage.
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery
@@ -38,9 +39,6 @@
 #' @examples
 #' \dontrun{
 #' library(inbodb)
-#' library(DBI)
-#' library(odbc)
-#' library(dplyr)
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
 #' # get a specific classification from a survey and collect the data
@@ -49,7 +47,8 @@
 #'
 #' # get the classification from several specific surveys
 #' classif_info <- get_inboveg_classification(con,
-#' survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen" ))
+#'   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen" ),
+#'   multiple = TRUE)
 #'
 #' # get all surveys, all classifications,  don't collect the data
 #' allecodes <- get_inboveg_classification(con)
@@ -59,20 +58,30 @@
 #' rm(con)
 #' }
 
-## uitbreiden met multiple
 get_inboveg_classification <- function(connection,
-                                   survey_name,
-                                   classif,
-                                   multiple = FALSE,
-                                   collect = FALSE) {
+                                        survey_name,
+                                        classif,
+                                        multiple = FALSE,
+                                        collect = FALSE) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
 
-  if (missing(survey_name)) {
+  if (missing(survey_name) & !multiple) {
     survey_name <- "%"
-  } else {
-    assert_that(is.character(survey_name))
+  }
+
+  if (missing(survey_name) & multiple) {
+    stop("Please provide one or more survey names to survey_name when multiple
+         = TRUE")
+  }
+
+  if (!missing(survey_name)) {
+    if (!multiple) {
+      assert_that(is.character(survey_name))
+    } else {
+      assert_that(is.vector(survey_name, mode = "character"))
+    }
   }
 
   if (missing(classif)) {
@@ -81,8 +90,7 @@ get_inboveg_classification <- function(connection,
     assert_that(is.character(classif))
   }
 
-  sql_statement <- glue_sql(
-    "Select ivR.RecordingGivid
+  common_part <- "Select ivR.RecordingGivid
     , ivS.Name
     , ivRLClas.Classif
     , ivRLRes_Class.ActionGroup
@@ -93,25 +101,50 @@ get_inboveg_classification <- function(connection,
     , ftC.PctValue
     FROM ivRecording ivR
     INNER JOIN ivSurvey ivS on ivS.Id = ivR.surveyId
-    LEFT JOIN [dbo].[ivRLClassification] ivRLClas on ivRLClas.RecordingID = ivR.Id
-    LEFT JOIN [dbo].[ivRLResources] ivRLRes_Class on ivRLRes_Class.ResourceGIVID = ivRLClas.ClassifResource
-    LEFT JOIN [syno].[Futon_dbo_ftActionGroupList] ftAGL_Class on ftAGL_Class.ActionGroup = ivRLRes_Class.ActionGroup collate Latin1_General_CI_AI
-    AND ftAGL_Class.ListName = ivRLRes_Class.ListName collate Latin1_General_CI_AI
-    LEFT JOIN [syno].[Futon_dbo_ftBWKValues] ftBWK on ftBWK.Code = ivRLClas.Classif collate Latin1_General_CI_AI
-    AND ftBWK.ListGIVID = ftAGL_Class.ListGIVID
-    LEFT JOIN [syno].[Futon_dbo_ftN2kValues] ftN2K on ftN2K.Code = ivRLClas.Classif collate Latin1_General_CI_AI
-    AND ftN2K.ListGIVID = ftAGL_Class.ListGIVID
-    LEFT JOIN [dbo].[ivRLResources] ivRLR_C on ivRLR_C.ResourceGIVID = ivRLClas.CoverResource
-    LEFT JOIN [syno].[Futon_dbo_ftActionGroupList] ftAGL_C on ftAGL_C.ActionGroup = ivRLR_C.ActionGroup collate Latin1_General_CI_AI
-    AND ftAGL_C.ListName = ivRLR_C.ListName collate Latin1_General_CI_AI
-    LEFT JOIN [syno].[Futon_dbo_ftCoverValues] ftC on ftC.Code = ivRLClas.Cover collate Latin1_General_CI_AI
-    AND ftAGL_C.ListGIVID = ftC.ListGIVID
-    WHERE ivRLClas.Classif is not NULL
-    AND ivS.Name LIKE {survey_name}
-    AND ivRLClas.Classif LIKE {classif}",
-    survey_name = survey_name,
-    classif = classif,
-    .con = connection)
+    LEFT JOIN [dbo].[ivRLClassification] ivRLClas
+      on ivRLClas.RecordingID = ivR.Id
+    LEFT JOIN [dbo].[ivRLResources] ivRLRes_Class
+      on ivRLRes_Class.ResourceGIVID = ivRLClas.ClassifResource
+    LEFT JOIN [syno].[Futon_dbo_ftActionGroupList] ftAGL_Class
+      on ftAGL_Class.ActionGroup = ivRLRes_Class.ActionGroup
+          collate Latin1_General_CI_AI
+      AND ftAGL_Class.ListName = ivRLRes_Class.ListName
+          collate Latin1_General_CI_AI
+    LEFT JOIN [syno].[Futon_dbo_ftBWKValues] ftBWK
+      on ftBWK.Code = ivRLClas.Classif collate Latin1_General_CI_AI
+      AND ftBWK.ListGIVID = ftAGL_Class.ListGIVID
+    LEFT JOIN [syno].[Futon_dbo_ftN2kValues] ftN2K
+      on ftN2K.Code = ivRLClas.Classif collate Latin1_General_CI_AI
+      AND ftN2K.ListGIVID = ftAGL_Class.ListGIVID
+    LEFT JOIN [dbo].[ivRLResources] ivRLR_C
+      on ivRLR_C.ResourceGIVID = ivRLClas.CoverResource
+    LEFT JOIN [syno].[Futon_dbo_ftActionGroupList] ftAGL_C
+      on ftAGL_C.ActionGroup = ivRLR_C.ActionGroup collate Latin1_General_CI_AI
+      AND ftAGL_C.ListName = ivRLR_C.ListName collate Latin1_General_CI_AI
+    LEFT JOIN [syno].[Futon_dbo_ftCoverValues] ftC
+      on ftC.Code = ivRLClas.Cover collate Latin1_General_CI_AI
+      AND ftAGL_C.ListGIVID = ftC.ListGIVID
+    WHERE 1 = 1"
+
+  if (!multiple) {
+    sql_statement <- glue_sql(common_part,
+                              "AND ivS.Name LIKE {survey_name}
+                               AND ivRLClas.Classif LIKE {classif}
+                               AND ivRLClas.Classif is not NULL",
+                              survey_name = survey_name,
+                              classif = classif,
+                              .con = connection)
+
+  } else {
+    sql_statement <- glue_sql(common_part,
+                              "AND ivS.Name IN ({survey_name*})
+                               AND ivRLClas.Classif LIKE {classif}
+                               AND ivRLClas.Classif is not NULL",
+                              survey_name = survey_name,
+                              classif = classif,
+                              .con = connection)
+  }
+
 
   query_result <- tbl(connection, sql(sql_statement))
 
@@ -122,4 +155,3 @@ get_inboveg_classification <- function(connection,
     return(query_result)
   }
 }
-

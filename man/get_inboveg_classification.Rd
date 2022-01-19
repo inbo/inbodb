@@ -37,22 +37,20 @@ environment.}
 }
 \value{
 A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-= TRUE) with variables Id, SurveyName, Classification-code, BWK or
-N2000-list, LocalClassification, Description of the Habitattype, Cover-code,
-Cover in percentage.
+= TRUE) with variables Id, SurveyName, Classification-code,
+vegetation type/BWK or N2000-list, LocalClassification, Description of
+the Habitattype, Cover-code, Cover in percentage.
 }
 \description{
 This function queries the INBOVEG database for information
-on the field classification (N2000 or BWK-code) of the releve (recording) for one
-or more survey(s) by the name of the survey. See the examples
-for how to get information for all surveys.
+on the field classification (N2000 or local vegetation ype, e.g. BWK-code)
+of the releve (recording) for one or more survey(s) by the name of
+the survey.
+See the examples for how to get information for all surveys.
 }
 \examples{
 \dontrun{
 library(inbodb)
-library(DBI)
-library(odbc)
-library(dplyr)
 con <- connect_inbo_dbase("D0010_00_Cydonia")
 
 # get a specific classification from a survey and collect the data
@@ -61,7 +59,8 @@ survey_name = "MILKLIM_Heischraal2012", classif = "4010", collect = TRUE)
 
 # get the classification from several specific surveys
 classif_info <- get_inboveg_classification(con,
-survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen" ))
+  survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen" ),
+  multiple = TRUE)
 
 # get all surveys, all classifications,  don't collect the data
 allecodes <- get_inboveg_classification(con)
@@ -74,9 +73,11 @@ rm(con)
 \seealso{
 Other inboveg: 
 \code{\link{get_inboveg_header}()},
-\code{\link{get_inboveg_qualifiers}()},
-\code{\link{get_inboveg_recordings}()},
-\code{\link{get_inboveg_relation}()},
+\code{\link{get_inboveg_layer_cover}()},
+\code{\link{get_inboveg_layer_qualifier}()},
+\code{\link{get_inboveg_qualifier}()},
+\code{\link{get_inboveg_recording}()},
+\code{\link{get_inboveg_relation_recording}()},
 \code{\link{get_inboveg_survey}()}
 }
 \concept{inboveg}
