@@ -1,6 +1,6 @@
 # inbodb 0.0.3
 
-* Functionality to support ODBC Driver 18 for SQL Server.
+* Added support for Microsoft ODBC Driver 18 for SQL Server (#43).
 
 # inbodb 0.0.2
 
