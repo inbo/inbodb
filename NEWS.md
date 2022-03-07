@@ -1,3 +1,7 @@
+# inbodb 0.0.3
+
+* Added support for Microsoft ODBC Driver 18 for SQL Server (#43).
+
 # inbodb 0.0.2
 
 * New functions `get_inboveg_layer_cover()` and `get_inboveg_layer_qualifier()`.

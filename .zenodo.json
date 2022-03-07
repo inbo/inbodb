@@ -1,6 +1,6 @@
 {
   "title": "inbodb: Connect to and Retrieve Data from Databases on the INBO Server",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A bundle of functions to connect to and retrieve data from databases on the INBO server, with dedicated functions to query some of these databases.",
   "creators": [
     {
@@ -13,7 +13,7 @@
     },
     {
       "name": "De Bie, Els",
-      "orcid": "<https://orcid.org/0000-0001-7679-743X>"
+      "orcid": "https://orcid.org/0000-0001-7679-743X"
     },
     {
       "name": "Vanderhaeghe, Floris",

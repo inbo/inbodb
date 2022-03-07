@@ -67,7 +67,8 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
                           port = 1433,
                           database = database_name,
                           encoding = encoding,
-                          trusted_connection = "YES"),
+                          trusted_connection = "yes",
+                          encrypt = "no"),
         error = function(e) {
             assert_that(
                 !grepl("connection to SQL Server", e),
