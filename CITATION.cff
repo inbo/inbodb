@@ -20,7 +20,7 @@ contact:
 - email: info@inbo.be
   name: Research Institute for Nature and Forest
 title: 'inbodb: Connect to and Retrieve Data from Databases on the INBO Server'
-version: 0.0.1
+version: 0.0.3
 abstract: A bundle of functions to connect to and retrieve data from databases on
   the INBO server, with dedicated functions to query some of these databases.
 license: GPL-3.0

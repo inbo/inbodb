@@ -1,6 +1,6 @@
 Package: inbodb
 Title: Connect to and Retrieve Data from Databases on the INBO Server
-Version: 0.0.1
+Version: 0.0.3
 Authors@R: c(
     person("Els", "Lommelen", , "els.lommelen@inbo.be", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3481-5684")),
