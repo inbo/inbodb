@@ -12,3 +12,6 @@ allowed:
 citation_roles:
 - aut
 - cre
+keywords:
+- INBO database
+- R package
