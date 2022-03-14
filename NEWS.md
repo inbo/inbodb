@@ -1,3 +1,7 @@
+# inbodb 0.0.4
+
+* Publish package inbodb on Zenodo (fix problem).
+
 # inbodb 0.0.3
 
 * Added support for Microsoft ODBC Driver 18 for SQL Server (#43).

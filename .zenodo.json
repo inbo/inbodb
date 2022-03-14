@@ -1,6 +1,6 @@
 {
   "title": "inbodb: Connect to and Retrieve Data from Databases on the INBO Server",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A bundle of functions to connect to and retrieve data from databases on the INBO server, with dedicated functions to query some of these databases.",
   "creators": [
     {
