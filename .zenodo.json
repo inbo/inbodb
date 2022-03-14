@@ -44,5 +44,6 @@
       "orcid": "https://orcid.org/0000-0002-3481-5684"
     }
   ],
-  "language": "eng"
+  "language": "eng",
+  "keywords": ["INBO database", "R package"]
 }

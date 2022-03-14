@@ -8,5 +8,6 @@ citEntry(
   url = "https://github.com/inbo/inbodb",
   abstract = "A bundle of functions to connect to and retrieve data from databases on the INBO server, with dedicated functions to query some of these databases.",
   textVersion = "Lommelen, Els; Van Calster, Hans; De Bie, Els; Vanderhaeghe, Floris (2022) inbodb: Connect to and Retrieve Data from Databases on the INBO Server. Version 0.0.4. https://github.com/inbo/inbodb, https://inbo.github.io/inbodb/",
+  keywords = "INBO database, R package",
 )
 # end checklist entry

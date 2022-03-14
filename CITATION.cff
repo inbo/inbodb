@@ -29,3 +29,6 @@ repository-code: https://github.com/inbo/inbodb
 identifiers:
 - type: url
   value: https://inbo.github.io/inbodb/
+keywords:
+- INBO database
+- R package
