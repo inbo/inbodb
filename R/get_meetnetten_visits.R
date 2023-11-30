@@ -19,7 +19,7 @@
 #' environment.
 #'
 #' @return A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-#' = TRUE) with variables pecies_group, scheme, protocol, location, visit_id,
+#' = TRUE) with variables species_group, scheme, protocol, location, visit_id,
 #' validation_status, start_date, start_time, end_date, end_time, date_created,
 #' visit_status, for_analysis, for_targets, notes.
 #'
@@ -36,15 +36,15 @@
 #' con <- connect_inbo_dbase("S0008_00_Meetnetten")
 #'
 #' # get visits for a specific monitoring scheme and collect data
-#' visits_treefrog <- get_meetnetten_visist(con, scheme_name = "Boomkikker",
+#' visits_treefrog <- get_meetnetten_visits(con, scheme_name = "Boomkikker",
 #' collect = TRUE)
 #'
 #' # get visits for a specific species_group and collect data
-#' visits_amphibians <- get_meetnetten_visist(con, species_group = "amfibieën",
+#' visits_dragonflies <- get_meetnetten_visits(con, species_group = "libellen",
 #' collect = TRUE)
 #'
 #' # get visits for all species and do not collect data
-#' visits_all <- get_meetnetten_visist(con)
+#' visits_all <- get_meetnetten_visits(con)
 #'
 #' # Close the connection when done
 #' dbDisconnect(con)
