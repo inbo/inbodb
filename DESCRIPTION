@@ -30,7 +30,8 @@ Imports:
     lifecycle,
     methods,
     odbc,
-    rlang
+    rlang,
+    stringr
 Suggests: 
     dbplyr,
     kableExtra,
