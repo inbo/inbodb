@@ -66,6 +66,8 @@ rm(con)
 }
 \seealso{
 Other meetnetten: 
+\code{\link{get_meetnetten_locations}()},
+\code{\link{get_meetnetten_schemes}()},
 \code{\link{get_meetnetten_visits}()}
 }
 \concept{meetnetten}
