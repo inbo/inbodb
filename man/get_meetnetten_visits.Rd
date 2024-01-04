@@ -6,8 +6,8 @@
 \usage{
 get_meetnetten_visits(
   connection,
-  scheme_name = "\%",
-  species_group = "\%",
+  scheme_name = NULL,
+  species_group = NULL,
   collect = FALSE
 )
 }
@@ -63,6 +63,8 @@ rm(con)
 }
 \seealso{
 Other meetnetten: 
-\code{\link{get_meetnetten_observations}()}
+\code{\link{get_meetnetten_locations}()},
+\code{\link{get_meetnetten_observations}()},
+\code{\link{get_meetnetten_schemes}()}
 }
 \concept{meetnetten}

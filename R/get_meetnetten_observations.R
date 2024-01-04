@@ -58,6 +58,8 @@ get_meetnetten_observations <- function(connection,
                                species_group = NULL,
                                collect = FALSE) {
 
+  species_group_selected <- species_group
+
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
 
@@ -66,9 +68,9 @@ get_meetnetten_observations <- function(connection,
     scheme_name <- str_to_lower(scheme_name)
   }
 
-  if (!is.null(species_group)) {
-    assert_that(is.character(species_group))
-    species_group_select <- str_to_lower(species_group)
+  if (!is.null(species_group_selected)) {
+    assert_that(is.character(species_group_selected))
+    species_group_selected <- str_to_lower(species_group_selected)
   }
 
   sql_statement <-
@@ -123,21 +125,21 @@ get_meetnetten_observations <- function(connection,
 
   query_result <- tbl(connection, sql(sql_statement))
 
-  if (!is.null(scheme_name) & !is.null(species_group_select)) {
+  if (!is.null(scheme_name) & !is.null(species_group_selected)) {
 
     query_result <- query_result %>%
       filter(str_to_lower(.data$scheme) %in% scheme_name |
-               str_to_lower(.data$species_group) %in% species_group_select)
+               str_to_lower(.data$species_group) %in% species_group_selected)
 
   } else if (!is.null(scheme_name)) {
 
     query_result <- query_result %>%
       filter(str_to_lower(.data$scheme) %in% scheme_name)
 
-  } else if (!is.null(species_group_select)) {
+  } else if (!is.null(species_group_selected)) {
 
     query_result <- query_result %>%
-      filter(str_to_lower(.data$species_group) %in% species_group_select)
+      filter(str_to_lower(.data$species_group) %in% species_group_selected)
 
   }
 

@@ -23,8 +23,6 @@
 #' validation_status, start_date, start_time, end_date, end_time, date_created,
 #' visit_status, for_analysis, for_targets, notes.
 #'
-#' @importFrom glue glue_sql
-#' @importFrom DBI dbGetQuery
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr collect tbl sql
 #'
@@ -52,17 +50,26 @@
 #' }
 
 get_meetnetten_visits <- function(connection,
-                               scheme_name = "%",
-                               species_group = "%",
+                               scheme_name = NULL,
+                               species_group = NULL,
                                collect = FALSE) {
+
+  species_group_selected <- species_group
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
 
-  assert_that(is.character(scheme_name))
-  assert_that(is.character(species_group))
+  if (!is.null(scheme_name)) {
+    assert_that(is.character(scheme_name))
+    scheme_name <- str_to_lower(scheme_name)
+  }
 
-  sql_statement <- glue_sql(
+  if (!is.null(species_group_selected)) {
+    assert_that(is.character(species_group_selected))
+    species_group_selected <- str_to_lower(species_group_selected)
+  }
+
+  sql_statement <-
     "SELECT
     pg.name AS species_group
     , p.name AS scheme
@@ -90,14 +97,30 @@ get_meetnetten_visits <- function(connection,
     INNER JOIN staging_meetnetten.fieldwork_visit v ON v.project_id = P.id
     INNER JOIN staging_meetnetten.Locations_location l ON l.id = v.location_id
     INNER JOIN staging_meetnetten.protocols_protocol PR ON PR.id = v.protocol_id
-    WHERE 1 = 1
-    AND p.name LIKE {scheme_name}
-    AND pg.name LIKE {species_group}",
-    scheme_name = scheme_name,
-    species_group = species_group,
-    .con = connection)
+    WHERE 1 = 1"
 
   query_result <- tbl(connection, sql(sql_statement))
+
+  if (!is.null(scheme_name) & !is.null(species_group_selected)) {
+
+    query_result <- query_result %>%
+      filter(str_to_lower(.data$scheme) %in% scheme_name |
+               str_to_lower(.data$species_group) %in% species_group_selected)
+
+  } else if (!is.null(scheme_name)) {
+
+    query_result <- query_result %>%
+      filter(str_to_lower(.data$scheme) %in% scheme_name)
+
+  } else if (!is.null(species_group_selected)) {
+
+    query_result <- query_result %>%
+      filter(str_to_lower(.data$species_group) %in% species_group_selected)
+
+  }
+
+  query_result <- query_result %>%
+    arrange(.data$species_group, .data$scheme, .data$start_date, .data$location)
 
   if (!isTRUE(collect)) {
     return(query_result)
