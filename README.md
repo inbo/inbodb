@@ -15,7 +15,7 @@ Connect to and retrieve data from databases on the INBO server
 
 # Installation
   
-To install `inbodb` from the [INBO universe](https://inbo.r-universe.dev/ui#builds),
+To install `inbodb` from the [INBO universe](https://inbo.r-universe.dev/builds),
 start a new R session and run this code (before loading any packages):
 
 ```r
