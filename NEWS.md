@@ -1,3 +1,8 @@
+# inbodb 0.0.5
+
+* Add new function `get_inboveg_ppa()` to get point-plant-distance type data
+  (PPA) from INBOVEG (#50)
+
 # inbodb 0.0.4
 
 * Publish package inbodb on Zenodo (fix problem).
