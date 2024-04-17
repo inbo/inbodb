@@ -21,8 +21,8 @@ License: GPL-3
 URL: https://github.com/inbo/inbodb, https://inbo.github.io/inbodb/
 BugReports: https://github.com/inbo/inbodb/issues
 Imports:
-    DBI,
     assertthat,
+    DBI,
     dbplyr,
     dplyr,
     glue,
