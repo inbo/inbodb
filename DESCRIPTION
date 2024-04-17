@@ -12,7 +12,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-6378-6229")),
     person("Stijn", "Van Hoey", , "stijnvanhoey@gmail.com", role = "ctb",
            comment = c(ORCID = "0000-0001-6413-3185")),
-    person("Research Institute for Nature and Forest", , , "info@inbo.be", role = c("cph", "fnd"))
+    person("Research Institute for Nature and Forest (INBO)", , , "info@inbo.be", role = c("cph", "fnd"))
   )
 Description: A bundle of functions to connect to and retrieve data from
     databases on the INBO server, with dedicated functions to query some
@@ -23,10 +23,8 @@ BugReports: https://github.com/inbo/inbodb/issues
 Imports:
     assertthat,
     DBI,
-    dbplyr,
     dplyr,
     glue,
-    methods,
     odbc,
     rlang
 Suggests: 
