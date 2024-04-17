@@ -1,49 +1,58 @@
 {
   "title": "inbodb: Connect to and Retrieve Data from Databases on the INBO Server",
-  "version": "0.0.4",
-  "description": "A bundle of functions to connect to and retrieve data from databases on the INBO server, with dedicated functions to query some of these databases.",
+  "version": "0.0.5",
+  "license": "GPL-3.0",
+  "upload_type": "software",
+  "description": "<p>A bundle of functions to connect to and retrieve data from databases\non the INBO server, with dedicated functions to query some of these\ndatabases.<\/p>",
+  "keywords": [
+    "sql",
+    "databases",
+    "queries"
+  ],
+  "access_right": "open",
+  "language": "eng",
+  "contributors": [
+    {
+      "name": "Lommelen, Els",
+      "affiliation": "Research Institute for Nature and Forest (INBO)",
+      "orcid": "0000-0002-3481-5684",
+      "type": "ContactPerson"
+    },
+    {
+      "name": "Van Hoey, Stijn",
+      "orcid": "0000-0001-6413-3185",
+      "type": "ProjectMember"
+    },
+    {
+      "name": "Research Institute for Nature and Forest (INBO)",
+      "type": "RightsHolder"
+    }
+  ],
   "creators": [
     {
       "name": "Lommelen, Els",
-      "orcid": "https://orcid.org/0000-0002-3481-5684"
+      "affiliation": "Research Institute for Nature and Forest (INBO)",
+      "orcid": "0000-0002-3481-5684"
     },
     {
       "name": "Van Calster, Hans",
-      "orcid": "https://orcid.org/0000-0001-8595-8426"
+      "affiliation": "Research Institute for Nature and Forest (INBO)",
+      "orcid": "0000-0001-8595-8426"
     },
     {
       "name": "De Bie, Els",
-      "orcid": "https://orcid.org/0000-0001-7679-743X"
+      "affiliation": "Research Institute for Nature and Forest (INBO)",
+      "orcid": "0000-0001-7679-743X"
     },
     {
       "name": "Vanderhaeghe, Floris",
-      "orcid": "https://orcid.org/0000-0002-6378-6229"
+      "affiliation": "Research Institute for Nature and Forest (INBO)",
+      "orcid": "0000-0002-6378-6229"
     }
   ],
-  "upload_type": "software",
-  "access_right": "open",
-  "license": "GPL-3.0",
   "communities": [
     {
       "identifier": "inbo"
     }
-  ],
-  "contributors": [
-    {
-      "name": "Van Hoey, Stijn",
-      "type": "ProjectMember",
-      "orcid": "https://orcid.org/0000-0001-6413-3185"
-    },
-    {
-      "name": "Research Institute for Nature and Forest",
-      "type": "RightsHolder"
-    },
-    {
-      "name": "Lommelen, Els",
-      "type": "ContactPerson",
-      "orcid": "https://orcid.org/0000-0002-3481-5684"
-    }
-  ],
-  "language": "eng",
-  "keywords": ["INBO database", "R package"]
+  ]
 }
