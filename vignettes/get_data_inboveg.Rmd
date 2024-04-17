@@ -10,6 +10,13 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+if (requireNamespace("dbplyr", quietly = TRUE)) {
+  library("dbplyr")
+  # Example with pkg
+} else {
+  message("'dbplyr' not available")
+}
+
 tryCatch(
   con <- inbodb::connect_inbo_dbase("D0010_00_Cydonia"),
   error = function(e) e,
