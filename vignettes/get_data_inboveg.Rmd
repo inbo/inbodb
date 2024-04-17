@@ -80,9 +80,10 @@ Three examples are given, this can be used as base to continue selecting the dat
 Get information of a specific survey and collect data.
 
 ```{r examples_survey}
-survey_info <- get_inboveg_survey(con,
-                              survey_name = "OudeLanden_1979",
-                              collect = TRUE)
+survey_info <- get_inboveg_survey(
+  con,
+  survey_name = "OudeLanden_1979",
+  collect = TRUE)
 ```
 
 ```{r eval=TRUE}
@@ -104,9 +105,10 @@ class(allsurveys)
 If only a part of the survey name is known, you can make use of wildcards such as `%`.
 
 ```{r}
-partsurveys <- get_inboveg_survey(con,
-                              survey_name = "%MILKLIM%",
-                              collect = TRUE)
+partsurveys <- get_inboveg_survey(
+  con,
+  survey_name = "%MILKLIM%",
+  collect = TRUE)
 ```
 
 ```{r eval=TRUE}
@@ -115,6 +117,7 @@ partsurveys
 
 
 ## Header information
+
 The function `get_inboveg_header` queries the INBOVEG database for header information (metadata for a vegetation-relevé) for one or more survey by the name of the survey(s) and the recorder type (`classic`, `classic-emmer`, `classic-ketting`, `biohab`, `ppa`). All relevés are selected, also those with 'needs work' indicated (0 = no work needed, 1 = needs work). It is important to realize that the relevé is not finished yet, species lists can be incomplete, or not all species have been identified yet. For certain analysis these relevés can better be excluded (by using dplyr -> filter).
 
 Three examples are given, this can be used as base to continue selecting the data you require.
@@ -122,10 +125,11 @@ Three examples are given, this can be used as base to continue selecting the dat
 Get header information from a specific survey and a specific recording type and collect the data:
 
 ```{r examples_header}
-header_info <- get_inboveg_header(con,
-                              survey_name = "OudeLanden_1979",
-                              rec_type = "Classic",
-                              collect = TRUE)
+header_info <- get_inboveg_header(
+  con,
+  survey_name = "OudeLanden_1979",
+  rec_type = "Classic",
+  collect = TRUE)
 ```
 
 ```{r eval=TRUE}
@@ -135,8 +139,9 @@ head(header_info, 10)
 Get header information from several specific surveys by using `multiple = TRUE`. 
 
 ```{r, eval = FALSE}
-header_severalsurveys <- get_inboveg_header(con,
-                survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+header_severalsurveys <- get_inboveg_header(
+  con,
+  survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
                 multiple = TRUE)
 ```
 
@@ -148,6 +153,7 @@ all_header_info <- get_inboveg_header(con)
 
 
 ## Recording information
+
 The function  `get_inboveg_recording()` queries the INBOVEG database for relevé information (which species were recorded in which plots and in which vegetation layers with which cover) for one or more surveys.
 
 Several examples are given, this can be used as base to continue selecting the data you require.
@@ -155,9 +161,10 @@ Several examples are given, this can be used as base to continue selecting the d
 First, we show how to get the relevés from one survey and collect the data:
 
 ```{r examples_recordings}
-recording_heischraal2012 <- get_inboveg_recording(con,
-                                      survey_name = "MILKLIM_Heischraal2012",
-                                      collect = TRUE)
+recording_heischraal2012 <- get_inboveg_recording(
+  con,
+  survey_name = "MILKLIM_Heischraal2012",
+  collect = TRUE)
 ```
 
 ```{r eval=TRUE}
@@ -167,18 +174,20 @@ recording_heischraal2012
 Here is how to get the relevé for a specific `RecordingGivid`:
 
 ```{r, eval = FALSE}
-recording_specific_givid <- get_inboveg_recording(con,
-                                    recording_givid = "IV2012080609161322",
-                                    collect = TRUE)
+recording_specific_givid <- get_inboveg_recording(
+  con,
+  recording_givid = "IV2012080609161322",
+  collect = TRUE)
 ```
 
 Or for multiple `RecordingGivid`, make sure to set `multiple = TRUE`. 
 
 ```{r}
-recording_specific_givid <- get_inboveg_recording(con,
-                recording_givid = c("IV2012080609161322", "IV2012081611384756"),
-                multiple = TRUE,
-                collect = TRUE)
+recording_specific_givid <- get_inboveg_recording(
+  con,
+  recording_givid = c("IV2012080609161322", "IV2012081611384756"),
+  multiple = TRUE,
+  collect = TRUE)
 ```
 
 The above is very useful in tandem with `get_inboveg_header()` to first search for all relevés belonging to one or more surveys and further filter these records to only the relevés you require based on the relevé metadata (such as date, observer, ...).
@@ -187,25 +196,28 @@ The above is very useful in tandem with `get_inboveg_header()` to first search f
 Or based on a user reference:
 
 ```{r, eval = FALSE}
-recording_specific_userref <- get_inboveg_recording(con,
-                                                  user_reference = "HS_1001",
-                                                  collect = TRUE)
+recording_specific_userref <- get_inboveg_recording(
+  con,
+  user_reference = "HS_1001",
+  collect = TRUE)
 ```
 
 Get all recordings from MILKLIM surveys (partial matching), without collecting the data:
 
 ```{r, eval = FALSE}
-recording_milkim <- get_inboveg_recording(con,
-                              survey_name = "%MILKLIM%")
+recording_milkim <- get_inboveg_recording(
+  con,
+  survey_name = "%MILKLIM%")
 ```
 
 Get recordings from several specific surveys:
 
 ```{r, eval = FALSE}
-recording_severalsurveys <- get_inboveg_recording(con,
-                survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
-                multiple = TRUE,
-                collect = TRUE)
+recording_severalsurveys <- get_inboveg_recording(
+  con,
+  survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+  multiple = TRUE,
+  collect = TRUE)
 ```
 
 Get all relevés of all surveys,  without collecting the data:
@@ -214,8 +226,14 @@ Get all relevés of all surveys,  without collecting the data:
 allrecordings <- get_inboveg_recording(con)
 ```
 
+The function `get_inboveg_ppa()` is similar in use as `get_inboveg_recording()`, but can be used specifically to get point to plant distance type data (PPA) from the INBOVEG database.
+
+```{r eval=FALSE}
+allppa <- get_inboveg_ppa(con)
+```
 
 ## Classification information
+
 The function `get_inboveg_classification` queries the INBOVEG database for information on the field classification (N2000 or BWK-code) of the relevé for one or more survey(s) by the name of the survey. 
 
 Two  examples are given, this can be used as base to continue selecting the data you require.
@@ -224,10 +242,11 @@ Two  examples are given, this can be used as base to continue selecting the data
 Get a specific classification from a survey and collect the data:
 
 ```{r examples_classification}
-classif_info <- get_inboveg_classification(con,
-                              survey_name = "MILKLIM_Heischraal2012",
-                              classif = "4010",
-                              collect = TRUE)
+classif_info <- get_inboveg_classification(
+  con,
+  survey_name = "MILKLIM_Heischraal2012",
+  classif = "4010",
+  collect = TRUE)
 ```
 
 ```{r eval=TRUE}
@@ -237,9 +256,10 @@ classif_info
 Get the classification from several specific surveys
 
 ```{r, eval = FALSE}
- classif_info <- get_inboveg_classification(con,
-                  survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
-                  multiple = TRUE)
+ classif_info <- get_inboveg_classification(
+   con,
+   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+   multiple = TRUE)
 classif_info
 ```
 
@@ -257,8 +277,9 @@ These qualifiers give information on management (management qualifier `MQ`) or l
 Get the qualifiers from one survey:
 
 ```{r examples_qualifiers}
-qualifiers_heischraal2012 <- get_inboveg_qualifier(con,
-                                  survey_name = "MILKLIM_Heischraal2012")
+qualifiers_heischraal2012 <- get_inboveg_qualifier(
+  con,
+  survey_name = "MILKLIM_Heischraal2012")
 ```
 
 ```{r eval=TRUE}
@@ -268,17 +289,19 @@ head(qualifiers_heischraal2012)
 Get all site qualifiers (SQ) from MILKLIM surveys (partial matching):
 
 ```{r, eval = FALSE}
-qualifiers_milkim <- get_inboveg_qualifier(con,
-                                        survey_name = "%MILKLIM%",
-                                        qualifier_type = "SQ")
+qualifiers_milkim <- get_inboveg_qualifier(
+  con,
+  survey_name = "%MILKLIM%",
+  qualifier_type = "SQ")
 ```
 
 Get qualifiers from several specific surveys with `multiple = TRUE`:
 
 ```{r, eval = FALSE}
-qualifiers_severalsurveys <- get_inboveg_qualifier(con,
-                survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
-                multiple = TRUE)
+qualifiers_severalsurveys <- get_inboveg_qualifier(
+  con,
+  survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+  multiple = TRUE)
 ```
 
 Get all qualifiers of all surveys:
@@ -288,28 +311,32 @@ allqualifiers <- get_inboveg_qualifier(con)
 ```
 
 ## Layer information
+
 The function `get_inboveg_layer_cover` queries the INBOVEG database for cover information per layer on recordings for one or more surveys.
 
 Get the layer cover information from one survey
 
 ```{r, eval = FALSE}
-layerinfo_heischraal2012 <- get_inboveg_layer_cover(con,
-                                        survey_name = "MILKLIM_Heischraal2012")
+layerinfo_heischraal2012 <- get_inboveg_layer_cover(
+  con,
+  survey_name = "MILKLIM_Heischraal2012")
 ```
 
 Get all layer cover information from MILKLIM surveys (partial matching)
 
 ```{r, eval = FALSE}
-layerinfo_milkim <- get_inboveg_layer_cover(con,
-                                          survey_name = "%MILKLIM%")
+layerinfo_milkim <- get_inboveg_layer_cover(
+  con,
+  survey_name = "%MILKLIM%")
 ```
 
 Get layer cover information from several specific surveys
 
 ```{r, eval = FALSE}
-layerinfo_severalsurveys <- get_inboveg_layer_cover(con,
-                  survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
-                  multiple = TRUE)
+layerinfo_severalsurveys <- get_inboveg_layer_cover(
+  con,
+  survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+  multiple = TRUE)
 ```
 
 Get all layer cover information of all surveys
@@ -319,28 +346,32 @@ all_layerinfo <- get_inboveg_layer_cover(con)
 ```
 
 ## Layer qualifiers
+
 The function `get_inboveg_layer_qualifier()`queries the INBOVEG database for layer qualifier information on recordings  for one or more surveys.
 
 Get the layer qualifiers from one survey
 
 ```{r, eval = FALSE}
-layerqualifier_gagealutea <- get_inboveg_layer_qualifier(con,
-                                              survey_name = "GageaLutea_1980")
+layerqualifier_gagealutea <- get_inboveg_layer_qualifier(
+  con,
+  survey_name = "GageaLutea_1980")
 ```
 
 Get all layer qualifiers from MILKLIM surveys (partial matching)
 
 ```{r, eval = FALSE}
-layerqualifiers_milkim <- get_inboveg_layer_qualifier(con,
-                                                survey_name = "%MILKLIM%")
+layerqualifiers_milkim <- get_inboveg_layer_qualifier(
+  con,
+  survey_name = "%MILKLIM%")
 ```
 
 Get layer qualifiers from several specific surveys
 
 ```{r, eval = FALSE}
-layerqualifiers_severalsurveys <- get_inboveg_layer_qualifier(con,
-                  survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
-                  multiple = TRUE)
+layerqualifiers_severalsurveys <- get_inboveg_layer_qualifier(
+  con,
+  survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+  multiple = TRUE)
 ```
 
 Get all layer qualifiers of all surveys
@@ -356,8 +387,9 @@ The function `get_inboveg_relation_recording()` queries the INBOVEG database for
 Get all parent-child-relations from `N2000meetnet` surveys (partial matching):
 
 ```{r}
-relations_n2000meetnet <- get_inboveg_relation_recording(con,
-                                                survey_name = "%N2000meetnet%")
+relations_n2000meetnet <- get_inboveg_relation_recording(
+  con,
+  survey_name = "%N2000meetnet%")
 
 relations_n2000meetnet
 ```
@@ -375,14 +407,16 @@ if (!database_access) {
 Get the parent-child-relations from several specific surveys:
 
 ```{r, eval = FALSE}
-relations_severalsurveys <- get_inboveg_relation_recording(con,
-          survey_name =  c("DeBlankaart-1985-Beheer", "N2000meetnet_Grasland"),
-          multiple = TRUE)
+relations_severalsurveys <- get_inboveg_relation_recording(
+  con,
+  survey_name =  c("DeBlankaart-1985-Beheer", "N2000meetnet_Grasland"),
+  multiple = TRUE)
 ```
 
 
 
 ## More complex queries
+
 These functions give most of the relevant basic information that is available in INBOVEG.
 If more detailed information is needed `dplyr` is the magic word. 
 In the future additional functions can be added to this package to help the INBOVEG-users.
