@@ -28,9 +28,10 @@ Imports:
     odbc,
     rlang
 Suggests: 
+    dbplyr,
     knitr,
-    rmarkdown,
-    dbplyr
+    methods,
+    rmarkdown
 VignetteBuilder: 
     knitr
 Config/checklist/communities: inbo
