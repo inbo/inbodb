@@ -80,6 +80,7 @@ con <- connect_inbo_dbase("D0010_00_Cydonia")
 # Functionality
 
 ## Survey information
+
 The function `get_inboveg_survey` queries the INBOVEG database for survey information (metadata about surveys) for one or more survey(s) by the name of the survey.
 
 Three examples are given, this can be used as base to continue selecting the data you require.
@@ -421,11 +422,61 @@ relations_severalsurveys <- get_inboveg_relation_recording(
 ```
 
 
+# Processing the retrieved data
 
-## More complex queries
+When you have retrieved the data from INBOVEG using one of the `inbodb` functions in the previous section, you can easily work with these data in R or export the data.
+
+We recommend to use the [`dplyr`](https://dplyr.tidyverse.org/) package for basic as well as advanced data wrangling.
+For instance:
+
+-   `dplyr::mutate()` adds new variables that are functions of existing variables
+
+-   `dplyr::select()` picks variables based on their names.
+
+-   `dplyr::filter()` picks cases (rows) based on their values.
+
+-   `dplyr::summarise()` reduces multiple values down to a single summary.
+
+-   `dplyr::arrange()` changes the ordering of the rows.
+
+
+For exporting the data we can make use of the [`readr`](https://readr.tidyverse.org/) package.
+
+Here is a simple example:
+
+```{r eval=FALSE, echo=TRUE}
+library(inbodb)
+library(dplyr)
+library(readr)
+
+# get the data
+con <- inbo
+
+recording_heischraal2012 <- get_inboveg_recording(
+  con,
+  survey_name = "MILKLIM_Heischraal2012",
+  collect = TRUE)
+
+# close the connection
+dbDisconnect(con)
+rm(con)
+
+# do some data wrangling with dplyr
+# here we remove one column
+output_heischraal2012 <- recording_heischraal2012 %>%
+  select(-OrignalName)
+
+# export the data to a csv file that can be easily read by excel
+write_excel_csv2(
+  x = output_heischraal2012,
+  file = "data/output_heischraal2012.csv"
+)
+```
+
+
+# More complex queries
 
 These functions give most of the relevant basic information that is available in INBOVEG.
-If more detailed information is needed `dplyr` is the magic word. 
 In the future additional functions can be added to this package to help the INBOVEG-users.
 
 
