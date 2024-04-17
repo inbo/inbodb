@@ -46,7 +46,8 @@
 #' `GivenLongitude`,
 #' `GivenLatitude2`,
 #' `GivenLongitude2`,
-#' `MaxSearchEffort`,
+#' `MaxSearchEffortUnit`,
+#' `MaxSearchEffortLabel`,
 #' `Indirect`,
 #' `NotSure`,
 #' `LayerCode`,
@@ -115,7 +116,9 @@ get_inboveg_ppa <- function(
   , ivR.GivenLongitude
   , ivR.GivenLatitude2
   , ivR.GivenLongitude2
-  , ivRL_Qual.QualifierCode as MaxSearchEffort
+  --, ivRL_Qual.QualifierCode as MaxSearchEffort
+  , ftQualifier.Description as MaxSearchEffortUnit
+  , ftQualifier.Elucidation as MaxSearchEffortLabel
   , ivRL_Qual.Indirect
   , ivRL_Qual.NotSure
   , ivRL_Layer.LayerCode
@@ -162,15 +165,15 @@ get_inboveg_ppa <- function(
   ivRL_Iden.TaxonFullText = Synoniem.TaxonFullText collate Latin1_General_CI_AI
   -- KVE: Opvragen max. zoekafstand
   LEFT JOIN [dbo].[ivRLQualifier] ivRL_Qual ON ivRL_Qual.LayerID = ivRL_Layer.ID
-  -- Hier begint deel met bedekking
+  -- KVE: Opvragen eenheid max. zoekinspanning
   LEFT JOIN [dbo].[ivRLResources] ivRL_Res on
-  ivRL_Res.ResourceGIVID = ivRL_Taxon.CoverageResource
+  ivRL_Res.ResourceGIVID = ivRL_Qual.QualifierResource
   LEFT JOIN [syno].[Futon_dbo_ftActionGroupList] ftAGL on
   ftAGL.ActionGroup = ivRL_Res.ActionGroup collate Latin1_General_CI_AI
   AND ftAGL.ListName = ivRL_Res.ListName collate Latin1_General_CI_AI
-  LEFT JOIN [syno].[Futon_dbo_ftCoverValues] ftCover on
-  ftCover.ListGIVID = ftAGL.ListGIVID
-  AND ivRL_Taxon.CoverageCode = ftCover.Code collate Latin1_General_CI_AI
+  LEFT JOIN [syno].[Futon_dbo_ftQualifierValues] ftQualifier on
+  ftQualifier.ListGIVID = ftAGL.ListGIVID
+  AND ivRL_Qual.QualifierCode = ftQualifier.Code collate Latin1_General_CI_AI
   WHERE 1=1
   AND ivRL_Iden.Preferred = 1
   AND ivREc.Name LIKE 'PPA'
