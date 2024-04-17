@@ -3,7 +3,7 @@ package: yes
 allowed:
   warnings: []
   notes:
-  - motivation: Only relevant when submitting to CRAN.
+  - motivation: will not be submitted to CRAN
     value: |-
       checking CRAN incoming feasibility ... NOTE
       Maintainer: 'Els Lommelen <els.lommelen@inbo.be>'
