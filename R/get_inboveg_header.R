@@ -12,8 +12,8 @@
 #' If missing, all surveys are returned.
 #' @param rec_type A character vector giving the name of record type for which
 #' you want to extract header information e.g. 'Classic', 'Classic-emmer',
-#' 'Classic-ketting', 'BioHab', 'ABS'. If missing, all recording types are
-#' returned.
+#' 'Classic-ketting', 'BioHab', 'ABS', 'PPA'. If missing, all recording types
+#' are returned.
 #' @param connection dbconnection with the database 'Cydonia'
 #' on the inbo-sql07-prd server
 #' @param multiple If TRUE, survey_name can take a character vector with
@@ -112,6 +112,7 @@ get_inboveg_header <- function(connection,
   , ivR.VagueDateEnd
   , ivR.SurveyId
   , ivR.RecTypeID
+  , ivRec.Name
   FROM [dbo].[ivRecording] ivR
   INNER JOIN [dbo].[ivSurvey] ivS on ivS.Id = ivR.SurveyId
   INNER JOIN [dbo].[ivRecTypeD] ivRec on ivRec.ID = ivR.RecTypeID
