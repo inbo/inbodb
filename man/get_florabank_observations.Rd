@@ -19,17 +19,28 @@ and scientific names must include authorship in order to match.}
 matching)
 .}
 
-\item{collect}{If FALSE (the default), a remote tbl object is returned. This
+\item{collect}{If FALSE (the default), a remote \code{tbl} object is returned. This
 is like a reference to the result of the query but the full result of the
 query is not brought into memory. If TRUE the full result of the query is
 collected (fetched) from the database and brought into memory of the working
 environment.}
 }
 \value{
-A dataframe with the following variables: "NaamNederlands",
-"NaamWetenschappelijk", "Bron", "BeginDatum", "EindDatum", "hok",
-"Toponiem", "CommentaarTaxon", "CommentaarHabitat",
-"WaarnemingID", "X_waarneming", "Y_waarneming", "X_meting", "Y_meting"
+A dataframe with the following variables:
+\code{NaamNederlands},
+\code{NaamWetenschappelijk},
+\code{Bron},
+\code{BeginDatum},
+\code{EindDatum},
+\code{hok},
+\code{Toponiem},
+\code{CommentaarTaxon},
+\code{CommentaarHabitat},
+\code{WaarnemingID},
+\code{X_waarneming},
+\code{Y_waarneming},
+\code{X_meting},
+\code{Y_meting}
 }
 \description{
 This function takes as input a character vector with one or more names of

@@ -11,25 +11,38 @@
 #' header information.
 #' If missing, all surveys are returned.
 #' @param rec_type A character vector giving the name of record type for which
-#' you want to extract header information e.g. 'Classic', 'Classic-emmer',
-#' 'Classic-ketting', 'BioHab', 'ABS', 'PPA'. If missing, all recording types
-#' are returned.
-#' @param connection dbconnection with the database 'Cydonia'
-#' on the inbo-sql07-prd server
+#' you want to extract header information e.g. `'Classic'`, `'Classic-emmer'`,
+#' `'Classic-ketting'`, `'BioHab'`, `'ABS'`, `'PPA'`.
+#' If missing, all recording types are returned.
+#' @param connection `dbconnection` with the database 'Cydonia'
+#' on the `inbo-sql07-prd` server
 #' @param multiple If TRUE, survey_name can take a character vector with
 #' multiple survey names that must match exactly. If FALSE (the default),
 #' survey_name must be a single character string (one survey name) that can
 #' include wildcards to allow partial matches
-#' @param collect If FALSE (the default), a remote tbl object is returned.
+#' @param collect If FALSE (the default), a remote `tbl` object is returned.
 #' This is like a reference to the result of the query but the full result of
 #' the query is not brought into memory. If TRUE the full result of the query is
 #' collected (fetched) from the database and brought into memory of the working
 #' environment.
 #'
-#' @return A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-#' = TRUE) with variables RecordingGivid, Name, UserReference, Observer,
-#' LocationCode, Latitude, Longitude, Area (in m2), Length (in cm), Width (in
-#' cm), VagueDateType, VagueDateBegin, VagueDateEnd, SurveyId, RecTypeID.
+#' @return A remote `tbl` object (collect = FALSE) or a `tibble` dataframe
+#' (collect = TRUE) with variables
+#' `RecordingGivid`,
+#' `Name`,
+#' `UserReference`,
+#' `Observer`,
+#' `LocationCode`,
+#' `Latitude`,
+#' `Longitude`,
+#' `Area` (in m2),
+#' `Length` (in cm),
+#' `Width` (in cm),
+#' `VagueDateType`,
+#' `VagueDateBegin`,
+#' `VagueDateEnd`,
+#' `SurveyId`,
+#' `RecTypeID`.
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery

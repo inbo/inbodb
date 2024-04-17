@@ -21,11 +21,19 @@ collected (fetched) from the database and brought into memory of the working
 environment.}
 }
 \value{
-A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-= TRUE) containing the trait values for each species and for all
-partially matched traits. The dataframe contains the variables TaxonID,
-TaxonAfkorting, TaxonWetenschappelijk, TaxonNederlands, Kenmerk, Code,
-Omschrijving, Rekenwaarde, Bron and ExtraOmschrijving.
+A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
+(collect = TRUE) containing the trait values for each species and for all
+partially matched traits. The dataframe contains the variables
+\code{TaxonID},
+\code{TaxonAfkorting},
+\code{TaxonWetenschappelijk},
+\code{TaxonNederlands},
+\code{Kenmerk},
+\code{Code},
+\code{Omschrijving},
+\code{Rekenwaarde},
+\code{Bron} and
+\code{ExtraOmschrijving}.
 The first four variables identify the taxon, the latter five variables relate
 to the taxon traits.
 }

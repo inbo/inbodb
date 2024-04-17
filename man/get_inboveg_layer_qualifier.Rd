@@ -7,8 +7,8 @@
 get_inboveg_layer_qualifier(connection, survey_name, multiple = FALSE)
 }
 \arguments{
-\item{connection}{dbconnection with the database 'Cydonia'
-on the inbo-sql07-prd server}
+\item{connection}{\code{dbconnection} with the database 'Cydonia'
+on the \code{inbo-sql07-prd} server}
 
 \item{survey_name}{A character string or a character vector, depending on
 multiple parameter, giving the name or names of the survey(s) for which you
@@ -20,10 +20,18 @@ survey_name must be a single character string (one survey name) that can
 include wildcards to allow partial matches}
 }
 \value{
-A dataframe with variables Name (of the survey), RecordingGivid
-(unique Id), UserReference, LayerCode, LayerDescription, QualifierCode,
-Qualifier Description, Elucidation and 'NotSure' in case the qualifier is
-doubtful, CoverCode and Cover percentage
+A dataframe with variables
+\code{Name} (of the survey),
+\code{RecordingGivid} (unique Id),
+\code{UserReference},
+\code{LayerCode},
+\code{LayerDescription},
+\code{QualifierCode},
+\verb{Qualifier Description},
+\code{Elucidation} and
+\code{NotSure} in case the qualifier is doubtful,
+\code{CoverCode} and
+\verb{Cover percentage}
 }
 \description{
 This function queries the INBOVEG database for layer
@@ -61,6 +69,7 @@ Other inboveg:
 \code{\link{get_inboveg_classification}()},
 \code{\link{get_inboveg_header}()},
 \code{\link{get_inboveg_layer_cover}()},
+\code{\link{get_inboveg_ppa}()},
 \code{\link{get_inboveg_qualifier}()},
 \code{\link{get_inboveg_recording}()},
 \code{\link{get_inboveg_relation_recording}()},

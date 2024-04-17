@@ -14,7 +14,7 @@ get_inboveg_classification(
 }
 \arguments{
 \item{connection}{dbconnection with the database 'Cydonia'
-on the inbo-sql07-prd server}
+on the \code{inbo-sql07-prd} server}
 
 \item{survey_name}{A character string or a character vector
 giving the name or names of the survey(s) for which you want to extract
@@ -29,21 +29,27 @@ multiple survey names that must match exactly. If FALSE (the default),
 survey_name must be a single character string (one survey name) that can
 include wildcards to allow partial matches}
 
-\item{collect}{If FALSE (the default), a remote tbl object is returned. This
+\item{collect}{If FALSE (the default), a remote \code{tbl} object is returned. This
 is like a reference to the result of the query but the full result of the
 query is not brought into memory. If TRUE the full result of the query is
 collected (fetched) from the database and brought into memory of the working
 environment.}
 }
 \value{
-A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-= TRUE) with variables Id, SurveyName, Classification-code,
-vegetation type/BWK or N2000-list, LocalClassification, Description of
-the Habitattype, Cover-code, Cover in percentage.
+A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
+(collect = TRUE) with variables
+\code{Id},
+\code{SurveyName},
+\code{Classification-code},
+vegetation type / BWK or N2000-list,
+\code{LocalClassification},
+Description of the Habitattype,
+Cover-code,
+Cover in percentage.
 }
 \description{
 This function queries the INBOVEG database for information
-on the field classification (N2000 or local vegetation ype, e.g. BWK-code)
+on the field classification (N2000 or local vegetation type, e.g. BWK-code)
 of the releve (recording) for one or more survey(s) by the name of
 the survey.
 See the examples for how to get information for all surveys.
@@ -75,6 +81,7 @@ Other inboveg:
 \code{\link{get_inboveg_header}()},
 \code{\link{get_inboveg_layer_cover}()},
 \code{\link{get_inboveg_layer_qualifier}()},
+\code{\link{get_inboveg_ppa}()},
 \code{\link{get_inboveg_qualifier}()},
 \code{\link{get_inboveg_recording}()},
 \code{\link{get_inboveg_relation_recording}()},

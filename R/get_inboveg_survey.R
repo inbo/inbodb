@@ -7,15 +7,15 @@
 #'
 #' @param survey_name A character vector giving the names of the surveys for
 #' which you want to extract survey information.
-#' @param connection dbconnection with the database 'Cydonia'
-#' on the inbo-sql07-prd server
-#' @param collect If FALSE (the default), a remote tbl object is returned. This
+#' @param connection `dbconnection` with the database 'Cydonia'
+#' on the `inbo-sql07-prd` server
+#' @param collect If FALSE (the default), a remote `tbl` object is returned. This
 #' is like a reference to the result of the query but the full result of the
 #' query is not brought into memory. If TRUE the full result of the query is
 #' collected (fetched) from the database and brought into memory of the working
 #' environment.
 #'
-#' @return A remote tbl object (collect = FALSE) or a tibble dataframe (collect
+#' @return A remote `tbl` object (collect = FALSE) or a `tibble` dataframe (collect
 #' = TRUE) with variables Id, Name, Description, Owner and Creator.
 #'
 #' @importFrom glue glue_sql

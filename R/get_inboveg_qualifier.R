@@ -9,20 +9,21 @@
 #' survey(s) for which you want to extract recordings information. If missing,
 #' all surveys are returned.
 #' @param qualifier_type A character vector giving the name of qualifier type
-#' for which you want to extract  information e.g. 'SQ' (site qualifier), 'MQ'
+#' for which you want to extract  information e.g. `'SQ'` (site qualifier),
+#' `'MQ'`
 #' (management qualifier).
 #' If missing, all qualifier types are returned.
-#' @param connection dbconnection with the database 'Cydonia'
-#' on the inbo-sql07-prd server
+#' @param connection `dbconnection` with the database 'Cydonia'
+#' on the `inbo-sql07-prd` server
 #' @param multiple If TRUE, survey_name can take a character vector with
 #' multiple survey names that must match exactly. If FALSE (the default),
 #' survey_name must be a single character string (one survey name) that can
 #' include wildcards to allow partial matches
 #'
-#' @return A dataframe with variables RecordingGivid (unique Id), UserReference,
-#' Observer, QualifierType, QualifierCode, Description, 2nd QualifierCode,
-#' 2nd Description, 3rd QualifierCode, 3rd Description, Elucidation, in case
-#' qualifier is 'NotSure', ParentID, QualifierResource
+#' @return A dataframe with variables `RecordingGivid` (unique Id), `UserReference`,
+#' `Observer`, `QualifierType`, `QualifierCode`, `Description`, `2nd QualifierCode`,
+#' `2nd Description`, `3rd QualifierCode`, `3rd Description`, `Elucidation`, in case
+#' qualifier is `'NotSure'`, `ParentID`, `QualifierResource`
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery

@@ -3,40 +3,60 @@
 #' @description This function queries the INBOVEG database for
 #' PPA-type releve information (which species were recorded at what distance
 #' from a point location) for one or more surveys,
-#' or in combination with the unique ID (recordingGIVID) or user reference
+#' or in combination with the unique ID (`recordingGIVID`) or user reference
 #'
 #' @param user_reference A character string or a character vector giving the
 #' name of a recording for which you want to extract releve information.
-#' As default (user_reference = "%") all user-references are returned.
+#' As default (`user_reference` = "%") all user-references are returned.
 #' @param recording_givid A character string or a character vector giving
 #' the unique id of a recording for which you want to extract releve
 #' information.
 #' As default (recording_givids = "%") all recording_givids are returned.
 #' @param survey_name A character string or a character vector, depending on
 #' multiple parameter, giving the name or names of the survey(s) for which you
-#' want to extract releve information. As default (surey_name = "%") all surveys
+#' want to extract releve information. As default (`survey_name` = "%") all
+#' surveys
 #' are returned.
-#' @param connection dbconnection with the database 'Cydonia'
-#' on the inbo-sql07-prd server
-#' @param collect If FALSE (the default), a remote tbl object is returned.
+#' @param connection `dbconnection` with the database 'Cydonia'
+#' on the `inbo-sql07-prd` server
+#' @param collect If FALSE (the default), a remote `tbl` object is returned.
 #' This is like a reference to the result of the query but the full result of
 #' the query is not brought into memory. If TRUE the full result of the query is
 #' collected (fetched) from the database and brought into memory of the working
 #' environment.
-#' @param multiple If TRUE survey_name, user_reference or recording_givid can
+#' @param multiple If TRUE survey_name, `user_reference` or `recording_givid`
+#' can
 #' take a character vector with multiple survey names, user references or
-#' recording_givids that must match exactly.
-#' If FALSE (the default) survey_name , user_reference or recording_givid must
+#' `recording_givids` that must match exactly.
+#' If FALSE (the default) survey_name , `user_reference` or `recording_givid`
+#' must
 #' be a single character string (one survey name, or one user_reference or one
-#' recording_givid). Only survey_name can include wildcarts to allow partial
+#' `recording_givid`). Only survey_name can include wildcards to allow partial
 #' matches.
 #'
-#' @return A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-#' = TRUE) with variables SurveyName, RecordingGivid, ivR.UserReference,
-#' DateRecording, LocationCode, CoordinateRefSystem, GivenLatitude,
-#' GivenLongitude, GivenLatitude2, GivenLongitude2, MaxSearchEffort, Indirect,
-#' NotSure, LayerCode, LayerCover, OriginalName, ScientificName, PhenologyCode,
-#' Distance, DateIdentification, RecordTypeName
+#' @return A remote `tbl` object (collect = FALSE) or a `tibble` dataframe (collect
+#' = TRUE) with variables
+#' `SurveyName`,
+#' `RecordingGivid`,
+#' `UserReference`,
+#' `DateRecording`,
+#' `LocationCode`,
+#' `CoordinateRefSystem`,
+#' `GivenLatitude`,
+#' `GivenLongitude`,
+#' `GivenLatitude2`,
+#' `GivenLongitude2`,
+#' `MaxSearchEffort`,
+#' `Indirect`,
+#' `NotSure`,
+#' `LayerCode`,
+#' `LayerCover`,
+#' `OriginalName`,
+#' `ScientificName`,
+#' `PhenologyCode`,
+#' `Distance`,
+#' `DateIdentification`,
+#' `RecordTypeName`
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery

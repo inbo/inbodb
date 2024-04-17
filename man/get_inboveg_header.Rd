@@ -13,8 +13,8 @@ get_inboveg_header(
 )
 }
 \arguments{
-\item{connection}{dbconnection with the database 'Cydonia'
-on the inbo-sql07-prd server}
+\item{connection}{\code{dbconnection} with the database 'Cydonia'
+on the \code{inbo-sql07-prd} server}
 
 \item{survey_name}{A character string or a character vector
 giving the name or names of the survey(s) for which you want to extract
@@ -22,26 +22,39 @@ header information.
 If missing, all surveys are returned.}
 
 \item{rec_type}{A character vector giving the name of record type for which
-you want to extract header information e.g. 'Classic', 'Classic-emmer',
-'Classic-ketting', 'BioHab', 'ABS'. If missing, all recording types are
-returned.}
+you want to extract header information e.g. \code{'Classic'}, \code{'Classic-emmer'},
+\code{'Classic-ketting'}, \code{'BioHab'}, \code{'ABS'}, \code{'PPA'}.
+If missing, all recording types are returned.}
 
 \item{multiple}{If TRUE, survey_name can take a character vector with
 multiple survey names that must match exactly. If FALSE (the default),
 survey_name must be a single character string (one survey name) that can
 include wildcards to allow partial matches}
 
-\item{collect}{If FALSE (the default), a remote tbl object is returned.
+\item{collect}{If FALSE (the default), a remote \code{tbl} object is returned.
 This is like a reference to the result of the query but the full result of
 the query is not brought into memory. If TRUE the full result of the query is
 collected (fetched) from the database and brought into memory of the working
 environment.}
 }
 \value{
-A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-= TRUE) with variables RecordingGivid, Name, UserReference, Observer,
-LocationCode, Latitude, Longitude, Area (in m2), Length (in cm), Width (in
-cm), VagueDateType, VagueDateBegin, VagueDateEnd, SurveyId, RecTypeID.
+A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
+(collect = TRUE) with variables
+\code{RecordingGivid},
+\code{Name},
+\code{UserReference},
+\code{Observer},
+\code{LocationCode},
+\code{Latitude},
+\code{Longitude},
+\code{Area} (in m2),
+\code{Length} (in cm),
+\code{Width} (in cm),
+\code{VagueDateType},
+\code{VagueDateBegin},
+\code{VagueDateEnd},
+\code{SurveyId},
+\code{RecTypeID}.
 }
 \description{
 This function queries the INBOVEG database for header
@@ -77,6 +90,7 @@ Other inboveg:
 \code{\link{get_inboveg_classification}()},
 \code{\link{get_inboveg_layer_cover}()},
 \code{\link{get_inboveg_layer_qualifier}()},
+\code{\link{get_inboveg_ppa}()},
 \code{\link{get_inboveg_qualifier}()},
 \code{\link{get_inboveg_recording}()},
 \code{\link{get_inboveg_relation_recording}()},

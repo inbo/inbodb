@@ -30,12 +30,12 @@ if (!database_access) {
 
 The Flemish vegetation database, INBOVEG, is an application developed to provide a repository of relevés and makes the relevés available for future use. More information? Check out https://www.vlaanderen.be/inbo/en-gb/data-applications/inboveg/
 
-INBOVEG supports different types of recordings: BioHab recordings (protocol of Natura 2000 monitoring) and the classic relevés. 
+INBOVEG supports different types of recordings: `BioHab` recordings (protocol of Natura 2000 monitoring) and the classic relevés. 
 The classic relevés can stand alone, be an element of a collection or element of a chain where the linkage is used to give information about the relative position of recording within a series. 
-Ample selection and export functions toward analysis tools are provided. It also provides standardized lists of species, habitats, life forms, scales etc. 
+Ample selection and export functions toward analysis tools are provided. It also provides standardized lists of species, habitats, life forms, scales ... 
 Original observations are preserved and a full history of subsequent identifications is saved.
 
-More information? Check out [inboveg-website](https://www.vlaanderen.be/inbo/en-gb/data-applications/inboveg/)
+More information? Check out [INBOVEG-website](https://www.vlaanderen.be/inbo/en-gb/data-applications/inboveg/)
 
 # Aim
 
@@ -64,7 +64,7 @@ library(inbodb)
 
 These functions will only work for people with access to the INBO network. As an INBO employee, you should make sure you have reading-rights for CYDONIA, otherwise place an ICT-call.
 
-The following R-code can be used to establish a connection to INBOVEG by using 'connect_inbo_dbase' of the inbodb-package with the database 'Cydonia' on the inbo-sql07-prd server:
+The following R-code can be used to establish a connection to INBOVEG by using `connect_inbo_dbase` of the inbodb-package with the database 'Cydonia' on the `inbo-sql07-prd` server:
 
 ```{r connection_inbo}
 con <- connect_inbo_dbase("D0010_00_Cydonia")
@@ -115,7 +115,7 @@ partsurveys
 
 
 ## Header information
-The function `get_inboveg_header` queries the INBOVEG database for header information (metadata for a vegetation-relevé) for one or more survey by the name of the survey(s) and the recorder type (classic, classic-emmer, classic-ketting, biohab). All relevés are selected, also those with 'needs work' indicated (0 = no work needed, 1 = needs work). It is important to realize that the relevé is not finished yet, species lists can be incomplete, or not all species have been identified yet. For certain analysis these relevés can better be excluded (by using dplyr -> filter).
+The function `get_inboveg_header` queries the INBOVEG database for header information (metadata for a vegetation-relevé) for one or more survey by the name of the survey(s) and the recorder type (`classic`, `classic-emmer`, `classic-ketting`, `biohab`, `ppa`). All relevés are selected, also those with 'needs work' indicated (0 = no work needed, 1 = needs work). It is important to realize that the relevé is not finished yet, species lists can be incomplete, or not all species have been identified yet. For certain analysis these relevés can better be excluded (by using dplyr -> filter).
 
 Three examples are given, this can be used as base to continue selecting the data you require.
 
@@ -172,7 +172,7 @@ recording_specific_givid <- get_inboveg_recording(con,
                                     collect = TRUE)
 ```
 
-Or for multiple RecordingGivid, make sure to set `multiple = TRUE`. 
+Or for multiple `RecordingGivid`, make sure to set `multiple = TRUE`. 
 
 ```{r}
 recording_specific_givid <- get_inboveg_recording(con,
@@ -252,7 +252,7 @@ all_codes <- get_inboveg_classification(con)
 
 ## Qualifiers information
 The function `get_inboveg_qualifier()`queries the INBOVEG database for qualifier information on recordings for one or more surveys. 
-These qualifiers give information on management (management qualifier 'MQ') or location description (site qualifier'SQ').
+These qualifiers give information on management (management qualifier `MQ`) or location description (site qualifier `SQ`).
 
 Get the qualifiers from one survey:
 
@@ -353,7 +353,7 @@ alllayerqualifiers <- get_inboveg_layer_qualifier(con)
 
 The function `get_inboveg_relation_recording()` queries the INBOVEG database for relational information on recordings for one or more surveys based on parent (classic-chain/bucket) and Child (classic) relationships.
 
-Get all parent-child-relations from N2000meetnet surveys (partial matching):
+Get all parent-child-relations from `N2000meetnet` surveys (partial matching):
 
 ```{r}
 relations_n2000meetnet <- get_inboveg_relation_recording(con,
@@ -385,7 +385,7 @@ relations_severalsurveys <- get_inboveg_relation_recording(con,
 ## More complex queries
 These functions give most of the relevant basic information that is available in INBOVEG.
 If more detailed information is needed `dplyr` is the magic word. 
-In the future additional functions can be added to this package to help the inboveg-users.
+In the future additional functions can be added to this package to help the INBOVEG-users.
 
 
 
