@@ -34,6 +34,8 @@ Suggests:
     rmarkdown
 VignetteBuilder: 
     knitr
+Config/checklist/communities: inbo
+Config/checklist/keywords: sql; databases; queries
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
