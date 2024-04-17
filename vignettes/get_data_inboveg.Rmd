@@ -450,7 +450,7 @@ library(dplyr)
 library(readr)
 
 # get the data
-con <- inbo
+con <- connect_inbo_dbase("D0010_00_Cydonia")
 
 recording_heischraal2012 <- get_inboveg_recording(
   con,
