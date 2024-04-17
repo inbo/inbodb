@@ -41,7 +41,7 @@ environment.}
 A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
 (collect = TRUE) with variables
 \code{RecordingGivid},
-\code{Name},
+\code{SurveyName},
 \code{UserReference},
 \code{Observer},
 \code{LocationCode},
@@ -54,7 +54,8 @@ A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
 \code{VagueDateBegin},
 \code{VagueDateEnd},
 \code{SurveyId},
-\code{RecTypeID}.
+\code{RecTypeID},
+\code{RecTypeName}.
 }
 \description{
 This function queries the INBOVEG database for header

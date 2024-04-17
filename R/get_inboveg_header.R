@@ -29,7 +29,7 @@
 #' @return A remote `tbl` object (collect = FALSE) or a `tibble` dataframe
 #' (collect = TRUE) with variables
 #' `RecordingGivid`,
-#' `Name`,
+#' `SurveyName`,
 #' `UserReference`,
 #' `Observer`,
 #' `LocationCode`,
@@ -42,7 +42,8 @@
 #' `VagueDateBegin`,
 #' `VagueDateEnd`,
 #' `SurveyId`,
-#' `RecTypeID`.
+#' `RecTypeID`,
+#' `RecTypeName`.
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery
@@ -110,7 +111,7 @@ get_inboveg_header <- function(connection,
   common_part <- "SELECT
   ivR.RecordingGivid
   , ivR.NeedsWork
-  , ivS.Name
+  , ivS.Name as SurveyName
   , ivR.UserReference
   , ivR.Observer
   , ivR.LocationCode
@@ -125,7 +126,7 @@ get_inboveg_header <- function(connection,
   , ivR.VagueDateEnd
   , ivR.SurveyId
   , ivR.RecTypeID
-  , ivRec.Name
+  , ivRec.Name as RecTypeName
   FROM [dbo].[ivRecording] ivR
   INNER JOIN [dbo].[ivSurvey] ivS on ivS.Id = ivR.SurveyId
   INNER JOIN [dbo].[ivRecTypeD] ivRec on ivRec.ID = ivR.RecTypeID
