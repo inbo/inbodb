@@ -18,7 +18,8 @@
 #' @param fixed Logical. If TRUE, names is to be matched as is (no partial
 #' matching)
 #' .
-#' @param collect If FALSE (the default), a remote `tbl` object is returned. This
+#' @param collect If FALSE (the default), a remote `tbl` object is returned.
+#' This
 #' is like a reference to the result of the query but the full result of the
 #' query is not brought into memory. If TRUE the full result of the query is
 #' collected (fetched) from the database and brought into memory of the working

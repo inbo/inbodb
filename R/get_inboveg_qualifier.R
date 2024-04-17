@@ -20,10 +20,20 @@
 #' survey_name must be a single character string (one survey name) that can
 #' include wildcards to allow partial matches
 #'
-#' @return A dataframe with variables `RecordingGivid` (unique Id), `UserReference`,
-#' `Observer`, `QualifierType`, `QualifierCode`, `Description`, `2nd QualifierCode`,
-#' `2nd Description`, `3rd QualifierCode`, `3rd Description`, `Elucidation`, in case
-#' qualifier is `'NotSure'`, `ParentID`, `QualifierResource`
+#' @return A dataframe with variables
+#' `RecordingGivid` (unique Id),
+#' `UserReference`,
+#' `Observer`,
+#' `QualifierType`,
+#' `QualifierCode`,
+#' `Description`,
+#' `2nd QualifierCode`,
+#' `2nd Description`,
+#' `3rd QualifierCode`,
+#' `3rd Description`,
+#' `Elucidation`, in case qualifier is `'NotSure'`,
+#' `ParentID`,
+#' `QualifierResource`
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery
@@ -66,11 +76,11 @@ get_inboveg_qualifier <- function(connection,
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
 
-  if (missing(survey_name) & !multiple) {
+  if (missing(survey_name) && !multiple) {
     survey_name <- "%"
   }
 
-  if (missing(survey_name) & multiple) {
+  if (missing(survey_name) && multiple) {
     stop("Please provide one or more survey names to survey_name when multiple
          = TRUE")
   }

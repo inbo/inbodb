@@ -32,10 +32,20 @@ survey_name must be a single character string (one survey name) that can
 include wildcards to allow partial matches}
 }
 \value{
-A dataframe with variables \code{RecordingGivid} (unique Id), \code{UserReference},
-\code{Observer}, \code{QualifierType}, \code{QualifierCode}, \code{Description}, \verb{2nd QualifierCode},
-\verb{2nd Description}, \verb{3rd QualifierCode}, \verb{3rd Description}, \code{Elucidation}, in case
-qualifier is \code{'NotSure'}, \code{ParentID}, \code{QualifierResource}
+A dataframe with variables
+\code{RecordingGivid} (unique Id),
+\code{UserReference},
+\code{Observer},
+\code{QualifierType},
+\code{QualifierCode},
+\code{Description},
+\verb{2nd QualifierCode},
+\verb{2nd Description},
+\verb{3rd QualifierCode},
+\verb{3rd Description},
+\code{Elucidation}, in case qualifier is \code{'NotSure'},
+\code{ParentID},
+\code{QualifierResource}
 }
 \description{
 This function queries the INBOVEG database for

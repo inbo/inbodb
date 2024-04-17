@@ -63,11 +63,11 @@ get_inboveg_layer_cover <- function(connection,
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
 
-  if (missing(survey_name) & !multiple) {
+  if (missing(survey_name) && !multiple) {
     survey_name <- "%"
   }
 
-  if (missing(survey_name) & multiple) {
+  if (missing(survey_name) && multiple) {
     stop("Please provide one or more survey names to survey_name when multiple
          = TRUE")
   }

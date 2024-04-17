@@ -22,10 +22,13 @@
 #' collected (fetched) from the database and brought into memory of the working
 #' environment.
 #'
-#' @return A dataframe with variables `RecordingId`, `Child_GIVID` (unique
-#' `RecordingGIVID`), `Child_UserRef` (`UserReference`), `ParentId`
-#' (`RecordingId`), `Parent_GIVID` (unique `RecordingGIVID`) and `Parent_UserRef`
-#' (`UserReference`)
+#' @return A dataframe with variables
+#' `RecordingId`,
+#' `Child_GIVID` (unique `RecordingGIVID`),
+#' `Child_UserRef` (`UserReference`),
+#' `ParentId` (`RecordingId`),
+#' `Parent_GIVID` (unique `RecordingGIVID`) and
+#' `Parent_UserRef` (`UserReference`)
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery
@@ -69,11 +72,11 @@ get_inboveg_relation_recording <- function(connection,
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
 
-  if (missing(survey_name) & !multiple) {
+  if (missing(survey_name) && !multiple) {
     survey_name <- "%"
   }
 
-  if (missing(survey_name) & multiple) {
+  if (missing(survey_name) && multiple) {
     stop("Please provide one or more survey names to survey_name when multiple
          = TRUE")
   }

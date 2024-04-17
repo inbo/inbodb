@@ -18,7 +18,8 @@
 #' multiple survey names that must match exactly. If FALSE (the default),
 #' survey_name must be a single character string (one survey name) that can
 #' include wildcards to allow partial matches
-#' @param collect If FALSE (the default), a remote `tbl` object is returned. This
+#' @param collect If FALSE (the default), a remote `tbl` object is returned.
+#' This
 #' is like a reference to the result of the query but the full result of the
 #' query is not brought into memory. If TRUE the full result of the query is
 #' collected (fetched) from the database and brought into memory of the working
@@ -73,11 +74,11 @@ get_inboveg_classification <- function(connection,
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
 
-  if (missing(survey_name) & !multiple) {
+  if (missing(survey_name) && !multiple) {
     survey_name <- "%"
   }
 
-  if (missing(survey_name) & multiple) {
+  if (missing(survey_name) && multiple) {
     stop("Please provide one or more survey names to survey_name when multiple
          = TRUE")
   }

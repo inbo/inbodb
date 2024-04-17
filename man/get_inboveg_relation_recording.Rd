@@ -34,10 +34,13 @@ collected (fetched) from the database and brought into memory of the working
 environment.}
 }
 \value{
-A dataframe with variables \code{RecordingId}, \code{Child_GIVID} (unique
-\code{RecordingGIVID}), \code{Child_UserRef} (\code{UserReference}), \code{ParentId}
-(\code{RecordingId}), \code{Parent_GIVID} (unique \code{RecordingGIVID}) and \code{Parent_UserRef}
-(\code{UserReference})
+A dataframe with variables
+\code{RecordingId},
+\code{Child_GIVID} (unique \code{RecordingGIVID}),
+\code{Child_UserRef} (\code{UserReference}),
+\code{ParentId} (\code{RecordingId}),
+\code{Parent_GIVID} (unique \code{RecordingGIVID}) and
+\code{Parent_UserRef} (\code{UserReference})
 }
 \description{
 This function queries the INBOVEG database for

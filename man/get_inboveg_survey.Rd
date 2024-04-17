@@ -13,14 +13,16 @@ on the \code{inbo-sql07-prd} server}
 \item{survey_name}{A character vector giving the names of the surveys for
 which you want to extract survey information.}
 
-\item{collect}{If FALSE (the default), a remote \code{tbl} object is returned. This
+\item{collect}{If FALSE (the default), a remote \code{tbl} object is returned.
+This
 is like a reference to the result of the query but the full result of the
 query is not brought into memory. If TRUE the full result of the query is
 collected (fetched) from the database and brought into memory of the working
 environment.}
 }
 \value{
-A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe (collect
+A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
+(collect
 = TRUE) with variables Id, Name, Description, Owner and Creator.
 }
 \description{

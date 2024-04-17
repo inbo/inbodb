@@ -19,7 +19,8 @@ on the \code{inbo-sql07-prd} server}
 
 \item{survey_name}{A character string or a character vector, depending on
 multiple parameter, giving the name or names of the survey(s) for which you
-want to extract relevé information. As default (\code{survey_name} = "\%") all surveys
+want to extract relevé information. As default (\code{survey_name} = "\%") all
+surveys
 are returned.}
 
 \item{user_reference}{A character string or a character vector giving the

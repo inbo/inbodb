@@ -49,8 +49,8 @@ be a single character string (one survey name, or one user_reference or one
 matches.}
 }
 \value{
-A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe (collect
-= TRUE) with variables
+A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
+(collect = TRUE) with variables
 \code{SurveyName},
 \code{RecordingGivid},
 \code{UserReference},

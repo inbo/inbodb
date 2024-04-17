@@ -34,8 +34,8 @@
 #' `recording_givid`). Only survey_name can include wildcards to allow partial
 #' matches.
 #'
-#' @return A remote `tbl` object (collect = FALSE) or a `tibble` dataframe (collect
-#' = TRUE) with variables
+#' @return A remote `tbl` object (collect = FALSE) or a `tibble` dataframe
+#' (collect = TRUE) with variables
 #' `SurveyName`,
 #' `RecordingGivid`,
 #' `UserReference`,
@@ -199,9 +199,9 @@ get_inboveg_ppa <- function(
       .con = connection)
 
   } else {
-    if (!(length(survey_name) == 1 & survey_name[1] == "%") &
-        !(length(user_reference) == 1 & user_reference[1] == "%") &
-        !(length(recording_givid) == 1 & recording_givid[1] == "%")) {
+    if (!(length(survey_name) == 1 && survey_name[1] == "%") &&
+        !(length(user_reference) == 1 && user_reference[1] == "%") &&
+        !(length(recording_givid) == 1 && recording_givid[1] == "%")) {
       sql_statement <- glue_sql(
         common_part,
         "AND ivS.Name IN ({survey_name*})
@@ -212,9 +212,9 @@ get_inboveg_ppa <- function(
         recording_givid = recording_givid,
         .con = connection)
     }
-    if ((length(survey_name) == 1 & survey_name[1] == "%") &
-        !(length(user_reference) == 1 & user_reference[1] == "%") &
-        !(length(recording_givid) == 1 & recording_givid[1] == "%")) {
+    if ((length(survey_name) == 1 && survey_name[1] == "%") &&
+        !(length(user_reference) == 1 && user_reference[1] == "%") &&
+        !(length(recording_givid) == 1 && recording_givid[1] == "%")) {
       sql_statement <- glue_sql(
         common_part,
         "AND (ivR.[RecordingGivid] IN ({recording_givid*})
@@ -223,36 +223,36 @@ get_inboveg_ppa <- function(
         recording_givid = recording_givid,
         .con = connection)
     }
-    if ((length(survey_name) == 1 & survey_name[1] == "%") &
-        (length(user_reference) == 1 & user_reference[1] == "%") &
-        !(length(recording_givid) == 1 & recording_givid[1] == "%")) {
+    if ((length(survey_name) == 1 && survey_name[1] == "%") &&
+        (length(user_reference) == 1 && user_reference[1] == "%") &&
+        !(length(recording_givid) == 1 && recording_givid[1] == "%")) {
       sql_statement <- glue_sql(
         common_part,
         "AND ivR.[RecordingGivid] IN ({recording_givid*})",
         recording_givid = recording_givid,
         .con = connection)
     }
-    if ((length(survey_name) == 1 & survey_name[1] == "%") &
-        !(length(user_reference) == 1 & user_reference[1] == "%") &
-        (length(recording_givid) == 1 & recording_givid[1] == "%")) {
+    if ((length(survey_name) == 1 && survey_name[1] == "%") &&
+        !(length(user_reference) == 1 && user_reference[1] == "%") &&
+        (length(recording_givid) == 1 && recording_givid[1] == "%")) {
       sql_statement <- glue_sql(
         common_part,
         "AND ivR.UserReference IN ({user_reference*})",
         user_reference = user_reference,
         .con = connection)
     }
-    if (!(length(survey_name) == 1 & survey_name[1] == "%") &
-        (length(user_reference) == 1 & user_reference[1] == "%") &
-        (length(recording_givid) == 1 & recording_givid[1] == "%")) {
+    if (!(length(survey_name) == 1 && survey_name[1] == "%") &&
+        (length(user_reference) == 1 && user_reference[1] == "%") &&
+        (length(recording_givid) == 1 && recording_givid[1] == "%")) {
       sql_statement <- glue_sql(
         common_part,
         "AND ivS.Name IN ({survey_name*})",
         survey_name = survey_name,
         .con = connection)
     }
-    if (!(length(survey_name) == 1 & survey_name[1] == "%") &
-        (length(user_reference) == 1 & user_reference[1] == "%") &
-        !(length(recording_givid) == 1 & recording_givid[1] == "%")) {
+    if (!(length(survey_name) == 1 && survey_name[1] == "%") &&
+        (length(user_reference) == 1 && user_reference[1] == "%") &&
+        !(length(recording_givid) == 1 && recording_givid[1] == "%")) {
       sql_statement <- glue_sql(
         common_part,
         "AND ivS.Name IN ({survey_name*})
@@ -261,9 +261,9 @@ get_inboveg_ppa <- function(
         recording_givid = recording_givid,
         .con = connection)
     }
-    if (!(length(survey_name) == 1 & survey_name[1] == "%") &
-        !(length(user_reference) == 1 & user_reference[1] == "%") &
-        (length(recording_givid) == 1 & recording_givid[1] == "%")) {
+    if (!(length(survey_name) == 1 && survey_name[1] == "%") &&
+        !(length(user_reference) == 1 && user_reference[1] == "%") &&
+        (length(recording_givid) == 1 && recording_givid[1] == "%")) {
       sql_statement <- glue_sql(
         common_part,
         "AND ivS.Name IN ({survey_name*})

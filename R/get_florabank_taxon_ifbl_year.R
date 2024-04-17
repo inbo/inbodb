@@ -135,8 +135,8 @@ get_florabank_taxon_ifbl_year <- function(connection,
       #str_flatten() is not available for Microsoft SQL Server
       #sql(STRING_AGG("hok", ",")) also does not work
       #fix this later
-      summarize(#ifbl_squares = paste(hok, collapse = '|'),
-                ifbl_number_squares = n()) %>%
+      summarize(
+        ifbl_number_squares = n()) %>%
       ungroup()
 
     if (!isTRUE(collect)) {
