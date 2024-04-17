@@ -56,6 +56,7 @@
 #' `ScientificName`,
 #' `PhenologyCode`,
 #' `Distance`,
+#' `Comment`
 #' `DateIdentification`,
 #' `RecordTypeName`
 #'
@@ -127,6 +128,7 @@ get_inboveg_ppa <- function(
   , Synoniem.ScientificName
   , ivRL_Iden.PhenologyCode
   , ivRL_Taxon.CustomField1Code as Distance
+  , ivRL_Iden.Comment
   , ivRL_Iden.VagueDateBegin as DateIdentification
   , ivRec.Name as RecordTypeName
   FROM  dbo.ivSurvey ivS

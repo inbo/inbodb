@@ -71,6 +71,7 @@ A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
 \code{ScientificName},
 \code{PhenologyCode},
 \code{Distance},
+\code{Comment}
 \code{DateIdentification},
 \code{RecordTypeName}
 }
