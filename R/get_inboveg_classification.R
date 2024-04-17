@@ -2,7 +2,7 @@
 #'
 #' @description This function queries the INBOVEG database for information
 #' on the field classification (N2000 or local vegetation type, e.g. BWK-code)
-#' of the releve (recording) for one or more survey(s) by the name of
+#' of the relevé (recording) for one or more survey(s) by the name of
 #' the survey.
 #' See the examples for how to get information for all surveys.
 #'
@@ -12,7 +12,7 @@
 #' @param classif A character vector giving the Classification code of the
 #' vegetation type for which you want to extract information. If missing,
 #' all classifications are returned.
-#' @param connection dbconnection with the database 'Cydonia'
+#' @param connection `dbconnection` with the database 'Cydonia'
 #' on the `inbo-sql07-prd` server
 #' @param multiple If TRUE, survey_name can take a character vector with
 #' multiple survey names that must match exactly. If FALSE (the default),
@@ -31,7 +31,7 @@
 #' `Classification-code`,
 #' vegetation type / BWK or N2000-list,
 #' `LocalClassification`,
-#' Description of the Habitattype,
+#' Description of the habitat type,
 #' Cover-code,
 #' Cover in percentage.
 #'

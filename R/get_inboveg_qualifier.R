@@ -1,4 +1,4 @@
-#' @title Query qualifier information of recordings (releve) from INBOVEG
+#' @title Query qualifier information of recordings (relevé) from INBOVEG
 #'
 #' @description This function queries the INBOVEG database for
 #' qualifier information (site qualifier or management qualifier)on recordings

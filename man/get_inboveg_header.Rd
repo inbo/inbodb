@@ -58,7 +58,7 @@ A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
 }
 \description{
 This function queries the INBOVEG database for header
-information (metadata for a vegetation-recording or releve) for one or more
+information (metadata for a vegetation-recording or relevé) for one or more
 surveys and the recorder type. All records, also with 'work needed'
 are selected.
 See the examples for how to get information for all surveys.

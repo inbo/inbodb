@@ -13,7 +13,7 @@ get_inboveg_classification(
 )
 }
 \arguments{
-\item{connection}{dbconnection with the database 'Cydonia'
+\item{connection}{\code{dbconnection} with the database 'Cydonia'
 on the \code{inbo-sql07-prd} server}
 
 \item{survey_name}{A character string or a character vector
@@ -43,14 +43,14 @@ A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
 \code{Classification-code},
 vegetation type / BWK or N2000-list,
 \code{LocalClassification},
-Description of the Habitattype,
+Description of the habitat type,
 Cover-code,
 Cover in percentage.
 }
 \description{
 This function queries the INBOVEG database for information
 on the field classification (N2000 or local vegetation type, e.g. BWK-code)
-of the releve (recording) for one or more survey(s) by the name of
+of the relevé (recording) for one or more survey(s) by the name of
 the survey.
 See the examples for how to get information for all surveys.
 }

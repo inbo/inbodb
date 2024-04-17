@@ -164,7 +164,7 @@ recording_heischraal2012 <- get_inboveg_recording(con,
 recording_heischraal2012
 ```
 
-Here is how to get the relevé for a specific RecordingGivid:
+Here is how to get the relevé for a specific `RecordingGivid`:
 
 ```{r, eval = FALSE}
 recording_specific_givid <- get_inboveg_recording(con,

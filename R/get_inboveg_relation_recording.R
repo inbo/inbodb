@@ -1,4 +1,4 @@
-#' @title Query relation (Parent - Child) information of recordings (releve)
+#' @title Query relation (Parent - Child) information of recordings (relevé)
 #' from INBOVEG
 #'
 #' @description This function queries the INBOVEG database for

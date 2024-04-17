@@ -19,18 +19,18 @@ on the \code{inbo-sql07-prd} server}
 
 \item{survey_name}{A character string or a character vector, depending on
 multiple parameter, giving the name or names of the survey(s) for which you
-want to extract releve information. As default (\code{survey_name} = "\%") all
+want to extract relevé information. As default (\code{survey_name} = "\%") all
 surveys
 are returned.}
 
 \item{user_reference}{A character string or a character vector giving the
-name of a recording for which you want to extract releve information.
+name of a recording for which you want to extract relevé information.
 As default (\code{user_reference} = "\%") all user-references are returned.}
 
 \item{recording_givid}{A character string or a character vector giving
-the unique id of a recording for which you want to extract releve
+the unique id of a recording for which you want to extract relevé
 information.
-As default (recording_givids = "\%") all recording_givids are returned.}
+As default (\code{recording_givids} = "\%") all \code{recording_givids} are returned.}
 
 \item{collect}{If FALSE (the default), a remote \code{tbl} object is returned.
 This is like a reference to the result of the query but the full result of
@@ -75,7 +75,7 @@ A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe (colle
 }
 \description{
 This function queries the INBOVEG database for
-PPA-type releve information (which species were recorded at what distance
+PPA-type relevé information (which species were recorded at what distance
 from a point location) for one or more surveys,
 or in combination with the unique ID (\code{recordingGIVID}) or user reference
 }

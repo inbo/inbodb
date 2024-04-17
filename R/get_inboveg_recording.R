@@ -1,20 +1,20 @@
-#' @title Query recording (releve) information from INBOVEG
+#' @title Query recording (relevé) information from INBOVEG
 #'
 #' @description This function queries the INBOVEG database for
-#' releve information (which species were recorded in which plots and in
+#' relevé information (which species were recorded in which plots and in
 #' which vegetation layers with which cover) for one or more surveys,
 #' or in combination with the unique ID (`recordingGIVID`) or user reference
 #'
 #' @param user_reference A character string or a character vector giving the
-#' name of a recording for which you want to extract releve information.
+#' name of a recording for which you want to extract relevé information.
 #' As default (user_reference = "%") all user-references are returned.
 #' @param recording_givid A character string or a character vector giving
-#' the unique id of a recording for which you want to extract releve
+#' the unique id of a recording for which you want to extract relevé
 #' information.
 #' As default (`recording_givids` = "%") all `recording_givids` are returned.
 #' @param survey_name A character string or a character vector, depending on
 #' multiple parameter, giving the name or names of the survey(s) for which you
-#' want to extract releve information. As default (`survey_name` = "%") all surveys
+#' want to extract relevé information. As default (`survey_name` = "%") all surveys
 #' are returned.
 #' @param connection `dbconnection` with the database 'Cydonia'
 #' on the `inbo-sql07-prd` server

@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_inboveg_relation_recording.R
 \name{get_inboveg_relation_recording}
 \alias{get_inboveg_relation_recording}
-\title{Query relation (Parent - Child) information of recordings (releve)
+\title{Query relation (Parent - Child) information of recordings (relevé)
 from INBOVEG}
 \usage{
 get_inboveg_relation_recording(

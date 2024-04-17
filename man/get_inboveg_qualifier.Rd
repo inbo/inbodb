@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_inboveg_qualifier.R
 \name{get_inboveg_qualifier}
 \alias{get_inboveg_qualifier}
-\title{Query qualifier information of recordings (releve) from INBOVEG}
+\title{Query qualifier information of recordings (relevé) from INBOVEG}
 \usage{
 get_inboveg_qualifier(
   connection,

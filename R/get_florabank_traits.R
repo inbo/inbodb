@@ -12,7 +12,8 @@ globalVariables("%LIKE%")
 #' associated taxon-specific trait values. If this is missing, the function
 #' returns an error and prints a message showing all possible trait names.
 #'
-#' @param collect If FALSE (the default), a remote tbl object is returned. This
+#' @param collect If FALSE (the default), a remote `tbl` object is returned.
+#' This
 #' is like a reference to the result of the query but the full result of the
 #' query is not brought into memory. If TRUE the full result of the query is
 #' collected (fetched) from the database and brought into memory of the working
