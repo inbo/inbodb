@@ -35,12 +35,18 @@
 #'
 #' @return A remote `tbl` object (collect = FALSE) or a `tibble` dataframe
 #' (collect
-#' = TRUE) with variables `RecordingGivid` (unique ID), User reference,
+#' = TRUE) with variables
+#' `RecordingGivid` (unique ID),
+#'  `User reference`,
 #' `LayerCode`,
-#' `CoverCode`, `OriginalName`, `ScientificName`, `PhenologyCode`,
+#' `CoverCode`,
+#' `OriginalName`,
+#' `ScientificName`,
+#' `TaxonGroupCode`,
+#' `PhenologyCode`,
 #' `CoverageCode`,
-#' `PctValue` (percentage coverage), `RecordingScale` (name of the scale of
-#' coverage)
+#' `PctValue` (percentage coverage),
+#' `RecordingScale` (name of the scale of coverage)
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery
@@ -99,8 +105,9 @@ get_inboveg_recording <- function(
   , ivR.UserReference
   , ivRL_Layer.LayerCode
   , ivRL_Layer.CoverCode
-  , ivRL_Iden.TaxonFullText as OrignalName
+  , ivRL_Iden.TaxonFullText as OriginalName
   , Synoniem.ScientificName
+  , ivRL_Iden.TaxonGroup as TaxonGroupCode
   , ivRL_Iden.PhenologyCode
   , ivRL_Taxon.CoverageCode
   , ftCover.PctValue

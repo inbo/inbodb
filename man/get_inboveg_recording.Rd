@@ -50,12 +50,18 @@ matches.}
 \value{
 A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
 (collect
-= TRUE) with variables \code{RecordingGivid} (unique ID), User reference,
+= TRUE) with variables
+\code{RecordingGivid} (unique ID),
+\verb{User reference},
 \code{LayerCode},
-\code{CoverCode}, \code{OriginalName}, \code{ScientificName}, \code{PhenologyCode},
+\code{CoverCode},
+\code{OriginalName},
+\code{ScientificName},
+\code{TaxonGroupCode},
+\code{PhenologyCode},
 \code{CoverageCode},
-\code{PctValue} (percentage coverage), \code{RecordingScale} (name of the scale of
-coverage)
+\code{PctValue} (percentage coverage),
+\code{RecordingScale} (name of the scale of coverage)
 }
 \description{
 This function queries the INBOVEG database for

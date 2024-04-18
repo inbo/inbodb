@@ -69,6 +69,7 @@ A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
 \code{LayerCover},
 \code{OriginalName},
 \code{ScientificName},
+\code{TaxonGroupCode},
 \code{PhenologyCode},
 \code{Distance},
 \code{Comment}

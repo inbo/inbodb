@@ -464,7 +464,7 @@ rm(con)
 # do some data wrangling with dplyr
 # here we remove one column
 output_heischraal2012 <- recording_heischraal2012 %>%
-  select(-OrignalName)
+  select(-OriginalName)
 
 # export the data to a csv file that can be easily read by excel
 write_excel_csv2(

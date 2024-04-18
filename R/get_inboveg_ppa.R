@@ -54,6 +54,7 @@
 #' `LayerCover`,
 #' `OriginalName`,
 #' `ScientificName`,
+#' `TaxonGroupCode`,
 #' `PhenologyCode`,
 #' `Distance`,
 #' `Comment`
@@ -126,6 +127,7 @@ get_inboveg_ppa <- function(
   , ivRL_Layer.CoverCode as LayerCover
   , ivRL_Iden.TaxonFullText as OriginalName
   , Synoniem.ScientificName
+  , ivRL_Iden.TaxonGroup as TaxonGroupCode
   , ivRL_Iden.PhenologyCode
   , ivRL_Taxon.CustomField1Code as Distance
   , ivRL_Iden.Comment
