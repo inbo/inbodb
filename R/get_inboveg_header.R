@@ -146,7 +146,7 @@ get_inboveg_header <- function(
   , ivR.SurveyId
   , ivR.RecTypeID
   , ivRec.Name as RecTypeName",
-  paste(sprintf(", ivR.%s",additional_variables), collapse = ""),
+  paste(sprintf(", ivR.%s", additional_variables), collapse = ""),
   " FROM [dbo].[ivRecording] ivR
   INNER JOIN [dbo].[ivSurvey] ivS on ivS.Id = ivR.SurveyId
   INNER JOIN [dbo].[ivRecTypeD] ivRec on ivRec.ID = ivR.RecTypeID
