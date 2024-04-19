@@ -44,6 +44,7 @@
 #' `ScientificName`,
 #' `TaxonGroupCode`,
 #' `PhenologyCode`,
+#' `Comment`,
 #' `CoverageCode`,
 #' `PctValue` (percentage coverage),
 #' `RecordingScale` (name of the scale of coverage)
@@ -109,6 +110,7 @@ get_inboveg_recording <- function(
   , Synoniem.ScientificName
   , ivRL_Iden.TaxonGroup as TaxonGroupCode
   , ivRL_Iden.PhenologyCode
+  , ivRL_Iden.Comment
   , ivRL_Taxon.CoverageCode
   , ftCover.PctValue
   , ftAGL.Description as RecordingScale

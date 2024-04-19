@@ -59,6 +59,7 @@ A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
 \code{ScientificName},
 \code{TaxonGroupCode},
 \code{PhenologyCode},
+\code{Comment},
 \code{CoverageCode},
 \code{PctValue} (percentage coverage),
 \code{RecordingScale} (name of the scale of coverage)
