@@ -8,6 +8,7 @@ get_inboveg_header(
   connection,
   survey_name,
   rec_type,
+  additional_variables = character(0),
   multiple = FALSE,
   collect = FALSE
 )
@@ -25,6 +26,17 @@ If missing, all surveys are returned.}
 you want to extract header information e.g. \code{'Classic'}, \code{'Classic-emmer'},
 \code{'Classic-ketting'}, \code{'BioHab'}, \code{'ABS'}, \code{'PPA'}.
 If missing, all recording types are returned.}
+
+\item{additional_variables}{Default character(0).
+A character vector with names of additional variables to select from
+\code{ivRecording} table:
+\code{CoordinateRefSystem},
+\code{GivenLatitute},
+\code{GivenLongitude},
+\code{GivenLatitude2},
+\code{GivenLongitude2},
+\code{Pq},
+\code{Homogenous}}
 
 \item{multiple}{If TRUE, survey_name can take a character vector with
 multiple survey names that must match exactly. If FALSE (the default),
@@ -74,6 +86,10 @@ con <- connect_inbo_dbase("D0010_00_Cydonia")
 header_info <- get_inboveg_header(con, survey_name = "OudeLanden_1979",
 rec_type = "Classic", collect = TRUE)
 
+# with additional variables
+header_info <- get_inboveg_header(con, survey_name = "OudeLanden_1979",
+rec_type = "Classic", additional_variables = c("Pq", "Homogenous"),
+collect = TRUE)
 # get header information from several specific surveys
 header_severalsurveys <- get_inboveg_header(con, survey_name =
 c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"), multiple = TRUE)

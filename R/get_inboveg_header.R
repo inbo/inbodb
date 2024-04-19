@@ -20,6 +20,16 @@
 #' multiple survey names that must match exactly. If FALSE (the default),
 #' survey_name must be a single character string (one survey name) that can
 #' include wildcards to allow partial matches
+#' @param additional_variables Default character(0).
+#' A character vector with names of additional variables to select from
+#' `ivRecording` table:
+#' `CoordinateRefSystem`,
+#' `GivenLatitute`,
+#' `GivenLongitude`,
+#' `GivenLatitude2`,
+#' `GivenLongitude2`,
+#' `Pq`,
+#' `Homogenous`
 #' @param collect If FALSE (the default), a remote `tbl` object is returned.
 #' This is like a reference to the result of the query but the full result of
 #' the query is not brought into memory. If TRUE the full result of the query is
@@ -62,6 +72,10 @@
 #' header_info <- get_inboveg_header(con, survey_name = "OudeLanden_1979",
 #' rec_type = "Classic", collect = TRUE)
 #'
+#' # with additional variables
+#' header_info <- get_inboveg_header(con, survey_name = "OudeLanden_1979",
+#' rec_type = "Classic", additional_variables = c("Pq", "Homogenous"),
+#' collect = TRUE)
 #' # get header information from several specific surveys
 #' header_severalsurveys <- get_inboveg_header(con, survey_name =
 #' c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"), multiple = TRUE)
@@ -79,12 +93,14 @@ get_inboveg_header <- function(
     connection,
     survey_name,
     rec_type,
+    additional_variables = character(0),
     multiple = FALSE,
     collect = FALSE) {
 
   assert_that(
     inherits(connection, what = "Microsoft SQL Server"),
     msg = "Not a connection object to database.")
+  assert_that(is.character(additional_variables))
 
   if (missing(survey_name) && !multiple) {
     survey_name <- "%"
@@ -110,7 +126,8 @@ get_inboveg_header <- function(
     assert_that(is.character(rec_type))
   }
 
-  common_part <- "SELECT
+  common_part <- paste0(
+    "SELECT
   ivR.RecordingGivid
   , ivR.NeedsWork
   , ivS.Name as SurveyName
@@ -128,11 +145,12 @@ get_inboveg_header <- function(
   , ivR.VagueDateEnd
   , ivR.SurveyId
   , ivR.RecTypeID
-  , ivRec.Name as RecTypeName
-  FROM [dbo].[ivRecording] ivR
+  , ivRec.Name as RecTypeName",
+  paste(sprintf(", ivR.%s",additional_variables), collapse = ""),
+  " FROM [dbo].[ivRecording] ivR
   INNER JOIN [dbo].[ivSurvey] ivS on ivS.Id = ivR.SurveyId
   INNER JOIN [dbo].[ivRecTypeD] ivRec on ivRec.ID = ivR.RecTypeID
-  WHERE 1 = 1 "
+  WHERE 1 = 1 ")
 
   if (!multiple) {
     sql_statement <- glue_sql(
