@@ -75,14 +75,16 @@
 #' }
 
 
-get_inboveg_header <- function(connection,
-                           survey_name,
-                           rec_type,
-                           multiple = FALSE,
-                           collect = FALSE) {
+get_inboveg_header <- function(
+    connection,
+    survey_name,
+    rec_type,
+    multiple = FALSE,
+    collect = FALSE) {
 
-  assert_that(inherits(connection, what = "Microsoft SQL Server"),
-              msg = "Not a connection object to database.")
+  assert_that(
+    inherits(connection, what = "Microsoft SQL Server"),
+    msg = "Not a connection object to database.")
 
   if (missing(survey_name) && !multiple) {
     survey_name <- "%"
@@ -132,29 +134,31 @@ get_inboveg_header <- function(connection,
   INNER JOIN [dbo].[ivRecTypeD] ivRec on ivRec.ID = ivR.RecTypeID
   WHERE 1 = 1 "
 
-if (!multiple) {
-  sql_statement <- glue_sql(common_part,
-                            "AND ivS.Name LIKE {survey_name}
-                            AND ivREc.Name LIKE {rec_type}",
-                            survey_name = survey_name,
-                            rec_type = rec_type,
-                            .con = connection)
+  if (!multiple) {
+    sql_statement <- glue_sql(
+      common_part,
+      "AND ivS.Name LIKE {survey_name}
+       AND ivREc.Name LIKE {rec_type}",
+      survey_name = survey_name,
+      rec_type = rec_type,
+      .con = connection)
 
-} else {
-  sql_statement <- glue_sql(common_part,
-                            "AND ivS.Name IN ({survey_name*})
-                            AND ivREc.Name LIKE {rec_type}",
-                            survey_name = survey_name,
-                            rec_type = rec_type,
-                            .con = connection)
-}
+  } else {
+    sql_statement <- glue_sql(
+      common_part,
+      "AND ivS.Name IN ({survey_name*})
+       AND ivREc.Name LIKE {rec_type}",
+      survey_name = survey_name,
+      rec_type = rec_type,
+      .con = connection)
+  }
 
-query_result <- tbl(connection, sql(sql_statement))
+  query_result <- tbl(connection, sql(sql_statement))
 
-if (!isTRUE(collect)) {
-  return(query_result)
-} else {
-  query_result <- collect(query_result)
-  return(query_result)
-}
+  if (!isTRUE(collect)) {
+    return(query_result)
+  } else {
+    query_result <- collect(query_result)
+    return(query_result)
+  }
 }
