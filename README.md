@@ -29,7 +29,7 @@ options(
 install.packages("inbodb")
 ```
 
-To install `inbodb` from Github, start a new R session and run this code (before loading any packages):
+To install `inbodb` from GitHub, start a new R session and run this code (before loading any packages):
 
 ```r
 #install.packages("remotes")

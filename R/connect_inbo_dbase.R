@@ -94,7 +94,7 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
         }
     )
 
-    # derived from the odbc package Viewer setup to activate the Rstudio Viewer
+    # derived from the odbc package Viewer setup to activate the RStudio Viewer
     code_call <- c(match.call())
     code_call <- paste(c("library(inbodb)",
                          paste("con <-", gsub(", ", ",\n\t", code_call))),
@@ -105,7 +105,7 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
 }
 
 
-#' Rstudio Viewer integration
+#' RStudio Viewer integration
 #'
 #' See https://stackoverflow.com/questions/48936851/calling-odbc-connection-within-function-does-not-display-in-rstudio-connection and https://rstudio.github.io/rstudio-extensions/connections-contract.html#persistence #nolint
 #' @param connection `odbc` connection
