@@ -26,6 +26,7 @@
 #' the query is not brought into memory. If TRUE the full result of the query is
 #' collected (fetched) from the database and brought into memory of the working
 #' environment.
+#' @param multiple Deprecated.
 #'
 #' @return A remote `tbl` object (collect = FALSE) or a `tibble` dataframe
 #' (collect
@@ -47,6 +48,7 @@
 #' @importFrom DBI dbGetQuery
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr collect tbl sql
+#' @importFrom lifecycle deprecated
 #'
 #' @export
 #' @family inboveg
@@ -86,13 +88,27 @@ get_inboveg_recording <- function(
   survey_name = "%",
   user_reference = "%",
   recording_givid = "%",
-  collect = FALSE) {
+  collect = FALSE,
+  multiple = deprecated()) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
   assert_that(is.character(survey_name))
   assert_that(is.character(user_reference))
   assert_that(is.character(recording_givid))
+  if (lifecycle::is_present(multiple)) {
+    lifecycle::deprecate_warn(
+      when = "0.0.5",
+      what = "get_inboveg_recording(multiple)",
+      details =
+        paste(
+          "The argument will be removed.",
+          "You can safely remove the argument from your code and the function",
+          "should work as before."
+        )
+    )
+  }
+
 
   common_part <- "SELECT ivS.Name
   , ivR.[RecordingGivid]

@@ -25,6 +25,7 @@ Imports:
     DBI,
     dplyr,
     glue,
+    lifecycle,
     odbc,
     rlang
 Suggests: 

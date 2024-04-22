@@ -9,7 +9,8 @@ get_inboveg_recording(
   survey_name = "\%",
   user_reference = "\%",
   recording_givid = "\%",
-  collect = FALSE
+  collect = FALSE,
+  multiple = deprecated()
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ This is like a reference to the result of the query but the full result of
 the query is not brought into memory. If TRUE the full result of the query is
 collected (fetched) from the database and brought into memory of the working
 environment.}
+
+\item{multiple}{Deprecated.}
 }
 \value{
 A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
