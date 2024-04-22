@@ -38,13 +38,12 @@ the query is not brought into memory. If TRUE the full result of the query is
 collected (fetched) from the database and brought into memory of the working
 environment.}
 
-\item{multiple}{If TRUE survey_name, \code{user_reference} or \code{recording_givid}
-can
+\item{multiple}{If TRUE survey_name, user_reference or \code{recording_givid} can
 take a character vector with multiple survey names, user references or
 \code{recording_givids} that must match exactly.
-If FALSE (the default) survey_name , \code{user_reference} or \code{recording_givid}
+If FALSE (the default) \code{survey_name} , \code{user_reference} or \code{recording_givid}
 must
-be a single character string (one survey name, or one user_reference or one
+be a single character string (one survey name, or one \code{user_reference} or one
 \code{recording_givid}). Only survey_name can include wildcards to allow partial
 matches.}
 }

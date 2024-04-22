@@ -25,7 +25,7 @@ are returned.}
 
 \item{user_reference}{A character string or a character vector giving the
 name of a recording for which you want to extract relevé information.
-As default (user_reference = "\%") all user-references are returned.}
+As default (\code{user_reference} = "\%") all user-references are returned.}
 
 \item{recording_givid}{A character string or a character vector giving
 the unique id of a recording for which you want to extract relevé
