@@ -4,6 +4,9 @@
 #' PPA-type relevé information (which species were recorded at what distance
 #' from a point location) for one or more surveys,
 #' or in combination with the unique ID (`recordingGIVID`) or user reference
+#' Wildcards in `survey_name`, `user_reference` or `recording_givid`
+#' should only be used if a character string (a length one character vector),
+#' otherwise values are assumed to match exactly.
 #'
 #' @inheritParams get_inboveg_recording
 #'
@@ -57,7 +60,7 @@
 #' # get recordings from several specific recordinggivid
 #' recording_severalgivids <- get_inboveg_ppa(con,
 #' recording_givid = c("IV2024040411243457","IV2024040411263782"),
-#' multiple = TRUE, collect = TRUE)
+#' collect = TRUE)
 #'
 #' # get all PPA-type recordings of all surveys,  don't collect the data
 #' all_ppa <- get_inboveg_ppa(con)
@@ -72,8 +75,7 @@ get_inboveg_ppa <- function(
   survey_name = "%",
   user_reference = "%",
   recording_givid = "%",
-  collect = FALSE,
-  multiple = FALSE) {
+  collect = FALSE) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
@@ -156,108 +158,12 @@ get_inboveg_ppa <- function(
   AND ivREc.Name LIKE 'PPA'
   "
 
-  if (!multiple) {
-
-    assert_that(
-      length(survey_name) == 1,
-      msg = "If you want to give multiple survey names, please change multiple  into TRUE") #nolint
-    assert_that(
-      length(recording_givid) == 1,
-      msg = "If you want to give multiple recording givid, please change multiple  into TRUE") #nolint
-    assert_that(
-      length(user_reference) == 1,
-      msg = "If you want to give multiple user reference, please change multiple into TRUE") #nolint
-
-    sql_statement <- glue_sql(
-      common_part,
-      "AND ivS.Name LIKE {survey_name}
-       AND ivR.[RecordingGivid] LIKE {recording_givid}
-       AND ivR.UserReference LIKE {user_reference}",
-      survey_name = survey_name,
-      user_reference = user_reference,
-      recording_givid = recording_givid,
-      .con = connection)
-
-  } else {
-    if (!(length(survey_name) == 1 && survey_name[1] == "%") &&
-        !(length(user_reference) == 1 && user_reference[1] == "%") &&
-        !(length(recording_givid) == 1 && recording_givid[1] == "%")) {
-      sql_statement <- glue_sql(
-        common_part,
-        "AND ivS.Name IN ({survey_name*})
-         AND (ivR.[RecordingGivid] IN ({recording_givid*})
-         OR ivR.UserReference IN ({user_reference*}))",
-        survey_name = survey_name,
-        user_reference = user_reference,
-        recording_givid = recording_givid,
-        .con = connection)
-    }
-    if ((length(survey_name) == 1 && survey_name[1] == "%") &&
-        !(length(user_reference) == 1 && user_reference[1] == "%") &&
-        !(length(recording_givid) == 1 && recording_givid[1] == "%")) {
-      sql_statement <- glue_sql(
-        common_part,
-        "AND (ivR.[RecordingGivid] IN ({recording_givid*})
-         OR ivR.UserReference IN ({user_reference*}))",
-        user_reference = user_reference,
-        recording_givid = recording_givid,
-        .con = connection)
-    }
-    if ((length(survey_name) == 1 && survey_name[1] == "%") &&
-        (length(user_reference) == 1 && user_reference[1] == "%") &&
-        !(length(recording_givid) == 1 && recording_givid[1] == "%")) {
-      sql_statement <- glue_sql(
-        common_part,
-        "AND ivR.[RecordingGivid] IN ({recording_givid*})",
-        recording_givid = recording_givid,
-        .con = connection)
-    }
-    if ((length(survey_name) == 1 && survey_name[1] == "%") &&
-        !(length(user_reference) == 1 && user_reference[1] == "%") &&
-        (length(recording_givid) == 1 && recording_givid[1] == "%")) {
-      sql_statement <- glue_sql(
-        common_part,
-        "AND ivR.UserReference IN ({user_reference*})",
-        user_reference = user_reference,
-        .con = connection)
-    }
-    if (!(length(survey_name) == 1 && survey_name[1] == "%") &&
-        (length(user_reference) == 1 && user_reference[1] == "%") &&
-        (length(recording_givid) == 1 && recording_givid[1] == "%")) {
-      sql_statement <- glue_sql(
-        common_part,
-        "AND ivS.Name IN ({survey_name*})",
-        survey_name = survey_name,
-        .con = connection)
-    }
-    if (!(length(survey_name) == 1 && survey_name[1] == "%") &&
-        (length(user_reference) == 1 && user_reference[1] == "%") &&
-        !(length(recording_givid) == 1 && recording_givid[1] == "%")) {
-      sql_statement <- glue_sql(
-        common_part,
-        "AND ivS.Name IN ({survey_name*})
-         AND ivR.[RecordingGivid] IN ({recording_givid*})",
-        survey_name = survey_name,
-        recording_givid = recording_givid,
-        .con = connection)
-    }
-    if (!(length(survey_name) == 1 && survey_name[1] == "%") &&
-        !(length(user_reference) == 1 && user_reference[1] == "%") &&
-        (length(recording_givid) == 1 && recording_givid[1] == "%")) {
-      sql_statement <- glue_sql(
-        common_part,
-        "AND ivS.Name IN ({survey_name*})
-         AND ivR.UserReference IN ({user_reference*})",
-        survey_name = survey_name,
-        user_reference = user_reference,
-        .con = connection)
-    }
-    stopifnot(
-      "When choosing multiple = TRUE, please add a (vector of) value(s) for at least one of the following variables: survey_name, user_reference or recording_givid." #nolint
-      = exists("sql_statement")
-    )
-
-  }
+  sql_statement <- complete_sql_statement(
+    survey_name = survey_name,
+    recording_givid = recording_givid,
+    user_reference = user_reference,
+    common_part = common_part,
+    connection = connection)
 
   query_result <- tbl(connection, sql(sql_statement))
 

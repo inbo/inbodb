@@ -188,13 +188,12 @@ recording_specific_givid <- get_inboveg_recording(
   collect = TRUE)
 ```
 
-Or for multiple `RecordingGivid`, make sure to set `multiple = TRUE`. 
+Or for multiple `RecordingGivid`: 
 
 ```{r}
 recording_specific_givid <- get_inboveg_recording(
   con,
   recording_givid = c("IV2012080609161322", "IV2012081611384756"),
-  multiple = TRUE,
   collect = TRUE)
 ```
 
@@ -224,7 +223,6 @@ Get recordings from several specific surveys:
 recording_severalsurveys <- get_inboveg_recording(
   con,
   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
-  multiple = TRUE,
   collect = TRUE)
 ```
 

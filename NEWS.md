@@ -2,6 +2,8 @@
 
 * Add new function `get_inboveg_ppa()` to get point-plant-distance type data
   (PPA) from INBOVEG (#50)
+* Reworked `get_inboveg_recording()`. Argument `multiple` is no longer needed
+  and therefor removed.
 
 # inbodb 0.0.4
 

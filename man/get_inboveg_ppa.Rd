@@ -9,19 +9,17 @@ get_inboveg_ppa(
   survey_name = "\%",
   user_reference = "\%",
   recording_givid = "\%",
-  collect = FALSE,
-  multiple = FALSE
+  collect = FALSE
 )
 }
 \arguments{
 \item{connection}{\code{dbconnection} with the database 'Cydonia'
 on the \code{inbo-sql07-prd} server}
 
-\item{survey_name}{A character string or a character vector, depending on
-multiple parameter, giving the name or names of the survey(s) for which you
+\item{survey_name}{A character string or a character vector, giving the name
+or names of the survey(s) for which you
 want to extract relevé information. As default (\code{survey_name} = "\%") all
-surveys
-are returned.}
+surveys are returned.}
 
 \item{user_reference}{A character string or a character vector giving the
 name of a recording for which you want to extract relevé information.
@@ -37,15 +35,6 @@ This is like a reference to the result of the query but the full result of
 the query is not brought into memory. If TRUE the full result of the query is
 collected (fetched) from the database and brought into memory of the working
 environment.}
-
-\item{multiple}{If TRUE survey_name, user_reference or \code{recording_givid} can
-take a character vector with multiple survey names, user references or
-\code{recording_givids} that must match exactly.
-If FALSE (the default) \code{survey_name} , \code{user_reference} or \code{recording_givid}
-must
-be a single character string (one survey name, or one \code{user_reference} or one
-\code{recording_givid}). Only survey_name can include wildcards to allow partial
-matches.}
 }
 \value{
 A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
@@ -80,6 +69,9 @@ This function queries the INBOVEG database for
 PPA-type relevé information (which species were recorded at what distance
 from a point location) for one or more surveys,
 or in combination with the unique ID (\code{recordingGIVID}) or user reference
+Wildcards in \code{survey_name}, \code{user_reference} or \code{recording_givid}
+should only be used if a character string (a length one character vector),
+otherwise values are assumed to match exactly.
 }
 \examples{
 \dontrun{
@@ -97,7 +89,7 @@ collect = FALSE)
 # get recordings from several specific recordinggivid
 recording_severalgivids <- get_inboveg_ppa(con,
 recording_givid = c("IV2024040411243457","IV2024040411263782"),
-multiple = TRUE, collect = TRUE)
+collect = TRUE)
 
 # get all PPA-type recordings of all surveys,  don't collect the data
 all_ppa <- get_inboveg_ppa(con)
