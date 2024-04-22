@@ -2,8 +2,11 @@
 
 * Add new function `get_inboveg_ppa()` to get point-plant-distance type data
   (PPA) from INBOVEG (#50)
-* Reworked `get_inboveg_recording()`. Argument `multiple` is no longer needed
-  and therefore removed.
+* Simplified `get_inboveg_recording()` so that a user no longer needs to specify
+  `multiple = TRUE` if multiple surveys, user references, or `recording_givid`'s
+  are passed to their respective arguments.
+  Argument `multiple` is no longer needed and is therefore deprecated.
+  A warning is issued if the argument is still being used.
 
 # inbodb 0.0.4
 
