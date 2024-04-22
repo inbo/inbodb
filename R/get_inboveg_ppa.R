@@ -5,34 +5,7 @@
 #' from a point location) for one or more surveys,
 #' or in combination with the unique ID (`recordingGIVID`) or user reference
 #'
-#' @param user_reference A character string or a character vector giving the
-#' name of a recording for which you want to extract relevé information.
-#' As default (`user_reference` = "%") all user-references are returned.
-#' @param recording_givid A character string or a character vector giving
-#' the unique id of a recording for which you want to extract relevé
-#' information.
-#' As default (`recording_givids` = "%") all `recording_givids` are returned.
-#' @param survey_name A character string or a character vector, depending on
-#' multiple parameter, giving the name or names of the survey(s) for which you
-#' want to extract relevé information. As default (`survey_name` = "%") all
-#' surveys
-#' are returned.
-#' @param connection `dbconnection` with the database 'Cydonia'
-#' on the `inbo-sql07-prd` server
-#' @param collect If FALSE (the default), a remote `tbl` object is returned.
-#' This is like a reference to the result of the query but the full result of
-#' the query is not brought into memory. If TRUE the full result of the query is
-#' collected (fetched) from the database and brought into memory of the working
-#' environment.
-#' @param multiple If TRUE survey_name, `user_reference` or `recording_givid`
-#' can
-#' take a character vector with multiple survey names, user references or
-#' `recording_givids` that must match exactly.
-#' If FALSE (the default) survey_name , `user_reference` or `recording_givid`
-#' must
-#' be a single character string (one survey name, or one user_reference or one
-#' `recording_givid`). Only survey_name can include wildcards to allow partial
-#' matches.
+#' @inheritParams get_inboveg_recording
 #'
 #' @return A remote `tbl` object (collect = FALSE) or a `tibble` dataframe
 #' (collect = TRUE) with variables
