@@ -1,9 +1,9 @@
 #' @title Query to extract the taxa on a taxonlist from D0156_00_Taxonlijsten
 #'
 #' @description This function queries D0156_00_Taxonlijsten and gives an
-#' overview of the taxa that are on a given taxon list version. You can choose
-#' to retrieve the taxa as they were originally published, an interpretation of
-#' the original taxa or both. The taxa of the latest list version are shown
+#' overview of the taxa that are on a given taxon list version. The interpreted
+#' taxa are given by default, but it is possible to add taxa as they were
+#' originally published. The taxa of the latest list version are shown
 #' unless specified otherwise.
 #'
 #' @param connection dbconnection with the database 'D0156_00_Taxonlijsten'
