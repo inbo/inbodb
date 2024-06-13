@@ -41,7 +41,8 @@ Suggests:
     kableExtra,
     knitr,
     rmarkdown,
-    tidyr
+    tidyr,
+    ggplot2
 VignetteBuilder: 
     knitr
 Config/checklist/communities: inbo
