@@ -111,7 +111,7 @@ get_taxonlijsten_items <- function(connection,
 
   if (version == "latest") {
     version <- 1
-  } else if (version == "old"){
+  } else if (version == "old") {
     version <- 0
   } else {
     whereclause <- ""
