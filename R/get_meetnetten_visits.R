@@ -1,7 +1,7 @@
-#' @title Query visit data from meetnetten
+#' @title Query visit data from Meetnetten
 #'
 #' @description This function queries the meetnetten database for visit
-#' data (data about the counting process) for a specified monitoring scheme or
+#' data (data about a counting event) for a specified monitoring scheme or
 #' for all monitoring schemes within a specified species group. When no
 #' monitoring scheme or species group is specified, the visits of all monitoring
 #' schemes are returned.
@@ -12,16 +12,54 @@
 #' extract visit data.
 #' @param connection dbconnection with the database 'S0008_00_Meetnetten'
 #' on the inbo-sql08-prd.inbo.be server
-#' @param collect If FALSE (the default), a remote tbl object is returned. This
-#' is like a reference to the result of the query but the full result of the
-#' query is not brought into memory. If TRUE the full result of the query is
-#' collected (fetched) from the database and brought into memory of the working
-#' environment.
+#' @param collect If \code{FALSE} (the default), a remote tbl object is returned.
+#' This is like a reference to the result of the query but the full result of the
+#' query is not brought into memory. If \code{TRUE} the full result of the query
+#' is collected (fetched) from the database and brought into memory of the
+#' working environment.
 #'
-#' @return A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-#' = TRUE) with variables species_group, scheme, protocol, location, visit_id,
-#' validation_status, start_date, start_time, end_date, end_time, date_created,
-#' visit_status, for_analysis, for_targets, notes.
+#' @return A remote \code{tbl} object (\code{collect} = \code{FALSE}) or a
+#' \code{tibble} dataframe (\code{collect} = \code{TRUE}) with following
+#' variables:
+#' \itemize{
+#'    \item \code{species_group}
+#'    \item \code{scheme}: the name of the monitoring scheme
+#'    \item \code{protocol}: the protocol used
+#'    \item \code{location}: the name of the location
+#'    \item \code{visit_id}: unique id for a count event
+#'    \item \code{validation_status}: validation status of the visit (visits
+#'    that are not approved are not provided)
+#'    \itemize{
+#'        \item \code{10}: visit not validated
+#'        \item \code{100}: visit approved
+#'        }
+#'    \item \code{start_date}: the start date of the visit
+#'    \item \code{start_time}: the start time of the visit
+#'    \item \code{end_date}: the end date of the visit
+#'    \item \code{end_time}: the end time of the visit
+#'    \item \code{date_created}: the date at which the data was imported in the
+#'    database
+#'    \item \code{visit_status}: the status of the visit (determined by
+#'    the observer) using following categories:
+#'    \itemize{
+#'        \item \code{conform protocol}: the protocol was applied
+#'        \item \code{weersomstandigheden waren ongunstig}: weather conditions
+#'        were unfavourable
+#'        \item \code{telmethode uit handleiding niet gevolgd}: the protocol was
+#'        not applied
+#'        \item \code{geen veldwerk mogelijk - locatie ontoegankelijk}: counting
+#'        was not possible because the location is inaccessible
+#'        \item \code{geen veldwerk mogelijk - locatie is ongeschikt voor de soort}:
+#'        counting was not possible because the location is not suitable
+#'        for the species
+#'        }
+#'    \item \code{for_analysis}: whether the data is suited for analysis
+#'    (determined by the validator)
+#'    \item \code{for_targets}: every year targets are set in terms of the
+#'    number of locations that have to be counted per monitoring scheme; when
+#'    \code{for_targets} = \code{TRUE} the visit contributes to these targets
+#'    \item \code{notes}: notes by the observer
+#' }
 #'
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr collect tbl sql

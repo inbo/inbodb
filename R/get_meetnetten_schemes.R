@@ -1,6 +1,6 @@
-#' @title Overview of monitoring schemes in meetnetten database
+#' @title Overview of monitoring schemes in the Meetnetten database
 #'
-#' @description This function queries the meetnetten database to give an
+#' @description This function queries the Meetnetten database to give an
 #' overview of monitoring schemes that are included.
 #'
 #' @param connection dbconnection with the database 'S0008_00_Meetnetten'
@@ -10,6 +10,27 @@
 #'
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr collect tbl sql
+#'
+#' @details The species monitoring programme of Flanders
+#' (\href{www.meetnetten.be}{Meetnetten}) consists of a series of monitoring
+#' schemes. In each monitoring scheme one or more target species are counted
+#' based on a specific protocol. For more details we refer to Maes et al. (2023)
+#'
+#' @references
+#' \itemize{
+#' \item Maes D, Piesschaert F, Ledegen H, Van De Poel S, Adriaens T, Anselin A,
+#' Belpaire C, Breine J, Brosens D, Brys R, De Bruyn L, Decleer K, De Knijf G,
+#' Devos K, Driessens G, Feys S, Gouwy J, Gyselings R, Herremans M, Jacobs I,
+#' Lewylle I, Leyssen A, Louette G, Onkelinx T, Packet J, Provoost S,
+#' Quataert P, Ruyts S, Scheppers T, Speybroeck J, Steeman R, Stienen E,
+#' Thomaes A, Van Den Berge K, Van Keer K, Van Landuyt W, Van Thuyne G,
+#' Veraghtert W, Verbelen D, Verbeylen G, Vermeersch G, Westra T, Pollet M (2023)
+#' Monitoring schemes for species of conservation concern in Flanders
+#' (northern Belgium). An overview of established schemes and the design of an
+#' additional monitoring scheme. Reports of the Research Institute for Nature and
+#'  Forest (INBO) 2023 (15). Research Institute for Nature and Forest (INBO), Brussels.
+#' \doi{10.21436/inbor.93332112}.
+#' }
 #'
 #' @export
 #' @family meetnetten
