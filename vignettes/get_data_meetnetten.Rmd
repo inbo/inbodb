@@ -1,0 +1,225 @@
+---
+title: "How to retrieve data from the meetnetten database"
+author: "Toon Westra, Frederic Piesschaert"
+date: 2024-01-04
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{How to retrieve data from the meetnetten database}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+tryCatch(
+  con <- inbodb::connect_inbo_dbase("S0008_00_Meetnetten"),
+  error = function(e) e,
+  finally = database_access <- exists("con")
+)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = database_access,
+  cache = FALSE
+)
+if (!database_access) {
+  load("get_data_meetnetten_results.Rda")
+}
+```
+
+# Introduction
+
+The Flemish species monitoring programme [meetnetten.be](www.meetnetten.be) consists of set of monitoring schemes for priority species in Flanders, the northern part of Belgium. 
+Each monitoring scheme consists of a number of monitoring sites at which target species are counted using a standardized protocol. 
+The count data is stored in the meetnetten database which is maintained by the Nature and Forest Research Institute (INBO).
+We present some functions to easily access the data from the meetnetten database.
+
+# Aim
+
+We make functions available to query data directly from the meetnetten database. 
+This avoids writing your own queries.
+
+We have provided functions to query
+
++ monitoring schemes included in the species monitoring programme
++ locations and sublocations (for example different sections of a transect) of the monitoring schemes
++ visits (count events)
++ observations
+  
+# Packages and connection
+
+The main functions that we will use in this tutorial all start with `get_meetnetten_*`. 
+These functions are made available by loading the `inbodb` package.
+We also load the `tidyverse` and `sf` package
+
+```{r setup, message = FALSE}
+library(inbodb)
+library(dplyr)
+library(sf)
+library(ggplot2)
+
+```
+
+These functions will only work for people with access to the INBO network. 
+As an INBO employee, you should make sure you have reading-rights for the INBO DWH Server, otherwise place an ICT-call.
+
+The following R-code can be used to establish a connection to the meetnetten database:
+
+```{r connection_inbo}
+con <- connect_inbo_dbase("S0008_00_Meetnetten")
+```
+
+# Functionality
+
+## Information on monitoring schemes
+
+The function `get_meetnetten_schemes` gives an overview per species group of all
+monitoring schemes included in meetnetten and the protocols that are applied in 
+the monitoring schemes.
+
+In most cases, a monitoring scheme is dedicated to one target species and the
+monitoring scheme is named after the target species.
+In some cases, a monitoring scheme has several target species, such as the 
+Algemene Broedvogelmonitoring Vlaanderen. 
+
+
+```{r get_scheme}
+scheme_info <- get_meetnetten_schemes(con)
+```
+
+```{r eval=TRUE}
+scheme_info
+```
+
+## Locations and sublocation of monitoring schemes
+
+Each monitoring scheme consists of a fixed set of locations where the target
+species is/are counted on a regular basis.
+Some locations are subdivided in sublocations.
+This is, for example, the case for most butterfly monitoring schemes, where the 
+sublocations represent the 50 meter sections of a transect.
+
+The function `get_meetnetten_locations` returns the locations and the
+sublocations for one or several monitoring scheme.
+It returns a list of two `sf` objects: `main_locations` and `sublocations`.
+
+In the following example we select the locations and sublocations of the
+Argusvlinder (*Lasiommata megera*) monitoring scheme.
+
+```{r example_locations}
+
+locations <- get_meetnetten_locations(con,
+                                      scheme_name = "Argusvlinder")
+
+main_locations <- locations$main_locations
+
+sublocations <- locations$sublocations
+
+```
+
+Let's have a look at the `main_locations`.
+
+```{r}
+main_locations %>%
+  head(5)
+```
+Two variables need some further explanations:
+
++ `is_sample`. For more common species, a random sample is drawn from all
+locations in Flanders where the target species occurs.
+For location that are selected `is_sample` = `TRUE`.
+Locations that are not selected, indicated by `is_sample` = `FALSE`, can be
+counted optionally.
+
++ `is_active`. When `is_active` = `FALSE`, the location is not counted any more.
+This is the case when the location appears to be inaccessible or when the target
+species does not occur at the location any more.
+However, most often these inactive locations where counted in previous years.
+So the the database also contains observations for (currently) inactive
+locations. 
+
+Next, let's have a look at the sublocations of the location Arenbergpolder.
+The locations consists of 14 sections.
+Note that we only show the active (`is_active` = `TURE`) sublocations. 
+
+```{r}
+sublocations_show <- sublocations %>%
+  filter(location == "Arenbergpolder") %>%
+  filter(is_active)
+
+sublocations_show
+```
+Below we show a basic map of the locations and sublocations.
+The location is the wider area where the target species occurs.
+The sublocations indicate where the target species is counted.
+
+```{r, fig.cap = "Arenbergpolder location of the Argusvlinder monitoring scheme and the different sublocations", fig.width = 7}
+main_location_show <- main_locations %>%
+  filter(location == "Arenbergpolder") 
+
+ggplot(sublocations_show) +
+  geom_sf(data = main_location_show) +
+  geom_sf(aes(colour = sublocation))
+```
+
+We can also select and plot all locations from the dragonfly (in Dutch
+*libellen*) monitoring schemes. 
+
+```{r, fig.cap = "All locations from the dragonfly monitoring schemes", fig.width = 7}
+# get locations for a specific species_group
+locations_dragonflies <- get_meetnetten_locations(con,
+                                                  species_group = "libellen")
+
+locations_dragonflies$main_locations %>%
+  ggplot() +
+  geom_sf(aes(fill = scheme, colour = scheme), alpha = 0.5) 
+```
+
+## Count events
+
+The function `get_meetnetten_visits` provide all count events for one or more 
+monitoring schemes.
+
+```{r example_visits}
+
+visits <- get_meetnetten_visits(con,
+                                scheme_name = "Argusvlinder",
+                                collect = TRUE)
+
+```
+
+## Observations
+
+The function `get_meetnetten_observations` provide all count events for one or more 
+monitoring scheme.
+
+```{r example_observations}
+
+observations <- get_meetnetten_observations(con,
+                                            scheme_name = "Argusvlinder",
+                                            collect = FALSE) %>%
+  filter(location == "Arenbergpolder") %>%
+  collect()
+
+```
+
+
+
+## More complex queries
+These functions give most of the relevant basic information that is available in INBOVEG.
+If more detailed information is needed `dplyr` is the magic word. 
+In the future additional functions can be added to this package to help the inboveg-users.
+
+# Closing the connection
+
+Close the connection when done
+
+```{r closing_conn}
+dbDisconnect(con)
+rm(con)
+```
+
+```{r echo=FALSE, include=FALSE}
+rm(database_access)
+save.image(file = "get_data_meetnetten_results.Rda")
+```
+
