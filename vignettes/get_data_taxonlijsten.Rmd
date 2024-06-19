@@ -163,7 +163,7 @@ cicindela <- get_taxonlijsten_items(con, list = 'Soortenbesluit', taxon = '%Cici
 select(c('Naamwet_origineel', 'NaamNed_origineel', 'Naamwet_interpretatie', 'NaamNed_interpretatie'))
 ```
 
-Compare red list status on multiple list versions:
+Compare red list status on multiple list versions (requires tidyverse):
 
 ```{r, eval=TRUE, echo=TRUE}
 redlist_evolution <- get_taxonlijsten_items(con, version = 'all', list = 'rode lijst van de dagvlinders') %>%
