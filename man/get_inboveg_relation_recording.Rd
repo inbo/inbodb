@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_inboveg_relation_recording.R
 \name{get_inboveg_relation_recording}
 \alias{get_inboveg_relation_recording}
-\title{Query relation (Parent - Child) information of recordings (releve)
+\title{Query relation (Parent - Child) information of recordings (relevé)
 from INBOVEG}
 \usage{
 get_inboveg_relation_recording(
@@ -13,8 +13,8 @@ get_inboveg_relation_recording(
 )
 }
 \arguments{
-\item{connection}{dbconnection with the database 'Cydonia'
-on the inbo-sql07-prd server}
+\item{connection}{\code{dbconnection} with the database 'Cydonia'
+on the \code{inbo-sql07-prd} server}
 
 \item{survey_name}{A character string or a character vector, depending on
 multiple parameter, giving the name or names of the
@@ -26,16 +26,21 @@ multiple survey names that must match exactly. If FALSE (the default),
 survey_name must be a single character string (one survey name) that can
 include wildcards to allow partial matches}
 
-\item{collect}{If FALSE (the default), a remote tbl object is returned. This
+\item{collect}{If FALSE (the default), a remote \code{tbl} object is returned.
+This
 is like a reference to the result of the query but the full result of the
 query is not brought into memory. If TRUE the full result of the query is
 collected (fetched) from the database and brought into memory of the working
 environment.}
 }
 \value{
-A dataframe with variables RecordingId, Child_GIVID (unique
-RecordingGIVID), Child_UserRef (UserReference), ParentId (RecordingId),
-Parent_GIVID (uniek RecordingGIVID) and Parent_UserRef (UserReference)
+A dataframe with variables
+\code{RecordingId},
+\code{Child_GIVID} (unique \code{RecordingGIVID}),
+\code{Child_UserRef} (\code{UserReference}),
+\code{ParentId} (\code{RecordingId}),
+\code{Parent_GIVID} (unique \code{RecordingGIVID}) and
+\code{Parent_UserRef} (\code{UserReference})
 }
 \description{
 This function queries the INBOVEG database for
@@ -76,6 +81,7 @@ Other inboveg:
 \code{\link{get_inboveg_header}()},
 \code{\link{get_inboveg_layer_cover}()},
 \code{\link{get_inboveg_layer_qualifier}()},
+\code{\link{get_inboveg_ppa}()},
 \code{\link{get_inboveg_qualifier}()},
 \code{\link{get_inboveg_recording}()},
 \code{\link{get_inboveg_survey}()}

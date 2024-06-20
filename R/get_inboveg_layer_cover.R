@@ -7,16 +7,22 @@
 #' @param survey_name A character string or a character vector, depending on
 #' multiple parameter, giving the name or names of the survey(s) for which you
 #' want to extract recordings information. If missing, all surveys are returned.
-#' @param connection dbconnection with the database 'Cydonia'
-#' on the inbo-sql07-prd server
+#' @param connection `dbconnection` with the database 'Cydonia'
+#' on the `inbo-sql07-prd` server
 #' @param multiple If TRUE, survey_name can take a character vector with
 #' multiple survey names that must match exactly. If FALSE (the default),
 #' survey_name must be a single character string (one survey name) that can
 #' include wildcards to allow partial matches
 #'
-#' @return A dataframe with variables Name (of the survey), RecordingGivid
-#' (unique Id), UserReference, LayerCode, LayerDescription, CoverCode,
-#' Coverpercentage and Mean hight (cm)
+#' @return A dataframe with variables
+#' `Name` (of the survey),
+#' `RecordingGivid` (unique Id),
+#' `UserReference`,
+#' `LayerCode`,
+#' `LayerDescription`,
+#' `CoverCode`,
+#' `Coverpercentage` and
+#' `Mean height` (cm)
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery
@@ -57,11 +63,11 @@ get_inboveg_layer_cover <- function(connection,
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
 
-  if (missing(survey_name) & !multiple) {
+  if (missing(survey_name) && !multiple) {
     survey_name <- "%"
   }
 
-  if (missing(survey_name) & multiple) {
+  if (missing(survey_name) && multiple) {
     stop("Please provide one or more survey names to survey_name when multiple
          = TRUE")
   }

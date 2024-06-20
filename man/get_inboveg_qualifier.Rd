@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_inboveg_qualifier.R
 \name{get_inboveg_qualifier}
 \alias{get_inboveg_qualifier}
-\title{Query qualifier information of recordings (releve) from INBOVEG}
+\title{Query qualifier information of recordings (relevé) from INBOVEG}
 \usage{
 get_inboveg_qualifier(
   connection,
@@ -12,8 +12,8 @@ get_inboveg_qualifier(
 )
 }
 \arguments{
-\item{connection}{dbconnection with the database 'Cydonia'
-on the inbo-sql07-prd server}
+\item{connection}{\code{dbconnection} with the database 'Cydonia'
+on the \code{inbo-sql07-prd} server}
 
 \item{survey_name}{A character string or a character vector, depending on
 multiple parameter, giving the name or names of the
@@ -21,7 +21,8 @@ survey(s) for which you want to extract recordings information. If missing,
 all surveys are returned.}
 
 \item{qualifier_type}{A character vector giving the name of qualifier type
-for which you want to extract  information e.g. 'SQ' (site qualifier), 'MQ'
+for which you want to extract  information e.g. \code{'SQ'} (site qualifier),
+\code{'MQ'}
 (management qualifier).
 If missing, all qualifier types are returned.}
 
@@ -31,10 +32,20 @@ survey_name must be a single character string (one survey name) that can
 include wildcards to allow partial matches}
 }
 \value{
-A dataframe with variables RecordingGivid (unique Id), UserReference,
-Observer, QualifierType, QualifierCode, Description, 2nd QualifierCode,
-2nd Description, 3rd QualifierCode, 3rd Description, Elucidation, in case
-qualifier is 'NotSure', ParentID, QualifierResource
+A dataframe with variables
+\code{RecordingGivid} (unique Id),
+\code{UserReference},
+\code{Observer},
+\code{QualifierType},
+\code{QualifierCode},
+\code{Description},
+\verb{2nd QualifierCode},
+\verb{2nd Description},
+\verb{3rd QualifierCode},
+\verb{3rd Description},
+\code{Elucidation}, in case qualifier is \code{'NotSure'},
+\code{ParentID},
+\code{QualifierResource}
 }
 \description{
 This function queries the INBOVEG database for
@@ -73,6 +84,7 @@ Other inboveg:
 \code{\link{get_inboveg_header}()},
 \code{\link{get_inboveg_layer_cover}()},
 \code{\link{get_inboveg_layer_qualifier}()},
+\code{\link{get_inboveg_ppa}()},
 \code{\link{get_inboveg_recording}()},
 \code{\link{get_inboveg_relation_recording}()},
 \code{\link{get_inboveg_survey}()}

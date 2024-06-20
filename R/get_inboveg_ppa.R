@@ -1,54 +1,46 @@
-#' @title Query recording (relevé) information from INBOVEG
+#' @title Query PPA (point-plant distance) information from INBOVEG
 #'
 #' @description This function queries the INBOVEG database for
-#' relevé information (which species were recorded in which plots and in
-#' which vegetation layers with which cover) for one or more surveys,
+#' PPA-type relevé information (which species were recorded at what distance
+#' from a point location) for one or more surveys,
 #' or in combination with the unique ID (`recordingGIVID`) or user reference
 #' Wildcards in `survey_name`, `user_reference` or `recording_givid`
 #' should only be used if a character string (a length one character vector),
 #' otherwise values are assumed to match exactly.
 #'
-#' @param user_reference A character string or a character vector giving the
-#' name of a recording for which you want to extract relevé information.
-#' As default (`user_reference` = "%") all user-references are returned.
-#' @param recording_givid A character string or a character vector giving
-#' the unique id of a recording for which you want to extract relevé
-#' information.
-#' As default (`recording_givids` = "%") all `recording_givids` are returned.
-#' @param survey_name A character string or a character vector, giving the name
-#' or names of the survey(s) for which you
-#' want to extract relevé information. As default (`survey_name` = "%") all
-#' surveys are returned.
-#' @param connection `dbconnection` with the database 'Cydonia'
-#' on the `inbo-sql07-prd` server
-#' @param collect If FALSE (the default), a remote `tbl` object is returned.
-#' This is like a reference to the result of the query but the full result of
-#' the query is not brought into memory. If TRUE the full result of the query is
-#' collected (fetched) from the database and brought into memory of the working
-#' environment.
-#' @param multiple Deprecated.
+#' @inheritParams get_inboveg_recording
 #'
 #' @return A remote `tbl` object (collect = FALSE) or a `tibble` dataframe
-#' (collect
-#' = TRUE) with variables
-#' `RecordingGivid` (unique ID),
-#'  `User reference`,
+#' (collect = TRUE) with variables
+#' `SurveyName`,
+#' `RecordingGivid`,
+#' `UserReference`,
+#' `DateRecording`,
+#' `LocationCode`,
+#' `CoordinateRefSystem`,
+#' `GivenLatitude`,
+#' `GivenLongitude`,
+#' `GivenLatitude2`,
+#' `GivenLongitude2`,
+#' `MaxSearchEffortUnit`,
+#' `MaxSearchEffortLabel`,
+#' `Indirect`,
+#' `NotSure`,
 #' `LayerCode`,
-#' `CoverCode`,
+#' `LayerCover`,
 #' `OriginalName`,
 #' `ScientificName`,
 #' `TaxonGroupCode`,
 #' `PhenologyCode`,
-#' `Comment`,
-#' `CoverageCode`,
-#' `PctValue` (percentage coverage),
-#' `RecordingScale` (name of the scale of coverage)
+#' `Distance`,
+#' `Comment`
+#' `DateIdentification`,
+#' `RecordTypeName`
 #'
 #' @importFrom glue glue_sql
 #' @importFrom DBI dbGetQuery
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr collect tbl sql
-#' @importFrom lifecycle deprecated
 #'
 #' @export
 #' @family inboveg
@@ -58,73 +50,67 @@
 #' con <- connect_inbo_dbase("D0010_00_Cydonia")
 #'
 #' # get the recordings from one survey and collect the data
-#' recording_heischraal2012 <- get_inboveg_recording(con, survey_name =
-#' "MILKLIM_Heischraal2012", collect = TRUE)
+#' specifieke_survey <- get_inboveg_ppa(con, survey_name =
+#' "LEN_sinusmaaiproject_ppa", collect = TRUE)
 #'
-#' # get all recordings from MILKLIM surveys (partial matching), don't collect
-#' recording_milkim <- get_inboveg_recording(con, survey_name = "%MILKLIM%",
+#' # get all recordings from with partial matching, don't collect
+#' partial_match <- get_inboveg_ppa(con, survey_name = "%LEN%",
 #' collect = FALSE)
 #'
-#' # get recordings from several specific surveys
-#' recording_severalsurveys <- get_inboveg_recording(con, survey_name =
-#' c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
-#' collect = TRUE)
-#'
 #' # get recordings from several specific recordinggivid
-#' recording_severalgivids <- get_inboveg_recording(con,
-#' recording_givid = c("IV2012081609450300","IV2012081610204607"),
+#' recording_severalgivids <- get_inboveg_ppa(con,
+#' recording_givid = c("IV2024040411243457","IV2024040411263782"),
 #' collect = TRUE)
 #'
-#' # get all recordings of all surveys,  don't collect the data
-#' allrecordings <- get_inboveg_recording(con)
+#' # get all PPA-type recordings of all surveys,  don't collect the data
+#' all_ppa <- get_inboveg_ppa(con)
 #'
 #' # Close the connection when done
 #' dbDisconnect(con)
 #' rm(con)
 #' }
 
-get_inboveg_recording <- function(
+get_inboveg_ppa <- function(
   connection,
   survey_name = "%",
   user_reference = "%",
   recording_givid = "%",
-  collect = FALSE,
-  multiple = deprecated()) {
+  collect = FALSE) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
   assert_that(is.character(survey_name))
   assert_that(is.character(user_reference))
   assert_that(is.character(recording_givid))
-  if (lifecycle::is_present(multiple)) {
-    lifecycle::deprecate_warn(
-      when = "0.0.5",
-      what = "get_inboveg_recording(multiple)",
-      details =
-        paste(
-          "The argument will be removed.",
-          "You can safely remove the argument from your code and the function",
-          "should work as before."
-        )
-    )
-  }
 
-
-  common_part <- "SELECT ivS.Name
+  common_part <- "SELECT ivS.Name as SurveyName
   , ivR.[RecordingGivid]
   , ivR.UserReference
+  , ivR.VagueDateBegin as DateRecording
+  , ivR.LocationCode
+  , ivR.CoordinateRefSystem
+  , ivR.GivenLatitude
+  , ivR.GivenLongitude
+  , ivR.GivenLatitude2
+  , ivR.GivenLongitude2
+  --, ivRL_Qual.QualifierCode as MaxSearchEffort
+  , ftQualifier.Description as MaxSearchEffortUnit
+  , ftQualifier.Elucidation as MaxSearchEffortLabel
+  , ivRL_Qual.Indirect
+  , ivRL_Qual.NotSure
   , ivRL_Layer.LayerCode
-  , ivRL_Layer.CoverCode
+  , ivRL_Layer.CoverCode as LayerCover
   , ivRL_Iden.TaxonFullText as OriginalName
   , Synoniem.ScientificName
   , ivRL_Iden.TaxonGroup as TaxonGroupCode
   , ivRL_Iden.PhenologyCode
+  , ivRL_Taxon.CustomField1Code as Distance
   , ivRL_Iden.Comment
-  , ivRL_Taxon.CoverageCode
-  , ftCover.PctValue
-  , ftAGL.Description as RecordingScale
+  , ivRL_Iden.VagueDateBegin as DateIdentification
+  , ivRec.Name as RecordTypeName
   FROM  dbo.ivSurvey ivS
   INNER JOIN [dbo].[ivRecording] ivR  ON ivR.SurveyId = ivS.Id
+  INNER JOIN [dbo].[ivRecTypeD] ivRec on ivRec.ID = ivR.RecTypeID
   -- Deel met soortenlijst en synoniem
   INNER JOIN [dbo].[ivRLLayer] ivRL_Layer on ivRL_Layer.RecordingID = ivR.Id
   INNER JOIN [dbo].[ivRLTaxonOccurrence] ivRL_Taxon on
@@ -156,17 +142,21 @@ get_inboveg_recording <- function(
   WHERE ftTLI.TaxonListGIVID = 'TL2011092815101010'
   ) Synoniem on
   ivRL_Iden.TaxonFullText = Synoniem.TaxonFullText collate Latin1_General_CI_AI
-  -- Hier begint deel met bedekking
+  -- KVE: Opvragen max. zoekafstand
+  LEFT JOIN [dbo].[ivRLQualifier] ivRL_Qual ON ivRL_Qual.LayerID = ivRL_Layer.ID
+  -- KVE: Opvragen eenheid max. zoekinspanning
   LEFT JOIN [dbo].[ivRLResources] ivRL_Res on
-  ivRL_Res.ResourceGIVID = ivRL_Taxon.CoverageResource
+  ivRL_Res.ResourceGIVID = ivRL_Qual.QualifierResource
   LEFT JOIN [syno].[Futon_dbo_ftActionGroupList] ftAGL on
   ftAGL.ActionGroup = ivRL_Res.ActionGroup collate Latin1_General_CI_AI
   AND ftAGL.ListName = ivRL_Res.ListName collate Latin1_General_CI_AI
-  LEFT JOIN [syno].[Futon_dbo_ftCoverValues] ftCover on
-  ftCover.ListGIVID = ftAGL.ListGIVID
-  AND ivRL_Taxon.CoverageCode = ftCover.Code collate Latin1_General_CI_AI
+  LEFT JOIN [syno].[Futon_dbo_ftQualifierValues] ftQualifier on
+  ftQualifier.ListGIVID = ftAGL.ListGIVID
+  AND ivRL_Qual.QualifierCode = ftQualifier.Code collate Latin1_General_CI_AI
   WHERE 1=1
-  AND ivRL_Iden.Preferred = 1"
+  AND ivRL_Iden.Preferred = 1
+  AND ivREc.Name LIKE 'PPA'
+  "
 
   sql_statement <- complete_sql_statement(
     survey_name = survey_name,
@@ -181,21 +171,4 @@ get_inboveg_recording <- function(
     query_result <- collect(query_result)
   }
   return(query_result)
-}
-
-
-get_inboveg_recordings <- function(
-  connection,
-  survey_name = "%",
-  user_reference = "%",
-  recording_givid = "%",
-  collect = FALSE,
-  multiple = FALSE) {
-
-  .Deprecated("get_inboveg_recording")
-  get_inboveg_recording(connection = connection,
-                        survey_name = survey_name,
-                        user_reference = user_reference,
-                        recording_givid = recording_givid,
-                        collect = collect)
 }

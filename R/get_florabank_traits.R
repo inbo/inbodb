@@ -12,17 +12,26 @@ globalVariables("%LIKE%")
 #' associated taxon-specific trait values. If this is missing, the function
 #' returns an error and prints a message showing all possible trait names.
 #'
-#' @param collect If FALSE (the default), a remote tbl object is returned. This
+#' @param collect If FALSE (the default), a remote `tbl` object is returned.
+#' This
 #' is like a reference to the result of the query but the full result of the
 #' query is not brought into memory. If TRUE the full result of the query is
 #' collected (fetched) from the database and brought into memory of the working
 #' environment.
 #'
-#' @return A remote tbl object (collect = FALSE) or a tibble dataframe (collect
-#' = TRUE) containing the trait values for each species and for all
-#' partially matched traits. The dataframe contains the variables TaxonID,
-#' TaxonAfkorting, TaxonWetenschappelijk, TaxonNederlands, Kenmerk, Code,
-#' Omschrijving, Rekenwaarde, Bron and ExtraOmschrijving.
+#' @return A remote `tbl` object (collect = FALSE) or a `tibble` dataframe
+#' (collect = TRUE) containing the trait values for each species and for all
+#' partially matched traits. The dataframe contains the variables
+#' `TaxonID`,
+#' `TaxonAfkorting`,
+#' `TaxonWetenschappelijk`,
+#' `TaxonNederlands`,
+#' `Kenmerk`,
+#' `Code`,
+#' `Omschrijving`,
+#' `Rekenwaarde`,
+#' `Bron` and
+#' `ExtraOmschrijving`.
 #' The first four variables identify the taxon, the latter five variables relate
 #' to the taxon traits.
 #'
