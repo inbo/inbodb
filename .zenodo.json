@@ -3,7 +3,7 @@
   "version": "0.0.5",
   "license": "GPL-3.0",
   "upload_type": "software",
-  "description": "<p>A bundle of functions to connect to and retrieve data from databases\non the INBO server, with dedicated functions to query some of these\ndatabases.<\/p>",
+  "description": "<p>A bundle of functions to connect to and retrieve data from databases on the INBO server, with dedicated functions to query some of these databases.<\/p>",
   "keywords": [
     "sql",
     "databases",
@@ -16,16 +16,16 @@
       "name": "Lommelen, Els",
       "affiliation": "Research Institute for Nature and Forest (INBO)",
       "orcid": "0000-0002-3481-5684",
-      "type": "ContactPerson"
+      "type": "contactperson"
     },
     {
       "name": "Van Hoey, Stijn",
       "orcid": "0000-0001-6413-3185",
-      "type": "ProjectMember"
+      "type": "projectmember"
     },
     {
       "name": "Research Institute for Nature and Forest (INBO)",
-      "type": "RightsHolder"
+      "type": "rightsholder"
     }
   ],
   "creators": [
