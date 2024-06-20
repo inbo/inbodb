@@ -48,7 +48,8 @@
 #'
 #' # status of red lists
 #' RL <- get_taxonlijsten_lists(con, list = '%rode lijst%')
-#' select(RL,Taxonlijst, PublicatieJaar, Criteria, Validering, Vaststelling)
+#' select(RL,"Taxonlijst", "PublicatieJaar", "Criteria", "Validering",
+#' "Vaststelling")
 #'
 #' # Close the connection when done
 #' dbDisconnect(con)

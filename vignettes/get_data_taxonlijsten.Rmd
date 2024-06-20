@@ -46,6 +46,7 @@ They are made available by loading the `inbodb` package.
 
 ```{r setup}
 library(inbodb)
+library(tidyverse)
 ```
 
 These functions will only work for people with access to the INBO network. The following R-code can be used to connect to the database D0156_00_Taxonlijsten on the inbo-sql07-prd server:
@@ -92,7 +93,7 @@ Red lists need to be validated (= compliant with IUCN criteria) and authorized b
 rodelijst_status <- get_taxonlijsten_lists(con,
                               list = "%rode lijst%"
                            )  %>%
-select(c('RL','Taxonlijst', 'PublicatieJaar', 'Criteria', 'Validering', 'Vaststelling'))
+select('Taxonlijst', 'PublicatieJaar', 'Criteria', 'Validering', 'Vaststelling')
 ```
 
 ## Taxonlist features
@@ -167,24 +168,14 @@ Compare red list status on multiple list versions (requires tidyverse):
 
 ```{r, eval=TRUE, echo=TRUE}
 redlist_evolution <- get_taxonlijsten_items(con, version = 'all', list = 'rode lijst van de dagvlinders') %>%
-select(c('Publicatiejaar', 'Naamwet_interpretatie', 'NaamNed_interpretatie', 'KenmerkwaardeCode')) %>%
-pivot_wider(names_from = Publicatiejaar, values_from = KenmerkwaardeCode)
+select(c('Lijst','Publicatiejaar', 'Naamwet_interpretatie', 'NaamNed_interpretatie', 'KenmerkwaardeCode')) %>%
+pivot_wider(names_from = 'Publicatiejaar', values_from = 'KenmerkwaardeCode')
 ```
 
 
 ## More complex queries
 These functions give most of the relevant basic information that is available in D0156_00_Taxonlijsten.
 If more detailed information is needed `dplyr` is the magic word. 
-
-
-# Closing the connection
-
-Close the connection when done
-
-```{r closing_conn}
-dbDisconnect(con)
-rm(con)
-```
 
 # Database philosophy
 
@@ -359,4 +350,14 @@ AND c.column_id = ep1.minor_id
 AND ep1.name = 'Beschrijving'
 where schema_name(t.schema_id) = 'dbo'
 and t.name not like 'syc%'")
+```
+
+
+# Closing the connection
+
+Close the connection when done
+
+```{r closing_conn}
+dbDisconnect(con)
+rm(con)
 ```

@@ -39,13 +39,13 @@
 #' @importFrom DBI dbGetQuery
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr collect tbl sql select
-#' @importFrom tidyverse pivot_wider
 #'
 #' @export
 #' @family taxonlijsten
 #' @examples
 #' \dontrun{
 #' library(inbodb)
+#' library(tidyverse)
 #' con <- connect_inbo_dbase("D0156_00_Taxonlijsten")
 #'
 #' # Get all taxa from list 'Jachtdecreet'
