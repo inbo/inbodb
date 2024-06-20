@@ -8,6 +8,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom glue glue_sql
 #' @noRd
+#'
 complete_sql_statement <- function(
     survey_name,
     recording_givid,
