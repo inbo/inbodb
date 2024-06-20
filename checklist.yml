@@ -9,6 +9,11 @@ allowed:
       Maintainer: 'Els Lommelen <els.lommelen@inbo.be>'
 
       New submission
+  - motivation: Dependency methods is needed to run inbodb (function exportMethods)
+    value: |-
+      checking dependencies in R code ... NOTE
+      Namespace in Imports field not imported from: 'methods'
+        All declared Imports should be used.
 required:
 - CITATION
 - DESCRIPTION
