@@ -46,7 +46,9 @@ They are made available by loading the `inbodb` package.
 
 ```{r setup}
 library(inbodb)
-library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(DBI)
 ```
 
 These functions will only work for people with access to the INBO network. The following R-code can be used to connect to the database D0156_00_Taxonlijsten on the inbo-sql07-prd server:
