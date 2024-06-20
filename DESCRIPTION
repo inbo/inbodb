@@ -26,12 +26,12 @@ Imports:
     dplyr,
     glue,
     lifecycle,
+    methods,
     odbc,
     rlang
 Suggests: 
     dbplyr,
     knitr,
-    methods,
     rmarkdown
 VignetteBuilder: 
     knitr
