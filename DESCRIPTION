@@ -1,18 +1,18 @@
 Package: inbodb
 Title: Connect to and Retrieve Data from Databases on the INBO Server
-Version: 0.0.4
+Version: 0.0.5
 Authors@R: c(
     person("Els", "Lommelen", , "els.lommelen@inbo.be", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-3481-5684")),
+           comment = c(ORCID = "0000-0002-3481-5684", affiliation = "Research Institute for Nature and Forest (INBO)")),
     person("Hans", "Van Calster", , "hans.vancalster@inbo.be", role = "aut",
-           comment = c(ORCID = "0000-0001-8595-8426")),
+           comment = c(ORCID = "0000-0001-8595-8426", affiliation = "Research Institute for Nature and Forest (INBO)")),
     person("Els", "De Bie", , "els.debie@inbo.be", role = "aut",
-           comment = c(ORCID = "0000-0001-7679-743X")),
+           comment = c(ORCID = "0000-0001-7679-743X", affiliation = "Research Institute for Nature and Forest (INBO)")),
     person("Floris", "Vanderhaeghe", , "floris.vanderhaeghe@inbo.be", role = "aut",
-           comment = c(ORCID = "0000-0002-6378-6229")),
+           comment = c(ORCID = "0000-0002-6378-6229", affiliation = "Research Institute for Nature and Forest (INBO)")),
     person("Stijn", "Van Hoey", , "stijnvanhoey@gmail.com", role = "ctb",
            comment = c(ORCID = "0000-0001-6413-3185")),
-    person("Research Institute for Nature and Forest", , , "info@inbo.be", role = c("cph", "fnd"))
+    person("Research Institute for Nature and Forest (INBO)", , , "info@inbo.be", role = c("cph", "fnd"))
   )
 Description: A bundle of functions to connect to and retrieve data from
     databases on the INBO server, with dedicated functions to query some
@@ -21,21 +21,24 @@ License: GPL-3
 URL: https://github.com/inbo/inbodb, https://inbo.github.io/inbodb/
 BugReports: https://github.com/inbo/inbodb/issues
 Imports:
-    DBI,
     assertthat,
-    dbplyr,
+    DBI,
     dplyr,
     glue,
+    lifecycle,
     methods,
     odbc,
     rlang
 Suggests: 
+    dbplyr,
     knitr,
     rmarkdown
 VignetteBuilder: 
     knitr
+Config/checklist/communities: inbo
+Config/checklist/keywords: sql; databases; queries
 Encoding: UTF-8
-Language: eng
+Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.1

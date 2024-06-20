@@ -7,20 +7,22 @@
 get_inboveg_survey(connection, survey_name, collect = FALSE)
 }
 \arguments{
-\item{connection}{dbconnection with the database 'Cydonia'
-on the inbo-sql07-prd server}
+\item{connection}{\code{dbconnection} with the database 'Cydonia'
+on the \code{inbo-sql07-prd} server}
 
 \item{survey_name}{A character vector giving the names of the surveys for
 which you want to extract survey information.}
 
-\item{collect}{If FALSE (the default), a remote tbl object is returned. This
+\item{collect}{If FALSE (the default), a remote \code{tbl} object is returned.
+This
 is like a reference to the result of the query but the full result of the
 query is not brought into memory. If TRUE the full result of the query is
 collected (fetched) from the database and brought into memory of the working
 environment.}
 }
 \value{
-A remote tbl object (collect = FALSE) or a tibble dataframe (collect
+A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
+(collect
 = TRUE) with variables Id, Name, Description, Owner and Creator.
 }
 \description{
@@ -52,6 +54,7 @@ Other inboveg:
 \code{\link{get_inboveg_header}()},
 \code{\link{get_inboveg_layer_cover}()},
 \code{\link{get_inboveg_layer_qualifier}()},
+\code{\link{get_inboveg_ppa}()},
 \code{\link{get_inboveg_qualifier}()},
 \code{\link{get_inboveg_recording}()},
 \code{\link{get_inboveg_relation_recording}()}

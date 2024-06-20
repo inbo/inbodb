@@ -1,7 +1,8 @@
 #' Get unique combinations of taxon, IFBL-square and year.
 #'
 #' This functions queries all validated observations of the florabank database
-#' and returns unique combinations of taxon, IFBL-square and year. Either a 1 km
+#' and returns unique combinations of taxon, `IFBL`-square and year.
+#' Either a 1 km
 #' by 1 km or a 4 km x 4 km resolution can be chosen and a begin year can be
 #' set.
 #' Observations of taxa at genus level or higher are excluded. The taxonomic
@@ -15,27 +16,32 @@
 #' Default is 2010.
 #'
 #' @param ifbl_resolution The requested spatial resolution can be either
-#' 1km-by-1km IFBL squares or 4km-by-4km. Default is 1km-by-1km.
+#' 1km-by-1km `IFBL` squares or 4km-by-4km. Default is 1km-by-1km.
 #'
 #' @param taxongroup Choose for which taxonomic group you want the unique
-#' combinations. One of "Vaatplanten" (the default), "Mossen", "Korstmossen"
-#' of "Kranswieren".
+#' combinations. One of `"Vaatplanten"` (the default), `"Mossen"`,
+#' `"Korstmossen"`
+#' or `"Kranswieren"`.
 #'
-#' @param collect If FALSE (the default), a remote tbl object is returned. This
+#' @param collect If FALSE (the default), a remote `tbl` object is returned.
+#' This
 #' is like a reference to the result of the query but the full result of the
 #' query is not brought into memory. If TRUE the full result of the query is
 #' collected (fetched) from the database and brought into memory of the working
 #' environment.
 #'
-#' @return A dataframe with one line for each combination of taxon, IFBL-square
+#' @return A dataframe with one line for each combination of taxon,
+#' `IFBL`-square
 #' (either at 1 km x 1 km or 4 km x 4 km resolution) and year. In case the
-#' resolution is 1 km x 1 km, a variable ifbl_4by4 gives the corresponding
-#' ifbl_4by4 identifier within which the ifbl_1by1 square is located. In case
-#' the resolution is 4 km x 4 km, the variable ifbl_squares is a concatenation
+#' resolution is 1 km x 1 km, a variable `ifbl_4by4` gives the corresponding
+#' `ifbl_4by4` identifier within which the `ifbl_1by1` square is located.
+#' In case
+#' the resolution is 4 km x 4 km, the variable `ifbl_squares` is a concatenation
 #' of all nested squares with observations for the taxon in the corresponding
 #' year. This can be nested 1 x 1 squares as well as the corresponding 4 x 4
 #' square (the latter is the case if the original resolution of the observation
-#' is at 4 x 4 resolution). In addition, the variable ifbl_number_squares gives
+#' is at 4 x 4 resolution). In addition, the variable `ifbl_number_squares`
+#' gives
 #' the number of unique nested squares where the taxon was observed for that
 #' year and 4 x 4 square combination.
 #'
@@ -129,8 +135,8 @@ get_florabank_taxon_ifbl_year <- function(connection,
       #str_flatten() is not available for Microsoft SQL Server
       #sql(STRING_AGG("hok", ",")) also does not work
       #fix this later
-      summarize(#ifbl_squares = paste(hok, collapse = '|'),
-                ifbl_number_squares = n()) %>%
+      summarize(
+        ifbl_number_squares = n()) %>%
       ungroup()
 
     if (!isTRUE(collect)) {

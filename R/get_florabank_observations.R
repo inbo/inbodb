@@ -18,16 +18,28 @@
 #' @param fixed Logical. If TRUE, names is to be matched as is (no partial
 #' matching)
 #' .
-#' @param collect If FALSE (the default), a remote tbl object is returned. This
+#' @param collect If FALSE (the default), a remote `tbl` object is returned.
+#' This
 #' is like a reference to the result of the query but the full result of the
 #' query is not brought into memory. If TRUE the full result of the query is
 #' collected (fetched) from the database and brought into memory of the working
 #' environment.
 #'
-#' @return A dataframe with the following variables: "NaamNederlands",
-#' "NaamWetenschappelijk", "Bron", "BeginDatum", "EindDatum", "hok",
-#' "Toponiem", "CommentaarTaxon", "CommentaarHabitat",
-#' "WaarnemingID", "X_waarneming", "Y_waarneming", "X_meting", "Y_meting"
+#' @return A dataframe with the following variables:
+#' `NaamNederlands`,
+#' `NaamWetenschappelijk`,
+#' `Bron`,
+#' `BeginDatum`,
+#' `EindDatum`,
+#' `hok`,
+#' `Toponiem`,
+#' `CommentaarTaxon`,
+#' `CommentaarHabitat`,
+#' `WaarnemingID`,
+#' `X_waarneming`,
+#' `Y_waarneming`,
+#' `X_meting`,
+#' `Y_meting`
 #'
 #' @importFrom glue glue_sql
 #' @importFrom assertthat assert_that

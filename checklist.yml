@@ -3,15 +3,29 @@ package: yes
 allowed:
   warnings: []
   notes:
-  - motivation: Only relevant when submitting to CRAN.
+  - motivation: will not be submitted to CRAN
     value: |-
       checking CRAN incoming feasibility ... NOTE
       Maintainer: 'Els Lommelen <els.lommelen@inbo.be>'
 
       New submission
-citation_roles:
-- aut
-- cre
-keywords:
-- INBO database
-- R package
+  - motivation: Dependency methods is needed to run inbodb (function exportMethods)
+    value: |-
+      checking dependencies in R code ... NOTE
+      Namespace in Imports field not imported from: 'methods'
+        All declared Imports should be used.
+required:
+- CITATION
+- DESCRIPTION
+- R CMD check
+- checklist
+- codemeta
+- documentation
+- filename conventions
+- folder conventions
+- license
+- lintr
+- repository secret
+- spelling
+spelling:
+  default: en-GB
