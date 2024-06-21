@@ -6,7 +6,7 @@
 \usage{
 get_taxonlijsten_features(
   connection,
-  list,
+  list = "\%",
   version = c("latest", "old", "all"),
   collect = FALSE
 )

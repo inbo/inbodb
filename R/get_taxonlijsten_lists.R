@@ -57,16 +57,12 @@
 #' }
 
 get_taxonlijsten_lists <- function(connection,
-                                   list,
-                                   version = c("latest","old","all"),
+                                   list = "%",
+                                   version = c("latest", "old", "all"),
                                    collect = FALSE
 ) {
 
-  if (missing(list)) {
-    list <- "%"
-  } else {
-    assert_that(is.character(list))
-  }
+  assert_that(is.character(list))
 
   version <- match.arg(version)
 
@@ -79,7 +75,7 @@ get_taxonlijsten_lists <- function(connection,
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
 
-  sql_statement <- glue_sql( "SELECT * FROM
+  sql_statement <- glue_sql("SELECT * FROM
       (SELECT tlt.code AS TaxonlijstType
     , tl.code AS TaxonlijstCode
     , tl.Naam AS Taxonlijst
@@ -114,5 +110,3 @@ get_taxonlijsten_lists <- function(connection,
     return(query_result)
   }
 }
-
-

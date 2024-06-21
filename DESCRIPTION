@@ -10,6 +10,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0001-7679-743X", affiliation = "Research Institute for Nature and Forest (INBO)")),
     person("Floris", "Vanderhaeghe", , "floris.vanderhaeghe@inbo.be", role = "aut",
            comment = c(ORCID = "0000-0002-6378-6229", affiliation = "Research Institute for Nature and Forest (INBO)")),
+    person("Frederic", "Piesschaert", , "frederic.piesschaert@inbo.be", role = "aut",
+           comment = c(ORCID = "0000-0002-5843-646X", affiliation = "Research Institute for Nature and Forest (INBO)")),
     person("Stijn", "Van Hoey", , "stijnvanhoey@gmail.com", role = "ctb",
            comment = c(ORCID = "0000-0001-6413-3185")),
     person("Research Institute for Nature and Forest (INBO)", , , "info@inbo.be", role = c("cph", "fnd"))

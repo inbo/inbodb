@@ -13,7 +13,8 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  cache = FALSE
+  cache = FALSE,
+  message = FALSE
 )
 
 ```
@@ -29,7 +30,7 @@ The Taxonlijsten database is a centralized INBO sql server database where the or
 
 # Aim
 
-We provide functions to query data directly from the Taxonlijsten SQL-server database ([INBO-SQL07-PRD\\LIVE].[D0156_00_Taxonlijsten]):
+We provide functions to query data directly from the Taxonlijsten SQL-server database `[INBO-SQL07-PRD\\LIVE].[D0156_00_Taxonlijsten]`:
 
 * taxonlists (an overview of all available taxonlists)
 * features (an overview of all features related to the taxonlists)
@@ -49,9 +50,11 @@ library(inbodb)
 library(dplyr)
 library(tidyr)
 library(DBI)
+library(knitr)
+library(kableExtra)
 ```
 
-These functions will only work for people with access to the INBO network. The following R-code can be used to connect to the database D0156_00_Taxonlijsten on the inbo-sql07-prd server:
+These functions will only work for people with access to the INBO network. The following R-code can be used to connect to the database `D0156_00_Taxonlijsten` on the `inbo-sql07-prd`-server:
 
 ```{r connection_inbo}
 con <- connect_inbo_dbase("D0156_00_Taxonlijsten")
@@ -60,7 +63,7 @@ con <- connect_inbo_dbase("D0156_00_Taxonlijsten")
 # Functionality
 
 ## Taxonlists overview
-The function `get_taxonlijsten_lists()` queries D0156_00_Taxonlijsten and gives an overview of all the taxonlists and taxonlist versions available in the database. Only the latest version is shown unless specified otherwise.
+The function `get_taxonlijsten_lists()` queries `D0156_00_Taxonlijsten` and gives an overview of all the taxonlists and taxonlist versions available in the database. Only the latest version is shown (unless specified otherwise).
 
 The following examples can be used as base to continue selecting the data you require.
 
@@ -71,6 +74,9 @@ rl_dagvlinders <- get_taxonlijsten_lists(con,
                               list = "%rode%dagvlinders%",
                               collect = TRUE
                            )
+rl_dagvlinders %>%
+  kable() %>%
+  kable_styling(font_size = 9)
 ```
 
 Get all recent versions of red lists. This time we will not use `collect = TRUE`, which will return a [lazy query](https://docs.lucee.org/guides/cookbooks/lazy_queries.html):
@@ -95,11 +101,15 @@ Red lists need to be validated (= compliant with IUCN criteria) and authorized b
 rodelijst_status <- get_taxonlijsten_lists(con,
                               list = "%rode lijst%"
                            )  %>%
-select('Taxonlijst', 'PublicatieJaar', 'Criteria', 'Validering', 'Vaststelling')
+select("Taxonlijst", "PublicatieJaar", "Criteria", "Validering",
+       "Vaststelling")
+rodelijst_status %>%
+  kable() %>%
+  kable_styling(font_size = 9)
 ```
 
 ## Taxonlist features
-The function `get_taxonlijsten_features()` queries D0156_00_Taxonlijsten and gives an overview of all features associated with taxa on a taxonlist version. This is an auxiliary function to check the accepted values (KenmerkwaardeCodes) of the `feature` parameter in the core function `get_taxonlijsten_items`.
+The function `get_taxonlijsten_features()` queries `D0156_00_Taxonlijsten` and gives an overview of all features associated with taxa on a taxonlist version. This is an auxiliary function to check the accepted values (KenmerkwaardeCodes) of the `feature` parameter in the core function `get_taxonlijsten_items`.
 
 Features are very context (list) dependent: it may be a red list status, an annex of a legislative list, a habitat, ... Not all lists have associated features, e.g. Soortbeschermingsplannen are (at this moment) featureless.
 
@@ -114,64 +124,83 @@ all_recent <- get_taxonlijsten_features(con)
 Get features of all versions of the 'Rode lijst van de Dagvlinders':
 
 ```{r, eval=TRUE, echo=TRUE}
-RL_butterfly <- get_taxonlijsten_features(con, version = 'all', list = '%rode%dagvlinders%', collect = TRUE)
+rl_butterfly <- get_taxonlijsten_features(con, version = "all",
+                                          list = "%rode%dagvlinders%",
+                                          collect = TRUE)
 ```
 
 Get features of Habitattypical fauna:
 
 ```{r, eval=TRUE, echo=TRUE}
-habitat_fauna <- get_taxonlijsten_features(con, list = '%Habitattyp%fauna%')
+habitat_fauna <- get_taxonlijsten_features(con, list = "%Habitattyp%fauna%")
 ```
 
 Note that the function also returns taxonlists without features:
 
 ```{r, eval=TRUE, echo=TRUE}
-no_feature <- get_taxonlijsten_features(con, list = '%SBP%')
+no_feature <- get_taxonlijsten_features(con, list = "%SBP%")
 ```
 
 
 ## Taxonlist items
-The function  `get_taxonlijsten_items()` queries D0156_00_Taxonlijsten and returns the taxa (list items) that are on a taxonlist. The interpreted taxa are given by default, but it is possible to add taxa as they were originally published.
+The function  `get_taxonlijsten_items()` queries `D0156_00_Taxonlijsten` and returns the taxa (list items) that are on a taxonlist. The interpreted taxa are given by default, but it is possible to add taxa as they were originally published.
 
 Several examples are given, this can be used as base to continue selecting the data you require.
 
 Get all taxa from list 'Jachtdecreet':
 
 ```{r, eval=TRUE, echo=TRUE}
-jachtdecreet <- get_taxonlijsten_items(con, list =  'Jachtdecreet', collect = TRUE)
+jachtdecreet <- get_taxonlijsten_items(con, list =  "Jachtdecreet",
+                                       collect = TRUE)
 ```
 
 Get all taxa on category 2 of 'Soortenbesluit':
 
 ```{r, eval=TRUE, echo=TRUE}
-soortenbesluit_cat2 <- get_taxonlijsten_items(con, list =  'soortenbesluit', feature = 'cat2')
+soortenbesluit_cat2 <- get_taxonlijsten_items(con, list =  "soortenbesluit",
+                                              feature = "cat2")
 ```
 
 Get all taxonlist that include 'Gentiaanblauwtje' (you can search for scientific as well as Dutch names):
 
 ```{r, eval=TRUE, echo=TRUE}
-gentiaanblauwtje <- get_taxonlijsten_items(con, taxon = 'Gentiaanblauwtje', collect = TRUE)
+gentiaanblauwtje <- get_taxonlijsten_items(con, taxon = "Gentiaanblauwtje",
+                                           collect = TRUE)
+gentiaanblauwtje %>%
+  kable() %>%
+  kable_styling(font_size = 9)
 ```
 
 Get all taxa with status CR (critically endangered) from the Red list of Vascular plants (use function `get_taxonlijsten_features()` to see what feature codes are available):
 
 ```{r, eval=TRUE, echo=TRUE}
-critical <- get_taxonlijsten_items(con, feature = 'CR', list = 'Rode lijst%vaatpl%')
+critical <- get_taxonlijsten_items(con, feature = "CR",
+                                   list = "Rode lijst%vaatpl%")
 ```
 
 Get original and interpreted Cicindela taxa from list 'Soortenbesluit'
 
 ```{r, eval=TRUE, echo=TRUE}
-cicindela <- get_taxonlijsten_items(con, list = 'Soortenbesluit', taxon = '%Cicindela%', original = TRUE) %>%
-select(c('Naamwet_origineel', 'NaamNed_origineel', 'Naamwet_interpretatie', 'NaamNed_interpretatie'))
+cicindela <- get_taxonlijsten_items(con, list = "Soortenbesluit",
+                                    taxon = "%Cicindela%", original = TRUE) %>%
+select(c("Naamwet_origineel", "NaamNed_origineel", "Naamwet_interpretatie",
+         "NaamNed_interpretatie"))
+cicindela %>%
+  kable() %>%
+  kable_styling(font_size = 9)
 ```
 
 Compare red list status on multiple list versions (requires tidyverse):
 
 ```{r, eval=TRUE, echo=TRUE}
-redlist_evolution <- get_taxonlijsten_items(con, version = 'all', list = 'rode lijst van de dagvlinders') %>%
-select(c('Lijst','Publicatiejaar', 'Naamwet_interpretatie', 'NaamNed_interpretatie', 'KenmerkwaardeCode')) %>%
-pivot_wider(names_from = 'Publicatiejaar', values_from = 'KenmerkwaardeCode')
+redlist_evolution <- get_taxonlijsten_items(con, version = "all",
+                                    list = "rode lijst van de dagvlinders") %>%
+select(c("Lijst", "Publicatiejaar", "Naamwet_interpretatie",
+         "NaamNed_interpretatie", "KenmerkwaardeCode")) %>%
+pivot_wider(names_from = "Publicatiejaar", values_from = "KenmerkwaardeCode")
+redlist_evolution %>%
+  kable() %>%
+  kable_styling(font_size = 9)
 ```
 
 
@@ -195,8 +224,9 @@ Taxonlists may be revised or updated over time. A typical example is the 10-year
 
 A taxonlist has at least one taxonlist version, but it can have multiple versions. As a rule of thumb a new taxonlist version can be related to a new publication. An example is the Union list of invasive alien species. This list is regularly amended. Each amendment is considered a new taxonlist version because it can be traced back to a citable, consolidated version:
 
+
 ```{r, eval=TRUE, echo=FALSE}
-dbGetQuery(con, "select tl.id as taxonlijstid
+tlv <- dbGetQuery(con, "select tl.id as taxonlijstid
            , tlv.id as taxonlijstversieid
            , tl.naam
            , tlv.PublicatieJaar
@@ -204,6 +234,9 @@ dbGetQuery(con, "select tl.id as taxonlijstid
            from taxonlijst tl
            inner join TaxonlijstVersie tlv on tlv.taxonlijstid = tl.id
            where tl.naam like '%Invasieve%Unielijst%'")
+tlv  %>%
+  kable() %>%
+  kable_styling(font_size = 9)
 ```
 
 
@@ -226,17 +259,24 @@ A Dutch name may be published without a scientific name or vice versa, scientifi
 This table links the name as it was originally published (Taxonlistitem) with one or more taxa. We call this link the interpretation of the original name. Usually the interpretation will be unambiguous and one-to-one, but in other cases a translation must be done. For example, the reindeer mosses from the example above refer to 6 species occurring in Flanders:
 
 ```{r, eval=TRUE, echo=FALSE}
-dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet, NaamNed, NaamWet_interpretatie, Auteur, NaamNed_interpretatie, taxongroep
+dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet, NaamNed,
+NaamWet_interpretatie, Auteur, NaamNed_interpretatie, taxongroep
 from [dbo].[vw_Taxonlijstitem_detail]
-where naamwet like '%cladina%' and Lijst = 'Soortenbesluit'")
+where naamwet like '%cladina%' and Lijst = 'Soortenbesluit'") %>%
+  kable() %>%
+  kable_styling(font_size = 9)
 ```
 
 The erroneuos publication of Veenmosorchis - *Dactylorhiza sphagnicola* is interpreted as follows:
 
 ```{r, eval=TRUE, echo=FALSE}
-dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet, NaamNed, NaamWet_interpretatie, Auteur, NaamNed_interpretatie, taxongroep
+dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet, NaamNed,
+NaamWet_interpretatie, Auteur, NaamNed_interpretatie, taxongroep
 from [dbo].[vw_Taxonlijstitem_detail]
-where naamwet like 'Dactylorhiza sphagnicola' and Lijst = 'Soortenmeetnetten'")
+where naamwet like 'Dactylorhiza sphagnicola' and Lijst =
+'Soortenmeetnetten'") %>%
+  kable() %>%
+  kable_styling(font_size = 9)
 ```
 
 In practice, you will usually want to request the interpreted taxa. 
@@ -263,18 +303,26 @@ Argynnis adippe      |(Linnaeus, 1767)              | Adippevlinder
 But that is not how it works. For each taxon there should be only one record, i.e. the name that is considered by the administrator of the taxon table as the currently accepted scientific and currently accepted Dutch name. Synonyms can of course occur as an original taxon list item. For example, we see that in the first version of the Red List of Butterflies the old Dutch name 'Adippevlinder' was used. The second version only contained Dutch names. They are all linked to the single entry Fabriciana adippe - Bosrandparelmoervlinder in the taxon table:
 
 ```{r, eval=TRUE, echo=FALSE}
-get_taxonlijsten_items(con, version = 'all', list = 'rode lijst van de dagvlinders', taxon = '%adippe%', original = TRUE) %>%
-  select(c('Lijst', 'Publicatiejaar', 'Naamwet_origineel', 'NaamNed_origineel', 'Naamwet_interpretatie', 'NaamNed_interpretatie'))
+get_taxonlijsten_items(con, version = "all",
+                       list = "rode lijst van de dagvlinders",
+                       taxon = "%adippe%", original = TRUE) %>%
+  select(c("Lijst", "Publicatiejaar", "Naamwet_origineel", "NaamNed_origineel",
+           "Naamwet_interpretatie", "NaamNed_interpretatie")) %>%
+  kable() %>%
+  kable_styling(font_size = 9)
 ```
 
 By allowing only one record per taxon in the taxon table, you are sure to get all relevant lists when requesting an overview for a taxon. The drawback is that you need to know the currently accepted name.
 
 ## Kenmerk (= feature)
 
-The taxonlistitems that appear on a taxonlist version may or may not have associated features. Typical examples of features are the Red List category or the Annex on which a taxonlistitem is listed. Currently these features are defined in the database:
+The taxonlistitems that appear on a taxonlist version may or may not have associated features. Typical examples of features are the Red List category or the Annex on which a taxonlistitem is listed. These are the features that are currently defined in the database:
 
 ```{r, eval=TRUE, echo=FALSE}
-dbGetQuery(con, "select distinct Kenmerkcode, Kenmerk from [dbo].[vw_Kenmerk]")
+dbGetQuery(con, "select distinct Kenmerkcode, Kenmerk from
+           [dbo].[vw_Kenmerk]") %>%
+  kable() %>%
+  kable_styling(font_size = 9)
 ```
 
 
@@ -283,7 +331,10 @@ dbGetQuery(con, "select distinct Kenmerkcode, Kenmerk from [dbo].[vw_Kenmerk]")
 Each feature has a set of allowed feature values. The feature value codes are the input values for the feature argument in `get_taxonlijsten_items()`:
 
 ```{r, eval=TRUE, echo=FALSE}
-dbGetQuery(con, "select Kenmerkcode, kenmerk, kenmerkwaardecode, kenmerkwaarde from [dbo].[vw_Kenmerk]")
+dbGetQuery(con, "select Kenmerkcode, kenmerk, kenmerkwaardecode,
+           kenmerkwaarde from [dbo].[vw_Kenmerk]") %>%
+  kable() %>%
+  kable_styling(font_size = 9)
 ```
 
 ## TaxonlijstItemAttribuut
@@ -291,8 +342,12 @@ dbGetQuery(con, "select Kenmerkcode, kenmerk, kenmerkwaardecode, kenmerkwaarde f
 This is the relation table linking a taxonlistitem to its feature values. A taxonlistitem can have multiple feature values for the same feature. For example: the moor frog is linked to 3 habitat types on the taxon list of habitattypical fauna species:
 
 ```{r, eval=TRUE, echo=FALSE}
-dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet_interpretatie, NaamNed_interpretatie, Kenmerk, KenmerkwaardeCode, Kenmerkwaarde
-from [dbo].[vw_Taxonlijstitem_detail] where NaamNed_interpretatie = 'Heikikker' and Lijst = 'Habitattypische faunasoorten' and LaatsteVersie = 1")
+dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet_interpretatie,
+NaamNed_interpretatie, Kenmerk, KenmerkwaardeCode, Kenmerkwaarde
+from [dbo].[vw_Taxonlijstitem_detail] where NaamNed_interpretatie = 'Heikikker'
+and Lijst = 'Habitattypische faunasoorten' and LaatsteVersie = 1") %>%
+  kable() %>%
+  kable_styling(font_size = 9)
 ```
 
 
@@ -313,7 +368,9 @@ ON t.object_id = ep2.major_id
 AND ep2.class = 1
 AND ep2.minor_id = 0
 AND ep2.name = 'Beschrijving'
-where schema_name(t.schema_id) = 'dbo'")
+where schema_name(t.schema_id) = 'dbo'") %>%
+  kable() %>%
+  kable_styling(font_size = 9)
 ```
 
 Field descriptions:
@@ -351,7 +408,9 @@ AND ep1.class = 1
 AND c.column_id = ep1.minor_id
 AND ep1.name = 'Beschrijving'
 where schema_name(t.schema_id) = 'dbo'
-and t.name not like 'syc%'")
+and t.name not like 'syc%'") %>%
+  kable() %>%
+  kable_styling(font_size = 9)
 ```
 
 

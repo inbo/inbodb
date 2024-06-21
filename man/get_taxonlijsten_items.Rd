@@ -6,9 +6,9 @@
 \usage{
 get_taxonlijsten_items(
   connection,
-  list,
-  taxon,
-  feature,
+  list = "\%",
+  taxon = "\%",
+  feature = "\%",
   version = c("latest", "old", "all"),
   original = FALSE,
   collect = FALSE

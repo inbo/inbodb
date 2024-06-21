@@ -79,31 +79,19 @@
 #' }
 
 get_taxonlijsten_items <- function(connection,
-                                       list,
-                                       taxon,
-                                       feature,
-                                       version = c("latest","old","all"),
+                                       list = "%",
+                                       taxon = "%",
+                                       feature = "%",
+                                       version = c("latest", "old", "all"),
                                        original = FALSE,
                                        collect = FALSE
 ) {
 
-  if (missing(list)) {
-    list <- "%"
-  } else {
-    assert_that(is.character(list))
-  }
+  assert_that(is.character(list))
 
-  if (missing(taxon)) {
-    taxon <- "%"
-  } else {
-    assert_that(is.character(taxon))
-  }
+  assert_that(is.character(taxon))
 
-  if (missing(feature)) {
-    feature <- "%"
-  } else {
-    assert_that(is.character(feature))
-  }
+  assert_that(is.character(feature))
 
   version <- match.arg(version)
 
@@ -128,7 +116,7 @@ get_taxonlijsten_items <- function(connection,
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
 
-  sql_statement <- glue_sql( "SELECT Lijst
+  sql_statement <- glue_sql("SELECT Lijst
 	, Publicatiejaar
 	, LaatsteVersie
 	, Taxongroep
@@ -162,4 +150,3 @@ get_taxonlijsten_items <- function(connection,
     return(query_result)
   }
 }
-
