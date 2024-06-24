@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_taxonlijsten_features.R
 \name{get_taxonlijsten_features}
 \alias{get_taxonlijsten_features}
-\title{Query to extract Taxonlist features from D0156_00_Taxonlijsten}
+\title{Query to extract Taxonlist features from \code{D0156_00_Taxonlijsten}}
 \usage{
 get_taxonlijsten_features(
   connection,
@@ -12,15 +12,15 @@ get_taxonlijsten_features(
 )
 }
 \arguments{
-\item{connection}{dbconnection with the database 'D0156_00_Taxonlijsten'
+\item{connection}{dbconnection with the database \code{D0156_00_Taxonlijsten}
 on the inbo-sql07-prd server}
 
 \item{list}{name of the taxonlist that you want to retrieve. Wildcards \%
 are allowed. Case insensitive.}
 
 \item{version}{A choice ('latest', 'old', 'all'). If 'latest' (the default)
-only the features of the most recent version are returned. If 'old' all but
-the most recent version is returned. If 'all' all versions are returned.}
+only the most recent version is returned. If 'old' all but the most recent
+version is returned. If 'all' all versions are returned.}
 
 \item{collect}{If FALSE (the default), a remote tbl object is returned. This
 is like a reference to the result of the query but the full result of the
@@ -34,11 +34,11 @@ A remote tbl object (collect = FALSE) or a tibble dataframe (collect
 KenmerkBeschrijving, KenmerkwaardeCode, KenmerkwaardeBeschrijving
 }
 \description{
-This function queries D0156_00_Taxonlijsten and gives an
+This function queries \code{D0156_00_Taxonlijsten} and gives an
 overview of all the features associated with a taxonlist version (a red list
 status or an annex of the Habitat Directive are examples of a feature). This
 is an auxiliary function to check the accepted values (KenmerkwaardeCodes)
-of the feature parameter in the core function get_taxonlijsten_items
+of the feature parameter in the core function \code{get_taxonlijsten_items}
 }
 \examples{
 \dontrun{

@@ -1,23 +1,12 @@
-#' @title Query to extract Taxonlist features from D0156_00_Taxonlijsten
+#' @title Query to extract Taxonlist features from `D0156_00_Taxonlijsten`
 #'
-#' @description This function queries D0156_00_Taxonlijsten and gives an
+#' @description This function queries `D0156_00_Taxonlijsten` and gives an
 #' overview of all the features associated with a taxonlist version (a red list
 #' status or an annex of the Habitat Directive are examples of a feature). This
 #' is an auxiliary function to check the accepted values (KenmerkwaardeCodes)
-#' of the feature parameter in the core function get_taxonlijsten_items
+#' of the feature parameter in the core function `get_taxonlijsten_items`
 #'
-#' @param connection dbconnection with the database 'D0156_00_Taxonlijsten'
-#' on the inbo-sql07-prd server
-#' @param list name of the taxonlist that you want to retrieve. Wildcards %
-#' are allowed. Case insensitive.
-#' @param version A choice ('latest', 'old', 'all'). If 'latest' (the default)
-#' only the features of the most recent version are returned. If 'old' all but
-#' the most recent version is returned. If 'all' all versions are returned.
-#' @param collect If FALSE (the default), a remote tbl object is returned. This
-#' is like a reference to the result of the query but the full result of the
-#' query is not brought into memory. If TRUE the full result of the query is
-#' collected (fetched) from the database and brought into memory of the working
-#' environment.
+#' @inheritParams get_taxonlijsten_lists
 #'
 #' @return A remote tbl object (collect = FALSE) or a tibble dataframe (collect
 #' = TRUE) with variables Taxonlijst, Publicatiejaar, Version, Kenmerkcode,

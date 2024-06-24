@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_taxonlijsten_lists.R
 \name{get_taxonlijsten_lists}
 \alias{get_taxonlijsten_lists}
-\title{Query to extract Taxonlijsten from D0156_00_Taxonlijsten}
+\title{Query to extract Taxonlijsten from \code{D0156_00_Taxonlijsten}}
 \usage{
 get_taxonlijsten_lists(
   connection,
@@ -12,7 +12,7 @@ get_taxonlijsten_lists(
 )
 }
 \arguments{
-\item{connection}{dbconnection with the database 'D0156_00_Taxonlijsten'
+\item{connection}{dbconnection with the database \code{D0156_00_Taxonlijsten}
 on the inbo-sql07-prd server}
 
 \item{list}{name of the taxonlist that you want to retrieve. Wildcards \%
@@ -34,7 +34,7 @@ A remote tbl object (collect = FALSE) or a tibble dataframe (collect
 Publicatiejaar, Version, ReferentieURL, Criteria, Validering, Vaststelling.
 }
 \description{
-This function queries D0156_00_Taxonlijsten and gives an
+This function queries \code{D0156_00_Taxonlijsten} and gives an
 overview of all the taxon lists and list versions currently available in the
 database. Only the latest version is shown unless specified otherwise
 }
@@ -57,13 +57,13 @@ get_taxonlijsten_lists(con, version = 'all', collect = TRUE)
 get_taxonlijsten_lists(con)
 
 # status of red lists
-RL <- get_taxonlijsten_lists(con, list = '\%rode lijst\%')
-select(RL,"Taxonlijst", "PublicatieJaar", "Criteria", "Validering",
+rl <- get_taxonlijsten_lists(con, list = '\%rode lijst\%')
+select(rl,"Taxonlijst", "PublicatieJaar", "Criteria", "Validering",
 "Vaststelling")
 
 # Close the connection when done
 dbDisconnect(con)
-rm(con)
+rm(con, rl)
 }
 }
 \seealso{

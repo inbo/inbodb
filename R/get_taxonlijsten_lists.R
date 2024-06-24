@@ -1,10 +1,10 @@
-#' @title Query to extract Taxonlijsten from D0156_00_Taxonlijsten
+#' @title Query to extract Taxonlijsten from `D0156_00_Taxonlijsten`
 #'
-#' @description This function queries D0156_00_Taxonlijsten and gives an
+#' @description This function queries `D0156_00_Taxonlijsten` and gives an
 #' overview of all the taxon lists and list versions currently available in the
 #' database. Only the latest version is shown unless specified otherwise
 #'
-#' @param connection dbconnection with the database 'D0156_00_Taxonlijsten'
+#' @param connection dbconnection with the database `D0156_00_Taxonlijsten`
 #' on the inbo-sql07-prd server
 #' @param list name of the taxonlist that you want to retrieve. Wildcards %
 #' are allowed. Case insensitive.
@@ -47,13 +47,13 @@
 #' get_taxonlijsten_lists(con)
 #'
 #' # status of red lists
-#' RL <- get_taxonlijsten_lists(con, list = '%rode lijst%')
-#' select(RL,"Taxonlijst", "PublicatieJaar", "Criteria", "Validering",
+#' rl <- get_taxonlijsten_lists(con, list = '%rode lijst%')
+#' select(rl,"Taxonlijst", "PublicatieJaar", "Criteria", "Validering",
 #' "Vaststelling")
 #'
 #' # Close the connection when done
 #' dbDisconnect(con)
-#' rm(con)
+#' rm(con, rl)
 #' }
 
 get_taxonlijsten_lists <- function(connection,

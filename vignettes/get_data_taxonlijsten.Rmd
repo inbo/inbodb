@@ -10,13 +10,21 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+tryCatch(
+  con <- inbodb::connect_inbo_dbase("D0156_00_Taxonlijsten"),
+  error = function(e) e,
+  finally = database_access <- exists("con")
+)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  eval = database_access,
   cache = FALSE,
   message = FALSE
 )
-
+if (!database_access) {
+  load("get_data_taxonlijsten_results.Rda")
+}
 ```
 
 # Introduction
@@ -421,4 +429,9 @@ Close the connection when done
 ```{r closing_conn}
 dbDisconnect(con)
 rm(con)
+```
+
+```{r echo=FALSE, include=FALSE}
+rm(database_access)
+save.image(file = "get_data_taxonlijsten_results.Rda")
 ```

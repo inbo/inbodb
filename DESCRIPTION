@@ -35,7 +35,8 @@ Suggests:
     dbplyr,
     kableExtra,
     knitr,
-    rmarkdown
+    rmarkdown,
+    tidyr
 VignetteBuilder: 
     knitr
 Config/checklist/communities: inbo

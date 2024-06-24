@@ -1,33 +1,22 @@
-#' @title Query to extract the taxa on a taxonlist from D0156_00_Taxonlijsten
+#' @title Query to extract the taxa on a taxonlist from `D0156_00_Taxonlijsten`
 #'
-#' @description This function queries D0156_00_Taxonlijsten and gives an
+#' @description This function queries `D0156_00_Taxonlijsten` and gives an
 #' overview of the taxa that are on a given taxon list version. The interpreted
 #' taxa are given by default, but it is possible to add taxa as they were
 #' originally published. The taxa of the latest list version are shown
 #' unless specified otherwise.
 #'
-#' @param connection dbconnection with the database 'D0156_00_Taxonlijsten'
-#' on the inbo-sql07-prd server
-#' @param list name of the taxonlist you want to retrieve. Wildcards %
-#' are allowed. Case insensitive.
+#' @inheritParams get_taxonlijsten_lists
 #' @param taxon name of the taxon you want to retrieve. Scientific and
 #' vernacular (Dutch) names are allowed. Wildcards % are allowed.
 #' Case insensitive.
 #' @param feature name of the list feature (actually feature code) you want to
 #' retrieve. Wildcards % are allowed. Case insensitive.
-#' @param version A choice ('latest', 'old', 'all'). If 'latest' (the default)
-#' only the most recent version is returned. If 'old' all but the most recent
-#' version is returned. If 'all' all versions are returned.
 #' @param original If FALSE (the default), the function will only retrieve the
 #' interpreted taxa. If TRUE, columns with the original taxa will be added
 #' to the output. For example, if the originally published taxon on a taxonlist
 #' is 'Cicindela spec.', the interpretation will exist of all relevant
 #' Cicindela species
-#' @param collect If FALSE (the default), a remote tbl object is returned. This
-#' is like a reference to the result of the query but the full result of the
-#' query is not brought into memory. If TRUE the full result of the query is
-#' collected (fetched) from the database and brought into memory of the working
-#' environment.
 #'
 #' @return A remote tbl object (collect = FALSE) or a tibble dataframe (collect
 #' = TRUE) with variables Lijst, Publicatiejaar, LaatsteVersie, Taxongroep,
@@ -63,14 +52,14 @@
 #' # Get original and interpreted Cicindela taxa from list 'Soortenbesluit'
 #' get_taxonlijsten_items(con, list = 'Soortenbesluit', taxon = '%Cicindela%'
 #' , original = TRUE) %>%
-#' select(c('Naamwet_origineel', 'NaamNed_origineel', 'Naamwet_interpretatie'
-#' , 'NaamNed_interpretatie'))
+#' select('Naamwet_origineel', 'NaamNed_origineel', 'Naamwet_interpretatie'
+#' , 'NaamNed_interpretatie')
 #'
 #' # Compare red list status on multiple listversions
 #' get_taxonlijsten_items(con, version = 'all'
 #' , list = 'rode lijst van de dagvlinders') %>%
-#' select(c('Lijst', 'Publicatiejaar', 'Naamwet_interpretatie'
-#' , 'NaamNed_interpretatie', 'KenmerkwaardeCode')) %>%
+#' select('Lijst', 'Publicatiejaar', 'Naamwet_interpretatie'
+#' , 'NaamNed_interpretatie', 'KenmerkwaardeCode') %>%
 #' pivot_wider(names_from = Publicatiejaar, values_from = KenmerkwaardeCode)
 #'
 #' # Close the connection when done
