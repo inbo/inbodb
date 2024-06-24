@@ -40,4 +40,4 @@ abstract: "A bundle of functions to connect to and retrieve data from databases 
 identifiers:
 - type: url
   value: https://inbo.github.io/inbodb/
-version: 0.0.5
+version: 0.0.6

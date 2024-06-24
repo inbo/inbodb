@@ -1,3 +1,9 @@
+# inbodb 0.0.6
+
+* new functions `get_taxonlijsten_lists()`, `get_taxonlijsten_features()` and
+  `get_taxonlijsten_items()` to query the 'D0156_00_Taxonlijsten' database
+
+
 # inbodb 0.0.5
 
 * Add new function `get_inboveg_ppa()` to get point-plant-distance type data
