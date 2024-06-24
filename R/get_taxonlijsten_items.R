@@ -14,7 +14,7 @@
 #' vernacular (Dutch) names are allowed. Wildcards % are allowed.
 #' Case insensitive.
 #' @param feature name of the list feature (actually feature code) you want to
-#' retrieve. Wildcards % #' are allowed. Case insensitive.
+#' retrieve. Wildcards % are allowed. Case insensitive.
 #' @param version A choice ('latest', 'old', 'all'). If 'latest' (the default)
 #' only the most recent version is returned. If 'old' all but the most recent
 #' version is returned. If 'all' all versions are returned.
