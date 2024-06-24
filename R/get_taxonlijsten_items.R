@@ -82,6 +82,10 @@ get_taxonlijsten_items <- function(connection,
 
   assert_that(is.character(feature))
 
+  assert_that(is.logical(original))
+
+  assert_that(is.logical(collect))
+
   version <- match.arg(version)
 
   whereclause <- "AND LaatsteVersie = {version}"

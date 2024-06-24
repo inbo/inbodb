@@ -2,6 +2,8 @@
 
 * new functions `get_taxonlijsten_lists()`, `get_taxonlijsten_features()` and
   `get_taxonlijsten_items()` to query the 'D0156_00_Taxonlijsten' database
+* check out `vignette("get_data_taxonlijsten", package = "inbodb")` for more
+  information
 
 # inbodb 0.0.5
 

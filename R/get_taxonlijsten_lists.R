@@ -64,6 +64,8 @@ get_taxonlijsten_lists <- function(connection,
 
   assert_that(is.character(list))
 
+  assert_that(is.logical(collect))
+
   version <- match.arg(version)
 
   whereclause <- "WHERE tmp.version = {version}"
