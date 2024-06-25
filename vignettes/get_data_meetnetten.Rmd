@@ -1,7 +1,7 @@
 ---
 title: "How to retrieve data from the meetnetten database"
 author: "Toon Westra, Frederic Piesschaert"
-date: 2024-01-04
+date: 2024-06-25
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{How to retrieve data from the meetnetten database}
@@ -28,10 +28,15 @@ if (!database_access) {
 
 # Introduction
 
-The Flemish species monitoring programme [meetnetten.be](www.meetnetten.be) consists of set of monitoring schemes for priority species in Flanders, the northern part of Belgium. 
-Each monitoring scheme consists of a number of monitoring sites at which target species are counted using a standardized protocol. 
-The count data is stored in the meetnetten database which is maintained by the Nature and Forest Research Institute (INBO).
-We present some functions to easily access the data from the meetnetten database.
+The Flemish species monitoring programme [meetnetten.be](www.meetnetten.be) 
+consists of set of monitoring schemes for priority species in Flanders, the 
+northern part of Belgium. 
+Each monitoring scheme consists of a number of monitoring sites at which target 
+species are counted using a standardized protocol. 
+The count data is stored in the meetnetten database which is maintained by the
+Nature and Forest Research Institute (INBO).
+We present some functions to easily access the data from the meetnetten 
+database.
 
 # Aim
 
@@ -41,15 +46,16 @@ This avoids writing your own queries.
 We have provided functions to query
 
 + monitoring schemes included in the species monitoring programme
-+ locations and sublocations (for example different sections of a transect) of the monitoring schemes
++ locations and sublocations (for example different sections of a transect) of 
+the monitoring schemes
 + visits (count events)
 + observations
   
 # Packages and connection
 
-The main functions that we will use in this tutorial all start with `get_meetnetten_*`. 
+The main functions that we will use in this tutorial all start with 
+`get_meetnetten_*`. 
 These functions are made available by loading the `inbodb` package.
-We also load the `tidyverse` and `sf` package
 
 ```{r setup, message = FALSE}
 library(inbodb)
@@ -60,9 +66,11 @@ library(ggplot2)
 ```
 
 These functions will only work for people with access to the INBO network. 
-As an INBO employee, you should make sure you have reading-rights for the INBO DWH Server, otherwise place an ICT-call.
+As an INBO employee, you should make sure you have reading-rights for the INBO 
+DWH Server, otherwise place an ICT-call.
 
-The following R-code can be used to establish a connection to the meetnetten database:
+The following R-code can be used to establish a connection to the 
+meetnetten database:
 
 ```{r connection_inbo}
 con <- connect_inbo_dbase("S0008_00_Meetnetten")
@@ -118,7 +126,7 @@ sublocations <- locations$sublocations
 
 Let's have a look at the `main_locations`.
 
-```{r}
+```{r, eval = TRUE}
 main_locations %>%
   head(5)
 ```
@@ -141,18 +149,20 @@ Next, let's have a look at the sublocations of the location Arenbergpolder.
 The locations consists of 14 sections.
 Note that we only show the active (`is_active` = `TURE`) sublocations. 
 
-```{r}
+```{r, eval = TRUE}
 sublocations_show <- sublocations %>%
   filter(location == "Arenbergpolder") %>%
   filter(is_active)
 
 sublocations_show
 ```
+
 Below we show a basic map of the locations and sublocations.
 The location is the wider area where the target species occurs.
 The sublocations indicate where the target species is counted.
 
-```{r, fig.cap = "Arenbergpolder location of the Argusvlinder monitoring scheme and the different sublocations", fig.width = 7}
+```{r, fig.width = 7, eval = TRUE}
+
 main_location_show <- main_locations %>%
   filter(location == "Arenbergpolder") 
 
@@ -164,20 +174,29 @@ ggplot(sublocations_show) +
 We can also select and plot all locations from the dragonfly (in Dutch
 *libellen*) monitoring schemes. 
 
-```{r, fig.cap = "All locations from the dragonfly monitoring schemes", fig.width = 7}
+```{r}
 # get locations for a specific species_group
 locations_dragonflies <- get_meetnetten_locations(con,
                                                   species_group = "libellen")
+
+```
+
+```{r, fig.width = 7, eval = TRUE}
 
 locations_dragonflies$main_locations %>%
   ggplot() +
   geom_sf(aes(fill = scheme, colour = scheme), alpha = 0.5) 
 ```
 
-## Count events
+## Visits
 
-The function `get_meetnetten_visits` provide all count events for one or more 
-monitoring schemes.
+The function `get_meetnetten_visits` returns all visits (count events) for 
+one or more monitoring schemes.
+
+Below we select all visits for the location Arenbergpolder of the Argusvlinder
+monitoring scheme. 
+We see that in most years the location is counted 6 times per year as demanded
+by the [monitoring protocol](https://purews.inbo.be/ws/portalfiles/portal/17657883/MaesEtal_2019_MonitoringsprotocolDagvlindersVersie2.pdf).
 
 ```{r example_visits}
 
@@ -187,29 +206,69 @@ visits <- get_meetnetten_visits(con,
 
 ```
 
+```{r, eval = TRUE}
+visits %>%
+  filter(location == "Arenbergpolder") %>%
+  select(location, visit_id, start_date, 
+         start_time, visit_status)
+```
+
+Use `?get_meetnetten_visits` to get more information on the variables that are
+returned by the function.
+
 ## Observations
 
-The function `get_meetnetten_observations` provide all count events for one or more 
-monitoring scheme.
+The function `get_meetnetten_observations` provides all observations for one 
+or more monitoring scheme.
+
+Let's select all observations from one visit at the Arenbergpolder location
+of the Argusvlinder monitoring scheme, by applying a filter based on the
+variable `visit_id`.
 
 ```{r example_observations}
 
 observations <- get_meetnetten_observations(con,
                                             scheme_name = "Argusvlinder",
                                             collect = FALSE) %>%
-  filter(location == "Arenbergpolder") %>%
+  filter(visit_id == 1080) %>%
   collect()
 
 ```
 
+First we take a look at the observation of the target species.
 
+```{r, eval = TRUE}
 
-## More complex queries
-These functions give most of the relevant basic information that is available in INBOVEG.
-If more detailed information is needed `dplyr` is the magic word. 
-In the future additional functions can be added to this package to help the inboveg-users.
+observations %>%
+  filter(target_species) %>%
+  select(location, sublocation, start_date, 
+         scientific_name, count)
+```
+Optionally observers can also record other species that can be counted using the
+same protocol.
 
-# Closing the connection
+The code below provides the total number of individuals per species,
+including the non target species, that were counted in one visit at the
+Arenberpolder location.
+
+```{r, eval = TRUE}
+
+observations %>%
+  group_by(start_date, target_species, name_nl, scientific_name) %>%
+  summarise(count_total = sum(count)) %>%
+  ungroup()
+```
+
+Use `?get_meetnetten_observations` to get more information on the variables that
+are returned by the function. 
+
+An important note: before you start analysing the data from a certain monitoring
+scheme, it is important to know how the monitoring schemes were designed and how
+the data is organised.
+So don't forget to check the monitoring protocol (available on the 
+[INBO website](https://www.vlaanderen.be/inbo/zoeken/?q=monitoringsprotocol)).
+
+## Closing the connection
 
 Close the connection when done
 
@@ -223,3 +282,15 @@ rm(database_access)
 save.image(file = "get_data_meetnetten_results.Rda")
 ```
 
+# Data policy
+
+Since many of the target species are sensitive species, we do not publicly make 
+available the exact location of the observations.
+Location information is generalized to 1, 5 or 10 km Universal Transverse 
+Mercator (UTM) grid cells, when publishing the data on [GBIF](www.gbif.org).
+The generalisation rules are the same as in 
+[waarnemingen.be](www.waarnemingen.be).
+
+Please respect this policy when you publish results based on the meetnetten
+data.
+When in doubt, contact [info@meetnetten.be](info@meetnetten.be).
