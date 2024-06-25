@@ -4,7 +4,7 @@ author: "Els De Bie, Hans Van Calster, Jo Loos"
 date: 2020-07-03
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{get_data_inboveg}
+  %\VignetteIndexEntry{How to retrieve data from the INBOVEG database}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
