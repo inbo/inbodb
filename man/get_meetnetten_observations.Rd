@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_meetnetten_observations.R
 \name{get_meetnetten_observations}
 \alias{get_meetnetten_observations}
-\title{Query observation data from meetnetten}
+\title{Query observation data from Meetnetten}
 \usage{
 get_meetnetten_observations(
   connection,
@@ -60,13 +60,13 @@ counted (\code{count_type} = \code{exact count}), however for some
 monitoring schemes different type of counts are performed. Check the
 protocol for more information when this is the case.
 \item \code{notes}: notes of the observed
-\item \code{x} and \item \code{y}: when the Meetnetten-app is used,
+\item \code{x} and \code{y}: when the Meetnetten-app is used,
 GPS coordinates (longitude and latitude, \code{crs} = \code{WGS84}) of
 each observation is recorded
 }
 }
 \description{
-This function queries the meetnetten database for observation
+This function queries the Meetnetten database for observation
 data (standardized counts) for a specified monitoring scheme or
 for all monitoring schemes within a specified species group. When no
 monitoring scheme or species group is specified, the observations of all
