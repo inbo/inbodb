@@ -50,7 +50,7 @@
 #'    monitoring schemes different type of counts are performed. Check the
 #'    protocol for more information when this is the case.
 #'    \item \code{notes}: notes of the observed
-#'    \item \code{x} and \item \code{y}: when the Meetnetten-app is used,
+#'    \item \code{x} and \code{y}: when the Meetnetten-app is used,
 #'    GPS coordinates (longitude and latitude, \code{crs} = \code{WGS84}) of
 #'    each observation is recorded
 #'    }
