@@ -1,7 +1,7 @@
 #' @title Query to extract Taxonlist features from `D0156_00_Taxonlijsten`
 #'
 #' @description This function queries `D0156_00_Taxonlijsten` and gives an
-#' overview of all the features associated with a taxonlist version (a red list
+#' overview of all the features associated with a `TaxonlijstVersie` (a red list
 #' status or an annex of the Habitat Directive are examples of a feature). This
 #' is an auxiliary function to check the accepted values (KenmerkwaardeCodes)
 #' of the feature parameter in the core function `get_taxonlijsten_items`

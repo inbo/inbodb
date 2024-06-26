@@ -4,7 +4,7 @@ author: "Frederic Piesschaert, Dirk Maes, Els Lommelen"
 date: 2024-06-06
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{get_data_taxonlijsten}
+  %\VignetteIndexEntry{How to retrieve data from the Taxonlijsten database}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -46,7 +46,7 @@ We provide functions to query data directly from the Taxonlijsten SQL-server dat
 
 # Data issues or missing taxonlist
 
-If you notice data issues or there is a taxonlist missing that you would like to be included in the database, please contact dirk.maes@inbo.be
+If you notice data issues or there is a `Taxonlijst` missing that you would like to be included in the database, please contact dirk.maes@inbo.be
   
 # Packages and connection
 
@@ -77,11 +77,14 @@ The following examples can be used as base to continue selecting the data you re
 
 Get the most recent version of the 'Rode lijst van de Dagvlinders':
 
-```{r, echo=TRUE}
+```{r , echo=TRUE}
 rl_dagvlinders <- get_taxonlijsten_lists(con,
                               list = "%rode%dagvlinders%",
                               collect = TRUE
                            )
+```
+
+```{r, eval=TRUE, echo=TRUE}
 rl_dagvlinders
 ```
 
@@ -109,6 +112,9 @@ rodelijst_status <- get_taxonlijsten_lists(con,
                            )  %>%
 select("Taxonlijst", "PublicatieJaar", "Criteria", "Validering",
        "Vaststelling")
+```
+
+```{r, eval=TRUE, echo=TRUE}
 rodelijst_status
 ```
 
@@ -145,6 +151,9 @@ Note that the function also returns taxonlists without features:
 no_feature <- get_taxonlijsten_features(con, list = "%SBP%")
 ```
 
+```{r, eval=TRUE, echo=TRUE}
+no_feature
+```
 
 ## Taxonlist items
 The function  `get_taxonlijsten_items()` queries `D0156_00_Taxonlijsten` and returns the taxa (list items) that are on a taxonlist. The interpreted taxa are given by default, but it is possible to add taxa as they were originally published.
@@ -170,6 +179,9 @@ Get all taxonlist that include 'Gentiaanblauwtje' (you can search for scientific
 ```{r, echo=TRUE}
 gentiaanblauwtje <- get_taxonlijsten_items(con, taxon = "Gentiaanblauwtje",
                                            collect = TRUE)
+```
+
+```{r, eval=TRUE, echo=TRUE}
 gentiaanblauwtje
 ```
 
@@ -187,40 +199,54 @@ cicindela <- get_taxonlijsten_items(con, list = "Soortenbesluit",
                                     taxon = "%Cicindela%", original = TRUE) %>%
 select(c("Naamwet_origineel", "NaamNed_origineel", "Naamwet_interpretatie",
          "NaamNed_interpretatie"))
+```
+
+```{r, eval=TRUE, echo=TRUE}
 cicindela
 ```
 
-Compare red list status on multiple list versions (requires tidyverse):
+Compare red list status on multiple list versions:
 
-```{r, eval=TRUE, echo=TRUE}
+```{r, echo=TRUE}
 redlist_evolution <- get_taxonlijsten_items(con, version = "all",
                                     list = "rode lijst van de dagvlinders") %>%
 select(c("Lijst", "Publicatiejaar", "Naamwet_interpretatie",
          "NaamNed_interpretatie", "KenmerkwaardeCode")) %>%
 pivot_wider(names_from = "Publicatiejaar", values_from = "KenmerkwaardeCode")
+```
+
+```{r, eval=TRUE, echo=TRUE}
 redlist_evolution
 ```
 
-
 ## More complex queries
-These functions give most of the relevant basic information that is available in D0156_00_Taxonlijsten.
-If more detailed information is needed `dplyr` is the magic word. 
+These functions give most of the relevant basic information that is available in D0156_00_Taxonlijsten. If you need more, check the data model below to write your own queries.
+
+# Closing the connection
+
+Close the connection when done
+
+```{r closing_conn, eval=FALSE}
+dbDisconnect(con)
+rm(con)
+```
+
 
 # Database philosophy
 
-The diagram below shows the core tables of the database that are essential to grasp the philosophy behind the datamodel. Full datamodel with short descriptions of tables and fields (in Dutch) is provided at the end of this document.
+The diagram below shows the core tables of the database that are essential to grasp the philosophy behind the data model. Full data model with short descriptions of tables and fields (in Dutch) is provided at the end of this document.
 
-![Taxonlijsten datamodel 00.04.00](images/taxonlijsten_datamodel_core.png)
+![Taxonlijsten data model 00.04.00](images/taxonlijsten_datamodel_core.png)
 
 ## Taxonlijst
 
-A taxonlist is a list of taxa that belong together for one reason or another. That reason can be legal (Habitats Directive, Birds Directive, Species Decree, Hunting Decree, etc.), thematic (ecoprofiles, etc.) or somewhere in between (Red lists, Species Protection Plans). This may seem pretty straightforward at first glance, but the concept of a taxonlist is susceptible to interpretation.
+A `Taxonlijst` is a list of taxa that belong together for one reason or another. That reason can be legal (Habitats Directive, Birds Directive, Species Decree, Hunting Decree, etc.), thematic (ecoprofiles, etc.) or somewhere in between (Red lists, Species Protection Plans). This may seem pretty straightforward at first glance, but the concept of a `Taxonlijst` is susceptible to interpretation.
 
 ## TaxonlijstVersie
 
-Taxonlists may be revised or updated over time. A typical example is the 10-yearly revision of the Red Lists. In that case we are talking about different versions of a taxonlist. 
+`Taxonlijst` may be revised or updated over time. A typical example is the 10-yearly revision of the Red Lists. In that case we are talking about different versions of a `Taxonlijst`. 
 
-A taxonlist has at least one taxonlist version, but it can have multiple versions. As a rule of thumb a new taxonlist version can be related to a new publication. An example is the Union list of invasive alien species. This list is regularly amended. Each amendment is considered a new taxonlist version because it can be traced back to a citable, consolidated version:
+A `Taxonlijst` has at least one `TaxonlijstVersie`, but it can have multiple versions. As a rule of thumb a new `Taxonlijstversie` can be related to a new publication. An example is the Union list of invasive alien species. This `Taxonlijst` is regularly amended. Each amendment is considered a new `TaxonlijstVersie` because it can be traced back to a citable, consolidated version:
 
 
 ```{r, echo=FALSE}
@@ -232,7 +258,10 @@ tlv <- dbGetQuery(con, "select tl.id as taxonlijstid
            from taxonlijst tl
            inner join TaxonlijstVersie tlv on tlv.taxonlijstid = tl.id
            where tl.naam like '%Invasieve%Unielijst%'")
-tlv  %>%
+```
+
+```{r, echo=FALSE, eval=TRUE}
+tlv %>%
   kable() %>%
   kable_styling(font_size = 9)
 ```
@@ -240,7 +269,7 @@ tlv  %>%
 
 ## Taxonlijstitem
 
-All elements (taxa) on a taxonlist version are called taxonlistitems. These are the taxon(group) names **as they were originally published**. Often this will be species names, but it might as well be a description of a taxongroup that requires further interpretation. The Species Decree (Soortenbesluit) for example, includes many descriptive items such as:
+All elements (taxa) on a `Taxonlijstversie` are called `TaxonlijstItem` These are the taxon(group) names **as they were originally published**. Often this will be species names, but it might as well be a description of a taxongroup that requires further interpretation. The Species Decree (Soortenbesluit) for example, includes many descriptive items such as:
 
 * *Cladonia* spp. Subgen. *Cladina* (rendiermossen)
 * *Calosoma* spp (poppenrovers - alle soorten)
@@ -248,19 +277,23 @@ All elements (taxa) on a taxonlist version are called taxonlistitems. These are 
 * *Odonata* (libellen: alle soorten met uitzondering van die welke specifiek in deze bijlage worden vermeld)
 * …
 
-It also happens that names are published incorrectly (typos, errors in the authors, incorrect scientific or Dutch name, etc.). Even then, the names are copied literally as they were published, including errors. An example: In the Blueprints for species monitoring in Flanders (a list of Natura 2000 and other Flemish priority species) we find Veenmosorchis - *Dactylorhiza sphagnicola*. Two different species are confused here, namely Veenorchis - *Dactylorhiza sphagnicola* and Veenmosorchis - *Hammarbya paludosa*. We include the incorrect version in the Taxonlistitem table, the correct interpretation only takes place afterwards.
+It also happens that names are published incorrectly (typos, errors in the authors, incorrect scientific or Dutch name, etc.). Even then, the names are copied literally as they were published, including errors. An example: In the Blueprints for species monitoring in Flanders (a list of Natura 2000 and other Flemish priority species) we find Veenmosorchis - *Dactylorhiza sphagnicola*. Two different species are confused here, namely Veenorchis - *Dactylorhiza sphagnicola* and Veenmosorchis - *Hammarbya paludosa*. We include the incorrect version in the `TaxonlijstItem` table, the correct interpretation only takes place afterwards.
 
-A Dutch name may be published without a scientific name or vice versa, scientific names are published either with or without an author's name, it all doesn't matter: we just copy things as they appear in the original list. Hence, the taxonlistitem table always allows you to recall the list exactly as it was published. There is no direct link with the Taxon table, that link will be made in the table TaxonlijstItemInterpretatie.
+A Dutch name may be published without a scientific name or vice versa, scientific names are published either with or without an author's name, it all doesn't matter: we just copy things as they appear in the original list. Hence, the `TaxonlijstItem` table always allows you to recall the list exactly as it was published. There is no direct link with the `Taxon` table, that link will be made in the table `TaxonlijstItemInterpretatie`.
 
 ## TaxonlijstitemInterpretatie
 
-This table links the name as it was originally published (Taxonlistitem) with one or more taxa. We call this link the interpretation of the original name. Usually the interpretation will be unambiguous and one-to-one, but in other cases a translation must be done. For example, the reindeer mosses from the example above refer to 6 species occurring in Flanders:
+This table links the name as it was originally published (`TaxonlijstItem`) with one or more taxa. We call this link the interpretation of the original name. Usually the interpretation will be unambiguous and one-to-one, but in other cases a translation must be done. For example, the reindeer mosses from the example above refer to 6 species occurring in Flanders:
 
 ```{r, echo=FALSE}
-dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet, NaamNed,
+reindeer <- dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet, NaamNed,
 NaamWet_interpretatie, Auteur, NaamNed_interpretatie, taxongroep
 from [dbo].[vw_Taxonlijstitem_detail]
-where naamwet like '%cladina%' and Lijst = 'Soortenbesluit'") %>%
+where naamwet like '%cladina%' and Lijst = 'Soortenbesluit'")
+```
+
+```{r, echo=FALSE, eval=TRUE}
+reindeer %>%
   kable() %>%
   kable_styling(font_size = 9)
 ```
@@ -268,11 +301,15 @@ where naamwet like '%cladina%' and Lijst = 'Soortenbesluit'") %>%
 The erroneuos publication of Veenmosorchis - *Dactylorhiza sphagnicola* is interpreted as follows:
 
 ```{r, echo=FALSE}
-dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet, NaamNed,
-NaamWet_interpretatie, Auteur, NaamNed_interpretatie, taxongroep
+veenmosorchis <- dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet,
+NaamNed, NaamWet_interpretatie, Auteur, NaamNed_interpretatie, taxongroep
 from [dbo].[vw_Taxonlijstitem_detail]
 where naamwet like 'Dactylorhiza sphagnicola' and Lijst =
-'Soortenmeetnetten'") %>%
+'Soortenmeetnetten'")
+```
+
+```{r, echo=FALSE, eval=TRUE}
+veenmosorchis %>%
   kable() %>%
   kable_styling(font_size = 9)
 ```
@@ -283,13 +320,13 @@ The data model only allows one interpretation, so you cannot define versions of 
 
 ## Taxon
 
-This is the reference table with the taxa of this database. When managing this table, a number of important principles must be taken into account. The taxon model has been deliberately kept very simple. There are no taxonomic hierarchies, nor is it possible to define synonyms between taxa. It is strongly discouraged to maintain more than one record in the taxon table for a particular taxon. Let's take the High Brown Fritillary (Bosrandparelmoervlinder) as an example. This is the corresponding taxon record:
+This is the reference table with the taxa of this database. When managing this table, a number of important principles must be taken into account. The taxon model has been deliberately kept very simple. There are no taxonomic hierarchies, nor is it possible to define synonymy between taxa. It is strongly discouraged to maintain more than one record in the `Taxon` table for a particular taxon. Let's take the High Brown Fritillary (Bosrandparelmoervlinder) as an example. This is the corresponding `Taxon` record:
 
 NaamWetenschappelijk | Auteur                       | NaamNederlands
 ---------------------|------------------------------|------------------------
 Fabriciana adippe    |(Denis & Schiffermüller, 1775)| Bosrandparelmoervlinder
 
-The species is also known under the synonym *Argynnis adippe* and was previously called Adippevlinder in Dutch. So you might be tempted to add more records in the taxon table:
+The species is also known under the synonym *Argynnis adippe* and was previously called Adippevlinder in Dutch. So you might be tempted to add more records in the `Taxon` table:
 
 NaamWetenschappelijk | Auteur                       | NaamNederlands
 ---------------------|------------------------------|------------------------
@@ -298,65 +335,80 @@ Fabriciana adippe    |(Denis & Schiffermüller, 1775)| Adippevlinder
 Argynnis adippe      |(Linnaeus, 1767)              | Bosrandparelmoervlinder
 Argynnis adippe      |(Linnaeus, 1767)              | Adippevlinder
 
-But that is not how it works. For each taxon there should be only one record, i.e. the name that is considered by the administrator of the taxon table as the currently accepted scientific and currently accepted Dutch name. Synonyms can of course occur as an original taxon list item. For example, we see that in the first version of the Red List of Butterflies the old Dutch name 'Adippevlinder' was used. The second version only contained Dutch names. They are all linked to the single entry Fabriciana adippe - Bosrandparelmoervlinder in the taxon table:
+But that is not how it works. For each taxon there should be only one record, i.e. the name that is considered by the administrator of the `Taxon` table as the currently accepted scientific and currently accepted Dutch name. Synonyms can of course occur as an original `TaxonlijstItem`. For example, we see that in the first version of the Red List of Butterflies the old Dutch name 'Adippevlinder' was used. The second version only contained Dutch names. They are all linked to the single entry Fabriciana adippe - Bosrandparelmoervlinder in the `Taxon` table:
 
 ```{r, echo=FALSE}
-get_taxonlijsten_items(con, version = "all",
+adippe <- get_taxonlijsten_items(con, version = "all",
                        list = "rode lijst van de dagvlinders",
                        taxon = "%adippe%", original = TRUE) %>%
   select(c("Lijst", "Publicatiejaar", "Naamwet_origineel", "NaamNed_origineel",
-           "Naamwet_interpretatie", "NaamNed_interpretatie")) %>%
+           "Naamwet_interpretatie", "NaamNed_interpretatie"))
+```
+
+```{r, echo=FALSE, eval=TRUE}
+adippe %>%
   kable() %>%
   kable_styling(font_size = 9)
 ```
 
-By allowing only one record per taxon in the taxon table, you are sure to get all relevant lists when requesting an overview for a taxon. The drawback is that you need to know the currently accepted name.
+By allowing only one record per taxon in the `Taxon` table, you are sure to get all relevant lists when requesting an overview for a taxon. The drawback is that you need to know the currently accepted name.
 
 ## Kenmerk (= feature)
 
-The taxonlistitems that appear on a taxonlist version may or may not have associated features. Typical examples of features are the Red List category or the Annex on which a taxonlistitem is listed. These are the features that are currently defined in the database:
+The `TaxonlijstItem` that appear on a `TaxonlijstVersion` may or may not have associated features. Typical examples of features are the Red List category or the Annex on which a `TaxonlijstItem` is listed. These are the features that are currently defined in the database:
 
 ```{r, echo=FALSE}
-dbGetQuery(con, "select distinct Kenmerkcode, Kenmerk from
-           [dbo].[vw_Kenmerk]") %>%
+feature <- dbGetQuery(con, "select distinct Kenmerkcode, Kenmerk from
+           [dbo].[vw_Kenmerk]")
+```
+
+```{r, echo=FALSE, eval=TRUE}
+feature %>%
   kable() %>%
   kable_styling(font_size = 9)
 ```
-
 
 ## Kenmerkwaarde
 
 Each feature has a set of allowed feature values. The feature value codes are the input values for the feature argument in `get_taxonlijsten_items()`:
 
 ```{r, echo=FALSE}
-dbGetQuery(con, "select Kenmerkcode, kenmerk, kenmerkwaardecode,
-           kenmerkwaarde from [dbo].[vw_Kenmerk]") %>%
+featurevalue <- dbGetQuery(con, "select Kenmerkcode, kenmerk, kenmerkwaardecode,
+           kenmerkwaarde from [dbo].[vw_Kenmerk]")
+```
+
+```{r, echo=FALSE, eval=TRUE}
+featurevalue %>%
   kable() %>%
   kable_styling(font_size = 9)
 ```
 
 ## TaxonlijstItemAttribuut
 
-This is the relation table linking a taxonlistitem to its feature values. A taxonlistitem can have multiple feature values for the same feature. For example: the moor frog is linked to 3 habitat types on the taxon list of habitattypical fauna species:
+This is the relation table linking a `TaxonlijstItem` to its feature values. A `TaxonlijstItem` can have multiple feature values for the same feature. For example: the moor frog is linked to 3 habitat types on the taxon list of habitattypical fauna species:
 
 ```{r, echo=FALSE}
-dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet_interpretatie,
+frog <- dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet_interpretatie,
 NaamNed_interpretatie, Kenmerk, KenmerkwaardeCode, Kenmerkwaarde
 from [dbo].[vw_Taxonlijstitem_detail] where NaamNed_interpretatie = 'Heikikker'
-and Lijst = 'Habitattypische faunasoorten' and LaatsteVersie = 1") %>%
+and Lijst = 'Habitattypische faunasoorten' and LaatsteVersie = 1")
+```
+
+```{r, echo=FALSE, eval=TRUE}
+frog %>%
   kable() %>%
   kable_styling(font_size = 9)
 ```
 
 
-# Full datamodel
+# Full data model
 
-![Taxonlijsten datamodel 00.04.00](images/taxonlijsten_datamodel.png)
+![Taxonlijsten data model 00.04.00](images/taxonlijsten_datamodel.png)
 
 Table descriptions:
 
 ```{r, echo=FALSE}
-dbGetQuery(con, "
+fulltable <- dbGetQuery(con, "
 SELECT schema_name(t.schema_id) SchemaName ,
 t.name AS TableName ,
 ep2.value AS Beschrijving
@@ -366,7 +418,11 @@ ON t.object_id = ep2.major_id
 AND ep2.class = 1
 AND ep2.minor_id = 0
 AND ep2.name = 'Beschrijving'
-where schema_name(t.schema_id) = 'dbo'") %>%
+where schema_name(t.schema_id) = 'dbo'")
+```
+
+```{r, echo=FALSE, eval=TRUE}
+fulltable %>%
   kable() %>%
   kable_styling(font_size = 9)
 ```
@@ -374,7 +430,7 @@ where schema_name(t.schema_id) = 'dbo'") %>%
 Field descriptions:
 
 ```{r, echo=FALSE}
-dbGetQuery(con, "
+fullfield <- dbGetQuery(con, "
 
 SELECT schema_name(t.schema_id) SchemaName ,
 t.name TableName ,
@@ -406,22 +462,18 @@ AND ep1.class = 1
 AND c.column_id = ep1.minor_id
 AND ep1.name = 'Beschrijving'
 where schema_name(t.schema_id) = 'dbo'
-and t.name not like 'syc%'") %>%
+and t.name not like 'syc%'")
+```
+
+```{r, echo=FALSE, eval=TRUE}
+fullfield %>%
   kable() %>%
   kable_styling(font_size = 9)
 ```
 
-
-# Closing the connection
-
-Close the connection when done
-
-```{r closing_conn}
+```{r echo=FALSE, include=FALSE}
 dbDisconnect(con)
 rm(con)
-```
-
-```{r echo=FALSE, include=FALSE}
 rm(database_access)
 save.image(file = "get_data_taxonlijsten_results.Rda")
 ```
