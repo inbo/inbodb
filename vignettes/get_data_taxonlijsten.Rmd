@@ -90,7 +90,7 @@ rl_dagvlinders
 
 Get all recent versions of red lists. This time we will not use `collect = TRUE`, which will return a [lazy query](https://docs.lucee.org/guides/cookbooks/lazy_queries.html):
 
-```{r, echo=TRUE}
+```{r, eval=FALSE, echo=TRUE}
 rodelijst_recent <- get_taxonlijsten_lists(con,
                               list = "%rode lijst%"
                            )
@@ -98,7 +98,7 @@ rodelijst_recent <- get_taxonlijsten_lists(con,
 
 Get all (most recent and older) taxonlist versions in the database:
 
-```{r, echo=TRUE}
+```{r, eval=FALSE, echo=TRUE}
 listversions_all <- get_taxonlijsten_lists(con,
                               version = "all"
                            )
@@ -108,7 +108,8 @@ Red lists need to be validated (= compliant with IUCN criteria) and authorized b
 
 ```{r, echo=TRUE}
 rodelijst_status <- get_taxonlijsten_lists(con,
-                              list = "%rode lijst%"
+                              list = "%rode lijst%",
+                              collect = TRUE
                            )  %>%
 select("Taxonlijst", "PublicatieJaar", "Criteria", "Validering",
        "Vaststelling")
@@ -127,13 +128,13 @@ The following examples can be used as base to continue selecting the data you re
 
 Use function with default values (get all features of the most recent list versions):
 
-```{r, echo=TRUE}
+```{r, eval=FALSE, echo=TRUE}
 all_recent <- get_taxonlijsten_features(con)
 ```
 
 Get features of all versions of the 'Rode lijst van de Dagvlinders':
 
-```{r, echo=TRUE}
+```{r, eval=FALSE, echo=TRUE}
 rl_butterfly <- get_taxonlijsten_features(con, version = "all",
                                           list = "%rode%dagvlinders%",
                                           collect = TRUE)
@@ -141,14 +142,14 @@ rl_butterfly <- get_taxonlijsten_features(con, version = "all",
 
 Get features of Habitattypical fauna:
 
-```{r, echo=TRUE}
+```{r, eval=FALSE, echo=TRUE}
 habitat_fauna <- get_taxonlijsten_features(con, list = "%Habitattyp%fauna%")
 ```
 
 Note that the function also returns taxonlists without features:
 
 ```{r, echo=TRUE}
-no_feature <- get_taxonlijsten_features(con, list = "%SBP%")
+no_feature <- get_taxonlijsten_features(con, list = "%SBP%", collect = TRUE)
 ```
 
 ```{r, eval=TRUE, echo=TRUE}
@@ -162,14 +163,14 @@ Several examples are given, this can be used as base to continue selecting the d
 
 Get all taxa from list 'Jachtdecreet':
 
-```{r, echo=TRUE}
+```{r, eval=FALSE, echo=TRUE}
 jachtdecreet <- get_taxonlijsten_items(con, list =  "Jachtdecreet",
                                        collect = TRUE)
 ```
 
 Get all taxa on category 2 of 'Soortenbesluit':
 
-```{r, echo=TRUE}
+```{r, eval=FALSE, echo=TRUE}
 soortenbesluit_cat2 <- get_taxonlijsten_items(con, list =  "soortenbesluit",
                                               feature = "cat2")
 ```
@@ -187,7 +188,7 @@ gentiaanblauwtje
 
 Get all taxa with status CR (critically endangered) from the Red list of Vascular plants (use function `get_taxonlijsten_features()` to see what feature codes are available):
 
-```{r, echo=TRUE}
+```{r, eval=FALSE, echo=TRUE}
 critical <- get_taxonlijsten_items(con, feature = "CR",
                                    list = "Rode lijst%vaatpl%")
 ```
@@ -196,9 +197,10 @@ Get original and interpreted Cicindela taxa from list 'Soortenbesluit'
 
 ```{r, echo=TRUE}
 cicindela <- get_taxonlijsten_items(con, list = "Soortenbesluit",
-                                    taxon = "%Cicindela%", original = TRUE) %>%
-select(c("Naamwet_origineel", "NaamNed_origineel", "Naamwet_interpretatie",
-         "NaamNed_interpretatie"))
+                                    taxon = "%Cicindela%", original = TRUE,
+                                    collect = TRUE) %>%
+select("Naamwet_origineel", "NaamNed_origineel", "Naamwet_interpretatie",
+         "NaamNed_interpretatie")
 ```
 
 ```{r, eval=TRUE, echo=TRUE}
@@ -209,9 +211,10 @@ Compare red list status on multiple list versions:
 
 ```{r, echo=TRUE}
 redlist_evolution <- get_taxonlijsten_items(con, version = "all",
-                                    list = "rode lijst van de dagvlinders") %>%
-select(c("Lijst", "Publicatiejaar", "Naamwet_interpretatie",
-         "NaamNed_interpretatie", "KenmerkwaardeCode")) %>%
+                                    list = "rode lijst van de dagvlinders",
+                                    collect = TRUE) %>%
+select("Lijst", "Publicatiejaar", "Naamwet_interpretatie",
+         "NaamNed_interpretatie", "KenmerkwaardeCode") %>%
 pivot_wider(names_from = "Publicatiejaar", values_from = "KenmerkwaardeCode")
 ```
 
