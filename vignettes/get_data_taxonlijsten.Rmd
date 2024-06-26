@@ -260,7 +260,7 @@ tlv <- dbGetQuery(con, "select tl.id as taxonlijstid
            , tlv.ReferentieURL
            from taxonlijst tl
            inner join TaxonlijstVersie tlv on tlv.taxonlijstid = tl.id
-           where tl.naam like '%Invasieve%Unielijst%'", collect = TRUE)
+           where tl.naam like '%Invasieve%Unielijst%'")
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
@@ -292,7 +292,7 @@ This table links the name as it was originally published (`TaxonlijstItem`) with
 reindeer <- dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet, NaamNed,
 NaamWet_interpretatie, Auteur, NaamNed_interpretatie, taxongroep
 from [dbo].[vw_Taxonlijstitem_detail]
-where naamwet like '%cladina%' and Lijst = 'Soortenbesluit'", collect = TRUE)
+where naamwet like '%cladina%' and Lijst = 'Soortenbesluit'")
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
@@ -308,7 +308,7 @@ veenmosorchis <- dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet,
 NaamNed, NaamWet_interpretatie, Auteur, NaamNed_interpretatie, taxongroep
 from [dbo].[vw_Taxonlijstitem_detail]
 where naamwet like 'Dactylorhiza sphagnicola' and Lijst =
-'Soortenmeetnetten'", collect = TRUE)
+'Soortenmeetnetten'")
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
@@ -362,7 +362,7 @@ The `TaxonlijstItem` that appear on a `TaxonlijstVersion` may or may not have as
 
 ```{r, echo=FALSE}
 feature <- dbGetQuery(con, "select distinct Kenmerkcode, Kenmerk from
-           [dbo].[vw_Kenmerk]", collect = TRUE)
+           [dbo].[vw_Kenmerk]")
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
@@ -377,7 +377,7 @@ Each feature has a set of allowed feature values. The feature value codes are th
 
 ```{r, echo=FALSE}
 featurevalue <- dbGetQuery(con, "select Kenmerkcode, kenmerk, kenmerkwaardecode,
-           kenmerkwaarde from [dbo].[vw_Kenmerk]", collect = TRUE)
+           kenmerkwaarde from [dbo].[vw_Kenmerk]")
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
@@ -394,8 +394,7 @@ This is the relation table linking a `TaxonlijstItem` to its feature values. A `
 frog <- dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet_interpretatie,
 NaamNed_interpretatie, Kenmerk, KenmerkwaardeCode, Kenmerkwaarde
 from [dbo].[vw_Taxonlijstitem_detail] where NaamNed_interpretatie = 'Heikikker'
-and Lijst = 'Habitattypische faunasoorten' and LaatsteVersie = 1",
-collect = TRUE)
+and Lijst = 'Habitattypische faunasoorten' and LaatsteVersie = 1")
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
@@ -422,7 +421,7 @@ ON t.object_id = ep2.major_id
 AND ep2.class = 1
 AND ep2.minor_id = 0
 AND ep2.name = 'Beschrijving'
-where schema_name(t.schema_id) = 'dbo'", collect = TRUE)
+where schema_name(t.schema_id) = 'dbo'")
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
@@ -465,7 +464,7 @@ AND ep1.class = 1
 AND c.column_id = ep1.minor_id
 AND ep1.name = 'Beschrijving'
 where schema_name(t.schema_id) = 'dbo'
-and t.name not like 'syc%'", collect = TRUE)
+and t.name not like 'syc%'")
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
