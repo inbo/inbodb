@@ -260,10 +260,10 @@ tlv <- dbGetQuery(con, "select tl.id as taxonlijstid
            , tlv.ReferentieURL
            from taxonlijst tl
            inner join TaxonlijstVersie tlv on tlv.taxonlijstid = tl.id
-           where tl.naam like '%Invasieve%Unielijst%'")
+           where tl.naam like '%Invasieve%Unielijst%'", collect = TRUE)
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, eval=TRUE, echo=FALSE}
 tlv %>%
   kable() %>%
   kable_styling(font_size = 9)
@@ -292,26 +292,26 @@ This table links the name as it was originally published (`TaxonlijstItem`) with
 reindeer <- dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet, NaamNed,
 NaamWet_interpretatie, Auteur, NaamNed_interpretatie, taxongroep
 from [dbo].[vw_Taxonlijstitem_detail]
-where naamwet like '%cladina%' and Lijst = 'Soortenbesluit'")
+where naamwet like '%cladina%' and Lijst = 'Soortenbesluit'", collect = TRUE)
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, eval=TRUE, echo=FALSE}
 reindeer %>%
   kable() %>%
   kable_styling(font_size = 9)
 ```
 
-The erroneuos publication of Veenmosorchis - *Dactylorhiza sphagnicola* is interpreted as follows:
+The erroneous publication of Veenmosorchis - *Dactylorhiza sphagnicola* is interpreted as follows:
 
 ```{r, echo=FALSE}
 veenmosorchis <- dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet,
 NaamNed, NaamWet_interpretatie, Auteur, NaamNed_interpretatie, taxongroep
 from [dbo].[vw_Taxonlijstitem_detail]
 where naamwet like 'Dactylorhiza sphagnicola' and Lijst =
-'Soortenmeetnetten'")
+'Soortenmeetnetten'", collect = TRUE)
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, eval=TRUE, echo=FALSE}
 veenmosorchis %>%
   kable() %>%
   kable_styling(font_size = 9)
@@ -343,12 +343,12 @@ But that is not how it works. For each taxon there should be only one record, i.
 ```{r, echo=FALSE}
 adippe <- get_taxonlijsten_items(con, version = "all",
                        list = "rode lijst van de dagvlinders",
-                       taxon = "%adippe%", original = TRUE) %>%
-  select(c("Lijst", "Publicatiejaar", "Naamwet_origineel", "NaamNed_origineel",
-           "Naamwet_interpretatie", "NaamNed_interpretatie"))
+                       taxon = "%adippe%", original = TRUE, collect = TRUE) %>%
+  select("Lijst", "Publicatiejaar", "Naamwet_origineel", "NaamNed_origineel",
+           "Naamwet_interpretatie", "NaamNed_interpretatie")
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, eval=TRUE, echo=FALSE}
 adippe %>%
   kable() %>%
   kable_styling(font_size = 9)
@@ -362,10 +362,10 @@ The `TaxonlijstItem` that appear on a `TaxonlijstVersion` may or may not have as
 
 ```{r, echo=FALSE}
 feature <- dbGetQuery(con, "select distinct Kenmerkcode, Kenmerk from
-           [dbo].[vw_Kenmerk]")
+           [dbo].[vw_Kenmerk]", collect = TRUE)
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, eval=TRUE, echo=FALSE}
 feature %>%
   kable() %>%
   kable_styling(font_size = 9)
@@ -377,10 +377,10 @@ Each feature has a set of allowed feature values. The feature value codes are th
 
 ```{r, echo=FALSE}
 featurevalue <- dbGetQuery(con, "select Kenmerkcode, kenmerk, kenmerkwaardecode,
-           kenmerkwaarde from [dbo].[vw_Kenmerk]")
+           kenmerkwaarde from [dbo].[vw_Kenmerk]", collect = TRUE)
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, eval=TRUE, echo=FALSE}
 featurevalue %>%
   kable() %>%
   kable_styling(font_size = 9)
@@ -394,10 +394,11 @@ This is the relation table linking a `TaxonlijstItem` to its feature values. A `
 frog <- dbGetQuery(con, "select Lijst, PublicatieJaar, NaamWet_interpretatie,
 NaamNed_interpretatie, Kenmerk, KenmerkwaardeCode, Kenmerkwaarde
 from [dbo].[vw_Taxonlijstitem_detail] where NaamNed_interpretatie = 'Heikikker'
-and Lijst = 'Habitattypische faunasoorten' and LaatsteVersie = 1")
+and Lijst = 'Habitattypische faunasoorten' and LaatsteVersie = 1",
+collect = TRUE)
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, eval=TRUE, echo=FALSE}
 frog %>%
   kable() %>%
   kable_styling(font_size = 9)
@@ -421,10 +422,10 @@ ON t.object_id = ep2.major_id
 AND ep2.class = 1
 AND ep2.minor_id = 0
 AND ep2.name = 'Beschrijving'
-where schema_name(t.schema_id) = 'dbo'")
+where schema_name(t.schema_id) = 'dbo'", collect = TRUE)
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, eval=TRUE, echo=FALSE}
 fulltable %>%
   kable() %>%
   kable_styling(font_size = 9)
@@ -434,7 +435,6 @@ Field descriptions:
 
 ```{r, echo=FALSE}
 fullfield <- dbGetQuery(con, "
-
 SELECT schema_name(t.schema_id) SchemaName ,
 t.name TableName ,
 c.name ColumnName ,
@@ -465,10 +465,10 @@ AND ep1.class = 1
 AND c.column_id = ep1.minor_id
 AND ep1.name = 'Beschrijving'
 where schema_name(t.schema_id) = 'dbo'
-and t.name not like 'syc%'")
+and t.name not like 'syc%'", collect = TRUE)
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, eval=TRUE, echo=FALSE}
 fullfield %>%
   kable() %>%
   kable_styling(font_size = 9)
