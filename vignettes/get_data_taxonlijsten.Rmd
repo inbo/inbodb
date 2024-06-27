@@ -239,7 +239,7 @@ rm(con)
 
 The diagram below shows the core tables of the database that are essential to grasp the philosophy behind the data model. Full data model with short descriptions of tables and fields (in Dutch) is provided at the end of this document.
 
-![Taxonlijsten data model 00.04.00](images/taxonlijsten_datamodel_core.png)
+![Taxonlijsten data model 00.04.00](images/taxonlijsten-datamodel-core.png)
 
 ## Taxonlijst
 
@@ -406,7 +406,7 @@ frog %>%
 
 # Full data model
 
-![Taxonlijsten data model 00.04.00](images/taxonlijsten_datamodel.png)
+![Taxonlijsten data model 00.04.00](images/taxonlijsten-datamodel.png)
 
 Table descriptions:
 
