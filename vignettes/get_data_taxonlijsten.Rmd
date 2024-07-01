@@ -53,7 +53,7 @@ If you notice data issues or there is a `Taxonlijst` missing that you would like
 The functions that we use in this tutorial all start with `get_taxonlijsten_*`. 
 They are made available by loading the `inbodb` package.
 
-```{r setup}
+```{r setup, eval=TRUE}
 library(inbodb)
 library(dplyr)
 library(tidyr)
