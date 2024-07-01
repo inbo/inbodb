@@ -2,7 +2,7 @@
 title: "odbc query problem"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{odbc_query_problem}
+  %\VignetteIndexEntry{odbc query problem}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
