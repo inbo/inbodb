@@ -67,7 +67,7 @@ library(ggplot2)
 
 These functions will only work for people with access to the INBO network. 
 As an INBO employee, you should make sure you have reading-rights for the INBO 
-DWH Server, otherwise place an ICT-call.
+Datawarehouse server, otherwise place an ICT-call.
 
 The following R-code can be used to establish a connection to the 
 meetnetten database:
