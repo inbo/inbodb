@@ -244,7 +244,7 @@ observations %>%
   select(location, sublocation, start_date, 
          scientific_name, count)
 ```
-Optionally observers can also record other species that can be counted using the
+Optionally observers can also record non target species that can be counted using the
 same protocol.
 
 The code below provides the total number of individuals per species,
