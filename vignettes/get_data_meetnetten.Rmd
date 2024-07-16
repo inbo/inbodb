@@ -29,7 +29,7 @@ if (!database_access) {
 # Introduction
 
 The Flemish species monitoring programme [meetnetten.be](www.meetnetten.be) 
-consists of set of monitoring schemes for priority species in Flanders, the 
+consists of a set of monitoring schemes for priority species in Flanders, the 
 northern part of Belgium. 
 Each monitoring scheme consists of a number of monitoring sites at which target 
 species are counted using a standardized protocol. 
