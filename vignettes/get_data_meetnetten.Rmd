@@ -130,7 +130,7 @@ Let's have a look at the `main_locations`.
 main_locations %>%
   head(5)
 ```
-Two variables need some further explanations:
+Two variables need some further explanation:
 
 + `is_sample`. For more common species, a random sample is drawn from all
 locations in Flanders where the target species occurs.
