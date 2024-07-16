@@ -123,7 +123,7 @@ get_meetnetten_locations <- function(connection,
 
   query_result <- tbl(connection, sql(sql_statement))
 
-  if (!is.null(scheme_name) & !is.null(species_group_selected)) {
+  if (!is.null(scheme_name) && !is.null(species_group_selected)) {
 
     query_result <- query_result %>%
       filter(str_to_lower(.data$scheme) %in% scheme_name |
