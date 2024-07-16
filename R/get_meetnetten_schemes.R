@@ -61,7 +61,7 @@ get_meetnetten_schemes <- function(connection) {
     INNER JOIN staging_meetnetten.projects_projectgroup pg ON pg.id = p.group_id
     INNER JOIN staging_meetnetten.projects_project_protocols ppp ON ppp.project_id = p.id
     INNER JOIN staging_meetnetten.protocols_protocol PR ON PR.id = ppp.protocol_id
-    WHERE 1 = 1"
+    ORDER BY pg.name, p.name, pr.name"
 
   query_result <- tbl(connection, sql(sql_statement)) %>%
     collect() %>%
