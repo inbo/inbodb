@@ -63,7 +63,7 @@ get_meetnetten_schemes <- function(connection) {
     INNER JOIN staging_meetnetten.protocols_protocol PR ON PR.id = ppp.protocol_id
     ORDER BY pg.name, p.name, pr.name"
 
-  query_result <- tbl(connection, sql(sql_statement)) %>%
+  query_result <- dbGetQuery(connection, sql_statement)
     collect() %>%
     arrange(.data$species_group, .data$scheme, .data$protocol)
 
