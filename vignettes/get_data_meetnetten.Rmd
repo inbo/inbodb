@@ -28,9 +28,9 @@ if (!database_access) {
 
 # Introduction
 
-The Flemish species monitoring programme [meetnetten.be](www.meetnetten.be) 
-consists of a set of monitoring schemes for priority species in Flanders, the 
-northern part of Belgium. 
+The Flemish species monitoring programme 
+[meetnetten.be](https://www.meetnetten.be) consists of a set of monitoring 
+schemes for priority species in Flanders, the northern part of Belgium. 
 Each monitoring scheme consists of a number of monitoring sites at which target 
 species are counted using a standardized protocol. 
 The count data is stored in the meetnetten database which is maintained by the
@@ -287,9 +287,10 @@ save.image(file = "get_data_meetnetten_results.Rda")
 Since many of the target species are sensitive species, we do not publicly make 
 available the exact location of the observations.
 Location information is generalized to 1, 5 or 10 km Universal Transverse 
-Mercator (UTM) grid cells, when publishing the data on [GBIF](www.gbif.org).
+Mercator (UTM) grid cells, when publishing the data on 
+[GBIF](https://www.gbif.org).
 The generalisation rules are the same as in 
-[waarnemingen.be](www.waarnemingen.be).
+[waarnemingen.be](https://www.waarnemingen.be).
 
 Please respect this policy when you publish results based on the meetnetten
 data.
