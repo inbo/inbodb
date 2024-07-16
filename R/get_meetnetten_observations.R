@@ -120,12 +120,10 @@
 #' con <- connect_inbo_dbase("S0008_00_Meetnetten")
 #'
 #' # get observations for a specific monitoring scheme and collect data
-#' observations_treefrog <- get_meetnetten_observations(con,
-#' scheme_name = "Boomkikker", collect = TRUE)
+#' get_meetnetten_observations(con, scheme_name = "Boomkikker", collect = TRUE)
 #'
 #' # get observations for a specific species_group and collect data
-#' observations_dragonflies <- get_meetnetten_observations(con,
-#' species_group = "libellen", collect = TRUE)
+#' get_meetnetten_observations(con, species_group = "libellen", collect = TRUE)
 #'
 #' # get observations for all species and do not collect data
 #' observations_all <- get_meetnetten_observations(con)
@@ -133,9 +131,7 @@
 #' # Close the connection when done
 #' dbDisconnect(con)
 #' rm(con)
-#' rm(observations_treefrog)
 #' rm(observations_all)
-#' rm(observations_dragonflies)
 #' }
 
 get_meetnetten_observations <- function(connection,
