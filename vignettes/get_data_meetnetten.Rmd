@@ -80,7 +80,7 @@ con <- connect_inbo_dbase("S0008_00_Meetnetten")
 
 ## Information on monitoring schemes
 
-The function `get_meetnetten_schemes` gives an overview per species group of all
+The function `get_meetnetten_schemes()` gives an overview per species group of all
 monitoring schemes included in meetnetten and the protocols that are applied in 
 the monitoring schemes.
 
@@ -106,7 +106,7 @@ Some locations are subdivided in sublocations.
 This is, for example, the case for most butterfly monitoring schemes, where the 
 sublocations represent the 50 meter sections of a transect.
 
-The function `get_meetnetten_locations` returns the locations and the
+The function `get_meetnetten_locations()` returns the locations and the
 sublocations for one or several monitoring scheme.
 It returns a list of two `sf` objects: `main_locations` and `sublocations`.
 
@@ -190,7 +190,7 @@ locations_dragonflies$main_locations %>%
 
 ## Visits
 
-The function `get_meetnetten_visits` returns all visits (count events) for 
+The function `get_meetnetten_visits()` returns all visits (count events) for 
 one or more monitoring schemes.
 
 Below we select all visits for the location Arenbergpolder of the Argusvlinder
@@ -218,7 +218,7 @@ returned by the function.
 
 ## Observations
 
-The function `get_meetnetten_observations` provides all observations for one 
+The function `get_meetnetten_observations()` provides all observations for one 
 or more monitoring scheme.
 
 Let's select all observations from one visit at the Arenbergpolder location
