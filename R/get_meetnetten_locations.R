@@ -73,8 +73,8 @@
 #' locations_heivlinder <- get_meetnetten_locations(con,
 #'                                                  scheme_name = "Heivlinder")
 #'
-#' main_locations <- locations_heivlinder$main_locations
-#' sublocations <- locations_heivlinder$sublocations
+#' locations_heivlinder$main_locations
+#' locations_heivlinder$sublocations
 #'
 #' # get locations for a specific species_group
 #' locations_dragonflies <- get_meetnetten_locations(con,
