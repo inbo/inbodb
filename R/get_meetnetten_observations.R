@@ -33,10 +33,10 @@
 #'    \item \code{sublocation}: the name of the sublocation
 #'    \item \code{not_counted}: \code{TRUE} when the sublocation is not counted
 #'    \item \code{sample_id}: unique id for a count subevent (see details)
-#'    \item \code{target_species}: \code{TRUE} when the observed species is the target
-#'    species, \code{FALSE} when the observed species is a secondary species
-#'    (another species than the target species that can be counted with the
-#'    same protocol,, see details)
+#'    \item \code{target_species}: \code{TRUE} when the observed species is the
+#'    target species, \code{FALSE} when the observed species is a secondary
+#'    species (another species than the target species that can be counted with
+#'    the same protocol, see details)
 #'    \item \code{checklist_complete}: whether all secondary species, defined
 #'    in the monitoring scheme, are counted
 #'    \item \code{name_nl}: Dutch name of the observed species
@@ -56,8 +56,8 @@
 #'    }
 #'
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter arrange collect tbl sql
-#' @importFrom stringr str_to_lower
+#' @importFrom dplyr filter arrange collect tbl sql %>%
+#' @importFrom rlang .data
 #'
 #' @details The species monitoring programme of Flanders
 #' (\href{www.meetnetten.be}{Meetnetten}) consists of a series of monitoring
@@ -104,14 +104,13 @@
 #' Lewylle I, Leyssen A, Louette G, Onkelinx T, Packet J, Provoost S,
 #' Quataert P, Ruyts S, Scheppers T, Speybroeck J, Steeman R, Stienen E,
 #' Thomaes A, Van Den Berge K, Van Keer K, Van Landuyt W, Van Thuyne G,
-#' Veraghtert W, Verbelen D, Verbeylen G, Vermeersch G, Westra T, Pollet M (2023)
-#' Monitoring schemes for species of conservation concern in Flanders
-#' (northern Belgium). An overview of established schemes and the design of an
-#' additional monitoring scheme. Reports of the Research Institute for Nature and
-#'  Forest (INBO) 2023 (15). Research Institute for Nature and Forest (INBO), Brussels.
-#' \doi{10.21436/inbor.93332112}.
+#' Veraghtert W, Verbelen D, Verbeylen G, Vermeersch G, Westra T,
+#' Pollet M (2023). Monitoring schemes for species of conservation concern in
+#' Flanders (northern Belgium). An overview of established schemes and the
+#' design of an additional monitoring scheme. Reports of the Research Institute
+#' for Nature and Forest (INBO) 2023 (15). Research Institute for Nature and
+#' Forest (INBO), Brussels. \doi{10.21436/inbor.93332112}.
 #' }
-#'
 #'
 #' @export
 #' @family meetnetten
@@ -147,13 +146,17 @@ get_meetnetten_observations <- function(connection,
               msg = "Not a connection object to database.")
 
   if (!is.null(scheme_name)) {
-    assert_that(is.character(scheme_name))
-    scheme_name <- str_to_lower(scheme_name)
+    assert_that(is.character(scheme_name),
+                length(scheme_name) > 0,
+                noNA(scheme_name))
+    scheme_name <- tolower(scheme_name)
   }
 
   if (!is.null(species_group_selected)) {
-    assert_that(is.character(species_group_selected))
-    species_group_selected <- str_to_lower(species_group_selected)
+    assert_that(is.character(species_group_selected),
+                length(species_group_selected) > 0,
+                noNA(species_group_selected))
+    species_group_selected <- tolower(species_group_selected)
   }
 
   sql_statement <-
@@ -208,22 +211,29 @@ get_meetnetten_observations <- function(connection,
 
   query_result <- tbl(connection, sql(sql_statement))
 
-  if (!is.null(scheme_name) & !is.null(species_group_selected)) {
+  if (!is.null(scheme_name)) {
 
-    query_result <- query_result %>%
-      filter(str_to_lower(.data$scheme) %in% scheme_name |
-               str_to_lower(.data$species_group) %in% species_group_selected)
+    if (!is.null(species_group_selected)) {
 
-  } else if (!is.null(scheme_name)) {
+      query_result <- query_result %>%
+        filter(to_lower(.data$scheme) %in% scheme_name |
+                 to_lower(.data$species_group) %in% species_group_selected)
 
-    query_result <- query_result %>%
-      filter(str_to_lower(.data$scheme) %in% scheme_name)
+    } else {
 
-  } else if (!is.null(species_group_selected)) {
+      query_result <- query_result %>%
+        filter(to_lower(.data$scheme) %in% scheme_name)
 
-    query_result <- query_result %>%
-      filter(str_to_lower(.data$species_group) %in% species_group_selected)
+    }
+    else {
 
+      if (!is.null(species_group_selected)) {
+
+        query_result <- query_result %>%
+          filter(to_lower(.data$species_group) %in% species_group_selected)
+
+      }
+    }
   }
 
   query_result <- query_result %>%

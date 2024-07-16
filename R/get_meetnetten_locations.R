@@ -1,13 +1,14 @@
 #' @title Query monitoring scheme locations from Meetnetten
 #'
-#' @description This function queries the Meetnetten database for the locations and
-#' sublocations for a specified monitoring scheme or for all monitoring schemes
-#' within a specified species group. When no monitoring scheme or species group
-#' is specified, the observations of all monitoring schemes are returned.
+#' @description This function queries the Meetnetten database for the locations
+#' and sublocations for a specified monitoring scheme or for all monitoring
+#' schemes within a specified species group. When no monitoring scheme or
+#' species group is specified, the observations of all monitoring schemes are
+#' returned.
 #'
 #' @param scheme_name the name of the monitoring scheme for which you want to
-#' extract location data. Data from multiple schemes can be selected by providing
-#' a vector with the names of the schemes.
+#' extract location data. Data from multiple schemes can be selected by
+#' providing a vector with the names of the schemes.
 #' @param species_group the name of the species group for which you want to
 #' extract location data. Data from multiple species groups can be selected by
 #' providing a vector with the names of the species groups.
@@ -58,8 +59,9 @@
 #' = \code{FALSE}), which means that no observations can be recorded any more.
 #'
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter arrange collect tbl sql mutate select
-#' @importFrom stringr str_to_lower
+#' @importFrom dplyr filter arrange collect tbl sql mutate select %>% left_join
+#' rename
+#' @importFrom rlang .data
 #' @importFrom sf st_as_sf st_drop_geometry
 #'
 #' @export
@@ -98,13 +100,17 @@ get_meetnetten_locations <- function(connection,
               msg = "Not a connection object to database.")
 
   if (!is.null(scheme_name)) {
-    assert_that(is.character(scheme_name), length(scheme_name) > 0, noNA(scheme_name))
+    assert_that(is.character(scheme_name),
+                length(scheme_name) > 0,
+                noNA(scheme_name))
     scheme_name <- tolower(scheme_name)
   }
 
   if (!is.null(species_group_selected)) {
-    assert_that(is.character(species_group_selected))
-    species_group_selected <- str_to_lower(species_group_selected)
+    assert_that(is.character(species_group_selected),
+                length(species_group_selected) > 0,
+                noNA(species_group_selected))
+    species_group_selected <- tolower(species_group_selected)
   }
 
   sql_statement <- "SELECT
@@ -123,22 +129,29 @@ get_meetnetten_locations <- function(connection,
 
   query_result <- tbl(connection, sql(sql_statement))
 
-  if (!is.null(scheme_name) && !is.null(species_group_selected)) {
+  if (!is.null(scheme_name)) {
 
-    query_result <- query_result %>%
-      filter(str_to_lower(.data$scheme) %in% scheme_name |
+    if (!is.null(species_group_selected)) {
+
+      query_result <- query_result %>%
+        filter(str_to_lower(.data$scheme) %in% scheme_name |
                str_to_lower(.data$species_group) %in% species_group_selected)
 
-  } else if (!is.null(scheme_name)) {
+    } else {
 
-    query_result <- query_result %>%
-      filter(str_to_lower(.data$scheme) %in% scheme_name)
+      query_result <- query_result %>%
+        filter(str_to_lower(.data$scheme) %in% scheme_name)
 
-  } else if (!is.null(species_group_selected)) {
+    }
+    else {
 
-    query_result <- query_result %>%
-      filter(str_to_lower(.data$species_group) %in% species_group_selected)
+      if (!is.null(species_group_selected)) {
 
+        query_result <- query_result %>%
+          filter(str_to_lower(.data$species_group) %in% species_group_selected)
+
+      }
+    }
   }
 
   locations_sf <- query_result %>%

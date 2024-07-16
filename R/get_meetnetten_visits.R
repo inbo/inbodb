@@ -12,11 +12,11 @@
 #' extract visit data.
 #' @param connection dbconnection with the database 'S0008_00_Meetnetten'
 #' on the inbo-sql08-prd.inbo.be server
-#' @param collect If \code{FALSE} (the default), a remote tbl object is returned.
-#' This is like a reference to the result of the query but the full result of the
-#' query is not brought into memory. If \code{TRUE} the full result of the query
-#' is collected (fetched) from the database and brought into memory of the
-#' working environment.
+#' @param collect If \code{FALSE} (the default), a remote tbl object is
+#' returned. This is like a reference to the result of the query but the full
+#' result of the query is not brought into memory. If \code{TRUE} the full
+#' result of the query is collected (fetched) from the database and brought
+#' into memory of the working environment.
 #'
 #' @return A remote \code{tbl} object (\code{collect} = \code{FALSE}) or a
 #' \code{tibble} dataframe (\code{collect} = \code{TRUE}) with following
@@ -62,7 +62,8 @@
 #' }
 #'
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr collect tbl sql
+#' @importFrom dplyr collect tbl sql %>% filter arrange
+#' @importFrom rlang .data
 #'
 #' @export
 #' @family meetnetten
@@ -98,13 +99,17 @@ get_meetnetten_visits <- function(connection,
               msg = "Not a connection object to database.")
 
   if (!is.null(scheme_name)) {
-    assert_that(is.character(scheme_name))
-    scheme_name <- str_to_lower(scheme_name)
+    assert_that(is.character(scheme_name),
+                length(scheme_name) > 0,
+                noNA(scheme_name))
+    scheme_name <- tolower(scheme_name)
   }
 
   if (!is.null(species_group_selected)) {
-    assert_that(is.character(species_group_selected))
-    species_group_selected <- str_to_lower(species_group_selected)
+    assert_that(is.character(species_group_selected),
+                length(species_group_selected) > 0,
+                noNA(species_group_selected))
+    species_group_selected <- tolower(species_group_selected)
   }
 
   sql_statement <-
@@ -139,22 +144,29 @@ get_meetnetten_visits <- function(connection,
 
   query_result <- tbl(connection, sql(sql_statement))
 
-  if (!is.null(scheme_name) & !is.null(species_group_selected)) {
+  if (!is.null(scheme_name)) {
 
-    query_result <- query_result %>%
-      filter(str_to_lower(.data$scheme) %in% scheme_name |
-               str_to_lower(.data$species_group) %in% species_group_selected)
+    if (!is.null(species_group_selected)) {
 
-  } else if (!is.null(scheme_name)) {
+      query_result <- query_result %>%
+        filter(tolower(.data$scheme) %in% scheme_name |
+                 tolower(.data$species_group) %in% species_group_selected)
 
-    query_result <- query_result %>%
-      filter(str_to_lower(.data$scheme) %in% scheme_name)
+    } else {
 
-  } else if (!is.null(species_group_selected)) {
+      query_result <- query_result %>%
+        filter(tolower(.data$scheme) %in% scheme_name)
 
-    query_result <- query_result %>%
-      filter(str_to_lower(.data$species_group) %in% species_group_selected)
+    }
+    else {
 
+      if (!is.null(species_group_selected)) {
+
+        query_result <- query_result %>%
+          filter(tolower(.data$species_group) %in% species_group_selected)
+
+      }
+    }
   }
 
   query_result <- query_result %>%
