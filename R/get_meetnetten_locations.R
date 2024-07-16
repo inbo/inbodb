@@ -99,7 +99,7 @@ get_meetnetten_locations <- function(connection,
 
   if (!is.null(scheme_name)) {
     assert_that(is.character(scheme_name), length(scheme_name) > 0, noNA(scheme_name))
-    scheme_name <- str_to_lower(scheme_name)
+    scheme_name <- tolower(scheme_name)
   }
 
   if (!is.null(species_group_selected)) {
