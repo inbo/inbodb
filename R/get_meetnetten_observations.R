@@ -84,7 +84,7 @@
 #' It is also important to know that counts can be recorded in the
 #' \href{www.meetnetten.be}{Meetnetten} website or by using the Meetnetten app.
 #' When using the Meetnetten app, the GPS coordinates of all observations are
-#' recorded and the observations are assigned to a locations or sublocation
+#' recorded and the observations are assigned to a location or sublocation
 #' based on the coordinates. For example, when you record a butterfly transect
 #' count in the website, you will enter the total number of indiviudals per
 #' species for each section (the sublocation) of the transect. When you use the
