@@ -121,7 +121,7 @@
 #' con <- connect_inbo_dbase("S0008_00_Meetnetten")
 #'
 #' # get observations for a specific monitoring scheme and collect data
-#' observations_treefrog <- get_meetnetten_observation(con,
+#' observations_treefrog <- get_meetnetten_observations(con,
 #' scheme_name = "Boomkikker", collect = TRUE)
 #'
 #' # get observations for a specific species_group and collect data
