@@ -82,12 +82,14 @@
 #' locations_dragonflies <- get_meetnetten_locations(con,
 #'                                                   species_group = "libellen")
 #'
-#' main_locations <- locations_dragonflies$main_locations
-#' sublocations <- locations_dragonflies$sublocations
+#' locations_dragonflies$main_locations
+#' locations_dragonflies$sublocations
 #'
 #' # Close the connection when done
 #' dbDisconnect(con)
 #' rm(con)
+#' rm(locations_heivlinder)
+#' rm(locations_dragonflies)
 #' }
 
 get_meetnetten_locations <- function(connection,

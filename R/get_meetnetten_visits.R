@@ -86,6 +86,9 @@
 #' # Close the connection when done
 #' dbDisconnect(con)
 #' rm(con)
+#' rm(visits_treefrog)
+#' rm(visits_dragonflies)
+#' rm(visits_all)
 #' }
 
 get_meetnetten_visits <- function(connection,

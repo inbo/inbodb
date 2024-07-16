@@ -133,6 +133,9 @@
 #' # Close the connection when done
 #' dbDisconnect(con)
 #' rm(con)
+#' rm(observations_treefrog)
+#' rm(observations_all)
+#' rm(observations_dragonflies)
 #' }
 
 get_meetnetten_observations <- function(connection,
