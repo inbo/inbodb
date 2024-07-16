@@ -138,7 +138,7 @@ For location that are selected `is_sample` = `TRUE`.
 Locations that are not selected, indicated by `is_sample` = `FALSE`, can be
 counted optionally.
 
-+ `is_active`. When `is_active` = `FALSE`, the location is not counted any more.
++ `is_active`. When `is_active` = `FALSE`, the location is no longer counted.
 This is the case when the location appears to be inaccessible or when the target
 species does not occur at the location any more.
 However, most often these inactive locations where counted in previous years.
