@@ -34,15 +34,15 @@ Imports:
     methods,
     odbc,
     rlang,
-    stringr,
-    sf
+    stringr
 Suggests: 
     dbplyr,
     kableExtra,
     knitr,
     rmarkdown,
     tidyr,
-    ggplot2
+    ggplot2,
+    sf
 VignetteBuilder: 
     knitr
 Config/checklist/communities: inbo

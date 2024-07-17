@@ -62,7 +62,6 @@
 #' @importFrom dplyr filter arrange collect tbl sql mutate select %>% left_join
 #' rename
 #' @importFrom rlang .data
-#' @importFrom sf st_as_sf st_drop_geometry
 #'
 #' @export
 #' @family meetnetten
@@ -156,19 +155,17 @@ get_meetnetten_locations <- function(connection,
     }
   }
 
-  locations_sf <- query_result %>%
+  locations <- query_result %>%
     collect() %>%
     mutate(location_type = ifelse(.data$parent_id == -1,
                                   "main_location",
-                                  "sublocation")) %>%
-    st_as_sf(wkt = "geom", crs = 4326)
+                                  "sublocation"))
 
   locations_main <- locations_sf %>%
     filter(.data$location_type == "main_location") %>%
     arrange(.data$species_group, .data$scheme, .data$location)
 
   locations_main_names <- locations_main %>%
-    st_drop_geometry() %>%
     select(scheme, location, location_id = id)
 
   locations_sublocations <- locations_sf %>%
@@ -180,10 +177,20 @@ get_meetnetten_locations <- function(connection,
     filter(!is.na(.data$location))
 
   locations_main <- locations_main %>%
-    select(species_group, scheme, location, is_sample, is_active)
+    select(species_group, scheme, location, is_sample, is_active, geom)
 
   locations_sublocations <- locations_sublocations %>%
-    select(species_group, scheme, location, sublocation, is_active)
+    select(species_group, scheme, location, sublocation, is_active, geom)
+
+  if (requireNamespace("sf", quietly = TRUE)) {
+
+    locations_main <- locations_main %>%
+      sf::st_as_sf(wkt = "geom", crs = 4326)
+
+    locations_sublocations <- locations_sublocations %>%
+      sf::st_as_sf(wkt = "geom", crs = 4326)
+
+  }
 
   result <- list(main_locations = locations_main,
                  sublocations = locations_sublocations)
