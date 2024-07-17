@@ -15,10 +15,11 @@
 #' @param connection dbconnection with the database 'S0008_00_Meetnetten'
 #' on the inbo-sql08-prd.inbo.be server
 #'
-#' @return A list with two sf objects:
+#' @return When the \code{sf} package is installed, a list with two \code{sf}
+#' objects is returned:
 #'
 #' \itemize{
-#'  \item \code{main_locations}: sf object of the main locations of the
+#'  \item \code{main_locations}: the main locations of the
 #'    selected monitoring schemes, with following attribute variables:
 #'    \itemize{
 #'    \item \code{species_group}
@@ -29,7 +30,7 @@
 #'    \item \code{is_active}: when a location is not suited for counting any
 #'    more, the location becomes inactive (\code{is_active} = \code{FALSE})
 #'    }
-#' \item \code{sublocations}: sf object of the the sublocations (for example
+#' \item \code{sublocations}: the sublocations (for example
 #' the sections of a transect) for each of the selected main locations, with
 #' following attribute variables:
 #'    \itemize{
@@ -40,6 +41,11 @@
 #'    \item \code{is_active}: whether the sublocation is counted or not
 #'    }
 #' }
+#'
+#' When the \code{sf} package is not installed, a list with two
+#' \code{tibble} objects is returned, with the same attribute variables as above
+#' and an additional variable \code{geom} that contains the geometry information
+#' in \code{wkt} (well known text) format.
 #'
 #' Not all main locations are subdivided in sublocations.
 #' So in some cases the sublocations object is empty.
@@ -142,9 +148,8 @@ get_meetnetten_locations <- function(connection,
 
       query_result <- query_result %>%
         filter(str_to_lower(.data$scheme) %in% scheme_name)
-
-    }
-    else {
+      }
+    }else {
 
       if (!is.null(species_group_selected)) {
 
@@ -153,7 +158,6 @@ get_meetnetten_locations <- function(connection,
 
       }
     }
-  }
 
   locations <- query_result %>%
     collect() %>%
@@ -161,14 +165,14 @@ get_meetnetten_locations <- function(connection,
                                   "main_location",
                                   "sublocation"))
 
-  locations_main <- locations_sf %>%
+  locations_main <- locations %>%
     filter(.data$location_type == "main_location") %>%
     arrange(.data$species_group, .data$scheme, .data$location)
 
   locations_main_names <- locations_main %>%
     select(scheme, location, location_id = id)
 
-  locations_sublocations <- locations_sf %>%
+  locations_sublocations <- locations %>%
     filter(.data$location_type == "sublocation") %>%
     rename(sublocation = location, location_id = parent_id) %>%
     left_join(locations_main_names, by = c("scheme", "location_id")) %>%

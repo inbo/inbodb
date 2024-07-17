@@ -9,7 +9,7 @@
 #' @return A tibble dataframe with variables species_group, scheme and protocol.
 #'
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr collect tbl sql
+#' @importFrom DBI dbGetQuery
 #'
 #' @details The species monitoring programme of Flanders
 #' (\href{www.meetnetten.be}{Meetnetten}) consists of a series of monitoring
@@ -64,8 +64,6 @@ get_meetnetten_schemes <- function(connection) {
     ORDER BY pg.name, p.name, pr.name"
 
   query_result <- dbGetQuery(connection, sql_statement)
-    collect() %>%
-    arrange(.data$species_group, .data$scheme, .data$protocol)
 
   return(query_result)
 }

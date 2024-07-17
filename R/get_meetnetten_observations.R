@@ -215,23 +215,21 @@ get_meetnetten_observations <- function(connection,
     if (!is.null(species_group_selected)) {
 
       query_result <- query_result %>%
-        filter(to_lower(.data$scheme) %in% scheme_name |
-                 to_lower(.data$species_group) %in% species_group_selected)
+        filter(str_to_lower(.data$scheme) %in% scheme_name |
+                 str_to_lower(.data$species_group) %in% species_group_selected)
 
     } else {
 
       query_result <- query_result %>%
-        filter(to_lower(.data$scheme) %in% scheme_name)
-
+        filter(str_to_lower(.data$scheme) %in% scheme_name)
     }
-    else {
+  }else {
 
-      if (!is.null(species_group_selected)) {
+    if (!is.null(species_group_selected)) {
 
-        query_result <- query_result %>%
-          filter(to_lower(.data$species_group) %in% species_group_selected)
+      query_result <- query_result %>%
+        filter(str_to_lower(.data$species_group) %in% species_group_selected)
 
-      }
     }
   }
 
