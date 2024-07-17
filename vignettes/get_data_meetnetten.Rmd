@@ -30,11 +30,14 @@ if (!database_access) {
 
 The Flemish species monitoring programme 
 [meetnetten.be](https://www.meetnetten.be) consists of a set of monitoring 
-schemes for priority species in Flanders, the northern part of Belgium. 
+schemes for priority species in Flanders, the northern part of Belgium.
+The monitoring programme is a collaboration between the
+Nature and Forest Research Institute (INBO), the Nature and Forest Agency (ANB),
+the NGO Natuurpunt and many volunteers. 
+
 Each monitoring scheme consists of a number of monitoring sites at which target 
 species are counted using a standardized protocol. 
-The count data is stored in the meetnetten database which is maintained by the
-Nature and Forest Research Institute (INBO).
+The count data is stored in the meetnetten database which is maintained by INBO.
 We present some functions to easily access the data from the meetnetten 
 database.
 
@@ -294,4 +297,7 @@ The generalisation rules are the same as in
 
 Please respect this policy when you publish results based on the meetnetten
 data.
-When in doubt, contact [info@meetnetten.be](info@meetnetten.be).
+Also please contact [info@meetnetten.be](info@meetnetten.be) before publishing
+results.
+This way we can inform you how to properly acknowledge the different project
+parters of [meetnetten.be](https://www.meetnetten.be).
