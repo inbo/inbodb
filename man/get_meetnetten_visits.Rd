@@ -21,11 +21,11 @@ extract visit data.}
 \item{species_group}{the name of the species group for which you want to
 extract visit data.}
 
-\item{collect}{If \code{FALSE} (the default), a remote tbl object is returned.
-This is like a reference to the result of the query but the full result of the
-query is not brought into memory. If \code{TRUE} the full result of the query
-is collected (fetched) from the database and brought into memory of the
-working environment.}
+\item{collect}{If \code{FALSE} (the default), a remote tbl object is
+returned. This is like a reference to the result of the query but the full
+result of the query is not brought into memory. If \code{TRUE} the full
+result of the query is collected (fetched) from the database and brought
+into memory of the working environment.}
 }
 \value{
 A remote \code{tbl} object (\code{collect} = \code{FALSE}) or a
@@ -38,10 +38,10 @@ variables:
 \item \code{location}: the name of the location
 \item \code{visit_id}: unique id for a count event
 \item \code{validation_status}: validation status of the visit (visits
-that are not approved are not provided)
+that are validated and not approved are not provided)
 \itemize{
 \item \code{10}: visit not validated
-\item \code{100}: visit approved
+\item \code{100}: visit validated and approved
 }
 \item \code{start_date}: the start date of the visit
 \item \code{start_time}: the start time of the visit
@@ -84,12 +84,10 @@ library(inbodb)
 con <- connect_inbo_dbase("S0008_00_Meetnetten")
 
 # get visits for a specific monitoring scheme and collect data
-visits_treefrog <- get_meetnetten_visits(con, scheme_name = "Boomkikker",
-collect = TRUE)
+get_meetnetten_visits(con, scheme_name = "Boomkikker", collect = TRUE)
 
 # get visits for a specific species_group and collect data
-visits_dragonflies <- get_meetnetten_visits(con, species_group = "libellen",
-collect = TRUE)
+get_meetnetten_visits(con, species_group = "libellen", collect = TRUE)
 
 # get visits for all species and do not collect data
 visits_all <- get_meetnetten_visits(con)
@@ -97,6 +95,7 @@ visits_all <- get_meetnetten_visits(con)
 # Close the connection when done
 dbDisconnect(con)
 rm(con)
+rm(visits_all)
 }
 }
 \seealso{

@@ -43,10 +43,10 @@ variables:
 \item \code{sublocation}: the name of the sublocation
 \item \code{not_counted}: \code{TRUE} when the sublocation is not counted
 \item \code{sample_id}: unique id for a count subevent (see details)
-\item \code{target_species}: \code{TRUE} when the observed species is the target
-species, \code{FALSE} when the observed species is a secondary species
-(another species than the target species that can be counted with the
-same protocol,, see details)
+\item \code{target_species}: \code{TRUE} when the observed species is the
+target species, \code{FALSE} when the observed species is a secondary
+species (another species than the target species that can be counted with
+the same protocol, see details)
 \item \code{checklist_complete}: whether all secondary species, defined
 in the monitoring scheme, are counted
 \item \code{name_nl}: Dutch name of the observed species
@@ -98,7 +98,7 @@ in the alcon blue monitoring scheme only the number of eggs are counted.
 It is also important to know that counts can be recorded in the
 \href{www.meetnetten.be}{Meetnetten} website or by using the Meetnetten app.
 When using the Meetnetten app, the GPS coordinates of all observations are
-recorded and the observations are assigned to a locations or sublocation
+recorded and the observations are assigned to a location or sublocation
 based on the coordinates. For example, when you record a butterfly transect
 count in the website, you will enter the total number of indiviudals per
 species for each section (the sublocation) of the transect. When you use the
@@ -116,12 +116,10 @@ library(inbodb)
 con <- connect_inbo_dbase("S0008_00_Meetnetten")
 
 # get observations for a specific monitoring scheme and collect data
-observations_treefrog <- get_meetnetten_observation(con,
-scheme_name = "Boomkikker", collect = TRUE)
+get_meetnetten_observations(con, scheme_name = "Boomkikker", collect = TRUE)
 
 # get observations for a specific species_group and collect data
-observations_dragonflies <- get_meetnetten_observations(con,
-species_group = "libellen", collect = TRUE)
+get_meetnetten_observations(con, species_group = "libellen", collect = TRUE)
 
 # get observations for all species and do not collect data
 observations_all <- get_meetnetten_observations(con)
@@ -129,6 +127,7 @@ observations_all <- get_meetnetten_observations(con)
 # Close the connection when done
 dbDisconnect(con)
 rm(con)
+rm(observations_all)
 }
 }
 \references{
@@ -139,12 +138,12 @@ Devos K, Driessens G, Feys S, Gouwy J, Gyselings R, Herremans M, Jacobs I,
 Lewylle I, Leyssen A, Louette G, Onkelinx T, Packet J, Provoost S,
 Quataert P, Ruyts S, Scheppers T, Speybroeck J, Steeman R, Stienen E,
 Thomaes A, Van Den Berge K, Van Keer K, Van Landuyt W, Van Thuyne G,
-Veraghtert W, Verbelen D, Verbeylen G, Vermeersch G, Westra T, Pollet M (2023)
-Monitoring schemes for species of conservation concern in Flanders
-(northern Belgium). An overview of established schemes and the design of an
-additional monitoring scheme. Reports of the Research Institute for Nature and
-Forest (INBO) 2023 (15). Research Institute for Nature and Forest (INBO), Brussels.
-\doi{10.21436/inbor.93332112}.
+Veraghtert W, Verbelen D, Verbeylen G, Vermeersch G, Westra T,
+Pollet M (2023). Monitoring schemes for species of conservation concern in
+Flanders (northern Belgium). An overview of established schemes and the
+design of an additional monitoring scheme. Reports of the Research Institute
+for Nature and Forest (INBO) 2023 (15). Research Institute for Nature and
+Forest (INBO), Brussels. \doi{10.21436/inbor.93332112}.
 }
 }
 \seealso{

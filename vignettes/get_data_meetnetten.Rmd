@@ -98,7 +98,8 @@ scheme_info <- get_meetnetten_schemes(con)
 ```
 
 ```{r eval=TRUE}
-scheme_info
+scheme_info %>%
+  as_tibble()
 ```
 
 ## Locations and sublocation of monitoring schemes

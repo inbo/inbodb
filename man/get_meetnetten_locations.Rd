@@ -11,8 +11,8 @@ get_meetnetten_locations(connection, scheme_name = NULL, species_group = NULL)
 on the inbo-sql08-prd.inbo.be server}
 
 \item{scheme_name}{the name of the monitoring scheme for which you want to
-extract location data. Data from multiple schemes can be selected by providing
-a vector with the names of the schemes.}
+extract location data. Data from multiple schemes can be selected by
+providing a vector with the names of the schemes.}
 
 \item{species_group}{the name of the species group for which you want to
 extract location data. Data from multiple species groups can be selected by
@@ -49,10 +49,11 @@ Not all main locations are subdivided in sublocations.
 So in some cases the sublocations object is empty.
 }
 \description{
-This function queries the Meetnetten database for the locations and
-sublocations for a specified monitoring scheme or for all monitoring schemes
-within a specified species group. When no monitoring scheme or species group
-is specified, the observations of all monitoring schemes are returned.
+This function queries the Meetnetten database for the locations
+and sublocations for a specified monitoring scheme or for all monitoring
+schemes within a specified species group. When no monitoring scheme or
+species group is specified, the observations of all monitoring schemes are
+returned.
 }
 \details{
 Each monitoring scheme of the species monitoring programme of Flanders
@@ -77,19 +78,21 @@ con <- connect_inbo_dbase("S0008_00_Meetnetten")
 locations_heivlinder <- get_meetnetten_locations(con,
                                                  scheme_name = "Heivlinder")
 
-main_locations <- locations_heivlinder$main_locations
-sublocations <- locations_heivlinder$sublocations
+locations_heivlinder$main_locations
+locations_heivlinder$sublocations
 
 # get locations for a specific species_group
 locations_dragonflies <- get_meetnetten_locations(con,
                                                   species_group = "libellen")
 
-main_locations <- locations_dragonflies$main_locations
-sublocations <- locations_dragonflies$sublocations
+locations_dragonflies$main_locations
+locations_dragonflies$sublocations
 
 # Close the connection when done
 dbDisconnect(con)
 rm(con)
+rm(locations_heivlinder)
+rm(locations_dragonflies)
 }
 }
 \seealso{
