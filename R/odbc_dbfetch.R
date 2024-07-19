@@ -7,6 +7,7 @@
 #'
 #' @inheritParams DBI::dbFetch
 #' @importFrom DBI dbFetch
+#' @importFrom methods setMethod
 #' @importFrom  odbc dbColumnInfo
 #' @importFrom utils getFromNamespace
 #' @export

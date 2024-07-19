@@ -22,6 +22,7 @@ on_connection_closed <- function(connection) {
 #'
 #' @inheritParams DBI::dbDisconnect
 #'
+#' @importFrom methods setMethod
 #' @importFrom odbc dbIsValid
 #' @importFrom utils getFromNamespace
 #' @export
