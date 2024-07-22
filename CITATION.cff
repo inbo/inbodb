@@ -22,6 +22,10 @@ authors:
   family-names: Piesschaert
   affiliation: Research Institute for Nature and Forest (INBO)
   orcid: 0000-0002-5843-646X
+- given-names: Toon
+  family-names: Westra
+  affiliation: Research Institute for Nature and Forest (INBO)
+  orcid: 0000-0003-2478-9459
 keywords:
 - sql
 - databases
