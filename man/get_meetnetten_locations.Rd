@@ -19,10 +19,11 @@ extract location data. Data from multiple species groups can be selected by
 providing a vector with the names of the species groups.}
 }
 \value{
-A list with two sf objects:
+When the \code{sf} package is installed, a list with two \code{sf}
+objects is returned:
 
 \itemize{
-\item \code{main_locations}: sf object of the main locations of the
+\item \code{main_locations}: the main locations of the
 selected monitoring schemes, with following attribute variables:
 \itemize{
 \item \code{species_group}
@@ -33,7 +34,7 @@ locations for the monitoring scheme (see details)
 \item \code{is_active}: when a location is not suited for counting any
 more, the location becomes inactive (\code{is_active} = \code{FALSE})
 }
-\item \code{sublocations}: sf object of the the sublocations (for example
+\item \code{sublocations}: the sublocations (for example
 the sections of a transect) for each of the selected main locations, with
 following attribute variables:
 \itemize{
@@ -45,29 +46,38 @@ following attribute variables:
 }
 }
 
+When the \code{sf} package is not installed, a list with two
+\code{tibble} objects is returned, with the same attribute variables as above
+and an additional variable \code{geom} that contains the geometry information
+in \code{wkt} (well-known text) format.
+
 Not all main locations are subdivided in sublocations.
 So in some cases the sublocations object is empty.
 }
 \description{
 This function queries the Meetnetten database for the locations
 and sublocations for a specified monitoring scheme or for all monitoring
-schemes within a specified species group. When no monitoring scheme or
-species group is specified, the observations of all monitoring schemes are
-returned.
+schemes within a specified species group.
+When no monitoring scheme or species group is specified, the observations of
+all monitoring schemes are returned.
 }
 \details{
 Each monitoring scheme of the species monitoring programme of Flanders
-\href{www.meetnetten.be}{Meetnetten} consists of a fixed set of locations.
+\href{https://www.meetnetten.be}{Meetnetten} consists of a fixed set of
+locations.
 A monitoring scheme for rare species includes all locations where the species
-occurs. For more common species a sample of locations is drawn and the
-the selected locations are included in the monitoring scheme. In some cases,
-the monitoring project in \href{www.meetnetten.be}{Meetnetten} also contains
-locations that are not part of the sample. These locations can be counted
-optionally and are indicated by (\code{is_sample} = \code{FALSE}).
+occurs.
+For more common species a sample of locations is drawn and the the selected
+locations are included in the monitoring scheme.
+In some cases, the monitoring project in
+\href{https://www.meetnetten.be}{Meetnetten} also contains locations that are
+not part of the sample. These locations can be counted optionally and are
+indicated by (\code{is_sample} = \code{FALSE}).
 
 It also occurs that a location becomes inaccessible or that the target
-species disappears. Then, a locations can be made inactive (\code{is_active}
-= \code{FALSE}), which means that no observations can be recorded any more.
+species disappears.
+Then, a locations can be made inactive (\code{is_active} = \code{FALSE}),
+which means that no observations can be recorded any more.
 }
 \examples{
 \dontrun{

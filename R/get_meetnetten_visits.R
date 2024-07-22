@@ -1,17 +1,17 @@
 #' @title Query visit data from Meetnetten
 #'
-#' @description This function queries the meetnetten database for visit
+#' @description This function queries the Meetnetten database for visit
 #' data (data about a counting event) for a specified monitoring scheme or
-#' for all monitoring schemes within a specified species group. When no
-#' monitoring scheme or species group is specified, the visits of all monitoring
-#' schemes are returned.
+#' for all monitoring schemes within a specified species group.
+#' When no monitoring scheme or species group is specified, the visits of all
+#' monitoring schemes are returned.
 #'
 #' @param scheme_name the name of the monitoring scheme for which you want to
 #' extract visit data.
 #' @param species_group the name of the species group for which you want to
 #' extract visit data.
 #' @param connection dbconnection with the database 'S0008_00_Meetnetten'
-#' on the inbo-sql08-prd.inbo.be server
+#' on the inbo-sql08-prd.inbo.be server.
 #' @param collect If \code{FALSE} (the default), a remote tbl object is
 #' returned. This is like a reference to the result of the query but the full
 #' result of the query is not brought into memory. If \code{TRUE} the full
@@ -45,11 +45,12 @@
 #'        \item \code{conform protocol}: the protocol was applied
 #'        \item \code{weersomstandigheden waren ongunstig}: weather conditions
 #'        were unfavourable
-#'        \item \code{telmethode uit handleiding niet gevolgd}: the protocol was
-#'        not applied
-#'        \item \code{geen veldwerk mogelijk - locatie ontoegankelijk}: counting
-#'        was not possible because the location is inaccessible
-#'        \item \code{geen veldwerk mogelijk - locatie is ongeschikt voor de soort}:
+#'        \item \code{telmethode uit handleiding niet gevolgd}: the protocol
+#'        was not applied
+#'        \item \code{geen veldwerk mogelijk - locatie ontoegankelijk}:
+#'        counting was not possible because the location is inaccessible
+#'        \item \code{geen veldwerk mogelijk - locatie is ongeschikt voor de
+#'        soort}:
 #'        counting was not possible because the location is not suitable
 #'        for the species
 #'        }
@@ -127,7 +128,8 @@ get_meetnetten_visits <- function(connection,
     , case when v.status = 1 then 'Conform protocol'
            when v.status = -1 then 'Weersomstandigheden ongunstig'
            when v.status = -2 then 'Telmethode niet gevolgd'
-           when v.status = -3 then 'Geen veldwerk mogelijk - locatie ontoegankelijk'
+           when v.status = -3 then
+           'Geen veldwerk mogelijk - locatie ontoegankelijk'
            when v.status = -4 then 'Geen veldwerk mogelijk - locatie ongeschikt'
            else Null
       end AS visit_status
@@ -144,26 +146,17 @@ get_meetnetten_visits <- function(connection,
   query_result <- tbl(connection, sql(sql_statement))
 
   if (!is.null(scheme_name)) {
-
     if (!is.null(species_group_selected)) {
-
       query_result <- query_result %>%
-        filter(str_to_lower(.data$scheme) %in% scheme_name |
-                 str_to_lower(.data$species_group) %in% species_group_selected)
-
+        filter(tolower(.data$scheme) %in% scheme_name |
+                 tolower(.data$species_group) %in% species_group_selected)
     } else {
-
       query_result <- query_result %>%
-        filter(str_to_lower(.data$scheme) %in% scheme_name)
+        filter(tolower(.data$scheme) %in% scheme_name)
     }
-  }else {
-
-    if (!is.null(species_group_selected)) {
-
-      query_result <- query_result %>%
-        filter(str_to_lower(.data$species_group) %in% species_group_selected)
-
-    }
+  } else if (!is.null(species_group_selected)) {
+    query_result <- query_result %>%
+      filter(tolower(.data$species_group) %in% species_group_selected)
   }
 
   query_result <- query_result %>%

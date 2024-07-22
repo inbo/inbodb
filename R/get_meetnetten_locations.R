@@ -2,9 +2,9 @@
 #'
 #' @description This function queries the Meetnetten database for the locations
 #' and sublocations for a specified monitoring scheme or for all monitoring
-#' schemes within a specified species group. When no monitoring scheme or
-#' species group is specified, the observations of all monitoring schemes are
-#' returned.
+#' schemes within a specified species group.
+#' When no monitoring scheme or species group is specified, the observations of
+#' all monitoring schemes are returned.
 #'
 #' @param scheme_name the name of the monitoring scheme for which you want to
 #' extract location data. Data from multiple schemes can be selected by
@@ -45,24 +45,28 @@
 #' When the \code{sf} package is not installed, a list with two
 #' \code{tibble} objects is returned, with the same attribute variables as above
 #' and an additional variable \code{geom} that contains the geometry information
-#' in \code{wkt} (well known text) format.
+#' in \code{wkt} (well-known text) format.
 #'
 #' Not all main locations are subdivided in sublocations.
 #' So in some cases the sublocations object is empty.
 #'
 #' @details
 #' Each monitoring scheme of the species monitoring programme of Flanders
-#' \href{www.meetnetten.be}{Meetnetten} consists of a fixed set of locations.
+#' \href{https://www.meetnetten.be}{Meetnetten} consists of a fixed set of
+#' locations.
 #' A monitoring scheme for rare species includes all locations where the species
-#' occurs. For more common species a sample of locations is drawn and the
-#' the selected locations are included in the monitoring scheme. In some cases,
-#' the monitoring project in \href{www.meetnetten.be}{Meetnetten} also contains
-#' locations that are not part of the sample. These locations can be counted
-#' optionally and are indicated by (\code{is_sample} = \code{FALSE}).
+#' occurs.
+#' For more common species a sample of locations is drawn and the the selected
+#' locations are included in the monitoring scheme.
+#' In some cases, the monitoring project in
+#' \href{https://www.meetnetten.be}{Meetnetten} also contains locations that are
+#' not part of the sample. These locations can be counted optionally and are
+#' indicated by (\code{is_sample} = \code{FALSE}).
 #'
 #' It also occurs that a location becomes inaccessible or that the target
-#' species disappears. Then, a locations can be made inactive (\code{is_active}
-#' = \code{FALSE}), which means that no observations can be recorded any more.
+#' species disappears.
+#' Then, a locations can be made inactive (\code{is_active} = \code{FALSE}),
+#' which means that no observations can be recorded any more.
 #'
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter arrange collect tbl sql mutate select %>% left_join
@@ -130,34 +134,28 @@ get_meetnetten_locations <- function(connection,
     PL.is_active,
     L.geom.STAsText() as geom
     FROM staging_meetnetten.locations_location L
-    INNER JOIN staging_meetnetten.projects_projectlocation PL ON PL.location_id = L.id
-    INNER JOIN staging_meetnetten.projects_project P ON P.id = PL.project_id
-    INNER JOIN staging_meetnetten.projects_projectgroup PG on PG.id = P.group_id"
+    INNER JOIN staging_meetnetten.projects_projectlocation PL
+    ON PL.location_id = L.id
+    INNER JOIN staging_meetnetten.projects_project P
+    ON P.id = PL.project_id
+    INNER JOIN staging_meetnetten.projects_projectgroup PG
+    ON PG.id = P.group_id"
 
   query_result <- tbl(connection, sql(sql_statement))
 
   if (!is.null(scheme_name)) {
-
     if (!is.null(species_group_selected)) {
-
       query_result <- query_result %>%
-        filter(str_to_lower(.data$scheme) %in% scheme_name |
-               str_to_lower(.data$species_group) %in% species_group_selected)
-
+        filter(tolower(.data$scheme) %in% scheme_name |
+                 tolower(.data$species_group) %in% species_group_selected)
     } else {
-
       query_result <- query_result %>%
-        filter(str_to_lower(.data$scheme) %in% scheme_name)
-      }
-    }else {
-
-      if (!is.null(species_group_selected)) {
-
-        query_result <- query_result %>%
-          filter(str_to_lower(.data$species_group) %in% species_group_selected)
-
-      }
+        filter(tolower(.data$scheme) %in% scheme_name)
     }
+  } else if (!is.null(species_group_selected)) {
+    query_result <- query_result %>%
+      filter(tolower(.data$species_group) %in% species_group_selected)
+  }
 
   locations <- query_result %>%
     collect() %>%
@@ -170,21 +168,23 @@ get_meetnetten_locations <- function(connection,
     arrange(.data$species_group, .data$scheme, .data$location)
 
   locations_main_names <- locations_main %>%
-    select(scheme, location, location_id = id)
+    select(.data$scheme, .data$location, location_id = .data$id)
 
   locations_sublocations <- locations %>%
     filter(.data$location_type == "sublocation") %>%
-    rename(sublocation = location, location_id = parent_id) %>%
+    rename(sublocation = .data$location, location_id = .data$parent_id) %>%
     left_join(locations_main_names, by = c("scheme", "location_id")) %>%
     arrange(.data$species_group, .data$scheme, .data$location,
             .data$sublocation) %>%
     filter(!is.na(.data$location))
 
   locations_main <- locations_main %>%
-    select(species_group, scheme, location, is_sample, is_active, geom)
+    select(.data$species_group, .data$scheme, .data$location, .data$is_sample,
+          .data$is_active, .data$geom)
 
   locations_sublocations <- locations_sublocations %>%
-    select(species_group, scheme, location, sublocation, is_active, geom)
+    select(.data$species_group, .data$scheme, .data$location, .data$sublocation,
+           .data$is_active, .data$geom)
 
   if (requireNamespace("sf", quietly = TRUE)) {
 

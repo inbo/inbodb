@@ -1,10 +1,10 @@
 ---
-title: "How to retrieve data from the meetnetten database"
+title: "How to retrieve data from the Meetnetten database"
 author: "Toon Westra, Frederic Piesschaert"
 date: 2024-06-25
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{How to retrieve data from the meetnetten database}
+  %\VignetteIndexEntry{How to retrieve data from the Meetnetten database}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -28,36 +28,36 @@ if (!database_access) {
 
 # Introduction
 
-The Flemish species monitoring programme 
-[meetnetten.be](https://www.meetnetten.be) consists of a set of monitoring 
+The Flemish species monitoring programme
+[Meetnetten.be](https://www.meetnetten.be) consists of a set of monitoring
 schemes for priority species in Flanders, the northern part of Belgium.
 The monitoring programme is a collaboration between the
 Nature and Forest Research Institute (INBO), the Nature and Forest Agency (ANB),
-the NGO Natuurpunt and many volunteers. 
+the NGO Natuurpunt and many volunteers.
 
-Each monitoring scheme consists of a number of monitoring sites at which target 
-species are counted using a standardized protocol. 
-The count data is stored in the meetnetten database which is maintained by INBO.
-We present some functions to easily access the data from the meetnetten 
+Each monitoring scheme consists of a number of monitoring sites at which target
+species are counted using a standardized protocol.
+The count data is stored in the Meetnetten database which is maintained by INBO.
+We present some functions to easily access the data from the Meetnetten
 database.
 
 # Aim
 
-We make functions available to query data directly from the meetnetten database. 
+We make functions available to query data directly from the Meetnetten database.
 This avoids writing your own queries.
 
 We have provided functions to query
 
 + monitoring schemes included in the species monitoring programme
-+ locations and sublocations (for example different sections of a transect) of 
++ locations and sublocations (for example different sections of a transect) of
 the monitoring schemes
 + visits (count events)
 + observations
   
 # Packages and connection
 
-The main functions that we will use in this tutorial all start with 
-`get_meetnetten_*`. 
+The main functions that we will use in this tutorial all start with
+`get_meetnetten_*`.
 These functions are made available by loading the `inbodb` package.
 
 ```{r setup, message = FALSE}
@@ -68,12 +68,12 @@ library(ggplot2)
 
 ```
 
-These functions will only work for people with access to the INBO network. 
-As an INBO employee, you should make sure you have read rights for the INBO 
-Datawarehouse server, otherwise place an ICT-call.
+These functions will only work for people with access to the INBO network.
+As an INBO employee, you should make sure you have read rights for the INBO
+Data Warehouse server, otherwise place an ICT-call.
 
-The following R-code can be used to establish a connection to the 
-meetnetten database:
+The following R-code can be used to establish a connection to the
+Meetnetten database:
 
 ```{r connection_inbo}
 con <- connect_inbo_dbase("S0008_00_Meetnetten")
@@ -83,14 +83,14 @@ con <- connect_inbo_dbase("S0008_00_Meetnetten")
 
 ## Information on monitoring schemes
 
-The function `get_meetnetten_schemes()` gives an overview per species group of all
-monitoring schemes included in meetnetten and the protocols that are applied in 
-the monitoring schemes.
+The function `get_meetnetten_schemes()` gives an overview per species group of
+all monitoring schemes included in Meetnetten and the protocols that are applied
+in the monitoring schemes.
 
 In most cases, a monitoring scheme is dedicated to one target species and the
 monitoring scheme is named after the target species.
-In some cases, a monitoring scheme has several target species, such as the 
-Algemene Broedvogelmonitoring Vlaanderen. 
+In some cases, a monitoring scheme has several target species, such as the
+`Algemene Broedvogelmonitoring Vlaanderen`.
 
 
 ```{r get_scheme}
@@ -107,7 +107,7 @@ scheme_info %>%
 Each monitoring scheme consists of a fixed set of locations where the target
 species is/are counted on a regular basis.
 Some locations are subdivided in sublocations.
-This is, for example, the case for most butterfly monitoring schemes, where the 
+This is, for example, the case for most butterfly monitoring schemes, where the
 sublocations represent the 50 meter sections of a transect.
 
 The function `get_meetnetten_locations()` returns the locations and the
@@ -147,11 +147,11 @@ This is the case when the location appears to be inaccessible or when the target
 species does not occur at the location any more.
 However, most often these inactive locations where counted in previous years.
 So the the database also contains observations for (currently) inactive
-locations. 
+locations.
 
 Next, let's have a look at the sublocations of the location Arenbergpolder.
 The locations consists of 14 sections.
-Note that we only show the active (`is_active` = `TURE`) sublocations. 
+Note that we only show the active (`is_active` = `TURE`) sublocations.
 
 ```{r, eval = TRUE}
 sublocations_show <- sublocations %>%
@@ -168,7 +168,7 @@ The sublocations indicate where the target species is counted.
 ```{r, fig.width = 7, eval = TRUE}
 
 main_location_show <- main_locations %>%
-  filter(location == "Arenbergpolder") 
+  filter(location == "Arenbergpolder")
 
 ggplot(sublocations_show) +
   geom_sf(data = main_location_show) +
@@ -189,16 +189,16 @@ locations_dragonflies <- get_meetnetten_locations(con,
 
 locations_dragonflies$main_locations %>%
   ggplot() +
-  geom_sf(aes(fill = scheme, colour = scheme), alpha = 0.5) 
+  geom_sf(aes(fill = scheme, colour = scheme), alpha = 0.5)
 ```
 
 ## Visits
 
-The function `get_meetnetten_visits()` returns all visits (count events) for 
+The function `get_meetnetten_visits()` returns all visits (count events) for
 one or more monitoring schemes.
 
 Below we select all visits for the location Arenbergpolder of the Argusvlinder
-monitoring scheme. 
+monitoring scheme.
 We see that in most years the location is counted 6 times per year as demanded
 by the [monitoring protocol](https://purews.inbo.be/ws/portalfiles/portal/17657883/MaesEtal_2019_MonitoringsprotocolDagvlindersVersie2.pdf).
 
@@ -213,7 +213,7 @@ visits <- get_meetnetten_visits(con,
 ```{r, eval = TRUE}
 visits %>%
   filter(location == "Arenbergpolder") %>%
-  select(location, visit_id, start_date, 
+  select(location, visit_id, start_date,
          start_time, visit_status)
 ```
 
@@ -222,7 +222,7 @@ returned by the function.
 
 ## Observations
 
-The function `get_meetnetten_observations()` provides all observations for one 
+The function `get_meetnetten_observations()` provides all observations for one
 or more monitoring scheme.
 
 Let's select all observations from one visit at the Arenbergpolder location
@@ -245,15 +245,15 @@ First we take a look at the observation of the target species.
 
 observations %>%
   filter(target_species) %>%
-  select(location, sublocation, start_date, 
+  select(location, sublocation, start_date,
          scientific_name, count)
 ```
-Optionally observers can also record non target species that can be counted using the
-same protocol.
+Optionally observers can also record non target species that can be counted
+using the same protocol.
 
 The code below provides the total number of individuals per species,
 including the non target species, that were counted in one visit at the
-Arenberpolder location.
+Arenbergpolder location.
 
 ```{r, eval = TRUE}
 
@@ -264,12 +264,12 @@ observations %>%
 ```
 
 Use `?get_meetnetten_observations` to get more information on the variables that
-are returned by the function. 
+are returned by the function.
 
 An important note: before you start analysing the data from a certain monitoring
 scheme, it is important to know how the monitoring schemes were designed and how
 the data is organised.
-So don't forget to check the monitoring protocol (available on the 
+So don't forget to check the monitoring protocol (available on the
 [INBO website](https://www.vlaanderen.be/inbo/zoeken/?q=monitoringsprotocol)).
 
 ## Closing the connection
@@ -288,17 +288,17 @@ save.image(file = "get_data_meetnetten_results.Rda")
 
 # Data policy
 
-Since many of the target species are sensitive species, we do not publicly make 
+Since many of the target species are sensitive species, we do not publicly make
 available the exact location of the observations.
-Location information is generalized to 1, 5 or 10 km Universal Transverse 
-Mercator (UTM) grid cells, when publishing the data on 
+Location information is generalized to 1, 5 or 10 km Universal Transverse
+Mercator (UTM) grid cells, when publishing the data on
 [GBIF](https://www.gbif.org).
-The generalisation rules are the same as in 
+The generalisation rules are the same as in
 [waarnemingen.be](https://www.waarnemingen.be).
 
-Please respect this policy when you publish results based on the meetnetten
+Please respect this policy when you publish results based on the Meetnetten
 data.
 Also please contact [info@meetnetten.be](info@meetnetten.be) before publishing
 results.
-This way we can inform you how to properly acknowledge the different project
-parters of [meetnetten.be](https://www.meetnetten.be).
+This way we can check if the publication complies with the data policy as agreed
+by the different project parters of [Meetnetten](https://www.meetnetten.be).

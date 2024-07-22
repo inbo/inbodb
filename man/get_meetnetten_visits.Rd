@@ -13,7 +13,7 @@ get_meetnetten_visits(
 }
 \arguments{
 \item{connection}{dbconnection with the database 'S0008_00_Meetnetten'
-on the inbo-sql08-prd.inbo.be server}
+on the inbo-sql08-prd.inbo.be server.}
 
 \item{scheme_name}{the name of the monitoring scheme for which you want to
 extract visit data.}
@@ -55,11 +55,12 @@ the observer) using following categories:
 \item \code{conform protocol}: the protocol was applied
 \item \code{weersomstandigheden waren ongunstig}: weather conditions
 were unfavourable
-\item \code{telmethode uit handleiding niet gevolgd}: the protocol was
-not applied
-\item \code{geen veldwerk mogelijk - locatie ontoegankelijk}: counting
-was not possible because the location is inaccessible
-\item \code{geen veldwerk mogelijk - locatie is ongeschikt voor de soort}:
+\item \code{telmethode uit handleiding niet gevolgd}: the protocol
+was not applied
+\item \code{geen veldwerk mogelijk - locatie ontoegankelijk}:
+counting was not possible because the location is inaccessible
+\item \code{geen veldwerk mogelijk - locatie is ongeschikt voor de
+       soort}:
 counting was not possible because the location is not suitable
 for the species
 }
@@ -72,11 +73,11 @@ number of locations that have to be counted per monitoring scheme; when
 }
 }
 \description{
-This function queries the meetnetten database for visit
+This function queries the Meetnetten database for visit
 data (data about a counting event) for a specified monitoring scheme or
-for all monitoring schemes within a specified species group. When no
-monitoring scheme or species group is specified, the visits of all monitoring
-schemes are returned.
+for all monitoring schemes within a specified species group.
+When no monitoring scheme or species group is specified, the visits of all
+monitoring schemes are returned.
 }
 \examples{
 \dontrun{

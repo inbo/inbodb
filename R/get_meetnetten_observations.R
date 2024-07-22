@@ -2,9 +2,9 @@
 #'
 #' @description This function queries the Meetnetten database for observation
 #' data (standardized counts) for a specified monitoring scheme or
-#' for all monitoring schemes within a specified species group. When no
-#' monitoring scheme or species group is specified, the observations of all
-#' monitoring schemes are returned.
+#' for all monitoring schemes within a specified species group.
+#' When no monitoring scheme or species group is specified, the observations
+#' of all monitoring schemes are returned.
 #'
 #' @param scheme_name the name of the monitoring scheme for which you want to
 #' extract visit data. Data from multiple schemes can be selected by providing
@@ -60,37 +60,44 @@
 #' @importFrom rlang .data
 #'
 #' @details The species monitoring programme of Flanders
-#' (\href{www.meetnetten.be}{Meetnetten}) consists of a series of monitoring
-#' schemes in which one or more target species are counted based on a specific
-#' protocol. Optionally, other species, that can be counted using the same
-#' protocol, can be recorded as well. When \code{checklist_complete} = \code{TRUE},
-#' all secondary species were counted, and we can assume that the secondary
-#' species that were not recorded are absent.
+#' (\href{https://www.meetnetten.be}{Meetnetten}) consists of a series of
+#' monitoring schemes in which one or more target species are counted based on a
+#' specific protocol.
+#' Optionally, other species, that can be counted using the same
+#' protocol, can be recorded as well.
+#' When \code{checklist_complete} = \code{TRUE}, all secondary species were
+#' counted, and we can assume that the secondary species that were not recorded
+#' are absent.
 #'
 #' Depending on the protocol, counting has to be done at the location or
-#' the sublocation level. Sublocations are, for example, different sections
-#' of a transect. For some monitoring schemes, it is necessary to record
-#' several count subevents at the location level. This is, for example,
-#' the case for the crested newt fyke count protocol, where two fykes are used
-#' per location and the counts are recorded per fyke. For every count subevent
-#' a unique \code{sample_id} is created.
+#' the sublocation level.
+#' Sublocations are, for example, different sections of a transect.
+#' For some monitoring schemes, it is necessary to record several count
+#' subevents at the location level.
+#' This is, for example, the case for the crested newt fyke count protocol,
+#' where two fykes are used per location and the counts are recorded per fyke.
+#' For every count subevent a unique \code{sample_id} is created.
 #'
 #' The protocol of a monitoring scheme also defines for which combinations of
-#' sex, life stage, and activity type the counts have to be recorded. For
-#' example, for the crested newt fyke counts the number of female adults, male
-#' adults and juveniles (sex undefined) are counted. Another example:
-#' in the alcon blue monitoring scheme only the number of eggs are counted.
+#' sex, life stage, and activity type the counts have to be recorded.
+#' For example, for the crested newt fyke counts the number of female adults,
+#' male adults and juveniles (sex undefined) are counted.
+#' Another example: in the alcon blue monitoring scheme only the number of eggs
+#' are counted.
 #'
 #' It is also important to know that counts can be recorded in the
-#' \href{www.meetnetten.be}{Meetnetten} website or by using the Meetnetten app.
+#' \href{https://www.meetnetten.be}{Meetnetten} website or by using the
+#' Meetnetten app.
 #' When using the Meetnetten app, the GPS coordinates of all observations are
 #' recorded and the observations are assigned to a location or sublocation
-#' based on the coordinates. For example, when you record a butterfly transect
-#' count in the website, you will enter the total number of indiviudals per
-#' species for each section (the sublocation) of the transect. When you use the
-#' app, you can record the position of every individual separately in the
-#' Meetnetten database. So when you want to know the total number of individuals
-#' per section, you will have to aggregate the data.
+#' based on the coordinates.
+#' For example, when you record a butterfly transect count in the website, you
+#' will enter the total number of individuals per species for each section
+#' (the sublocation) of the transect.
+#' When you use the app, you can record the position of every individual
+#' separately in the Meetnetten database.
+#' So when you want to know the total number of individuals per section, you
+#' will have to aggregate the data.
 #'
 #' To conclude, it is important to understand how the data is organised for a
 #' certain monitoring scheme, before you start analysing the data.
@@ -105,11 +112,14 @@
 #' Quataert P, Ruyts S, Scheppers T, Speybroeck J, Steeman R, Stienen E,
 #' Thomaes A, Van Den Berge K, Van Keer K, Van Landuyt W, Van Thuyne G,
 #' Veraghtert W, Verbelen D, Verbeylen G, Vermeersch G, Westra T,
-#' Pollet M (2023). Monitoring schemes for species of conservation concern in
-#' Flanders (northern Belgium). An overview of established schemes and the
-#' design of an additional monitoring scheme. Reports of the Research Institute
-#' for Nature and Forest (INBO) 2023 (15). Research Institute for Nature and
-#' Forest (INBO), Brussels. \doi{10.21436/inbor.93332112}.
+#' Pollet M (2023).
+#' Monitoring schemes for species of conservation concern in
+#' Flanders (northern Belgium).
+#' An overview of established schemes and the design of an additional monitoring
+#' scheme. Reports of the Research Institute for Nature and Forest (INBO) 2023
+#' (15).
+#' Research Institute for Nature and Forest (INBO), Brussels.
+#' \doi{10.21436/inbor.93332112}.
 #' }
 #'
 #' @export
@@ -211,27 +221,18 @@ get_meetnetten_observations <- function(connection,
   query_result <- tbl(connection, sql(sql_statement))
 
   if (!is.null(scheme_name)) {
-
     if (!is.null(species_group_selected)) {
-
       query_result <- query_result %>%
-        filter(str_to_lower(.data$scheme) %in% scheme_name |
-                 str_to_lower(.data$species_group) %in% species_group_selected)
-
+        filter(tolower(.data$scheme) %in% scheme_name |
+                 tolower(.data$species_group) %in% species_group_selected)
     } else {
-
       query_result <- query_result %>%
-        filter(str_to_lower(.data$scheme) %in% scheme_name)
+        filter(tolower(.data$scheme) %in% scheme_name)
     }
-  }else {
-
-    if (!is.null(species_group_selected)) {
-
+  } else if (!is.null(species_group_selected)) {
       query_result <- query_result %>%
-        filter(str_to_lower(.data$species_group) %in% species_group_selected)
-
-    }
-  }
+        filter(tolower(.data$species_group) %in% species_group_selected)
+      }
 
   query_result <- query_result %>%
     arrange(.data$species_group, .data$scheme, .data$start_date, .data$location)

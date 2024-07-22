@@ -4,7 +4,7 @@
 #' overview of monitoring schemes that are included.
 #'
 #' @param connection dbconnection with the database 'S0008_00_Meetnetten'
-#' on the inbo-sql08-prd.inbo.be server
+#' on the inbo-sql08-prd.inbo.be server.
 #'
 #' @return A tibble dataframe with variables species_group, scheme and protocol.
 #'
@@ -12,9 +12,11 @@
 #' @importFrom DBI dbGetQuery
 #'
 #' @details The species monitoring programme of Flanders
-#' (\href{www.meetnetten.be}{Meetnetten}) consists of a series of monitoring
-#' schemes. In each monitoring scheme one or more target species are counted
-#' based on a specific protocol. For more details we refer to Maes et al. (2023)
+#' (\href{https://www.meetnetten.be}{Meetnetten}) consists of a series of
+#' monitoring schemes.
+#' In each monitoring scheme one or more target species are counted
+#' based on a specific protocol.
+#' For more details we refer to Maes et al. (2023)
 #'
 #' @references
 #' \itemize{
@@ -24,11 +26,14 @@
 #' Lewylle I, Leyssen A, Louette G, Onkelinx T, Packet J, Provoost S,
 #' Quataert P, Ruyts S, Scheppers T, Speybroeck J, Steeman R, Stienen E,
 #' Thomaes A, Van Den Berge K, Van Keer K, Van Landuyt W, Van Thuyne G,
-#' Veraghtert W, Verbelen D, Verbeylen G, Vermeersch G, Westra T, Pollet M (2023)
+#' Veraghtert W, Verbelen D, Verbeylen G, Vermeersch G, Westra T, Pollet M
+#' (2023).
 #' Monitoring schemes for species of conservation concern in Flanders
-#' (northern Belgium). An overview of established schemes and the design of an
-#' additional monitoring scheme. Reports of the Research Institute for Nature and
-#'  Forest (INBO) 2023 (15). Research Institute for Nature and Forest (INBO), Brussels.
+#' (northern Belgium).
+#' An overview of established schemes and the design of an additional monitoring
+#' scheme.
+#' Reports of the Research Institute for Nature and Forest (INBO) 2023 (15).
+#' Research Institute for Nature and Forest (INBO), Brussels.
 #' \doi{10.21436/inbor.93332112}.
 #' }
 #'
@@ -58,9 +63,12 @@ get_meetnetten_schemes <- function(connection) {
     , p.name AS scheme
     , pr.name AS protocol
     FROM staging_meetnetten.projects_project p
-    INNER JOIN staging_meetnetten.projects_projectgroup pg ON pg.id = p.group_id
-    INNER JOIN staging_meetnetten.projects_project_protocols ppp ON ppp.project_id = p.id
-    INNER JOIN staging_meetnetten.protocols_protocol PR ON PR.id = ppp.protocol_id
+    INNER JOIN staging_meetnetten.projects_projectgroup pg
+    ON pg.id = p.group_id
+    INNER JOIN staging_meetnetten.projects_project_protocols ppp
+    ON ppp.project_id = p.id
+    INNER JOIN staging_meetnetten.protocols_protocol PR
+    ON PR.id = ppp.protocol_id
     ORDER BY pg.name, p.name, pr.name"
 
   query_result <- dbGetQuery(connection, sql_statement)
