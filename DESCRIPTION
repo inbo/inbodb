@@ -12,9 +12,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-6378-6229", affiliation = "Research Institute for Nature and Forest (INBO)")),
     person("Frederic", "Piesschaert", , "frederic.piesschaert@inbo.be", role = "aut",
            comment = c(ORCID = "0000-0002-5843-646X", affiliation = "Research Institute for Nature and Forest (INBO)")),
-           comment = c(ORCID = "0000-0002-6378-6229")),
     person("Toon", "Westra", , "toon.westra@inbo.be", role = "aut",
-           comment = c(ORCID = "0000-0003-2478-9459")),
+           comment = c(ORCID = "0000-0003-2478-9459", affiliation = "Research Institute for Nature and Forest (INBO)")),
     person("Stijn", "Van Hoey", , "stijnvanhoey@gmail.com", role = "ctb",
            comment = c(ORCID = "0000-0001-6413-3185")),
     person("Research Institute for Nature and Forest (INBO)", , , "info@inbo.be", role = c("cph", "fnd"))
@@ -33,16 +32,15 @@ Imports:
     lifecycle,
     methods,
     odbc,
-    rlang,
-    stringr
+    rlang
 Suggests: 
     dbplyr,
+    ggplot2,
     kableExtra,
     knitr,
     rmarkdown,
-    tidyr,
-    ggplot2,
-    sf
+    sf,
+    tidyr
 VignetteBuilder: 
     knitr
 Config/checklist/communities: inbo
@@ -51,4 +49,4 @@ Encoding: UTF-8
 Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
