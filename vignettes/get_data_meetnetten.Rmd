@@ -60,7 +60,7 @@ The main functions that we will use in this tutorial all start with
 `get_meetnetten_*`.
 These functions are made available by loading the `inbodb` package.
 
-```{r setup, message = FALSE}
+```{r setup, message = FALSE, eval = TRUE}
 library(inbodb)
 library(dplyr)
 library(sf)
@@ -95,12 +95,12 @@ In some cases, a monitoring scheme has several target species, such as the
 
 
 ```{r get_scheme}
-scheme_info <- get_meetnetten_schemes(con)
+scheme_info <- get_meetnetten_schemes(con) %>%
+  as_tibble()
 ```
 
 ```{r, eval=TRUE}
-scheme_info %>%
-  as_tibble()
+scheme_info
 ```
 
 ## Locations and sublocation of monitoring schemes
