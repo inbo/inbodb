@@ -98,7 +98,7 @@ In some cases, a monitoring scheme has several target species, such as the
 scheme_info <- get_meetnetten_schemes(con)
 ```
 
-```{r eval=TRUE}
+```{r, eval=TRUE}
 scheme_info %>%
   as_tibble()
 ```
@@ -282,7 +282,7 @@ dbDisconnect(con)
 rm(con)
 ```
 
-```{r echo=FALSE, include=FALSE}
+```{r, echo=FALSE, include=FALSE}
 rm(database_access)
 save.image(file = "get_data_meetnetten_results.Rda")
 ```
@@ -295,7 +295,7 @@ Location information is generalized to 1, 5 or 10 km Universal Transverse
 Mercator (UTM) grid cells, when publishing the data on
 [GBIF](https://www.gbif.org).
 The generalisation rules are the same as in
-[waarnemingen.be](https://www.waarnemingen.be).
+[waarnemingen.be](https://waarnemingen.be/).
 
 Please respect this policy when you publish results based on the Meetnetten
 data.
