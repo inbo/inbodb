@@ -40,7 +40,6 @@ Suggests:
     knitr,
     rmarkdown,
     sf,
-    tibble,
     tidyr
 VignetteBuilder: 
     knitr
