@@ -1,6 +1,6 @@
 Package: inbodb
 Title: Connect to and Retrieve Data from Databases on the INBO Server
-Version: 0.0.5
+Version: 0.0.6
 Authors@R: c(
     person("Els", "Lommelen", , "els.lommelen@inbo.be", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3481-5684", affiliation = "Research Institute for Nature and Forest (INBO)")),
@@ -10,6 +10,10 @@ Authors@R: c(
            comment = c(ORCID = "0000-0001-7679-743X", affiliation = "Research Institute for Nature and Forest (INBO)")),
     person("Floris", "Vanderhaeghe", , "floris.vanderhaeghe@inbo.be", role = "aut",
            comment = c(ORCID = "0000-0002-6378-6229", affiliation = "Research Institute for Nature and Forest (INBO)")),
+    person("Frederic", "Piesschaert", , "frederic.piesschaert@inbo.be", role = "aut",
+           comment = c(ORCID = "0000-0002-5843-646X", affiliation = "Research Institute for Nature and Forest (INBO)")),
+    person("Toon", "Westra", , "toon.westra@inbo.be", role = "aut",
+           comment = c(ORCID = "0000-0003-2478-9459", affiliation = "Research Institute for Nature and Forest (INBO)")),
     person("Stijn", "Van Hoey", , "stijnvanhoey@gmail.com", role = "ctb",
            comment = c(ORCID = "0000-0001-6413-3185")),
     person("Research Institute for Nature and Forest (INBO)", , , "info@inbo.be", role = c("cph", "fnd"))
@@ -31,8 +35,12 @@ Imports:
     rlang
 Suggests: 
     dbplyr,
+    ggplot2,
+    kableExtra,
     knitr,
-    rmarkdown
+    rmarkdown,
+    sf,
+    tidyr
 VignetteBuilder: 
     knitr
 Config/checklist/communities: inbo
@@ -41,4 +49,4 @@ Encoding: UTF-8
 Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2

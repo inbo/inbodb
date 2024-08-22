@@ -7,6 +7,7 @@
 #'
 #' @inheritParams DBI::dbFetch
 #' @importFrom DBI dbFetch
+#' @importFrom methods setMethod
 #' @importFrom  odbc dbColumnInfo
 #' @importFrom utils getFromNamespace
 #' @export
@@ -38,7 +39,8 @@ setMethod(
               or put field(s) '",
               columns,
               "' at the end of the select statement
-              (info in vignet odbc_query_problem)"
+              (info in vignet odbc query problem,
+              run vignette('odbc query problem', package = 'inbodb'))"
             )
           )
         } else {

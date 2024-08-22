@@ -18,6 +18,14 @@ authors:
   family-names: Vanderhaeghe
   affiliation: Research Institute for Nature and Forest (INBO)
   orcid: 0000-0002-6378-6229
+- given-names: Frederic
+  family-names: Piesschaert
+  affiliation: Research Institute for Nature and Forest (INBO)
+  orcid: 0000-0002-5843-646X
+- given-names: Toon
+  family-names: Westra
+  affiliation: Research Institute for Nature and Forest (INBO)
+  orcid: 0000-0003-2478-9459
 keywords:
 - sql
 - databases
@@ -36,4 +44,4 @@ abstract: "A bundle of functions to connect to and retrieve data from databases 
 identifiers:
 - type: url
   value: https://inbo.github.io/inbodb/
-version: 0.0.5
+version: 0.0.6

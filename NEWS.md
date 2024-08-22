@@ -1,3 +1,15 @@
+# inbodb 0.0.6
+
+* new functions `get_taxonlijsten_lists()`, `get_taxonlijsten_features()` and
+  `get_taxonlijsten_items()` to query the 'D0156_00_Taxonlijsten' database
+* check out `vignette("How to retrieve data from the Taxonlijsten database",
+  package = "inbodb")` for more information
+* new functions `get_meetnetten_schemes()`, `get_meetnetten_locations()`,
+  `get_meetnetten_visits()`, `get_meetnetten_observations()` to query the
+  Meetnetten database
+* check out `vignette("How to retrieve data from the Meetnetten database",
+  package = "inbodb")` for more information
+
 # inbodb 0.0.5
 
 * Add new function `get_inboveg_ppa()` to get point-plant-distance type data

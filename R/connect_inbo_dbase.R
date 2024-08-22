@@ -167,9 +167,6 @@ on_connection_opened <- function(connection, code, type) {
             odbcPreviewObject(connection, rowLimit, ...)
         },
 
-        # other actions that can be executed on this connection
-        actions = odbcConnectionActions(connection),
-
         # raw connection object
         connectionObject = connection
     )
