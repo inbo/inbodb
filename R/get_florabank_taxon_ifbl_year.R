@@ -56,7 +56,7 @@
 #' \dontrun{
 #' library(inbodb)
 #' # connect to florabank
-#' db_connectie <- connect_inbo_dbase("D0021_00_userFlora")
+#' db_connectie <- connect_inbo_dbase("D0152_00_Flora")
 #'
 #' # get records at 1 km x 1 km resolution for vascular plants from 2010
 #' # (default) without collecting all data into memory (default).

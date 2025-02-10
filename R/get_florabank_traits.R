@@ -56,7 +56,7 @@ globalVariables("%LIKE%")
 #' library(inbodb)
 #' library(dplyr)
 #' # connect to florabank
-#' db_connectie <- connect_inbo_dbase("D0021_00_userFlora")
+#' db_connectie <- connect_inbo_dbase("D0152_00_Flora")
 #'
 #' # get all Ellenberg values via partial matching, return as lazy query
 #' fb_ellenberg <- get_florabank_traits(db_connectie, "llenberg")
