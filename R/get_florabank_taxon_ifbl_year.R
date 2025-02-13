@@ -84,7 +84,7 @@ get_florabank_taxon_ifbl_year <- function(connection,
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
-  assert_that(connection@info$dbname == "D0021_00_userFlora")
+  assert_that(connection@info$dbname == "D0152_00_Flora")
 
   assert_that(is.numeric(starting_year))
   assert_that(starting_year <= as.numeric(format(Sys.Date(), "%Y")))
