@@ -25,7 +25,7 @@ Default is 2010.}
 
 \item{taxongroup}{Choose for which taxonomic group you want the unique
 combinations. One of \code{"Vaatplanten"} (the default), \code{"Mossen"},
-\code{"Korstmossen"}
+\code{"Lichenen (korstmossen)"}
 or \code{"Kranswieren"}.}
 
 \item{collect}{If FALSE (the default), a remote \code{tbl} object is returned.
@@ -64,7 +64,7 @@ group can be chosen.
 \dontrun{
 library(inbodb)
 # connect to florabank
-db_connectie <- connect_inbo_dbase("D0021_00_userFlora")
+db_connectie <- connect_inbo_dbase("D0152_00_Flora")
 
 # get records at 1 km x 1 km resolution for vascular plants from 2010
 # (default) without collecting all data into memory (default).

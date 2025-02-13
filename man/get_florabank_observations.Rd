@@ -56,7 +56,7 @@ level information about the matching taxa.
 # code can only be run if a connection to the database is possible
 library(inbodb)
 # connect to florabank
-db_connectie <- connect_inbo_dbase("D0021_00_userFlora")
+db_connectie <- connect_inbo_dbase("D0152_00_Flora")
 
 # query and collect the data using scientific name
 succprat1 <-	get_florabank_observations(db_connectie,
