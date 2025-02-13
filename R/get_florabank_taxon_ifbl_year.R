@@ -96,41 +96,62 @@ get_florabank_taxon_ifbl_year <- function(connection,
 
   if (ifbl_resolution == "4km-by-4km") {
     glue_statement <- glue_sql(
-      "SELECT DISTINCT
-    tblIFBLHok.Code AS hok
-    , SUBSTRING(tblIFBLHok.Code, 1, 5) AS ifbl_4by4
-    , Year(tblWaarneming.BeginDatum) AS Jaar
-    , relTaxonTaxon.TaxonIDParent
-    , tblTaxon.Code AS Taxoncode
-    FROM
-    (((tblMeting INNER JOIN
-      (tblIFBLHok INNER JOIN tblWaarneming
-        ON tblIFBLHok.ID = tblWaarneming.IFBLHokID)
-      ON tblMeting.WaarnemingID = tblWaarneming.ID)
-    INNER JOIN relTaxonTaxon ON tblMeting.TaxonID = relTaxonTaxon.TaxonIDChild)
-    INNER JOIN tblTaxon ON relTaxonTaxon.TaxonIDParent = tblTaxon.ID)
-    INNER JOIN relTaxonTaxonGroep ON tblTaxon.ID = relTaxonTaxonGroep.TaxonID
-    INNER JOIN tblTaxonGroep
-      ON relTaxonTaxonGroep.TaxonGroepID = tblTaxonGroep.ID
-    WHERE
-    tblIFBLHok.Code LIKE '%-%' AND
-    tblTaxon.Code NOT LIKE '%-sp' AND
-    Year([tblWaarneming].[BeginDatum]) >={starting_year} AND
-    (Year([tblWaarneming].[BeginDatum])=Year([tblWaarneming].[EindDatum])) AND
-    (tblTaxonGroep.Naam={taxongroup}) AND
-    (tblMeting.MetingStatusCode='GDGA' OR tblMeting.MetingStatusCode='GDGK')
-    ORDER BY
-    Year(tblWaarneming.BeginDatum) DESC OFFSET 0 ROWS",
+      ";WITH cte AS
+(
+SELECT t.id AS taxonid
+	, t.code AS taxoncode
+	, t.NaamNederlands
+	, t.NaamWetenschappelijk
+	, t.TaxonGroepID
+	, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+	THEN t.id ELSE t.ParentTaxonID END AS ParentTaxonID
+	, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+	THEN t.code ELSE tp.code END AS ParentTaxoncode
+	, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+	THEN t.NaamNederlands ELSE tp.NaamNederlands END AS ParentNaamNederlands
+	, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+	THEN t.NaamWetenschappelijk ELSE tp.NaamWetenschappelijk END AS ParentNaamWetenschappelijk
+FROM Taxon t
+	LEFT JOIN Taxon tp ON tp.id = t.ParentTaxonID
+)
+
+SELECT DISTINCT h.Code AS hok
+	, CASE WHEN tmp.code IS NULL THEN h.code ELSE tmp.Code END AS ifbl_4by4
+	, DATEPART(year, e.BeginDatum) AS jaar
+	, cte.ParentTaxonID
+	, cte.ParentTaxoncode
+	, cte.ParentNaamWetenschappelijk
+	, cte.ParentNaamNederlands
+FROM [event] e
+	INNER JOIN Hok h ON h.ID = e.HokID
+	INNER JOIN Waarneming w ON w.EventID = e.ID
+	INNER JOIN waarnemingstatus ws ON ws.id = w.WaarnemingStatusID
+	LEFT JOIN (SELECT HokIDChild
+					, h.Code
+				FROM Hok_Hok hh
+					INNER JOIN HokRelatieType hrt ON hrt.ID = hh.HokRelatieTypeID
+					INNER JOIN Hok h ON h.ID = hh.HokIDParent
+				WHERE hrt.Code = 'DV'
+				)tmp ON tmp.HokIDChild = e.hokid
+	INNER JOIN cte ON cte.taxonid = w.TaxonID
+	INNER JOIN TaxonGroep tg ON tg.ID = cte.TaxonGroepID
+WHERE 1=1
+	AND cte.ParentTaxoncode NOT LIKE '%-sp'
+	AND DATEPART(year, e.BeginDatum) >= {starting_year}
+	AND DATEPART(year, e.BeginDatum) = DATEPART(year, e.EindDatum)
+	AND tg.Beschrijving = {taxongroup}
+	AND ws.code IN ('GDGA','GDGK')
+ORDER BY DATEPART(year, e.BeginDatum) desc",
       starting_year = starting_year,
       taxongroup = taxongroup,
       .con = connection)
     glue_statement <- iconv(glue_statement, from =  "UTF-8", to = "latin1")
     query_result <- tbl(connection, sql(glue_statement))
 
-
     query_result <- query_result %>%
-      group_by(.data$ifbl_4by4, .data$Jaar, .data$TaxonIDParent,
-               .data$Taxoncode) %>%
+      group_by(.data$ifbl_4by4, .data$jaar, .data$ParentTaxonID,
+               .data$ParentTaxoncode, .data$ParentNaamWetenschappelijk,
+               .data$ParentNaamNederlands) %>%
       #paste with collapse does not translate to sql
       #str_flatten() is not available for Microsoft SQL Server
       #sql(STRING_AGG("hok", ",")) also does not work
