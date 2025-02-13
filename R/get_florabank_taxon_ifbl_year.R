@@ -20,7 +20,7 @@
 #'
 #' @param taxongroup Choose for which taxonomic group you want the unique
 #' combinations. One of `"Vaatplanten"` (the default), `"Mossen"`,
-#' `"Korstmossen"`
+#' `"Lichenen (korstmossen)"`
 #' or `"Kranswieren"`.
 #'
 #' @param collect If FALSE (the default), a remote `tbl` object is returned.
