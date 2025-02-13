@@ -127,7 +127,8 @@ FROM [event] e
 					THEN t.NaamNederlands ELSE tp.NaamNederlands
 					END AS ParentNaamNederlands
 					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
-					THEN t.NaamWetenschappelijk ELSE tp.NaamWetenschappelijk END AS ParentNaamWetenschappelijk
+					THEN t.NaamWetenschappelijk ELSE tp.NaamWetenschappelijk
+					END AS ParentNaamWetenschappelijk
 				FROM Taxon t
 					LEFT JOIN Taxon tp ON tp.id = t.ParentTaxonID)cte
 					ON cte.taxonid = w.TaxonID
@@ -197,7 +198,8 @@ FROM [event] e
 					THEN t.NaamNederlands ELSE tp.NaamNederlands
 					END AS ParentNaamNederlands
 					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
-					THEN t.NaamWetenschappelijk ELSE tp.NaamWetenschappelijk END AS ParentNaamWetenschappelijk
+					THEN t.NaamWetenschappelijk ELSE tp.NaamWetenschappelijk
+					END AS ParentNaamWetenschappelijk
 				FROM Taxon t
 					LEFT JOIN Taxon tp ON tp.id = t.ParentTaxonID)cte
 					ON cte.taxonid = w.TaxonID
