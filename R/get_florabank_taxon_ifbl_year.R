@@ -96,26 +96,7 @@ get_florabank_taxon_ifbl_year <- function(connection,
 
   if (ifbl_resolution == "4km-by-4km") {
     glue_statement <- glue_sql(
-      ";WITH cte AS
-(
-SELECT t.id AS taxonid
-	, t.code AS taxoncode
-	, t.NaamNederlands
-	, t.NaamWetenschappelijk
-	, t.TaxonGroepID
-	, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
-	THEN t.id ELSE t.ParentTaxonID END AS ParentTaxonID
-	, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
-	THEN t.code ELSE tp.code END AS ParentTaxoncode
-	, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
-	THEN t.NaamNederlands ELSE tp.NaamNederlands END AS ParentNaamNederlands
-	, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
-	THEN t.NaamWetenschappelijk ELSE tp.NaamWetenschappelijk END AS ParentNaamWetenschappelijk
-FROM Taxon t
-	LEFT JOIN Taxon tp ON tp.id = t.ParentTaxonID
-)
-
-SELECT DISTINCT h.Code AS hok
+      "SELECT DISTINCT h.Code AS hok
 	, CASE WHEN tmp.code IS NULL THEN h.code ELSE tmp.Code END AS ifbl_4by4
 	, DATEPART(year, e.BeginDatum) AS jaar
 	, cte.ParentTaxonID
@@ -133,7 +114,23 @@ FROM [event] e
 					INNER JOIN Hok h ON h.ID = hh.HokIDParent
 				WHERE hrt.Code = 'DV'
 				)tmp ON tmp.HokIDChild = e.hokid
-	INNER JOIN cte ON cte.taxonid = w.TaxonID
+	INNER JOIN (SELECT t.id AS taxonid
+					, t.code AS taxoncode
+					, t.NaamNederlands
+					, t.NaamWetenschappelijk
+					, t.TaxonGroepID
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.id ELSE t.ParentTaxonID END AS ParentTaxonID
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.code ELSE tp.code END AS ParentTaxoncode
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.NaamNederlands ELSE tp.NaamNederlands
+					END AS ParentNaamNederlands
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.NaamWetenschappelijk ELSE tp.NaamWetenschappelijk END AS ParentNaamWetenschappelijk
+				FROM Taxon t
+					LEFT JOIN Taxon tp ON tp.id = t.ParentTaxonID)cte
+					ON cte.taxonid = w.TaxonID
 	INNER JOIN TaxonGroep tg ON tg.ID = cte.TaxonGroepID
 WHERE 1=1
 	AND cte.ParentTaxoncode NOT LIKE '%-sp'
@@ -141,7 +138,7 @@ WHERE 1=1
 	AND DATEPART(year, e.BeginDatum) = DATEPART(year, e.EindDatum)
 	AND tg.Beschrijving = {taxongroup}
 	AND ws.code IN ('GDGA','GDGK')
-ORDER BY DATEPART(year, e.BeginDatum) desc",
+ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
       starting_year = starting_year,
       taxongroup = taxongroup,
       .con = connection)
@@ -170,27 +167,7 @@ ORDER BY DATEPART(year, e.BeginDatum) desc",
   }
 
   glue_statement <- glue_sql(
-    ";WITH cte AS
-(
-SELECT t.id AS taxonid
-	, t.code AS taxoncode
-	, t.NaamNederlands
-	, t.NaamWetenschappelijk
-	, t.TaxonGroepID
-	, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
-	THEN t.id ELSE t.ParentTaxonID END AS ParentTaxonID
-	, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
-	THEN t.code ELSE tp.code END AS ParentTaxoncode
-	, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
-	THEN t.NaamNederlands ELSE tp.NaamNederlands END AS ParentNaamNederlands
-	, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
-	THEN t.NaamWetenschappelijk ELSE tp.NaamWetenschappelijk END
-	AS ParentNaamWetenschappelijk
-FROM Taxon t
-	LEFT JOIN Taxon tp ON tp.id = t.ParentTaxonID
-)
-
-SELECT DISTINCT h.Code AS hok
+    "SELECT DISTINCT h.Code AS hok
 	, tmp.code AS ifbl_4by4
 	, DATEPART(year, e.BeginDatum) AS jaar
 	, cte.ParentTaxonID
@@ -207,7 +184,23 @@ FROM [event] e
 					INNER JOIN HokRelatieType hrt ON hrt.ID = hh.HokRelatieTypeID
 					INNER JOIN Hok h ON h.ID = hh.HokIDParent
 				WHERE hrt.Code = 'DV')tmp ON tmp.HokIDChild = e.hokid
-	INNER JOIN cte ON cte.taxonid = w.TaxonID
+	INNER JOIN (SELECT t.id AS taxonid
+					, t.code AS taxoncode
+					, t.NaamNederlands
+					, t.NaamWetenschappelijk
+					, t.TaxonGroepID
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.id ELSE t.ParentTaxonID END AS ParentTaxonID
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.code ELSE tp.code END AS ParentTaxoncode
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.NaamNederlands ELSE tp.NaamNederlands
+					END AS ParentNaamNederlands
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.NaamWetenschappelijk ELSE tp.NaamWetenschappelijk END AS ParentNaamWetenschappelijk
+				FROM Taxon t
+					LEFT JOIN Taxon tp ON tp.id = t.ParentTaxonID)cte
+					ON cte.taxonid = w.TaxonID
 	INNER JOIN TaxonGroep tg ON tg.ID = cte.TaxonGroepID
 WHERE 1=1
 	AND cte.ParentTaxoncode NOT LIKE '%-sp'
@@ -215,7 +208,7 @@ WHERE 1=1
 	AND DATEPART(year, e.BeginDatum) = DATEPART(year, e.EindDatum)
 	AND tg.Beschrijving = {taxongroup}
 	AND ws.code IN ('GDGA','GDGK')
-ORDER BY DATEPART(year, e.BeginDatum) desc",
+ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
     starting_year = starting_year,
     taxongroup = taxongroup,
     .con = connection)
