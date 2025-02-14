@@ -30,18 +30,19 @@ environment.}
 A dataframe with the following variables:
 \code{NaamNederlands},
 \code{NaamWetenschappelijk},
+\code{AcceptedNaamWetenschappelijk},
 \code{Bron},
 \code{BeginDatum},
 \code{EindDatum},
-\code{hok},
+\code{Hok},
 \code{Toponiem},
-\code{CommentaarTaxon},
-\code{CommentaarHabitat},
-\code{WaarnemingID},
+\code{CommentaarEvent},
+\code{CommentaarWaarneming},
+\code{EventID},
+\code{X_event},
+\code{Y_event},
 \code{X_waarneming},
-\code{Y_waarneming},
-\code{X_meting},
-\code{Y_meting}
+\code{Y_waarneming}
 }
 \description{
 This function takes as input a character vector with one or more names of
