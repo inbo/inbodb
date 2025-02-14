@@ -100,47 +100,71 @@
 #' }
 
 get_florabank_observations <- function(connection, names, fixed = FALSE,
-                                   collect = FALSE) {
+                                       collect = FALSE) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
-  assert_that(connection@info$dbname == "D0021_00_userFlora")
+  assert_that(connection@info$dbname == "D0152_00_Flora")
 
   if (missing(names)) {
     stop("Please provide names.")
   }
 
-  sql_statement <- "SELECT DISTINCT
-  tblTaxon.NaamNederlands
-  , tblTaxon.NaamWetenschappelijk
-  , cdeBron.Omschrijving AS Bron
-  , tblWaarneming.BeginDatum
-  , tblWaarneming.EindDatum
-  , tblIFBLHok.Code AS hok
-  , tblWaarneming.Opmerking AS Toponiem
-  , tblMeting.CommentaarTaxon
-  , tblMeting.CommentaarHabitat
-  , tblWaarneming.ID AS WaarnemingID
-  , tblWaarneming.Cor_X AS X_waarneming
-  , tblWaarneming.Cor_Y AS Y_waarneming
-  , tblMeting.Cor_X AS X_meting
-  , tblMeting.Cor_Y AS Y_meting
-  FROM dbo.tblWaarneming
-  INNER JOIN dbo.tblMeting ON tblWaarneming.ID = tblMeting.WaarnemingID
-  INNER JOIN dbo.relTaxonTaxon ON relTaxonTaxon.TaxonIDChild = tblMeting.TaxonID
-  INNER JOIN dbo.tblTaxon ON tblTaxon.ID = relTaxonTaxon.TaxonIDParent
-  LEFT JOIN dbo.tblIFBLHok ON tblIFBLHok.ID = tblWaarneming.IFBLHokID
-  INNER JOIN dbo.cdeBron ON cdeBron.Code = tblWaarneming.BronCode
-  WHERE 1=1
-  AND (tblMeting.MetingStatusCode='GDGA' OR tblMeting.MetingStatusCode='GDGK')
+  sql_statement <- "SELECT DISTINCT COALESCE(cte.ParentNaamNederlands
+  , cte.NaamNederlands) as NaamNederlands
+	, cte.NaamWetenschappelijk
+	, cte.ParentNaamWetenschappelijk AS AcceptedNaamWetenschappelijk
+	, b.Beschrijving AS Bron
+	, e.BeginDatum
+	, e.EindDatum
+	, h.Code AS Hok
+	, e.Toponiem
+	, e.Opmerking AS CommentaarEvent
+	, w.Commentaar AS CommentaarWaarneming
+	, e.id AS EventID
+	, e.CorX AS X_event
+	, e.CorY AS Y_event
+	, w.CorX AS X_waarneming
+	, w.CorY AS Y_waarneming
+FROM [event] e
+	INNER JOIN Bron b ON b.ID = e.BronID
+	INNER JOIN Waarneming w ON w.EventID = e.ID
+	INNER JOIN waarnemingstatus ws ON ws.id = w.WaarnemingStatusID
+	INNER JOIN Hok h ON h.ID = e.HokID
+	INNER JOIN (SELECT t.id AS taxonid
+					, t.code AS taxoncode
+					, t.NaamNederlands
+					, t.NaamWetenschappelijk
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.id ELSE t.ParentTaxonID END AS ParentTaxonID
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.code ELSE tp.code END AS ParentTaxoncode
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.NaamNederlands ELSE tp.NaamNederlands
+					END AS ParentNaamNederlands
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.NaamWetenschappelijk ELSE tp.NaamWetenschappelijk
+					END AS ParentNaamWetenschappelijk
+				FROM Taxon t
+					LEFT JOIN Taxon tp ON tp.id = t.ParentTaxonID)cte
+					ON cte.taxonid = w.TaxonID
+WHERE 1=1
+	AND ws.Code in ('GDGA','GDGK')
   "
 
   if (!fixed) {
     like_string <-
-      paste0("AND (",
+      paste0("AND cte.ParentTaxonID in
+		(SELECT DISTINCT CASE WHEN t.ParentTaxonID IS NULL
+		OR t.TaxonRelatieTypeID = 1 THEN t.id ELSE t.ParentTaxonID
+		END AS ParentTaxonID
+		 FROM Taxon t
+			LEFT JOIN Taxon tp ON tp.id = t.ParentTaxonID
+		 WHERE 1=1
+		 	AND (",
              paste0(
-               c(paste0("tblTaxon.NaamNederlands", " LIKE ", "'%", names, "%'"),
-                 paste0("tblTaxon.NaamWetenschappelijk", " LIKE ", "'%", names,
+               c(paste0("t.NaamNederlands", " LIKE ", "'%", names, "%'"),
+                 paste0("t.NaamWetenschappelijk", " LIKE ", "'%", names,
                         "%'")),
                collapse = " OR "),
              ")")
