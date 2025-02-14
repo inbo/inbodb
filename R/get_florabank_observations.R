@@ -28,18 +28,19 @@
 #' @return A dataframe with the following variables:
 #' `NaamNederlands`,
 #' `NaamWetenschappelijk`,
+#' `AcceptedNaamWetenschappelijk`,
 #' `Bron`,
 #' `BeginDatum`,
 #' `EindDatum`,
-#' `hok`,
+#' `Hok`,
 #' `Toponiem`,
-#' `CommentaarTaxon`,
-#' `CommentaarHabitat`,
-#' `WaarnemingID`,
+#' `CommentaarEvent`,
+#' `CommentaarWaarneming`,
+#' `EventID`,
+#' `X_event`,
+#' `Y_event`,
 #' `X_waarneming`,
-#' `Y_waarneming`,
-#' `X_meting`,
-#' `Y_meting`
+#' `Y_waarneming`
 #'
 #' @importFrom glue glue_sql
 #' @importFrom assertthat assert_that
