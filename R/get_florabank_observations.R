@@ -185,7 +185,7 @@ WHERE 1=1
 
   sql_statement <- glue_sql(
     sql_statement,
-    "ORDER BY tblWaarneming.BeginDatum DESC OFFSET 0 ROWS",
+    "ORDER BY e.BeginDatum DESC OFFSET 0 ROWS",
     .con = connection)
 
   sql_statement <- iconv(sql_statement, from =  "UTF-8", to = "latin1")
