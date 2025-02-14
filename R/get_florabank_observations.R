@@ -168,7 +168,7 @@ WHERE 1=1
                  paste0("t.NaamWetenschappelijk", " LIKE ", "'%", names,
                         "%'")),
                collapse = " OR "),
-             ")")
+             "))")
     sql_statement <- glue_sql(
       sql_statement,
       like_string,
