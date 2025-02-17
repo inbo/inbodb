@@ -26,16 +26,16 @@ A remote \code{tbl} object (collect = FALSE) or a \code{tibble} dataframe
 (collect = TRUE) containing the trait values for each species and for all
 partially matched traits. The dataframe contains the variables
 \code{TaxonID},
-\code{TaxonAfkorting},
-\code{TaxonWetenschappelijk},
-\code{TaxonNederlands},
+\code{TaxonCode},
+\code{NaamWetenschappelijk},
+\code{NaamNederlands},
 \code{Kenmerk},
-\code{Code},
+\code{KenmerkCode},
 \code{Omschrijving},
 \code{Rekenwaarde},
 \code{Bron} and
 \code{ExtraOmschrijving}.
-The first four variables identify the taxon, the latter five variables relate
+The first four variables identify the taxon, the latter six variables relate
 to the taxon traits.
 }
 \description{
