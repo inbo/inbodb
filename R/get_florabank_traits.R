@@ -23,16 +23,16 @@ globalVariables("%LIKE%")
 #' (collect = TRUE) containing the trait values for each species and for all
 #' partially matched traits. The dataframe contains the variables
 #' `TaxonID`,
-#' `TaxonAfkorting`,
-#' `TaxonWetenschappelijk`,
-#' `TaxonNederlands`,
+#' `TaxonCode`,
+#' `NaamWetenschappelijk`,
+#' `NaamNederlands`,
 #' `Kenmerk`,
-#' `Code`,
+#' `KenmerkCode`,
 #' `Omschrijving`,
 #' `Rekenwaarde`,
 #' `Bron` and
 #' `ExtraOmschrijving`.
-#' The first four variables identify the taxon, the latter five variables relate
+#' The first four variables identify the taxon, the latter six variables relate
 #' to the taxon traits.
 #'
 #' @importFrom dplyr
@@ -41,11 +41,7 @@ globalVariables("%LIKE%")
 #' distinct
 #' pull
 #' %>%
-#' inner_join
-#' left_join
-#' filter
-#' select
-#' rename
+#' @importFrom glue glue_sql
 #' @importFrom rlang .data
 #' @importFrom assertthat assert_that
 #'
