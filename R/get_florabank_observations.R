@@ -164,8 +164,8 @@ WHERE 1=1
 		 WHERE 1=1
 		 	AND (",
              paste0(
-               c(paste0("t.NaamNederlands", " LIKE ", "'%", names, "%'"),
-                 paste0("t.NaamWetenschappelijk", " LIKE ", "'%", names,
+               c(paste0("cte.NaamNederlands", " LIKE ", "'%", names, "%'"),
+                 paste0("cte.NaamWetenschappelijk", " LIKE ", "'%", names,
                         "%'")),
                collapse = " OR "),
              "))")
@@ -176,8 +176,8 @@ WHERE 1=1
   } else {
     sql_statement <- glue_sql(
       sql_statement,
-      "AND (tblTaxon.NaamWetenschappelijk IN ({names*}) OR
-             tblTaxon.NaamNederlands IN ({names*}))
+      "AND (cte.NaamWetenschappelijk IN ({names*}) OR
+             cte.NaamNederlands IN ({names*}))
              ",
       names = names,
       .con = connection)
