@@ -200,7 +200,7 @@ one or more monitoring schemes.
 Below we select all visits for the location Arenbergpolder of the Argusvlinder
 monitoring scheme.
 We see that in most years the location is counted 6 times per year as demanded
-by the [monitoring protocol](https://purews.inbo.be/ws/portalfiles/portal/17657883/MaesEtal_2019_MonitoringsprotocolDagvlindersVersie2.pdf).
+by the [monitoring protocol](https://doi.org/10.21436/inbor.16744530).
 
 ```{r example_visits}
 
