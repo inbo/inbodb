@@ -1,3 +1,10 @@
+# inbodb 0.0.7
+
+* update functions `get_florabank_observations()`,  
+  `get_florabank_taxon_ifbl_year()` and
+  `get_florabank_traits()` (database 'D0021_00_userFlora' is deprecated and 
+  replaced with 'D0152_00_Flora')
+
 # inbodb 0.0.6
 
 * new functions `get_taxonlijsten_lists()`, `get_taxonlijsten_features()` and
