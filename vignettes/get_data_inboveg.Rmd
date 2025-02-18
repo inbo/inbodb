@@ -99,7 +99,7 @@ survey_info
 ```
 
 Get information of all surveys. 
-This time we will not use `collect = TRUE`, which will return a [lazy query](https://docs.lucee.org/guides/cookbooks/lazy_queries.html):
+This time we will not use `collect = TRUE`, which will return a [lazy query](https://dbplyr.tidyverse.org/reference/tbl.src_dbi.html):
 
 ```{r}
 allsurveys <- get_inboveg_survey(con)
