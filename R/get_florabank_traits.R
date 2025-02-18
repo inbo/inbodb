@@ -99,7 +99,7 @@ get_florabank_traits <- function(connection, trait_name, collect = FALSE) {
     	, t.NaamWetenschappelijk
     	, t.NaamNederlands
     	, k.Kenmerk
-    	, kc.KenmerkCode
+    	, kc.Code AS KenmerkCode
     	, kc.naam AS Omschrijving
     	, kc.Rekenwaarde
     	, k.KenmerkBron AS Bron
