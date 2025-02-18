@@ -70,7 +70,7 @@ db_connectie <- connect_inbo_dbase("D0152_00_Flora")
 # (default) without collecting all data into memory (default).
 fb_kwartier <- get_florabank_taxon_ifbl_year(db_connectie)
 # to collect the data in memory set collect to TRUE or do
-fb_kwartier <- collect(fb_kwartier)
+fb_kwartier <- dplyr::collect(fb_kwartier)
 
 # get records at 4 km x 4 km resolution starting from 2000
 fb_uur <- get_florabank_taxon_ifbl_year(db_connectie, starting_year = 2000,
