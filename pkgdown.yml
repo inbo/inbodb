@@ -1,0 +1,9 @@
+pandoc: 3.6.3
+pkgdown: 2.1.1
+pkgdown_sha: ~
+articles:
+  get_data_inboveg: get_data_inboveg.html
+  get_data_meetnetten: get_data_meetnetten.html
+  get_data_taxonlijsten: get_data_taxonlijsten.html
+  odbc_query_problem: odbc_query_problem.html
+last_built: 2025-02-19T15:43Z
