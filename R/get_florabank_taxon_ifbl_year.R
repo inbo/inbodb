@@ -34,16 +34,10 @@
 #' `IFBL`-square
 #' (either at 1 km x 1 km or 4 km x 4 km resolution) and year. In case the
 #' resolution is 1 km x 1 km, a variable `ifbl_4by4` gives the corresponding
-#' `ifbl_4by4` identifier within which the `ifbl_1by1` square is located.
-#' In case
-#' the resolution is 4 km x 4 km, the variable `ifbl_squares` is a concatenation
-#' of all nested squares with observations for the taxon in the corresponding
-#' year. This can be nested 1 x 1 squares as well as the corresponding 4 x 4
-#' square (the latter is the case if the original resolution of the observation
-#' is at 4 x 4 resolution). In addition, the variable `ifbl_number_squares`
-#' gives
-#' the number of unique nested squares where the taxon was observed for that
-#' year and 4 x 4 square combination.
+#' 4 km x 4 km square within which the 1 km x 1 km square is located.
+#' In case the resolution is 4 km x 4 km the variable `ifbl_number_squares`
+#' gives the number of unique nested squares where the taxon was observed
+#' for that year and 4 x 4 square combination.
 #'
 #' @importFrom glue glue_sql
 #' @importFrom assertthat assert_that
@@ -147,13 +141,9 @@ ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
     query_result <- tbl(connection, sql(glue_statement))
 
     query_result <- query_result %>%
-      group_by(.data$ifbl_4by4, .data$jaar, .data$ParentTaxonID,
+      group_by(.data$ifbl_4by4, .data$Jaar, .data$ParentTaxonID,
                .data$ParentTaxoncode, .data$ParentNaamWetenschappelijk,
                .data$ParentNaamNederlands) %>%
-      #paste with collapse does not translate to sql
-      #str_flatten() is not available for Microsoft SQL Server
-      #sql(STRING_AGG("hok", ",")) also does not work
-      #fix this later
       summarize(
         ifbl_number_squares = n()) %>%
       ungroup()
