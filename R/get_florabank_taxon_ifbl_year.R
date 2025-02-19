@@ -168,9 +168,9 @@ ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
   }
 
   glue_statement <- glue_sql(
-    "SELECT DISTINCT h.Code AS hok
+    "SELECT DISTINCT h.Code AS Hok
 	, tmp.code AS ifbl_4by4
-	, DATEPART(year, e.BeginDatum) AS jaar
+	, DATEPART(year, e.BeginDatum) AS Jaar
 	, cte.ParentTaxonID
 	, cte.ParentTaxoncode
 	, cte.ParentNaamWetenschappelijk
