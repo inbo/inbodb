@@ -96,9 +96,9 @@ get_florabank_taxon_ifbl_year <- function(connection,
 
   if (ifbl_resolution == "4km-by-4km") {
     glue_statement <- glue_sql(
-      "SELECT DISTINCT h.Code AS hok
+      "SELECT DISTINCT h.Code AS Hok
 	, CASE WHEN tmp.code IS NULL THEN h.code ELSE tmp.Code END AS ifbl_4by4
-	, DATEPART(year, e.BeginDatum) AS jaar
+	, DATEPART(year, e.BeginDatum) AS Jaar
 	, cte.ParentTaxonID
 	, cte.ParentTaxoncode
 	, cte.ParentNaamWetenschappelijk
