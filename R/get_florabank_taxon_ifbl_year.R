@@ -20,7 +20,7 @@
 #'
 #' @param taxongroup Choose for which taxonomic group you want the unique
 #' combinations. One of `"Vaatplanten"` (the default), `"Mossen"`,
-#' `"Korstmossen"`
+#' `"Lichenen (korstmossen)"`
 #' or `"Kranswieren"`.
 #'
 #' @param collect If FALSE (the default), a remote `tbl` object is returned.
@@ -34,16 +34,10 @@
 #' `IFBL`-square
 #' (either at 1 km x 1 km or 4 km x 4 km resolution) and year. In case the
 #' resolution is 1 km x 1 km, a variable `ifbl_4by4` gives the corresponding
-#' `ifbl_4by4` identifier within which the `ifbl_1by1` square is located.
-#' In case
-#' the resolution is 4 km x 4 km, the variable `ifbl_squares` is a concatenation
-#' of all nested squares with observations for the taxon in the corresponding
-#' year. This can be nested 1 x 1 squares as well as the corresponding 4 x 4
-#' square (the latter is the case if the original resolution of the observation
-#' is at 4 x 4 resolution). In addition, the variable `ifbl_number_squares`
-#' gives
-#' the number of unique nested squares where the taxon was observed for that
-#' year and 4 x 4 square combination.
+#' 4 km x 4 km square within which the 1 km x 1 km square is located.
+#' In case the resolution is 4 km x 4 km the variable `ifbl_number_squares`
+#' gives the number of unique nested squares where the taxon was observed
+#' for that year and 4 x 4 square combination.
 #'
 #' @importFrom glue glue_sql
 #' @importFrom assertthat assert_that
@@ -56,13 +50,13 @@
 #' \dontrun{
 #' library(inbodb)
 #' # connect to florabank
-#' db_connectie <- connect_inbo_dbase("D0021_00_userFlora")
+#' db_connectie <- connect_inbo_dbase("D0152_00_Flora")
 #'
 #' # get records at 1 km x 1 km resolution for vascular plants from 2010
 #' # (default) without collecting all data into memory (default).
 #' fb_kwartier <- get_florabank_taxon_ifbl_year(db_connectie)
 #' # to collect the data in memory set collect to TRUE or do
-#' fb_kwartier <- collect(fb_kwartier)
+#' fb_kwartier <- dplyr::collect(fb_kwartier)
 #'
 #' # get records at 4 km x 4 km resolution starting from 2000
 #' fb_uur <- get_florabank_taxon_ifbl_year(db_connectie, starting_year = 2000,
@@ -84,7 +78,7 @@ get_florabank_taxon_ifbl_year <- function(connection,
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
-  assert_that(connection@info$dbname == "D0021_00_userFlora")
+  assert_that(connection@info$dbname == "D0152_00_Flora")
 
   assert_that(is.numeric(starting_year))
   assert_that(starting_year <= as.numeric(format(Sys.Date(), "%Y")))
@@ -96,45 +90,60 @@ get_florabank_taxon_ifbl_year <- function(connection,
 
   if (ifbl_resolution == "4km-by-4km") {
     glue_statement <- glue_sql(
-      "SELECT DISTINCT
-    tblIFBLHok.Code AS hok
-    , SUBSTRING(tblIFBLHok.Code, 1, 5) AS ifbl_4by4
-    , Year(tblWaarneming.BeginDatum) AS Jaar
-    , relTaxonTaxon.TaxonIDParent
-    , tblTaxon.Code AS Taxoncode
-    FROM
-    (((tblMeting INNER JOIN
-      (tblIFBLHok INNER JOIN tblWaarneming
-        ON tblIFBLHok.ID = tblWaarneming.IFBLHokID)
-      ON tblMeting.WaarnemingID = tblWaarneming.ID)
-    INNER JOIN relTaxonTaxon ON tblMeting.TaxonID = relTaxonTaxon.TaxonIDChild)
-    INNER JOIN tblTaxon ON relTaxonTaxon.TaxonIDParent = tblTaxon.ID)
-    INNER JOIN relTaxonTaxonGroep ON tblTaxon.ID = relTaxonTaxonGroep.TaxonID
-    INNER JOIN tblTaxonGroep
-      ON relTaxonTaxonGroep.TaxonGroepID = tblTaxonGroep.ID
-    WHERE
-    tblIFBLHok.Code LIKE '%-%' AND
-    tblTaxon.Code NOT LIKE '%-sp' AND
-    Year([tblWaarneming].[BeginDatum]) >={starting_year} AND
-    (Year([tblWaarneming].[BeginDatum])=Year([tblWaarneming].[EindDatum])) AND
-    (tblTaxonGroep.Naam={taxongroup}) AND
-    (tblMeting.MetingStatusCode='GDGA' OR tblMeting.MetingStatusCode='GDGK')
-    ORDER BY
-    Year(tblWaarneming.BeginDatum) DESC OFFSET 0 ROWS",
+      "SELECT DISTINCT h.Code AS Hok
+	, CASE WHEN tmp.code IS NULL THEN h.code ELSE tmp.Code END AS ifbl_4by4
+	, DATEPART(year, e.BeginDatum) AS Jaar
+	, cte.ParentTaxonID
+	, cte.ParentTaxoncode
+	, cte.ParentNaamWetenschappelijk
+	, cte.ParentNaamNederlands
+FROM [event] e
+	INNER JOIN Hok h ON h.ID = e.HokID
+	INNER JOIN Waarneming w ON w.EventID = e.ID
+	INNER JOIN waarnemingstatus ws ON ws.id = w.WaarnemingStatusID
+	LEFT JOIN (SELECT HokIDChild
+					, h.Code
+				FROM Hok_Hok hh
+					INNER JOIN HokRelatieType hrt ON hrt.ID = hh.HokRelatieTypeID
+					INNER JOIN Hok h ON h.ID = hh.HokIDParent
+				WHERE hrt.Code = 'DV'
+				)tmp ON tmp.HokIDChild = e.hokid
+	INNER JOIN (SELECT t.id AS taxonid
+					, t.code AS taxoncode
+					, t.NaamNederlands
+					, t.NaamWetenschappelijk
+					, t.TaxonGroepID
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.id ELSE t.ParentTaxonID END AS ParentTaxonID
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.code ELSE tp.code END AS ParentTaxoncode
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.NaamNederlands ELSE tp.NaamNederlands
+					END AS ParentNaamNederlands
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.NaamWetenschappelijk ELSE tp.NaamWetenschappelijk
+					END AS ParentNaamWetenschappelijk
+				FROM Taxon t
+					LEFT JOIN Taxon tp ON tp.id = t.ParentTaxonID)cte
+					ON cte.taxonid = w.TaxonID
+	INNER JOIN TaxonGroep tg ON tg.ID = cte.TaxonGroepID
+WHERE 1=1
+	AND cte.ParentTaxoncode NOT LIKE '%-sp'
+	AND DATEPART(year, e.BeginDatum) >= {starting_year}
+	AND DATEPART(year, e.BeginDatum) = DATEPART(year, e.EindDatum)
+	AND tg.Beschrijving = {taxongroup}
+	AND ws.code IN ('GDGA','GDGK')
+ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
       starting_year = starting_year,
       taxongroup = taxongroup,
       .con = connection)
     glue_statement <- iconv(glue_statement, from =  "UTF-8", to = "latin1")
     query_result <- tbl(connection, sql(glue_statement))
 
-
     query_result <- query_result %>%
-      group_by(.data$ifbl_4by4, .data$Jaar, .data$TaxonIDParent,
-               .data$Taxoncode) %>%
-      #paste with collapse does not translate to sql
-      #str_flatten() is not available for Microsoft SQL Server
-      #sql(STRING_AGG("hok", ",")) also does not work
-      #fix this later
+      group_by(.data$ifbl_4by4, .data$Jaar, .data$ParentTaxonID,
+               .data$ParentTaxoncode, .data$ParentNaamWetenschappelijk,
+               .data$ParentNaamNederlands) %>%
       summarize(
         ifbl_number_squares = n()) %>%
       ungroup()
@@ -149,31 +158,49 @@ get_florabank_taxon_ifbl_year <- function(connection,
   }
 
   glue_statement <- glue_sql(
-    "SELECT DISTINCT
-    tblIFBLHok.Code AS ifbl_1by1
-    , SUBSTRING(tblIFBLHok.Code, 1, 5) AS ifbl_4by4
-    , Year(tblWaarneming.BeginDatum) AS Jaar
-    , relTaxonTaxon.TaxonIDParent
-    , tblTaxon.Code AS Taxoncode
-    FROM
-    (((tblMeting INNER JOIN
-      (tblIFBLHok INNER JOIN tblWaarneming
-        ON tblIFBLHok.ID = tblWaarneming.IFBLHokID)
-      ON tblMeting.WaarnemingID = tblWaarneming.ID)
-    INNER JOIN relTaxonTaxon ON tblMeting.TaxonID = relTaxonTaxon.TaxonIDChild)
-    INNER JOIN tblTaxon ON relTaxonTaxon.TaxonIDParent = tblTaxon.ID)
-    INNER JOIN relTaxonTaxonGroep ON tblTaxon.ID = relTaxonTaxonGroep.TaxonID
-    INNER JOIN tblTaxonGroep
-      ON relTaxonTaxonGroep.TaxonGroepID = tblTaxonGroep.ID
-    WHERE
-    tblIFBLHok.Code LIKE '%-%-%' AND
-    tblTaxon.Code NOT LIKE '%-sp' AND
-    Year([tblWaarneming].[BeginDatum]) >={starting_year} AND
-    (Year([tblWaarneming].[BeginDatum])=Year([tblWaarneming].[EindDatum])) AND
-    (tblTaxonGroep.Naam={taxongroup}) AND
-    (tblMeting.MetingStatusCode='GDGA' OR tblMeting.MetingStatusCode='GDGK')
-    ORDER BY
-    Year(tblWaarneming.BeginDatum) DESC OFFSET 0 ROWS",
+    "SELECT DISTINCT h.Code AS Hok
+	, tmp.code AS ifbl_4by4
+	, DATEPART(year, e.BeginDatum) AS Jaar
+	, cte.ParentTaxonID
+	, cte.ParentTaxoncode
+	, cte.ParentNaamWetenschappelijk
+	, cte.ParentNaamNederlands
+FROM [event] e
+	INNER JOIN Hok h ON h.ID = e.HokID
+	INNER JOIN Waarneming w ON w.EventID = e.ID
+	INNER JOIN waarnemingstatus ws ON ws.id = w.WaarnemingStatusID
+	INNER JOIN (SELECT HokIDChild
+					, h.Code
+				FROM Hok_Hok hh
+					INNER JOIN HokRelatieType hrt ON hrt.ID = hh.HokRelatieTypeID
+					INNER JOIN Hok h ON h.ID = hh.HokIDParent
+				WHERE hrt.Code = 'DV')tmp ON tmp.HokIDChild = e.hokid
+	INNER JOIN (SELECT t.id AS taxonid
+					, t.code AS taxoncode
+					, t.NaamNederlands
+					, t.NaamWetenschappelijk
+					, t.TaxonGroepID
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.id ELSE t.ParentTaxonID END AS ParentTaxonID
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.code ELSE tp.code END AS ParentTaxoncode
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.NaamNederlands ELSE tp.NaamNederlands
+					END AS ParentNaamNederlands
+					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
+					THEN t.NaamWetenschappelijk ELSE tp.NaamWetenschappelijk
+					END AS ParentNaamWetenschappelijk
+				FROM Taxon t
+					LEFT JOIN Taxon tp ON tp.id = t.ParentTaxonID)cte
+					ON cte.taxonid = w.TaxonID
+	INNER JOIN TaxonGroep tg ON tg.ID = cte.TaxonGroepID
+WHERE 1=1
+	AND cte.ParentTaxoncode NOT LIKE '%-sp'
+	AND DATEPART(year, e.BeginDatum) >= {starting_year}
+	AND DATEPART(year, e.BeginDatum) = DATEPART(year, e.EindDatum)
+	AND tg.Beschrijving = {taxongroup}
+	AND ws.code IN ('GDGA','GDGK')
+ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
     starting_year = starting_year,
     taxongroup = taxongroup,
     .con = connection)

@@ -25,7 +25,7 @@ Default is 2010.}
 
 \item{taxongroup}{Choose for which taxonomic group you want the unique
 combinations. One of \code{"Vaatplanten"} (the default), \code{"Mossen"},
-\code{"Korstmossen"}
+\code{"Lichenen (korstmossen)"}
 or \code{"Kranswieren"}.}
 
 \item{collect}{If FALSE (the default), a remote \code{tbl} object is returned.
@@ -40,16 +40,10 @@ A dataframe with one line for each combination of taxon,
 \code{IFBL}-square
 (either at 1 km x 1 km or 4 km x 4 km resolution) and year. In case the
 resolution is 1 km x 1 km, a variable \code{ifbl_4by4} gives the corresponding
-\code{ifbl_4by4} identifier within which the \code{ifbl_1by1} square is located.
-In case
-the resolution is 4 km x 4 km, the variable \code{ifbl_squares} is a concatenation
-of all nested squares with observations for the taxon in the corresponding
-year. This can be nested 1 x 1 squares as well as the corresponding 4 x 4
-square (the latter is the case if the original resolution of the observation
-is at 4 x 4 resolution). In addition, the variable \code{ifbl_number_squares}
-gives
-the number of unique nested squares where the taxon was observed for that
-year and 4 x 4 square combination.
+4 km x 4 km square within which the 1 km x 1 km square is located.
+In case the resolution is 4 km x 4 km the variable \code{ifbl_number_squares}
+gives the number of unique nested squares where the taxon was observed
+for that year and 4 x 4 square combination.
 }
 \description{
 This functions queries all validated observations of the florabank database
@@ -64,13 +58,13 @@ group can be chosen.
 \dontrun{
 library(inbodb)
 # connect to florabank
-db_connectie <- connect_inbo_dbase("D0021_00_userFlora")
+db_connectie <- connect_inbo_dbase("D0152_00_Flora")
 
 # get records at 1 km x 1 km resolution for vascular plants from 2010
 # (default) without collecting all data into memory (default).
 fb_kwartier <- get_florabank_taxon_ifbl_year(db_connectie)
 # to collect the data in memory set collect to TRUE or do
-fb_kwartier <- collect(fb_kwartier)
+fb_kwartier <- dplyr::collect(fb_kwartier)
 
 # get records at 4 km x 4 km resolution starting from 2000
 fb_uur <- get_florabank_taxon_ifbl_year(db_connectie, starting_year = 2000,

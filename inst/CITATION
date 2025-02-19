@@ -2,12 +2,12 @@ citHeader("To cite `inbodb` in publications please use:")
 # begin checklist entry
 bibentry(
   bibtype = "Manual",
-  title = "inbodb: Connect to and Retrieve Data from Databases on the INBO Server. Version 0.0.6",
+  title = "inbodb: Connect to and Retrieve Data from Databases on the INBO Server. Version 0.0.7",
   author = c( author = c(person(given = "Els", family = "Lommelen"), person(given = "Hans", family = "Van Calster"), person(given = "Els", family = "De Bie"), person(given = "Floris", family = "Vanderhaeghe"), person(given = "Frederic", family = "Piesschaert"), person(given = "Toon", family = "Westra"))),
-  year = 2024,
+  year = 2025,
   url = "https://inbo.github.io/inbodb/",
   abstract = "A bundle of functions to connect to and retrieve data from databases on the INBO server, with dedicated functions to query some of these databases.",
-  textVersion = "Lommelen, Els; Van Calster, Hans; De Bie, Els; Vanderhaeghe, Floris; Piesschaert, Frederic; Westra, Toon (2024) inbodb: Connect to and Retrieve Data from Databases on the INBO Server. Version 0.0.6. https://inbo.github.io/inbodb/",
+  textVersion = "Lommelen, Els; Van Calster, Hans; De Bie, Els; Vanderhaeghe, Floris; Piesschaert, Frederic; Westra, Toon (2025) inbodb: Connect to and Retrieve Data from Databases on the INBO Server. Version 0.0.7. https://inbo.github.io/inbodb/",
   keywords = "sql; databases; queries",
 )
 # end checklist entry

@@ -23,7 +23,7 @@ The function can only be used from within the INBO network.
 }
 \details{
 For more information, refer to
-\href{https://inbo.github.io/tutorials/tutorials/r_database_access/}{this
+\href{https://tutorials.inbo.be/tutorials/r_database_access/}{this
 tutorial}.
 }
 \examples{

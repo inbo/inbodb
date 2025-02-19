@@ -23,16 +23,16 @@ globalVariables("%LIKE%")
 #' (collect = TRUE) containing the trait values for each species and for all
 #' partially matched traits. The dataframe contains the variables
 #' `TaxonID`,
-#' `TaxonAfkorting`,
-#' `TaxonWetenschappelijk`,
-#' `TaxonNederlands`,
+#' `TaxonCode`,
+#' `NaamWetenschappelijk`,
+#' `NaamNederlands`,
 #' `Kenmerk`,
-#' `Code`,
+#' `KenmerkCode`,
 #' `Omschrijving`,
 #' `Rekenwaarde`,
 #' `Bron` and
 #' `ExtraOmschrijving`.
-#' The first four variables identify the taxon, the latter five variables relate
+#' The first four variables identify the taxon, the latter six variables relate
 #' to the taxon traits.
 #'
 #' @importFrom dplyr
@@ -41,11 +41,7 @@ globalVariables("%LIKE%")
 #' distinct
 #' pull
 #' %>%
-#' inner_join
-#' left_join
-#' filter
-#' select
-#' rename
+#' @importFrom glue glue_sql
 #' @importFrom rlang .data
 #' @importFrom assertthat assert_that
 #'
@@ -56,7 +52,7 @@ globalVariables("%LIKE%")
 #' library(inbodb)
 #' library(dplyr)
 #' # connect to florabank
-#' db_connectie <- connect_inbo_dbase("D0021_00_userFlora")
+#' db_connectie <- connect_inbo_dbase("D0152_00_Flora")
 #'
 #' # get all Ellenberg values via partial matching, return as lazy query
 #' fb_ellenberg <- get_florabank_traits(db_connectie, "llenberg")
@@ -84,53 +80,48 @@ get_florabank_traits <- function(connection, trait_name, collect = FALSE) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
-  assert_that(connection@info$dbname == "D0021_00_userFlora")
+  assert_that(connection@info$dbname == "D0152_00_Flora")
 
   if (missing(trait_name)) {
-    traitnames <- tbl(connection, "tblTaxonKenmerk") %>%
-      distinct(.data$Naam) %>%
+    traitnames <- tbl(connection, "Kenmerk") %>%
+      distinct(.data$Beschrijving) %>%
       collect() %>%
-      pull(.data$Naam)
+      pull(.data$Beschrijving)
     message <- paste0("Please provide (part of) a trait name from this list: ",
                       paste(traitnames, collapse = ", "))
     options(warning.length = nchar(message))
     stop(message)
   }
 
-  trait_name <- tolower(trait_name)
+  sql_statement <- "
+    SELECT t.ID AS TaxonID
+    	, t.Code AS TaxonCode
+    	, t.NaamWetenschappelijk
+    	, t.NaamNederlands
+    	, k.Kenmerk
+    	, kc.Code AS KenmerkCode
+    	, kc.naam AS Omschrijving
+    	, kc.Rekenwaarde
+    	, k.KenmerkBron AS Bron
+    	, tk.Beschrijving AS ExtraOmschrijving
+    FROM [dbo].[Taxon_KenmerkWaarde] tk
+    	inner join Taxon t on t.ID = tk.TaxonID
+    	inner join TaxonGroep tg on tg.ID = t.TaxonGroepID
+    	left join vw.vw_kenmerk k on k.kenmerkid = tk.KenmerkID
+    	left join vw.vw_kenmerkcategorie kc on
+    	kc.kenmerkcategorieid = tk.KenmerkCategorieID
+    WHERE 1 = 1"
 
-  fb_taxon <- tbl(connection, "tblTaxon")
-  fb_taxon_kenmerk <- tbl(connection, "tblTaxonKenmerk")
-  fb_taxon_kenmerk_waarde <- tbl(connection, "tblTaxonKenmerkWaarde")
-  rel_taxon_taxon_kenmerk_waarde <-
-    tbl(connection, "relTaxonTaxonKenmerkWaarde")
+  like_string <- paste0(" AND k.kenmerk like '%", trait_name, "%'")
 
-  query_result <- rel_taxon_taxon_kenmerk_waarde %>%
-    inner_join(fb_taxon_kenmerk %>%
-                 filter(tolower(.data$Naam) %LIKE%
-                          paste0("%", trait_name, "%")) %>%
-                 select(.data$ID, .data$Naam, .data$Bron),
-               by = c("TaxonKenmerkID" = "ID")) %>%
-    rename(ExtraOmschrijving = .data$Omschrijving) %>%
-    left_join(fb_taxon_kenmerk_waarde %>%
-                distinct(.data$ID, .data$Code, .data$TaxonKenmerkID,
-                         .data$Omschrijving, .data$Rekenwaarde),
-              by = c("TaxonKenmerkID" = "TaxonKenmerkID",
-                     "TaxonKenmerkWaardeID" = "ID")) %>%
-    left_join(fb_taxon %>%
-                rename(NaamAfkorting = .data$Code),
-              by = c("TaxonID" = "ID")) %>%
-    distinct(.data$TaxonID,
-             TaxonAfkorting = .data$NaamAfkorting,
-             TaxonWetenschappelijk = .data$NaamWetenschappelijk,
-             TaxonNederlands = .data$NaamNederlands,
-             Kenmerk = .data$Naam,
-             .data$Code,
-             .data$Omschrijving,
-             .data$Rekenwaarde,
-             .data$Bron,
-             .data$ExtraOmschrijving
-    )
+  sql_statement <- glue_sql(
+    sql_statement,
+    like_string,
+    .con = connection)
+
+  sql_statement <- iconv(sql_statement, from =  "UTF-8", to = "latin1")
+
+  query_result <- tbl(connection, sql(sql_statement))
   if (!isTRUE(collect)) {
     return(query_result)
   } else {

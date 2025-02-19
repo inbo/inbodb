@@ -88,7 +88,7 @@ rl_dagvlinders <- get_taxonlijsten_lists(con,
 rl_dagvlinders
 ```
 
-Get all recent versions of red lists. This time we will not use `collect = TRUE`, which will return a [lazy query](https://docs.lucee.org/guides/cookbooks/lazy_queries.html):
+Get all recent versions of red lists. This time we will not use `collect = TRUE`, which will return a [lazy query](https://dbplyr.tidyverse.org/reference/tbl.src_dbi.html):
 
 ```{r, eval=FALSE, echo=TRUE}
 rodelijst_recent <- get_taxonlijsten_lists(con,
