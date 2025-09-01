@@ -125,7 +125,8 @@ get_taxonlijsten_items <- function(connection,
     AND lijst LIKE {list}
     AND (Naamwet_interpretatie LIKE {taxon} OR
     Naamned_interpretatie LIKE {taxon})
-    AND KenmerkwaardeCode LIKE {feature}",
+    AND (KenmerkwaardeCode LIKE {feature}
+        OR KenmerkwaardeCode IS NULL)",
                              whereclause,
                              list = list,
                              taxon = taxon,
