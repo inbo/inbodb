@@ -44,9 +44,7 @@
 #' rm(con)
 #' }
 
-get_inboveg_survey <- function(connection,
-                           survey_name,
-                           collect = FALSE) {
+get_inboveg_survey <- function(connection, survey_name, collect = FALSE) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
@@ -67,7 +65,8 @@ get_inboveg_survey <- function(connection,
     FROM [dbo].[ivSurvey] ivS
     WHERE ivS.Name LIKE {survey_name}",
     survey_name = survey_name,
-    .con = connection)
+    .con = connection
+  )
 
   query_result <- tbl(connection, sql(sql_statement))
 

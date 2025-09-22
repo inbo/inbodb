@@ -78,10 +78,11 @@ The following examples can be used as base to continue selecting the data you re
 Get the most recent version of the 'Rode lijst van de Dagvlinders':
 
 ```{r , echo=TRUE}
-rl_dagvlinders <- get_taxonlijsten_lists(con,
-                              list = "%rode%dagvlinders%",
-                              collect = TRUE
-                           )
+rl_dagvlinders <- get_taxonlijsten_lists(
+  con,
+  list = "%rode%dagvlinders%",
+  collect = TRUE
+)
 ```
 
 ```{r, eval=TRUE, echo=TRUE}
@@ -91,28 +92,26 @@ rl_dagvlinders
 Get all recent versions of red lists. This time we will not use `collect = TRUE`, which will return a [lazy query](https://dbplyr.tidyverse.org/reference/tbl.src_dbi.html):
 
 ```{r, eval=FALSE, echo=TRUE}
-rodelijst_recent <- get_taxonlijsten_lists(con,
-                              list = "%rode lijst%"
-                           )
+rodelijst_recent <- get_taxonlijsten_lists(con, list = "%rode lijst%")
 ```
 
 Get all (most recent and older) taxonlist versions in the database:
 
 ```{r, eval=FALSE, echo=TRUE}
-listversions_all <- get_taxonlijsten_lists(con,
-                              version = "all"
-                           )
+listversions_all <- get_taxonlijsten_lists(con, version = "all")
 ```
 
 Red lists need to be validated (= compliant with IUCN criteria) and authorized by the minister. Get the status of red lists:
 
 ```{r, echo=TRUE}
-rodelijst_status <- get_taxonlijsten_lists(con,
-                              list = "%rode lijst%",
-                              collect = TRUE
-                           )  %>%
-select("Taxonlijst", "PublicatieJaar", "Criteria", "Validering",
-       "Vaststelling")
+rodelijst_status <- get_taxonlijsten_lists(
+  con,
+  list = "%rode lijst%",
+  collect = TRUE
+) %>%
+  select(
+    "Taxonlijst", "PublicatieJaar", "Criteria", "Validering", "Vaststelling"
+  )
 ```
 
 ```{r, eval=TRUE, echo=TRUE}
@@ -196,10 +195,12 @@ critical <- get_taxonlijsten_items(con, feature = "CR",
 Get original and interpreted Cicindela taxa from list 'Soortenbesluit'
 
 ```{r, echo=TRUE}
-cicindela <- get_taxonlijsten_items(con, list = "Soortenbesluit",
-                                    taxon = "%Cicindela%", original = TRUE,
-                                    collect = TRUE) %>%
-select("Naamwet_origineel", "NaamNed_origineel", "Naamwet_interpretatie",
+cicindela <- get_taxonlijsten_items(
+  con, list = "Soortenbesluit",
+  taxon = "%Cicindela%", original = TRUE,
+  collect = TRUE
+) %>%
+  select("Naamwet_origineel", "NaamNed_origineel", "Naamwet_interpretatie",
          "NaamNed_interpretatie")
 ```
 
@@ -210,12 +211,14 @@ cicindela
 Compare red list status on multiple list versions:
 
 ```{r, echo=TRUE}
-redlist_evolution <- get_taxonlijsten_items(con, version = "all",
-                                    list = "rode lijst van de dagvlinders",
-                                    collect = TRUE) %>%
-select("Lijst", "Publicatiejaar", "Naamwet_interpretatie",
+redlist_evolution <- get_taxonlijsten_items(
+  con, version = "all",
+  list = "rode lijst van de dagvlinders",
+  collect = TRUE
+) %>%
+  select("Lijst", "Publicatiejaar", "Naamwet_interpretatie",
          "NaamNed_interpretatie", "KenmerkwaardeCode") %>%
-pivot_wider(names_from = "Publicatiejaar", values_from = "KenmerkwaardeCode")
+  pivot_wider(names_from = "Publicatiejaar", values_from = "KenmerkwaardeCode")
 ```
 
 ```{r, eval=TRUE, echo=TRUE}
@@ -341,11 +344,15 @@ Argynnis adippe      |(Linnaeus, 1767)              | Adippevlinder
 But that is not how it works. For each taxon there should be only one record, i.e. the name that is considered by the administrator of the `Taxon` table as the currently accepted scientific and currently accepted Dutch name. Synonyms can of course occur as an original `TaxonlijstItem`. For example, we see that in the first version of the Red List of Butterflies the old Dutch name 'Adippevlinder' was used. The second version only contained Dutch names. They are all linked to the single entry Fabriciana adippe - Bosrandparelmoervlinder in the `Taxon` table:
 
 ```{r, echo=FALSE}
-adippe <- get_taxonlijsten_items(con, version = "all",
-                       list = "rode lijst van de dagvlinders",
-                       taxon = "%adippe%", original = TRUE, collect = TRUE) %>%
-  select("Lijst", "Publicatiejaar", "Naamwet_origineel", "NaamNed_origineel",
-           "Naamwet_interpretatie", "NaamNed_interpretatie")
+adippe <- get_taxonlijsten_items(
+  con, version = "all",
+  list = "rode lijst van de dagvlinders",
+  taxon = "%adippe%", original = TRUE, collect = TRUE
+) %>%
+  select(
+    "Lijst", "Publicatiejaar", "Naamwet_origineel", "NaamNed_origineel",
+    "Naamwet_interpretatie", "NaamNed_interpretatie"
+  )
 ```
 
 ```{r, eval=TRUE, echo=FALSE}

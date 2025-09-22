@@ -64,10 +64,12 @@
 #' }
 #'
 
-get_inboveg_relation_recording <- function(connection,
-                             survey_name,
-                             multiple = FALSE,
-                             collect = FALSE) {
+get_inboveg_relation_recording <- function(
+  connection,
+  survey_name,
+  multiple = FALSE,
+  collect = FALSE
+) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
@@ -107,27 +109,27 @@ get_inboveg_relation_recording <- function(connection,
   INNER JOIN ivSurvey ON ivRecording.SurveyId = ivSurvey.Id
   WHERE (((ivRecordingRelation.ParentId) Is Not Null))"
 
-if (!multiple) {
-  sql_statement <- glue_sql(common_part,
-                            "AND ivSurvey.Name LIKE {survey_name}",
-                            survey_name = survey_name,
-                            .con = connection)
+  if (!multiple) {
+    sql_statement <- glue_sql(common_part,
+                              "AND ivSurvey.Name LIKE {survey_name}",
+                              survey_name = survey_name,
+                              .con = connection)
 
-} else {
-  sql_statement <- glue_sql(common_part,
-                            "AND ivSurvey.Name IN ({survey_name*})",
-                            survey_name = survey_name,
-                            .con = connection)
-}
+  } else {
+    sql_statement <- glue_sql(common_part,
+                              "AND ivSurvey.Name IN ({survey_name*})",
+                              survey_name = survey_name,
+                              .con = connection)
+  }
 
-query_result <- tbl(connection, sql(sql_statement))
+  query_result <- tbl(connection, sql(sql_statement))
 
-if (!isTRUE(collect)) {
-  return(query_result)
-} else {
-  query_result <- collect(query_result)
-  return(query_result)
-}
+  if (!isTRUE(collect)) {
+    return(query_result)
+  } else {
+    query_result <- collect(query_result)
+    return(query_result)
+  }
 }
 
 get_inboveg_relation <- function(connection,

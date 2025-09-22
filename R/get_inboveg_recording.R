@@ -89,7 +89,8 @@ get_inboveg_recording <- function(
   user_reference = "%",
   recording_givid = "%",
   collect = FALSE,
-  multiple = deprecated()) {
+  multiple = deprecated()
+) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
@@ -173,7 +174,8 @@ get_inboveg_recording <- function(
     recording_givid = recording_givid,
     user_reference = user_reference,
     common_part = common_part,
-    connection = connection)
+    connection = connection
+  )
 
   query_result <- tbl(connection, sql(sql_statement))
 
@@ -190,7 +192,8 @@ get_inboveg_recordings <- function(
   user_reference = "%",
   recording_givid = "%",
   collect = FALSE,
-  multiple = FALSE) {
+  multiple = FALSE
+) {
 
   .Deprecated("get_inboveg_recording")
   get_inboveg_recording(connection = connection,

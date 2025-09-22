@@ -144,10 +144,12 @@
 #' rm(observations_all)
 #' }
 
-get_meetnetten_observations <- function(connection,
-                               scheme_name = NULL,
-                               species_group = NULL,
-                               collect = FALSE) {
+get_meetnetten_observations <- function(
+  connection,
+  scheme_name = NULL,
+  species_group = NULL,
+  collect = FALSE
+) {
 
   species_group_selected <- species_group
 
@@ -230,9 +232,9 @@ get_meetnetten_observations <- function(connection,
         filter(tolower(.data$scheme) %in% scheme_name)
     }
   } else if (!is.null(species_group_selected)) {
-      query_result <- query_result %>%
-        filter(tolower(.data$species_group) %in% species_group_selected)
-      }
+    query_result <- query_result %>%
+      filter(tolower(.data$species_group) %in% species_group_selected)
+  }
 
   query_result <- query_result %>%
     arrange(.data$species_group, .data$scheme, .data$start_date, .data$location)

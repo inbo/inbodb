@@ -67,13 +67,14 @@
 #' rm(con)
 #' }
 
-get_taxonlijsten_items <- function(connection,
-                                       list = "%",
-                                       taxon = "%",
-                                       feature = "%",
-                                       version = c("latest", "old", "all"),
-                                       original = FALSE,
-                                       collect = FALSE
+get_taxonlijsten_items <- function(
+  connection,
+  list = "%",
+  taxon = "%",
+  feature = "%",
+  version = c("latest", "old", "all"),
+  original = FALSE,
+  collect = FALSE
 ) {
 
   assert_that(is.character(list))
@@ -109,7 +110,8 @@ get_taxonlijsten_items <- function(connection,
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
 
-  sql_statement <- glue_sql("SELECT Lijst
+  sql_statement <- glue_sql(
+    "SELECT Lijst
 	, Publicatiejaar
 	, LaatsteVersie
 	, Taxongroep
@@ -119,19 +121,19 @@ get_taxonlijsten_items <- function(connection,
 	, Kenmerk
 	, KenmerkwaardeCode
 	, Kenmerkwaarde ",
-                             original,
-                             " FROM [dbo].[vw_Taxonlijstitem_detail]
+    original,
+    " FROM [dbo].[vw_Taxonlijstitem_detail]
     WHERE 1 = 1
     AND lijst LIKE {list}
     AND (Naamwet_interpretatie LIKE {taxon} OR
     Naamned_interpretatie LIKE {taxon})
     AND KenmerkwaardeCode LIKE {feature}",
-                             whereclause,
-                             list = list,
-                             taxon = taxon,
-                             feature = feature,
-                             version = version,
-                             .con = connection
+    whereclause,
+    list = list,
+    taxon = taxon,
+    feature = feature,
+    version = version,
+    .con = connection
   )
 
   query_result <- tbl(connection, sql(sql_statement))

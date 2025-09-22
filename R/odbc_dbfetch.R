@@ -50,4 +50,5 @@ setMethod(
     )
 
     df
-  })
+  }
+)

@@ -42,10 +42,11 @@
 #' rm(con)
 #' }
 
-get_taxonlijsten_features <- function(connection,
-                                   list = "%",
-                                   version = c("latest", "old", "all"),
-                                   collect = FALSE
+get_taxonlijsten_features <- function(
+  connection,
+  list = "%",
+  version = c("latest", "old", "all"),
+  collect = FALSE
 ) {
 
   assert_that(is.character(list))
@@ -63,7 +64,8 @@ get_taxonlijsten_features <- function(connection,
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
 
-  sql_statement <- glue_sql("SELECT * FROM
+  sql_statement <- glue_sql(
+    "SELECT * FROM
       (SELECT DISTINCT tl.Naam AS Taxonlijst
         , tlv.PublicatieJaar
 		, v.Version
@@ -89,10 +91,10 @@ FROM [dbo].[Taxonlijst] tl
 	WHERE 1 = 1
        AND tl.Naam LIKE {list}
        )tmp ",
-                             whereclause,
-                             list = list,
-                             version = version,
-                             .con = connection
+    whereclause,
+    list = list,
+    version = version,
+    .con = connection
   )
 
   query_result <- tbl(connection, sql(sql_statement))

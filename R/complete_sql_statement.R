@@ -48,7 +48,8 @@ complete_sql_statement <- function(
     survey_name = survey_name,
     recording_givid = recording_givid,
     user_reference = user_reference,
-    .con = connection)
+    .con = connection
+  )
 
   return(sql_statement)
 }

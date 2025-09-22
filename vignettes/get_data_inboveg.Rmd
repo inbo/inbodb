@@ -91,7 +91,8 @@ Get information of a specific survey and collect data.
 survey_info <- get_inboveg_survey(
   con,
   survey_name = "OudeLanden_1979",
-  collect = TRUE)
+  collect = TRUE
+)
 ```
 
 ```{r eval=TRUE}
@@ -116,7 +117,8 @@ If only a part of the survey name is known, you can make use of wildcards such a
 partsurveys <- get_inboveg_survey(
   con,
   survey_name = "%MILKLIM%",
-  collect = TRUE)
+  collect = TRUE
+)
 ```
 
 ```{r eval=TRUE}
@@ -137,7 +139,8 @@ header_info <- get_inboveg_header(
   con,
   survey_name = "OudeLanden_1979",
   rec_type = "Classic",
-  collect = TRUE)
+  collect = TRUE
+)
 ```
 
 ```{r eval=TRUE}
@@ -150,7 +153,8 @@ Get header information from several specific surveys by using `multiple = TRUE`.
 header_severalsurveys <- get_inboveg_header(
   con,
   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
-                multiple = TRUE)
+  multiple = TRUE
+)
 ```
 
 Get header information of all surveys without collecting the data:
@@ -172,7 +176,8 @@ First, we show how to get the relevés from one survey and collect the data:
 recording_heischraal2012 <- get_inboveg_recording(
   con,
   survey_name = "MILKLIM_Heischraal2012",
-  collect = TRUE)
+  collect = TRUE
+)
 ```
 
 ```{r eval=TRUE}
@@ -185,7 +190,8 @@ Here is how to get the relevé for a specific `RecordingGivid`:
 recording_specific_givid <- get_inboveg_recording(
   con,
   recording_givid = "IV2012080609161322",
-  collect = TRUE)
+  collect = TRUE
+)
 ```
 
 Or for multiple `RecordingGivid`: 
@@ -194,7 +200,8 @@ Or for multiple `RecordingGivid`:
 recording_specific_givid <- get_inboveg_recording(
   con,
   recording_givid = c("IV2012080609161322", "IV2012081611384756"),
-  collect = TRUE)
+  collect = TRUE
+)
 ```
 
 The above is very useful in tandem with `get_inboveg_header()` to first search for all relevés belonging to one or more surveys and further filter these records to only the relevés you require based on the relevé metadata (such as date, observer, ...).
@@ -206,7 +213,8 @@ Or based on a user reference:
 recording_specific_userref <- get_inboveg_recording(
   con,
   user_reference = "HS_1001",
-  collect = TRUE)
+  collect = TRUE
+)
 ```
 
 Get all recordings from MILKLIM surveys (partial matching), without collecting the data:
@@ -214,7 +222,8 @@ Get all recordings from MILKLIM surveys (partial matching), without collecting t
 ```{r, eval = FALSE}
 recording_milkim <- get_inboveg_recording(
   con,
-  survey_name = "%MILKLIM%")
+  survey_name = "%MILKLIM%"
+)
 ```
 
 Get recordings from several specific surveys:
@@ -223,7 +232,8 @@ Get recordings from several specific surveys:
 recording_severalsurveys <- get_inboveg_recording(
   con,
   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
-  collect = TRUE)
+  collect = TRUE
+)
 ```
 
 Get all relevés of all surveys,  without collecting the data:
@@ -252,7 +262,8 @@ classif_info <- get_inboveg_classification(
   con,
   survey_name = "MILKLIM_Heischraal2012",
   classif = "4010",
-  collect = TRUE)
+  collect = TRUE
+)
 ```
 
 ```{r eval=TRUE}
@@ -262,10 +273,11 @@ classif_info
 Get the classification from several specific surveys
 
 ```{r, eval = FALSE}
- classif_info <- get_inboveg_classification(
-   con,
-   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
-   multiple = TRUE)
+classif_info <- get_inboveg_classification(
+  con,
+  survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
+  multiple = TRUE
+)
 classif_info
 ```
 
@@ -285,7 +297,8 @@ Get the qualifiers from one survey:
 ```{r examples_qualifiers}
 qualifiers_heischraal2012 <- get_inboveg_qualifier(
   con,
-  survey_name = "MILKLIM_Heischraal2012")
+  survey_name = "MILKLIM_Heischraal2012"
+)
 ```
 
 ```{r eval=TRUE}
@@ -298,7 +311,8 @@ Get all site qualifiers (SQ) from MILKLIM surveys (partial matching):
 qualifiers_milkim <- get_inboveg_qualifier(
   con,
   survey_name = "%MILKLIM%",
-  qualifier_type = "SQ")
+  qualifier_type = "SQ"
+)
 ```
 
 Get qualifiers from several specific surveys with `multiple = TRUE`:
@@ -307,7 +321,8 @@ Get qualifiers from several specific surveys with `multiple = TRUE`:
 qualifiers_severalsurveys <- get_inboveg_qualifier(
   con,
   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
-  multiple = TRUE)
+  multiple = TRUE
+)
 ```
 
 Get all qualifiers of all surveys:
@@ -325,7 +340,8 @@ Get the layer cover information from one survey
 ```{r, eval = FALSE}
 layerinfo_heischraal2012 <- get_inboveg_layer_cover(
   con,
-  survey_name = "MILKLIM_Heischraal2012")
+  survey_name = "MILKLIM_Heischraal2012"
+)
 ```
 
 Get all layer cover information from MILKLIM surveys (partial matching)
@@ -333,7 +349,8 @@ Get all layer cover information from MILKLIM surveys (partial matching)
 ```{r, eval = FALSE}
 layerinfo_milkim <- get_inboveg_layer_cover(
   con,
-  survey_name = "%MILKLIM%")
+  survey_name = "%MILKLIM%"
+)
 ```
 
 Get layer cover information from several specific surveys
@@ -342,7 +359,8 @@ Get layer cover information from several specific surveys
 layerinfo_severalsurveys <- get_inboveg_layer_cover(
   con,
   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
-  multiple = TRUE)
+  multiple = TRUE
+)
 ```
 
 Get all layer cover information of all surveys
@@ -360,7 +378,8 @@ Get the layer qualifiers from one survey
 ```{r, eval = FALSE}
 layerqualifier_gagealutea <- get_inboveg_layer_qualifier(
   con,
-  survey_name = "GageaLutea_1980")
+  survey_name = "GageaLutea_1980"
+)
 ```
 
 Get all layer qualifiers from MILKLIM surveys (partial matching)
@@ -368,7 +387,8 @@ Get all layer qualifiers from MILKLIM surveys (partial matching)
 ```{r, eval = FALSE}
 layerqualifiers_milkim <- get_inboveg_layer_qualifier(
   con,
-  survey_name = "%MILKLIM%")
+  survey_name = "%MILKLIM%"
+)
 ```
 
 Get layer qualifiers from several specific surveys
@@ -377,7 +397,8 @@ Get layer qualifiers from several specific surveys
 layerqualifiers_severalsurveys <- get_inboveg_layer_qualifier(
   con,
   survey_name = c("MILKLIM_Heischraal2012", "NICHE Vlaanderen"),
-  multiple = TRUE)
+  multiple = TRUE
+)
 ```
 
 Get all layer qualifiers of all surveys
@@ -395,7 +416,8 @@ Get all parent-child-relations from `N2000meetnet` surveys (partial matching):
 ```{r}
 relations_n2000meetnet <- get_inboveg_relation_recording(
   con,
-  survey_name = "%N2000meetnet%")
+  survey_name = "%N2000meetnet%"
+)
 
 relations_n2000meetnet
 ```
@@ -416,7 +438,8 @@ Get the parent-child-relations from several specific surveys:
 relations_severalsurveys <- get_inboveg_relation_recording(
   con,
   survey_name =  c("DeBlankaart-1985-Beheer", "N2000meetnet_Grasland"),
-  multiple = TRUE)
+  multiple = TRUE
+)
 ```
 
 
@@ -453,7 +476,8 @@ con <- connect_inbo_dbase("D0010_00_Cydonia")
 recording_heischraal2012 <- get_inboveg_recording(
   con,
   survey_name = "MILKLIM_Heischraal2012",
-  collect = TRUE)
+  collect = TRUE
+)
 
 # close the connection
 dbDisconnect(con)

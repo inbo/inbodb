@@ -101,9 +101,11 @@
 #' rm(locations_dragonflies)
 #' }
 
-get_meetnetten_locations <- function(connection,
-                                    scheme_name = NULL,
-                                    species_group = NULL) {
+get_meetnetten_locations <- function(
+  connection,
+  scheme_name = NULL,
+  species_group = NULL
+) {
 
   species_group_selected <- species_group
 
@@ -179,8 +181,10 @@ get_meetnetten_locations <- function(connection,
     filter(!is.na(.data$location))
 
   locations_main <- locations_main %>%
-    select(.data$species_group, .data$scheme, .data$location, .data$is_sample,
-          .data$is_active, .data$geom)
+    select(
+      .data$species_group, .data$scheme, .data$location, .data$is_sample,
+      .data$is_active, .data$geom
+    )
 
   locations_sublocations <- locations_sublocations %>%
     select(.data$species_group, .data$scheme, .data$location, .data$sublocation,

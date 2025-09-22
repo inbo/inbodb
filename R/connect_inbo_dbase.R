@@ -35,73 +35,72 @@
 #' }
 connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
 
-    assert_that(is.flag(autoconvert_utf8), noNA(autoconvert_utf8))
-    encoding <-
-        ifelse(autoconvert_utf8 & .Platform$OS.type == "windows", "latin1", "")
+  assert_that(is.flag(autoconvert_utf8), noNA(autoconvert_utf8))
+  encoding <-
+     ifelse(autoconvert_utf8 & .Platform$OS.type == "windows", "latin1", "")
 
-    # datawarehouse databases (sql08) start with an M, S or W; most
-    # transactional (sql07) with a D (by agreement with dba's)
-    if (any(startsWith(database_name, c("M", "S", "W")))) {
-        server <- "inbo-sql08-prd.inbo.be"  # DWH server
-        type <- "INBO DWH Server"
-    } else {
-        server <- "inbo-sql07-prd.inbo.be"  # SQL transactional server
-        type <- "INBO PRD Server"
+  # datawarehouse databases (sql08) start with an M, S or W; most
+  # transactional (sql07) with a D (by agreement with dba's)
+  if (any(startsWith(database_name, c("M", "S", "W")))) {
+     server <- "inbo-sql08-prd.inbo.be"  # DWH server
+     type <- "INBO DWH Server"
+  } else {
+     server <- "inbo-sql07-prd.inbo.be"  # SQL transactional server
+     type <- "INBO PRD Server"
+  }
+
+  # look up most recent ODBC Driver for SQL Server
+  driversvec <- unique(odbcListDrivers()$name)
+  drivers_sql <- driversvec[grepl("SQL Server", driversvec)]
+  drivers_sql_odbc <- drivers_sql[grepl("ODBC Driver", drivers_sql)]
+  sql_driver <- tail(sort(drivers_sql_odbc), 1)
+  if (length(sql_driver) == 0) {
+      stop("The 'ODBC Driver for SQL Server' is missing. Please install it or contact your system administrator.") #nolint
+  }
+
+  # connect to database
+  tryCatch(
+    conn <- dbConnect(odbc(),
+                      driver = sql_driver,
+                      server = server,
+                      port = 1433,
+                      database = database_name,
+                      encoding = encoding,
+                      trusted_connection = "yes",
+                      encrypt = "no"),
+    error = function(e) {
+      assert_that(
+        !grepl("connection to SQL Server", e),
+        msg =
+          paste(
+            e,
+            "[INBO] Are you connected to the internet?",
+            "Are you connected to the INBO network?",
+            "Is the VPN connection active when not @ INBO?",
+            "Did you open a tunnel through the bastion?"
+          )
+      )
+      assert_that(
+        !grepl("login failed", e),
+        msg =
+          paste(
+            e,
+            "[INBO] Is the database name written correct?",
+            "Do you have read permissions on the database?"
+          )
+      )
+      stop(e)
     }
+  )
 
-    # look up most recent ODBC Driver for SQL Server
-    driversvec <- unique(odbcListDrivers()$name)
-    drivers_sql <- driversvec[grepl("SQL Server", driversvec)]
-    drivers_sql_odbc <-
-        drivers_sql[grepl("ODBC Driver", drivers_sql)]
-    sql_driver <- tail(sort(drivers_sql_odbc), 1)
-    if (length(sql_driver) == 0) {
-        stop("The 'ODBC Driver for SQL Server' is missing. Please install it or contact your system administrator.") #nolint
-    }
+  # derived from the odbc package Viewer setup to activate the RStudio Viewer
+  code_call <- c(match.call())
+  code_call <- paste(c("library(inbodb)",
+                       paste("con <-", gsub(", ", ",\n\t", code_call))),
+                     collapse = "\n")
+  on_connection_opened(conn, code_call, type)
 
-    # connect to database
-    tryCatch(
-        conn <- dbConnect(odbc(),
-                          driver = sql_driver,
-                          server = server,
-                          port = 1433,
-                          database = database_name,
-                          encoding = encoding,
-                          trusted_connection = "yes",
-                          encrypt = "no"),
-        error = function(e) {
-            assert_that(
-                !grepl("connection to SQL Server", e),
-                msg =
-                    paste(
-                        e,
-                        "[INBO] Are you connected to the internet?",
-                        "Are you connected to the INBO network?",
-                        "Is the VPN connection active when not @ INBO?",
-                        "Did you open a tunnel through the bastion?"
-                    )
-            )
-            assert_that(
-                !grepl("login failed", e),
-                msg =
-                    paste(
-                        e,
-                        "[INBO] Is the database name written correct?",
-                        "Do you have read permissions on the database?"
-                    )
-            )
-            stop(e)
-        }
-    )
-
-    # derived from the odbc package Viewer setup to activate the RStudio Viewer
-    code_call <- c(match.call())
-    code_call <- paste(c("library(inbodb)",
-                         paste("con <-", gsub(", ", ",\n\t", code_call))),
-                       collapse = "\n")
-    on_connection_opened(conn, code_call, type)
-
-    return(conn)
+  return(conn)
 }
 
 
@@ -117,57 +116,57 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
 #' @importFrom DBI dbDisconnect
 #' @noRd
 on_connection_opened <- function(connection, code, type) {
-    # make sure we have an observer
-    observer <- getOption("connectionObserver")
-    if (is.null(observer))
-        return(invisible(NULL))
+  # make sure we have an observer
+  observer <- getOption("connectionObserver")
+  if (is.null(observer))
+    return(invisible(NULL))
 
-    # use the database name as the display name
-    display_name <- paste("INBO Database -", connection@info$dbname)
+  # use the database name as the display name
+  display_name <- paste("INBO Database -", connection@info$dbname)
 
-    # let observer know that connection has opened
-    observer$connectionOpened(
-        # connection type
-        type = type,
+  # let observer know that connection has opened
+  observer$connectionOpened(
+    # connection type
+    type = type,
 
-        # name displayed in connection pane
-        displayName = display_name,
+    # name displayed in connection pane
+    displayName = display_name,
 
-        # host key
-        host = connection@info$dbname,
+    # host key
+    host = connection@info$dbname,
 
-        # icon for connection
-        icon = system.file(file.path("static", "logo.png"),
-                           package = "inbodb"),
+    # icon for connection
+    icon = system.file(file.path("static", "logo.png"),
+                       package = "inbodb"),
 
-        # connection code
-        connectCode = code,
+    # connection code
+    connectCode = code,
 
-        # disconnection code
-        disconnect = function() {
-            dbDisconnect(connection)
-        },
+    # disconnection code
+    disconnect = function() {
+      dbDisconnect(connection)
+    },
 
-        listObjectTypes = function() {
-            odbcListObjectTypes(connection)
-        },
+    listObjectTypes = function() {
+      odbcListObjectTypes(connection)
+    },
 
-        # table enumeration code
-        listObjects = function(...) {
-            odbcListObjects(connection, ...)
-        },
+    # table enumeration code
+    listObjects = function(...) {
+      odbcListObjects(connection, ...)
+    },
 
-        # column enumeration code
-        listColumns = function(...) {
-            odbcListColumns(connection, ...)
-        },
+    # column enumeration code
+    listColumns = function(...) {
+      odbcListColumns(connection, ...)
+    },
 
-        # table preview code
-        previewObject = function(rowLimit, ...) { #nolint: object_name_linter.
-            odbcPreviewObject(connection, rowLimit, ...)
-        },
+    # table preview code
+    previewObject = function(rowLimit, ...) { #nolint: object_name_linter.
+      odbcPreviewObject(connection, rowLimit, ...)
+    },
 
-        # raw connection object
-        connectionObject = connection
-    )
+    # raw connection object
+    connectionObject = connection
+  )
 }
