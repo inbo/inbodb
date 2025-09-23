@@ -27,6 +27,7 @@ on_connection_closed <- function(connection) {
 #' @importFrom methods setMethod
 #' @importFrom odbc dbIsValid
 #' @importFrom utils getFromNamespace
+#' @rdname dbdisconnect
 #' @export
 setMethod(
   "dbDisconnect", "OdbcConnection",

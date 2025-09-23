@@ -13,6 +13,7 @@
 #' @importFrom methods setMethod
 #' @importFrom  odbc dbColumnInfo
 #' @importFrom utils getFromNamespace
+#' @rdname dbfetch
 #' @export
 setMethod(
   "dbFetch", "OdbcResult",
