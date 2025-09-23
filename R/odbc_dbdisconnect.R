@@ -20,6 +20,8 @@ on_connection_closed <- function(connection) {
 #' function in the `odbc` package and is an implementation of the method
 #' `dbDisconnect` defined in the `DBI` package.
 #'
+#' @param conn A \link[DBI:DBIConnection-class]{DBI::DBIConnection}
+#'   object, as returned by \link[DBI:dbConnect]{DBI::dbConnect()}
 #' @inheritParams DBI::dbDisconnect
 #'
 #' @importFrom methods setMethod
