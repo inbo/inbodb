@@ -37,16 +37,16 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
 
   assert_that(is.flag(autoconvert_utf8), noNA(autoconvert_utf8))
   encoding <-
-     ifelse(autoconvert_utf8 & .Platform$OS.type == "windows", "latin1", "")
+    ifelse(autoconvert_utf8 & .Platform$OS.type == "windows", "latin1", "")
 
   # datawarehouse databases (sql08) start with an M, S or W; most
   # transactional (sql07) with a D (by agreement with dba's)
   if (any(startsWith(database_name, c("M", "S", "W")))) {
-     server <- "inbo-sql08-prd.inbo.be"  # DWH server
-     type <- "INBO DWH Server"
+    server <- "inbo-sql08-prd.inbo.be"  # DWH server
+    type <- "INBO DWH Server"
   } else {
-     server <- "inbo-sql07-prd.inbo.be"  # SQL transactional server
-     type <- "INBO PRD Server"
+    server <- "inbo-sql07-prd.inbo.be"  # SQL transactional server
+    type <- "INBO PRD Server"
   }
 
   # look up most recent ODBC Driver for SQL Server
