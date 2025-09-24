@@ -515,5 +515,15 @@ rm(con)
 
 ```{r echo=FALSE, include=FALSE}
 rm(database_access)
-save.image(file = "get_data_inboveg_results.Rda")
+save(
+  allsurveys,
+  classif_info,
+  header_info,
+  partsurveys,
+  qualifiers_heischraal2012,
+  recording_heischraal2012,
+  relations_n2000meetnet,
+  survey_info,
+  file = "get_data_inboveg_results.Rda"
+)
 ```

@@ -213,8 +213,8 @@ visits <- get_meetnetten_visits(con,
 ```{r, eval = TRUE}
 visits %>%
   filter(location == "Arenbergpolder") %>%
-  select(location, visit_id, start_date,
-         start_time, visit_status)
+  select("location", "visit_id", "start_date",
+         "start_time", "visit_status")
 ```
 
 Use `?get_meetnetten_visits` to get more information on the variables that are
@@ -283,7 +283,16 @@ rm(con)
 
 ```{r, echo=FALSE, include=FALSE}
 rm(database_access)
-save.image(file = "get_data_meetnetten_results.Rda")
+save(
+  locations,
+  locations_dragonflies,
+  main_locations,
+  observations,
+  scheme_info,
+  sublocations,
+  visits,
+  file = "get_data_meetnetten_results.Rda"
+)
 ```
 
 # Data policy

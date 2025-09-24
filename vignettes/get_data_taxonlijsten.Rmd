@@ -484,5 +484,22 @@ fullfield %>%
 dbDisconnect(con)
 rm(con)
 rm(database_access)
-save.image(file = "get_data_taxonlijsten_results.Rda")
+save(
+  adippe,
+  cicindela,
+  feature,
+  featurevalue,
+  frog,
+  fullfield,
+  fulltable,
+  gentiaanblauwtje,
+  no_feature,
+  redlist_evolution,
+  reindeer,
+  rl_dagvlinders,
+  rodelijst_status,
+  tlv,
+  veenmosorchis,
+  file = "get_data_taxonlijsten_results.Rda"
+)
 ```
