@@ -28,7 +28,7 @@ tutorial}.
 }
 \examples{
 \dontrun{
-connection <- connect_inbo_dbase("D0021_00_userFlora")
+connection <- connect_inbo_dbase("D0152_00_Flora")
 connection <- connect_inbo_dbase("W0003_00_Lims")
 }
 }
