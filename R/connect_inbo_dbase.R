@@ -42,10 +42,12 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
   # datawarehouse databases (sql08) start with an M, S or W; most
   # transactional (sql07) with a D (by agreement with dba's)
   if (any(startsWith(database_name, c("M", "S", "W")))) {
-    server <- "inbo-sql08-prd.inbo.be"  # DWH server
+    server_new <- "inbo-sql07-prd.inbo.be"  # wrong server to test, to replace!
+    server_old <- "inbo-sql08-prd.inbo.be"  # DWH server
     type <- "INBO DWH Server"
   } else {
-    server <- "inbo-sql07-prd.inbo.be"  # SQL transactional server
+    server_new <- "inbo-sql08-prd.inbo.be"  # wrong server to test, to replace!
+    server_old <- "inbo-sql07-prd.inbo.be"  # SQL transactional server
     type <- "INBO PRD Server"
   }
 
@@ -60,37 +62,53 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
   }
 
   # connect to database
-  tryCatch(
-    conn <- dbConnect(odbc(),
-                      driver = sql_driver,
-                      server = server,
-                      port = 1433,
-                      database = database_name,
-                      encoding = encoding,
-                      trusted_connection = "yes",
-                      encrypt = "no"),
+  conn <- tryCatch(
+    dbConnect(
+      odbc(),
+      driver = sql_driver,
+      server = server_new,
+      port = 1433,
+      database = database_name,
+      encoding = encoding,
+      trusted_connection = "yes",
+      encrypt = "no"
+    ),
     error = function(e) {
-      assert_that(
-        !grepl("connection to SQL Server", e),
-        msg =
-            paste(
-                e,
-                "[INBO] Are you connected to the internet?",
-                "Are you connected to the INBO network?",
-                "Is the VPN connection active when not @ INBO?",
-                "Did you open a tunnel through the bastion?"
-            )
-      )
-      assert_that(
-        !grepl("login failed", e),
-        msg =
-            paste(
+      tryCatch(
+        dbConnect(
+          odbc(),
+          driver = sql_driver,
+          server = server_old,
+          port = 1433,
+          database = database_name,
+          encoding = encoding,
+          trusted_connection = "yes",
+          encrypt = "no"
+        ),
+        error = function(e) {
+          assert_that(
+            !grepl("connection to SQL Server", e),
+            msg =
+                paste(
+                    e,
+                    "[INBO] Are you connected to the internet?",
+                    "Are you connected to the INBO network?",
+                    "Is the VPN connection active when not @ INBO?",
+                    "Did you open a tunnel through the bastion?"
+                )
+          )
+          assert_that(
+            !grepl("login failed", e),
+            msg =
+              paste(
                 e,
                 "[INBO] Is the database name written correct?",
                 "Do you have read permissions on the database?"
-            )
+              )
+          )
+          stop(e)
+        }
       )
-      stop(e)
     }
   )
 
