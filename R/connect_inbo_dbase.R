@@ -88,14 +88,13 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
         error = function(e) {
           assert_that(
             !grepl("connection to SQL Server", e),
-            msg =
-                paste(
-                    e,
-                    "[INBO] Are you connected to the internet?",
-                    "Are you connected to the INBO network?",
-                    "Is the VPN connection active when not @ INBO?",
-                    "Did you open a tunnel through the bastion?"
-                )
+            msg = paste(
+              e,
+              "[INBO] Are you connected to the internet?",
+              "Are you connected to the INBO network?",
+              "Is the VPN connection active when not @ INBO?",
+              "Did you open a tunnel through the bastion?"
+            )
           )
           assert_that(
             !grepl("login failed", e),
@@ -138,7 +137,7 @@ on_connection_opened <- function(connection, code, type) {
   # make sure we have an observer
   observer <- getOption("connectionObserver")
   if (is.null(observer))
-      return(invisible(NULL))
+    return(invisible(NULL))
 
   # use the database name as the display name
   display_name <- paste("INBO Database -", connection@info$dbname)
@@ -163,26 +162,26 @@ on_connection_opened <- function(connection, code, type) {
 
     # disconnection code
     disconnect = function() {
-        dbDisconnect(connection)
+      dbDisconnect(connection)
     },
 
     listObjectTypes = function() {
-        odbcListObjectTypes(connection)
+      odbcListObjectTypes(connection)
     },
 
     # table enumeration code
     listObjects = function(...) {
-        odbcListObjects(connection, ...)
+      odbcListObjects(connection, ...)
     },
 
     # column enumeration code
     listColumns = function(...) {
-        odbcListColumns(connection, ...)
+      odbcListColumns(connection, ...)
     },
 
     # table preview code
     previewObject = function(rowLimit, ...) { #nolint: object_name_linter.
-        odbcPreviewObject(connection, rowLimit, ...)
+      odbcPreviewObject(connection, rowLimit, ...)
     },
 
     # raw connection object

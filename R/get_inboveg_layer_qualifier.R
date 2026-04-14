@@ -60,9 +60,10 @@
 #'
 
 
-get_inboveg_layer_qualifier <- function(connection,
-                                   survey_name,
-                                   multiple = FALSE) {
+get_inboveg_layer_qualifier <- function(
+    connection,
+    survey_name,
+    multiple = FALSE) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
@@ -84,8 +85,8 @@ get_inboveg_layer_qualifier <- function(connection,
     }
   }
 
-common_part <-
-  "SELECT ivS.Name
+  common_part <-
+    "SELECT ivS.Name
     , ivRecording.RecordingGivid
     , ivRecording.UserReference
     , ivRLLayer.LayerCode
@@ -122,8 +123,9 @@ common_part <-
 
   sql_statement <- glue_sql(
     sql_statement,
-   "ORDER BY ivRecording.RecordingGivid, ivRLLayer.LayerCode",
-    .con = connection)
+    "ORDER BY ivRecording.RecordingGivid, ivRLLayer.LayerCode",
+    .con = connection
+  )
 
   query_result <- dbGetQuery(connection, sql_statement)
 

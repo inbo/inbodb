@@ -88,10 +88,11 @@
 #' rm(visits_all)
 #' }
 
-get_meetnetten_visits <- function(connection,
-                               scheme_name = NULL,
-                               species_group = NULL,
-                               collect = FALSE) {
+get_meetnetten_visits <- function(
+    connection,
+    scheme_name = NULL,
+    species_group = NULL,
+    collect = FALSE) {
 
   species_group_selected <- species_group
 

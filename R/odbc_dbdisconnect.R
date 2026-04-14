@@ -37,4 +37,5 @@ setMethod(
     conn_release <- getFromNamespace("connection_release", "odbc")
     conn_release(conn@ptr)
     invisible(TRUE)
-  })
+  }
+)

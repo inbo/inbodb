@@ -68,10 +68,11 @@
 #'
 
 
-get_inboveg_qualifier <- function(connection,
-                               survey_name,
-                               qualifier_type,
-                               multiple = FALSE) {
+get_inboveg_qualifier <- function(
+    connection,
+    survey_name,
+    qualifier_type,
+    multiple = FALSE) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
@@ -166,7 +167,8 @@ get_inboveg_qualifier <- function(connection,
     sql_statement,
     "ORDER BY ivR.UserReference, ivRLQ.QualifierType, ivRLQ.QualifierCode
     OFFSET 0 ROWS",
-    .con = connection)
+    .con = connection
+  )
 
   sql_statement <- iconv(sql_statement, from =  "UTF-8", to = "latin1")
 

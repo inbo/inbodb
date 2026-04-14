@@ -20,12 +20,11 @@ setMethod(
       error = function(e) {
         if (grepl("Descriptor", e) & grepl("index", tolower(e))) {
           info <- dbColumnInfo(res)
-          columns <-
-            paste0(
-              info[info$type %in% c("-1", "-2", "-3", "-4", "-10", "-151"),
-                   "name"],
-              collapse = "', '"
-            )
+          columns <- paste0(
+            info[info$type %in% c("-1", "-2", "-3", "-4", "-10", "-151"),
+                 "name"],
+            collapse = "', '"
+          )
           if (.Platform$OS.type == "unix") {
             columns <-
               paste0(
@@ -50,4 +49,5 @@ setMethod(
     )
 
     df
-  })
+  }
+)

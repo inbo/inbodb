@@ -154,25 +154,29 @@ WHERE 1=1
   "
 
   if (!fixed) {
-    like_string <-
-      paste0("AND cte.ParentTaxonID in
-		(SELECT DISTINCT CASE WHEN t.ParentTaxonID IS NULL
-		OR t.TaxonRelatieTypeID = 1 THEN t.id ELSE t.ParentTaxonID
-		END AS ParentTaxonID
-		 FROM Taxon t
-			LEFT JOIN Taxon tp ON tp.id = t.ParentTaxonID
-		 WHERE 1=1
-		 	AND (",
-             paste0(
-               c(paste0("cte.NaamNederlands", " LIKE ", "'%", names, "%'"),
-                 paste0("cte.NaamWetenschappelijk", " LIKE ", "'%", names,
-                        "%'")),
-               collapse = " OR "),
-             "))")
+    like_string <- paste0(
+      "AND cte.ParentTaxonID in
+  		(SELECT DISTINCT CASE WHEN t.ParentTaxonID IS NULL
+  		OR t.TaxonRelatieTypeID = 1 THEN t.id ELSE t.ParentTaxonID
+  		END AS ParentTaxonID
+  		 FROM Taxon t
+  			LEFT JOIN Taxon tp ON tp.id = t.ParentTaxonID
+  		 WHERE 1=1
+  		 	AND (",
+      paste0(
+        c(
+          paste0("cte.NaamNederlands", " LIKE ", "'%", names, "%'"),
+          paste0("cte.NaamWetenschappelijk", " LIKE ", "'%", names, "%'")
+        ),
+        collapse = " OR "
+      ),
+      "))"
+    )
     sql_statement <- glue_sql(
       sql_statement,
       like_string,
-      .con = connection)
+      .con = connection
+    )
   } else {
     sql_statement <- glue_sql(
       sql_statement,
@@ -180,13 +184,15 @@ WHERE 1=1
              cte.NaamNederlands IN ({names*}))
              ",
       names = names,
-      .con = connection)
+      .con = connection
+    )
   }
 
   sql_statement <- glue_sql(
     sql_statement,
     "ORDER BY e.BeginDatum DESC OFFSET 0 ROWS",
-    .con = connection)
+    .con = connection
+  )
 
   sql_statement <- iconv(sql_statement, from =  "UTF-8", to = "latin1")
 
