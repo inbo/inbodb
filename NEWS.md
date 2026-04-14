@@ -1,3 +1,8 @@
+# inbodb 0.0.8
+
+* connect to new database server, and connect to old server if database is
+  not yet on new server (issue #67)
+
 # inbodb 0.0.7
 
 * update functions `get_florabank_observations()`,  

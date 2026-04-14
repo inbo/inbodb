@@ -42,11 +42,11 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
   # datawarehouse databases (sql08) start with an M, S or W; most
   # transactional (sql07) with a D (by agreement with dba's)
   if (any(startsWith(database_name, c("M", "S", "W")))) {
-    server_new <- "inbo-sql07-prd.inbo.be"  # wrong server to test, to replace!
+    server_new <- "inbo-sql10-prd.inbo.be"
     server_old <- "inbo-sql08-prd.inbo.be"  # DWH server
     type <- "INBO DWH Server"
   } else {
-    server_new <- "inbo-sql08-prd.inbo.be"  # wrong server to test, to replace!
+    server_new <- "inbo-sql09-prd.inbo.be"
     server_old <- "inbo-sql07-prd.inbo.be"  # SQL transactional server
     type <- "INBO PRD Server"
   }
