@@ -98,6 +98,11 @@ get_taxonlijsten_items <- function(
     whereclause <- ""
   }
 
+  if (feature != "%") {
+    whereclause <-
+      paste0(whereclause, " AND KenmerkwaardeCode like '", feature, "'")
+  }
+
   if (isTRUE(original)) {
     original <- ", Taxonlijstgroep  as Taxongroep_origineel
 	, NaamWet as Naamwet_origineel
@@ -124,12 +129,10 @@ get_taxonlijsten_items <- function(
     WHERE 1 = 1
     AND lijst LIKE {list}
     AND (Naamwet_interpretatie LIKE {taxon} OR
-    Naamned_interpretatie LIKE {taxon})
-    AND KenmerkwaardeCode LIKE {feature}",
+    Naamned_interpretatie LIKE {taxon})",
     whereclause,
     list = list,
     taxon = taxon,
-    feature = feature,
     version = version,
     .con = connection
   )
