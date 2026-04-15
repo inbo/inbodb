@@ -129,7 +129,8 @@ get_taxonlijsten_items <- function(
     WHERE 1 = 1
     AND lijst LIKE {list}
     AND (Naamwet_interpretatie LIKE {taxon} OR
-    Naamned_interpretatie LIKE {taxon})",
+    Naamned_interpretatie LIKE {taxon} OR
+    Naamwet LIKE {taxon} OR Naamned LIKE {taxon})",
     whereclause,
     list = list,
     taxon = taxon,
