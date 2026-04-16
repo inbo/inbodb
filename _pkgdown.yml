@@ -18,6 +18,24 @@ navbar:
         href: CONTRIBUTING.html
       - text: Code of conduct
         href: CODE_OF_CONDUCT.html
+
+reference:
+- title: Functions to establish a connection
+  contents:
+  - has_concept("connection")
+- title: Functions to query Florabank
+  contents:
+  - has_concept("florabank")
+- title: Functions to query INBOveg
+  contents:
+  - has_concept("inboveg")
+- title: Functions to query the meetnetten database
+  contents:
+  - has_concept("meetnetten")
+- title: Functions to query database taxonlijsten
+  contents:
+  - has_concept("taxonlijsten")
+
 authors:
   Research Institute for Nature and Forest (INBO):
     href: "https://www.vlaanderen.be/inbo/en-gb"

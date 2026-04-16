@@ -23,3 +23,9 @@ package and is an implementation of the method \code{dbFetch} defined in the
 \code{DBI} package.  Additional to the \code{odbc} package, it replaces a cryptic
 error message by an informative error message.
 }
+\seealso{
+Other connection: 
+\code{\link{connect_inbo_dbase}()},
+\code{\link{dbDisconnect,OdbcConnection-method}}
+}
+\concept{connection}

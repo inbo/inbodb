@@ -17,6 +17,7 @@
 #' @return odbc connection
 #'
 #' @export
+#' @family connection
 #'
 #' @importFrom DBI dbConnect
 #' @importFrom odbc odbc odbcListDrivers

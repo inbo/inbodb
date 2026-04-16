@@ -17,3 +17,9 @@ This method is an adaptation to the INBO databases from the eponymous
 function in the \code{odbc} package and is an implementation of the method
 \code{\link[DBI:dbDisconnect]{DBI::dbDisconnect()}} defined in the \code{DBI} package.
 }
+\seealso{
+Other connection: 
+\code{\link{connect_inbo_dbase}()},
+\code{\link{dbFetch,OdbcResult-method}}
+}
+\concept{connection}

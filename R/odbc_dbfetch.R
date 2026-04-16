@@ -14,6 +14,7 @@
 #' @importFrom  odbc dbColumnInfo
 #' @importFrom utils getFromNamespace
 #' @export
+#' @family connection
 setMethod(
   "dbFetch", "OdbcResult",
   function(res, n = -1, ...) {

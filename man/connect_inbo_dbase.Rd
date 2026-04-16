@@ -32,8 +32,14 @@ connection <- connect_inbo_dbase("D0152_00_Flora")
 connection <- connect_inbo_dbase("W0003_00_Lims")
 }
 }
+\seealso{
+Other connection: 
+\code{\link{dbDisconnect,OdbcConnection-method}},
+\code{\link{dbFetch,OdbcResult-method}}
+}
 \author{
 Stijn Van Hoey \email{stijnvanhoey@gmail.com}
 
 Els Lommelen \email{els.lommelen@inbo.be}
 }
+\concept{connection}
