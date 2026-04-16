@@ -15,5 +15,5 @@ as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}.}
 \description{
 This method is an adaptation to the INBO databases from the eponymous
 function in the \code{odbc} package and is an implementation of the method
-\code{dbDisconnect} defined in the \code{DBI} package.
+\code{\link[DBI:dbDisconnect]{DBI::dbDisconnect()}} defined in the \code{DBI} package.
 }
