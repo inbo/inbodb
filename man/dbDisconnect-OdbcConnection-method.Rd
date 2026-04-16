@@ -7,8 +7,8 @@
 \S4method{dbDisconnect}{OdbcConnection}(conn, ...)
 }
 \arguments{
-\item{conn}{A \linkS4class{DBIConnection} object, as returned by
-\code{\link[DBI:dbConnect]{dbConnect()}}.}
+\item{conn}{A \code{\link[DBI:DBIConnection-class]{DBI::DBIConnection}} object,
+as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}.}
 
 \item{...}{Other parameters passed on to methods.}
 }

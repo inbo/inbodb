@@ -5,7 +5,10 @@
 #' `DBI` package.  Additional to the `odbc` package, it replaces a cryptic
 #' error message by an informative error message.
 #'
+#' @param res An object inheriting from [`DBI::DBIResult-class`],
+#'   created by [DBI::dbSendQuery()].
 #' @inheritParams DBI::dbFetch
+#'
 #' @importFrom DBI dbFetch
 #' @importFrom methods setMethod
 #' @importFrom  odbc dbColumnInfo
