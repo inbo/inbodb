@@ -4,9 +4,15 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+![GitHub](https://img.shields.io/github/license/inbo/inbodb)
+[![Release](https://img.shields.io/github/release/inbo/inbodb.svg)](https://github.com/inbo/inbodb/releases)
+[![R build status](https://github.com/inbo/inbodb/actions/workflows/check_on_main.yml/badge.svg)](https://github.com/inbo/inbodb/actions)
 ![r-universe
 name](https://inbo.r-universe.dev/badges/:name?color=c04384)
 ![r-universe package](https://inbo.r-universe.dev/badges/inbodb)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/inbo/inbodb.svg)
+![GitHub repo size](https://img.shields.io/github/repo-size/inbo/inbodb.svg)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6353907.svg)](https://doi.org/10.5281/zenodo.6353907)
 <!-- badges: end -->
 
 # inbodb <img src="man/figures/hexsticker.svg" align="right" alt="A hexagon with the word inbodb" width="120" />
