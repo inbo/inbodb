@@ -21,7 +21,7 @@ on_connection_closed <- function(connection) {
 #' [DBI::dbDisconnect()] defined in the `DBI` package.
 #'
 #' @param conn A [`DBI::DBIConnection-class`] object,
-#'   as returned by [DBI::dbConnect()].
+#'   as returned by `connect_inbo_dbase()`.
 #' @inheritParams DBI::dbDisconnect
 #'
 #' @importFrom methods setMethod

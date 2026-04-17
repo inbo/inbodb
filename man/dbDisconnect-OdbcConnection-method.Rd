@@ -8,7 +8,7 @@
 }
 \arguments{
 \item{conn}{A \code{\link[DBI:DBIConnection-class]{DBI::DBIConnection}} object,
-as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}.}
+as returned by \code{connect_inbo_dbase()}.}
 
 \item{...}{Other parameters passed on to methods.}
 }
