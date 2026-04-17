@@ -2,8 +2,35 @@ description: Configuration file for checklist::check_pkg()
 package: yes
 allowed:
   warnings: []
-  notes: []
+  notes:
+  - motivation: All given links are accessible for human users.
+    value: |-
+      checking CRAN incoming feasibility ... NOTE
+      Maintainer: 'Els Lommelen <els.lommelen@inbo.be>'
 
+      New submission
+
+      Found the following (possibly) invalid URLs:
+        URL: https://eur-lex.europa.eu/eli/reg_impl/2016/1141/oj/nld##
+          From: inst/doc/get_data_taxonlijsten.html
+          Status: 202
+          Message: Accepted
+        URL: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A02016R1141-20170802#
+          From: inst/doc/get_data_taxonlijsten.html
+          Status: 202
+          Message: Accepted
+        URL: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A02016R1141-20190815#
+          From: inst/doc/get_data_taxonlijsten.html
+          Status: 202
+          Message: Accepted
+        URL: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A02016R1141-20220802#
+          From: inst/doc/get_data_taxonlijsten.html
+          Status: 202
+          Message: Accepted
+        URL: https://www.gbif.org
+          From: inst/doc/get_data_meetnetten.html
+          Status: 403
+          Message: Forbidden
 required:
 - CITATION
 - DESCRIPTION
@@ -15,7 +42,9 @@ required:
 - folder conventions
 - license
 - lintr
+- organisation
 - repository secret
 - spelling
 spelling:
   default: en-GB
+pak: []
