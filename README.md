@@ -44,8 +44,8 @@ remotes::install_github("inbo/inbodb")
 
 # Use `inbodb`
 
-The main function, `connect_inbo_dbase()`, makes a connection to a INBO database by simply providing the database's name as an argument (when connected to the INBO network).
-After making this connection, a Connections pane in RStudio shows an overview of the INBO databases, in which database contents can be explored on clicking the icons.
+The main function, `connect_inbo_dbase()`, makes a connection to an INBO database by simply providing the database's name as an argument (when connected to the INBO network).
+After making this connection, a Connections pane in RStudio shows an overview of the INBO databases, in which database contents can be explored by clicking on the icons.
 
 The connection allows to download or query data from the database using functions of packages [DBI](https://dbi.r-dbi.org/) and [dbplyr](https://dbplyr.tidyverse.org/).
 Some of the `DBI` functions have extra functionality in `inbodb`, for instance `dbDisconnect()` will also close the Connections pane in RStudio in addition to closing the connection.
