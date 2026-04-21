@@ -5,9 +5,15 @@ on_connection_closed <- function(connection) {
     return(invisible(NULL))
 
   # provide information no DWH or database
-  if (grepl("08", connection@info$servername)) {
+  if (
+    grepl("08", connection@info$servername) ||
+      grepl("10", connection@info$servername)
+  ) {
     type <- "INBO DWH Server"
-  } else if (grepl("07", connection@info$servername)) {
+  } else if (
+    grepl("07", connection@info$servername) ||
+      grepl("09", connection@info$servername)
+  ) {
     type <- "INBO PRD Server"
   }
 
