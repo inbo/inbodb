@@ -66,15 +66,13 @@
 #' dbDisconnect(db_connectie)
 #' }
 
-get_florabank_taxon_ifbl_year <- function(connection,
-                                      starting_year = 2010,
-                                      ifbl_resolution = c("1km-by-1km",
-                                                          "4km-by-4km"),
-                                      taxongroup = c("Vaatplanten",
-                                                     "Mossen",
-                                                     "Lichenen (korstmossen)",
-                                                     "Kranswieren"),
-                                      collect = FALSE) {
+get_florabank_taxon_ifbl_year <- function(
+    connection,
+    starting_year = 2010,
+    ifbl_resolution = c("1km-by-1km", "4km-by-4km"),
+    taxongroup =
+        c("Vaatplanten", "Mossen", "Lichenen (korstmossen)", "Kranswieren"),
+    collect = FALSE) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
@@ -136,7 +134,8 @@ WHERE 1=1
 ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
       starting_year = starting_year,
       taxongroup = taxongroup,
-      .con = connection)
+      .con = connection
+    )
     glue_statement <- iconv(glue_statement, from =  "UTF-8", to = "latin1")
     query_result <- tbl(connection, sql(glue_statement))
 
@@ -145,7 +144,8 @@ ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
                .data$ParentTaxoncode, .data$ParentNaamWetenschappelijk,
                .data$ParentNaamNederlands) %>%
       summarize(
-        ifbl_number_squares = n()) %>%
+        ifbl_number_squares = n()
+      ) %>%
       ungroup()
 
     if (!isTRUE(collect)) {
@@ -203,7 +203,8 @@ WHERE 1=1
 ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
     starting_year = starting_year,
     taxongroup = taxongroup,
-    .con = connection)
+    .con = connection
+  )
   glue_statement <- iconv(glue_statement, from =  "UTF-8", to = "latin1")
   query_result <- tbl(connection, sql(glue_statement))
   if (!isTRUE(collect)) {

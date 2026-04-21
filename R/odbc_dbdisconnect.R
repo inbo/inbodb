@@ -5,9 +5,15 @@ on_connection_closed <- function(connection) {
     return(invisible(NULL))
 
   # provide information no DWH or database
-  if (grepl("08", connection@info$servername)) {
+  if (
+    grepl("08", connection@info$servername) ||
+      grepl("10", connection@info$servername)
+  ) {
     type <- "INBO DWH Server"
-  } else if (grepl("07", connection@info$servername)) {
+  } else if (
+    grepl("07", connection@info$servername) ||
+      grepl("09", connection@info$servername)
+  ) {
     type <- "INBO PRD Server"
   }
 
@@ -18,14 +24,17 @@ on_connection_closed <- function(connection) {
 #'
 #' This method is an adaptation to the INBO databases from the eponymous
 #' function in the `odbc` package and is an implementation of the method
-#' `dbDisconnect` defined in the `DBI` package.
+#' [DBI::dbDisconnect()] defined in the `DBI` package.
 #'
+#' @param conn A [`DBI::DBIConnection-class`] object,
+#'   as returned by `connect_inbo_dbase()`.
 #' @inheritParams DBI::dbDisconnect
 #'
 #' @importFrom methods setMethod
 #' @importFrom odbc dbIsValid
 #' @importFrom utils getFromNamespace
 #' @export
+#' @family connection
 setMethod(
   "dbDisconnect", "OdbcConnection",
   function(conn, ...) {
@@ -37,4 +46,5 @@ setMethod(
     conn_release <- getFromNamespace("connection_release", "odbc")
     conn_release(conn@ptr)
     invisible(TRUE)
-  })
+  }
+)

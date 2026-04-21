@@ -56,11 +56,11 @@
 #' rm(con, rl)
 #' }
 
-get_taxonlijsten_lists <- function(connection,
-                                   list = "%",
-                                   version = c("latest", "old", "all"),
-                                   collect = FALSE
-) {
+get_taxonlijsten_lists <- function(
+    connection,
+    list = "%",
+    version = c("latest", "old", "all"),
+    collect = FALSE) {
 
   assert_that(is.character(list))
 
@@ -97,10 +97,10 @@ get_taxonlijsten_lists <- function(connection,
     LEFT JOIN [dbo].[Vaststelling] vs ON vs.ID = tlv.VaststellingID
     WHERE 1 = 1
     AND tl.Naam LIKE {list})tmp ",
-                             whereclause,
-                             list = list,
-                             version = version,
-                             .con = connection
+    whereclause,
+    list = list,
+    version = version,
+    .con = connection
   )
 
   query_result <- tbl(connection, sql(sql_statement))

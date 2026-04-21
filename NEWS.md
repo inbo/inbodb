@@ -1,3 +1,11 @@
+# inbodb 0.0.8
+
+* connect to new database server, and connect to old server if database is
+  not yet on new server (issue #67)
+* fix issue #65 in `get_taxonlijsten_items()`: return all results in default
+  `feature = '%'`, also results without features
+* add documentation on use of package on home page (README)
+
 # inbodb 0.0.7
 
 * update functions `get_florabank_observations()`,  

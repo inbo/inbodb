@@ -42,11 +42,11 @@
 #' rm(con)
 #' }
 
-get_taxonlijsten_features <- function(connection,
-                                   list = "%",
-                                   version = c("latest", "old", "all"),
-                                   collect = FALSE
-) {
+get_taxonlijsten_features <- function(
+    connection,
+    list = "%",
+    version = c("latest", "old", "all"),
+    collect = FALSE) {
 
   assert_that(is.character(list))
 
@@ -89,10 +89,10 @@ FROM [dbo].[Taxonlijst] tl
 	WHERE 1 = 1
        AND tl.Naam LIKE {list}
        )tmp ",
-                             whereclause,
-                             list = list,
-                             version = version,
-                             .con = connection
+    whereclause,
+    list = list,
+    version = version,
+    .con = connection
   )
 
   query_result <- tbl(connection, sql(sql_statement))

@@ -99,7 +99,8 @@ get_inboveg_header <- function(
 
   assert_that(
     inherits(connection, what = "Microsoft SQL Server"),
-    msg = "Not a connection object to database.")
+    msg = "Not a connection object to database."
+  )
   assert_that(is.character(additional_variables))
 
   if (missing(survey_name) && !multiple) {
@@ -128,29 +129,30 @@ get_inboveg_header <- function(
 
   common_part <- paste0(
     "SELECT
-  ivR.RecordingGivid
-  , ivR.NeedsWork
-  , ivS.Name as SurveyName
-  , ivR.UserReference
-  , ivR.Observer
-  , ivR.LocationCode
-  , ivR.Latitude
-  , ivR.Longitude
-  , COALESCE(ivR.Length * ivR.Width / 10000, try_convert(decimal, ivR.Area))
-      AS Area
-  , ivR.Length
-  , ivR.Width
-  , ivR.VagueDateType
-  , ivR.VagueDateBegin
-  , ivR.VagueDateEnd
-  , ivR.SurveyId
-  , ivR.RecTypeID
-  , ivRec.Name as RecTypeName",
-  paste(sprintf(", ivR.%s", additional_variables), collapse = ""),
-  " FROM [dbo].[ivRecording] ivR
-  INNER JOIN [dbo].[ivSurvey] ivS on ivS.Id = ivR.SurveyId
-  INNER JOIN [dbo].[ivRecTypeD] ivRec on ivRec.ID = ivR.RecTypeID
-  WHERE 1 = 1 ")
+    ivR.RecordingGivid
+    , ivR.NeedsWork
+    , ivS.Name as SurveyName
+    , ivR.UserReference
+    , ivR.Observer
+    , ivR.LocationCode
+    , ivR.Latitude
+    , ivR.Longitude
+    , COALESCE(ivR.Length * ivR.Width / 10000, try_convert(decimal, ivR.Area))
+        AS Area
+    , ivR.Length
+    , ivR.Width
+    , ivR.VagueDateType
+    , ivR.VagueDateBegin
+    , ivR.VagueDateEnd
+    , ivR.SurveyId
+    , ivR.RecTypeID
+    , ivRec.Name as RecTypeName",
+    paste(sprintf(", ivR.%s", additional_variables), collapse = ""),
+    " FROM [dbo].[ivRecording] ivR
+    INNER JOIN [dbo].[ivSurvey] ivS on ivS.Id = ivR.SurveyId
+    INNER JOIN [dbo].[ivRecTypeD] ivRec on ivRec.ID = ivR.RecTypeID
+    WHERE 1 = 1 "
+  )
 
   if (!multiple) {
     sql_statement <- glue_sql(
@@ -159,7 +161,8 @@ get_inboveg_header <- function(
        AND ivREc.Name LIKE {rec_type}",
       survey_name = survey_name,
       rec_type = rec_type,
-      .con = connection)
+      .con = connection
+    )
 
   } else {
     sql_statement <- glue_sql(
@@ -168,7 +171,8 @@ get_inboveg_header <- function(
        AND ivREc.Name LIKE {rec_type}",
       survey_name = survey_name,
       rec_type = rec_type,
-      .con = connection)
+      .con = connection
+    )
   }
 
   query_result <- tbl(connection, sql(sql_statement))

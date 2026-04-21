@@ -7,13 +7,19 @@
 \S4method{dbDisconnect}{OdbcConnection}(conn, ...)
 }
 \arguments{
-\item{conn}{A \linkS4class{DBIConnection} object, as returned by
-\code{\link[DBI:dbConnect]{dbConnect()}}.}
+\item{conn}{A \code{\link[DBI:DBIConnection-class]{DBI::DBIConnection}} object,
+as returned by \code{connect_inbo_dbase()}.}
 
 \item{...}{Other parameters passed on to methods.}
 }
 \description{
 This method is an adaptation to the INBO databases from the eponymous
 function in the \code{odbc} package and is an implementation of the method
-\code{dbDisconnect} defined in the \code{DBI} package.
+\code{\link[DBI:dbDisconnect]{DBI::dbDisconnect()}} defined in the \code{DBI} package.
 }
+\seealso{
+Other connection: 
+\code{\link{connect_inbo_dbase}()},
+\code{\link{dbFetch,OdbcResult-method}}
+}
+\concept{connection}

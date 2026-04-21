@@ -5,12 +5,16 @@
 #' `DBI` package.  Additional to the `odbc` package, it replaces a cryptic
 #' error message by an informative error message.
 #'
+#' @param res An object inheriting from [`DBI::DBIResult-class`],
+#'   created by [DBI::dbSendQuery()].
 #' @inheritParams DBI::dbFetch
+#'
 #' @importFrom DBI dbFetch
 #' @importFrom methods setMethod
 #' @importFrom  odbc dbColumnInfo
 #' @importFrom utils getFromNamespace
 #' @export
+#' @family connection
 setMethod(
   "dbFetch", "OdbcResult",
   function(res, n = -1, ...) {
@@ -20,12 +24,11 @@ setMethod(
       error = function(e) {
         if (grepl("Descriptor", e) & grepl("index", tolower(e))) {
           info <- dbColumnInfo(res)
-          columns <-
-            paste0(
-              info[info$type %in% c("-1", "-2", "-3", "-4", "-10", "-151"),
-                   "name"],
-              collapse = "', '"
-            )
+          columns <- paste0(
+            info[info$type %in% c("-1", "-2", "-3", "-4", "-10", "-151"),
+                 "name"],
+            collapse = "', '"
+          )
           if (.Platform$OS.type == "unix") {
             columns <-
               paste0(
@@ -50,4 +53,5 @@ setMethod(
     )
 
     df
-  })
+  }
+)

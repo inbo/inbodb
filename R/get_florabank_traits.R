@@ -117,7 +117,8 @@ get_florabank_traits <- function(connection, trait_name, collect = FALSE) {
   sql_statement <- glue_sql(
     sql_statement,
     like_string,
-    .con = connection)
+    .con = connection
+  )
 
   sql_statement <- iconv(sql_statement, from =  "UTF-8", to = "latin1")
 

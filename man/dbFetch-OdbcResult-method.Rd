@@ -7,8 +7,8 @@
 \S4method{dbFetch}{OdbcResult}(res, n = -1, ...)
 }
 \arguments{
-\item{res}{An object inheriting from \linkS4class{DBIResult}, created by
-\code{\link[DBI:dbSendQuery]{dbSendQuery()}}.}
+\item{res}{An object inheriting from \code{\link[DBI:DBIResult-class]{DBI::DBIResult}},
+created by \code{\link[DBI:dbSendQuery]{DBI::dbSendQuery()}}.}
 
 \item{n}{maximum number of records to retrieve per fetch. Use \code{n = -1}
 or \code{n = Inf}
@@ -23,3 +23,9 @@ package and is an implementation of the method \code{dbFetch} defined in the
 \code{DBI} package.  Additional to the \code{odbc} package, it replaces a cryptic
 error message by an informative error message.
 }
+\seealso{
+Other connection: 
+\code{\link{connect_inbo_dbase}()},
+\code{\link{dbDisconnect,OdbcConnection-method}}
+}
+\concept{connection}
