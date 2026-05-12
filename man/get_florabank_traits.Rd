@@ -72,8 +72,8 @@ dbDisconnect(db_connectie)
 }
 }
 \seealso{
-Other florabank: 
-\code{\link{get_florabank_observations}()},
-\code{\link{get_florabank_taxon_ifbl_year}()}
+Other florabank:
+\code{\link[=get_florabank_observations]{get_florabank_observations()}},
+\code{\link[=get_florabank_taxon_ifbl_year]{get_florabank_taxon_ifbl_year()}}
 }
 \concept{florabank}

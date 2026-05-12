@@ -106,9 +106,9 @@ rm(locations_dragonflies)
 }
 }
 \seealso{
-Other meetnetten: 
-\code{\link{get_meetnetten_observations}()},
-\code{\link{get_meetnetten_schemes}()},
-\code{\link{get_meetnetten_visits}()}
+Other meetnetten:
+\code{\link[=get_meetnetten_observations]{get_meetnetten_observations()}},
+\code{\link[=get_meetnetten_schemes]{get_meetnetten_schemes()}},
+\code{\link[=get_meetnetten_visits]{get_meetnetten_visits()}}
 }
 \concept{meetnetten}

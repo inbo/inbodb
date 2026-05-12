@@ -100,9 +100,9 @@ rm(visits_all)
 }
 }
 \seealso{
-Other meetnetten: 
-\code{\link{get_meetnetten_locations}()},
-\code{\link{get_meetnetten_observations}()},
-\code{\link{get_meetnetten_schemes}()}
+Other meetnetten:
+\code{\link[=get_meetnetten_locations]{get_meetnetten_locations()}},
+\code{\link[=get_meetnetten_observations]{get_meetnetten_observations()}},
+\code{\link[=get_meetnetten_schemes]{get_meetnetten_schemes()}}
 }
 \concept{meetnetten}

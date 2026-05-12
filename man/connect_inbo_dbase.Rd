@@ -33,7 +33,7 @@ connection <- connect_inbo_dbase("W0003_00_Lims")
 }
 }
 \seealso{
-Other connection: 
+Other connection:
 \code{\link{dbDisconnect,OdbcConnection-method}},
 \code{\link{dbFetch,OdbcResult-method}}
 }

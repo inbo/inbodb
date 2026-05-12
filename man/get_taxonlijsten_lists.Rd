@@ -67,8 +67,8 @@ rm(con, rl)
 }
 }
 \seealso{
-Other taxonlijsten: 
-\code{\link{get_taxonlijsten_features}()},
-\code{\link{get_taxonlijsten_items}()}
+Other taxonlijsten:
+\code{\link[=get_taxonlijsten_features]{get_taxonlijsten_features()}},
+\code{\link[=get_taxonlijsten_items]{get_taxonlijsten_items()}}
 }
 \concept{taxonlijsten}
