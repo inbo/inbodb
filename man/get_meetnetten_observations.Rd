@@ -157,9 +157,9 @@ Research Institute for Nature and Forest (INBO), Brussels.
 }
 }
 \seealso{
-Other meetnetten: 
-\code{\link{get_meetnetten_locations}()},
-\code{\link{get_meetnetten_schemes}()},
-\code{\link{get_meetnetten_visits}()}
+Other meetnetten:
+\code{\link[=get_meetnetten_locations]{get_meetnetten_locations()}},
+\code{\link[=get_meetnetten_schemes]{get_meetnetten_schemes()}},
+\code{\link[=get_meetnetten_visits]{get_meetnetten_visits()}}
 }
 \concept{meetnetten}

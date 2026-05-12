@@ -35,12 +35,7 @@ globalVariables("%LIKE%")
 #' The first four variables identify the taxon, the latter six variables relate
 #' to the taxon traits.
 #'
-#' @importFrom dplyr
-#' tbl
-#' collect
-#' distinct
-#' pull
-#' %>%
+#' @importFrom dplyr tbl collect distinct pull %>%
 #' @importFrom glue glue_sql
 #' @importFrom rlang .data
 #' @importFrom assertthat assert_that

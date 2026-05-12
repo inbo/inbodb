@@ -75,8 +75,8 @@ dbDisconnect(db_connectie)
 }
 }
 \seealso{
-Other florabank: 
-\code{\link{get_florabank_observations}()},
-\code{\link{get_florabank_traits}()}
+Other florabank:
+\code{\link[=get_florabank_observations]{get_florabank_observations()}},
+\code{\link[=get_florabank_traits]{get_florabank_traits()}}
 }
 \concept{florabank}

@@ -13,8 +13,7 @@ allowed:
       Found the following (possibly) invalid URLs:
         URL: https://eur-lex.europa.eu/eli/reg_impl/2016/1141/oj/nld##
           From: inst/doc/get_data_taxonlijsten.html
-          Status: 202
-          Message: Accepted
+          Message: Invalid URL: '#' not allowed in fragment
         URL: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A02016R1141-20170802#
           From: inst/doc/get_data_taxonlijsten.html
           Status: 202
@@ -27,10 +26,6 @@ allowed:
           From: inst/doc/get_data_taxonlijsten.html
           Status: 202
           Message: Accepted
-        URL: https://www.gbif.org
-          From: inst/doc/get_data_meetnetten.html
-          Status: 403
-          Message: Forbidden
 required:
 - CITATION
 - DESCRIPTION

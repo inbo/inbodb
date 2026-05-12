@@ -24,8 +24,8 @@ package and is an implementation of the method \code{dbFetch} defined in the
 error message by an informative error message.
 }
 \seealso{
-Other connection: 
-\code{\link{connect_inbo_dbase}()},
+Other connection:
+\code{\link[=connect_inbo_dbase]{connect_inbo_dbase()}},
 \code{\link{dbDisconnect,OdbcConnection-method}}
 }
 \concept{connection}

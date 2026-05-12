@@ -22,10 +22,7 @@
 #' @importFrom DBI dbConnect
 #' @importFrom odbc odbc odbcListDrivers
 #' @importFrom utils tail
-#' @importFrom assertthat
-#' assert_that
-#' is.flag
-#' noNA
+#' @importFrom assertthat assert_that is.flag noNA
 #'
 #' @author Stijn Van Hoey \email{stijnvanhoey@@gmail.com}
 #' @author Els Lommelen \email{els.lommelen@@inbo.be}
@@ -131,7 +128,7 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
 #' @param type INBO database server name
 #'
 #' @importFrom odbc odbcListObjectTypes odbcListObjects odbcListColumns
-#' odbcPreviewObject odbcConnectionActions
+#' @importFrom odbc odbcPreviewObject
 #' @importFrom DBI dbDisconnect
 #' @noRd
 on_connection_opened <- function(connection, code, type) {

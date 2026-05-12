@@ -78,14 +78,14 @@ rm(con)
 }
 }
 \seealso{
-Other inboveg: 
-\code{\link{get_inboveg_header}()},
-\code{\link{get_inboveg_layer_cover}()},
-\code{\link{get_inboveg_layer_qualifier}()},
-\code{\link{get_inboveg_ppa}()},
-\code{\link{get_inboveg_qualifier}()},
-\code{\link{get_inboveg_recording}()},
-\code{\link{get_inboveg_relation_recording}()},
-\code{\link{get_inboveg_survey}()}
+Other inboveg:
+\code{\link[=get_inboveg_header]{get_inboveg_header()}},
+\code{\link[=get_inboveg_layer_cover]{get_inboveg_layer_cover()}},
+\code{\link[=get_inboveg_layer_qualifier]{get_inboveg_layer_qualifier()}},
+\code{\link[=get_inboveg_ppa]{get_inboveg_ppa()}},
+\code{\link[=get_inboveg_qualifier]{get_inboveg_qualifier()}},
+\code{\link[=get_inboveg_recording]{get_inboveg_recording()}},
+\code{\link[=get_inboveg_relation_recording]{get_inboveg_relation_recording()}},
+\code{\link[=get_inboveg_survey]{get_inboveg_survey()}}
 }
 \concept{inboveg}

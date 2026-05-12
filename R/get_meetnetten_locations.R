@@ -70,7 +70,7 @@
 #'
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter arrange collect tbl sql mutate select %>% left_join
-#' rename
+#' @importFrom dplyr rename
 #' @importFrom rlang .data
 #'
 #' @export

@@ -18,8 +18,8 @@ function in the \code{odbc} package and is an implementation of the method
 \code{\link[DBI:dbDisconnect]{DBI::dbDisconnect()}} defined in the \code{DBI} package.
 }
 \seealso{
-Other connection: 
-\code{\link{connect_inbo_dbase}()},
+Other connection:
+\code{\link[=connect_inbo_dbase]{connect_inbo_dbase()}},
 \code{\link{dbFetch,OdbcResult-method}}
 }
 \concept{connection}
