@@ -69,7 +69,8 @@
 #' which means that no observations can be recorded any more.
 #'
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter arrange collect tbl sql mutate select %>% left_join rename
+#' @importFrom dplyr filter arrange collect tbl sql mutate select %>% left_join
+#' @importFrom dplyr rename
 #' @importFrom rlang .data
 #'
 #' @export

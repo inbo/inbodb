@@ -127,7 +127,8 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
 #' @param code `dbase` connection code
 #' @param type INBO database server name
 #'
-#' @importFrom odbc odbcListObjectTypes odbcListObjects odbcListColumns odbcPreviewObject
+#' @importFrom odbc odbcListObjectTypes odbcListObjects odbcListColumns
+#' @importFrom odbc odbcPreviewObject
 #' @importFrom DBI dbDisconnect
 #' @noRd
 on_connection_opened <- function(connection, code, type) {
