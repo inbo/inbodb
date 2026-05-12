@@ -44,10 +44,7 @@
 #'
 #' @importFrom glue glue_sql
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr
-#' tbl
-#' collect
-#' sql
+#' @importFrom dplyr tbl collect sql
 #'
 #' @export
 #' @family florabank
