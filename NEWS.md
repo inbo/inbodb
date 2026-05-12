@@ -1,3 +1,7 @@
+# inbodb 0.0.9
+
+* bugfix: error on load
+
 # inbodb 0.0.8
 
 * connect to new database server, and connect to old server if database is
