@@ -62,7 +62,7 @@
 #'    \item \code{notes}: notes by the observer
 #' }
 #'
-#' @importFrom assertthat assert_that
+#' @importFrom assertthat assert_that noNA
 #' @importFrom dplyr collect tbl sql %>% filter arrange
 #' @importFrom rlang .data
 #'

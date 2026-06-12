@@ -68,7 +68,7 @@
 #' Then, a locations can be made inactive (\code{is_active} = \code{FALSE}),
 #' which means that no observations can be recorded any more.
 #'
-#' @importFrom assertthat assert_that
+#' @importFrom assertthat assert_that noNA
 #' @importFrom dplyr filter arrange collect tbl sql mutate select %>% left_join
 #' @importFrom dplyr rename
 #' @importFrom rlang .data

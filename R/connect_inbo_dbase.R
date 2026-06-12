@@ -10,9 +10,8 @@
 #' tutorial}.
 #'
 #' @param database_name char Name of the INBO database you want to connect
-#' @param autoconvert_utf8 Should the encoding of the tables that are retrieved
-#' from the database be adapted to ensure correct presentation?
-#' Defaults to TRUE.
+#' @param autoconvert_utf8 this argument is not needed anymore thanks to better
+#' encoding in R for Windows and is therefore deprecated, do not use it anymore
 #'
 #' @return odbc connection
 #'
@@ -22,7 +21,8 @@
 #' @importFrom DBI dbConnect
 #' @importFrom odbc odbc odbcListDrivers
 #' @importFrom utils tail
-#' @importFrom assertthat assert_that is.flag noNA
+#' @importFrom assertthat assert_that
+#' @importFrom lifecycle deprecated
 #'
 #' @author Stijn Van Hoey \email{stijnvanhoey@@gmail.com}
 #' @author Els Lommelen \email{els.lommelen@@inbo.be}
@@ -31,11 +31,20 @@
 #' connection <- connect_inbo_dbase("D0152_00_Flora")
 #' connection <- connect_inbo_dbase("W0003_00_Lims")
 #' }
-connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
+connect_inbo_dbase <- function(database_name, autoconvert_utf8 = deprecated()) {
 
-  assert_that(is.flag(autoconvert_utf8), noNA(autoconvert_utf8))
-  encoding <-
-    ifelse(autoconvert_utf8 & .Platform$OS.type == "windows", "latin1", "")
+  if (lifecycle::is_present(autoconvert_utf8)) {
+    lifecycle::deprecate_warn(
+      when = "0.0.10",
+      what = "inbodb::connect_inbo_dbase(autoconvert_utf8)",
+      details = paste(
+        "Argument autoconvert_utf8 used to solve encoding-related problems",
+        "in Windows, but as these problems are gone in recent R versions,",
+        "this argument is not needed anymore.",
+        "Please contact the package maintainer if you still have problems."
+      )
+    )
+  }
 
   # datawarehouse databases (sql08) start with an M, S or W; most
   # transactional (sql07) with a D (by agreement with dba's)
@@ -67,7 +76,6 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
       server = server_new,
       port = 1433,
       database = database_name,
-      encoding = encoding,
       trusted_connection = "yes",
       encrypt = "no"
     ),
@@ -79,7 +87,6 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = TRUE) {
           server = server_old,
           port = 1433,
           database = database_name,
-          encoding = encoding,
           trusted_connection = "yes",
           encrypt = "no"
         ),
