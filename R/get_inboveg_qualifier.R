@@ -177,16 +177,3 @@ get_inboveg_qualifier <- function(
   return(query_result)
 
 }
-
-
-get_inboveg_qualifiers <- function(connection,
-                                   survey_name,
-                                   qualifier_type,
-                                   multiple = FALSE) {
-
-  .Deprecated("get_inboveg_qualifier")
-  get_inboveg_qualifier(connection = connection,
-                        survey_name = survey_name,
-                        qualifier_type = qualifier_type,
-                        multiple = multiple)
-}

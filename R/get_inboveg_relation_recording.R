@@ -130,15 +130,3 @@ get_inboveg_relation_recording <- function(
     return(query_result)
   }
 }
-
-get_inboveg_relation <- function(connection,
-                                 survey_name,
-                                 multiple = FALSE,
-                                 collect = FALSE) {
-
-  .Deprecated("get_inboveg_relation_recording")
-  get_inboveg_relation_recording(connection = connection,
-                                 survey_name = survey_name,
-                                 multiple = multiple,
-                                 collect = collect)
-}
