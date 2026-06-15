@@ -10,8 +10,8 @@
 #' tutorial}.
 #'
 #' @param database_name char Name of the INBO database you want to connect
-#' @param autoconvert_utf8 this argument is not needed anymore thanks to better
-#' encoding in R for Windows and is therefore deprecated, do not use it anymore
+#' @param autoconvert_utf8 this argument is not needed any more thanks to better
+#' encoding in R for Windows and is therefore deprecated, do not use it any more
 #'
 #' @return odbc connection
 #'

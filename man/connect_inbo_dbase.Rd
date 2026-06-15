@@ -9,8 +9,8 @@ connect_inbo_dbase(database_name, autoconvert_utf8 = deprecated())
 \arguments{
 \item{database_name}{char Name of the INBO database you want to connect}
 
-\item{autoconvert_utf8}{this argument is not needed anymore thanks to better
-encoding in R for Windows and is therefore deprecated, do not use it anymore}
+\item{autoconvert_utf8}{this argument is not needed any more thanks to better
+encoding in R for Windows and is therefore deprecated, do not use it any more}
 }
 \value{
 odbc connection
