@@ -1,7 +1,18 @@
 description: Configuration file for checklist::check_pkg()
 package: yes
 allowed:
-  warnings: []
+  warnings:
+  - motivation: This argument is defunct and cannot be used, no need to document it
+    value: |-
+      checking Rd \usage sections ... WARNING
+      Undocumented arguments in Rd file 'get_inboveg_recording.Rd'
+        'multiple'
+
+      Functions with \usage entries need to have the appropriate \alias
+      entries, and all their arguments documented.
+      The \usage entries must correspond to syntactically valid R code.
+      See chapter 'Writing R documentation files' in the 'Writing R
+      Extensions' manual.
   notes:
   - motivation: All given links are accessible for human users.
     value: |-
@@ -31,7 +42,6 @@ required:
 - DESCRIPTION
 - R CMD check
 - checklist
-- codemeta
 - documentation
 - filename conventions
 - folder conventions
@@ -43,3 +53,4 @@ required:
 spelling:
   default: en-GB
 pak: []
+gha_install: []

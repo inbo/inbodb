@@ -1,3 +1,10 @@
+# inbodb 0.0.10
+
+* bugfix: solve encoding problem with database Watina by deprecating argument
+  `autoconvert_utf8` in function `connect_inbo_dbase()` (issue #70)
+* defunct argument `multiple` from `get_inboveg_recording()` that was deprecated
+  in version 0.0.5
+
 # inbodb 0.0.9
 
 * bugfix: error on load

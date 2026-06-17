@@ -26,7 +26,6 @@
 #' the query is not brought into memory. If TRUE the full result of the query is
 #' collected (fetched) from the database and brought into memory of the working
 #' environment.
-#' @param multiple Deprecated.
 #'
 #' @return A remote `tbl` object (collect = FALSE) or a `tibble` dataframe
 #' (collect
@@ -97,7 +96,7 @@ get_inboveg_recording <- function(
   assert_that(is.character(user_reference))
   assert_that(is.character(recording_givid))
   if (lifecycle::is_present(multiple)) {
-    lifecycle::deprecate_warn(
+    lifecycle::deprecate_stop(
       when = "0.0.5",
       what = "get_inboveg_recording(multiple)",
       details =
@@ -182,21 +181,4 @@ get_inboveg_recording <- function(
     query_result <- collect(query_result)
   }
   return(query_result)
-}
-
-
-get_inboveg_recordings <- function(
-    connection,
-    survey_name = "%",
-    user_reference = "%",
-    recording_givid = "%",
-    collect = FALSE,
-    multiple = FALSE) {
-
-  .Deprecated("get_inboveg_recording")
-  get_inboveg_recording(connection = connection,
-                        survey_name = survey_name,
-                        user_reference = user_reference,
-                        recording_givid = recording_givid,
-                        collect = collect)
 }

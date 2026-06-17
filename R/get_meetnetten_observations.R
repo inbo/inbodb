@@ -55,7 +55,7 @@
 #'    each observation is recorded
 #'    }
 #'
-#' @importFrom assertthat assert_that
+#' @importFrom assertthat assert_that noNA
 #' @importFrom dplyr filter arrange collect tbl sql %>%
 #' @importFrom rlang .data
 #'
