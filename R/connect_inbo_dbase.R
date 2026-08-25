@@ -81,7 +81,6 @@ connect_inbo_dbase <- function(
       server = server_new,
       port = 1433,
       database = database_name,
-      trusted_connection = "yes",
       encrypt = "no",
       timeout = timeout
     ),
