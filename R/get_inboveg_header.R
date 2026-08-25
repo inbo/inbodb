@@ -90,12 +90,13 @@
 
 
 get_inboveg_header <- function(
-    connection,
-    survey_name,
-    rec_type,
-    additional_variables = character(0),
-    multiple = FALSE,
-    collect = FALSE) {
+  connection,
+  survey_name,
+  rec_type,
+  additional_variables = character(0),
+  multiple = FALSE,
+  collect = FALSE
+) {
 
   assert_that(
     inherits(connection, what = "Microsoft SQL Server"),

@@ -66,11 +66,12 @@
 #' }
 
 get_inboveg_classification <- function(
-    connection,
-    survey_name,
-    classif,
-    multiple = FALSE,
-    collect = FALSE) {
+  connection,
+  survey_name,
+  classif,
+  multiple = FALSE,
+  collect = FALSE
+) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
