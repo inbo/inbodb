@@ -10,6 +10,9 @@
 #' tutorial}.
 #'
 #' @param database_name char Name of the INBO database you want to connect
+#' @param timeout Time in seconds to timeout the connection attempt.
+#' Setting a timeout of `Inf` or `NA` indicates no timeout.
+#' Defaults to 2 seconds.
 #' @param autoconvert_utf8 this argument is not needed any more thanks to better
 #' encoding in R for Windows and is therefore deprecated, do not use it any more
 #'
@@ -31,7 +34,9 @@
 #' connection <- connect_inbo_dbase("D0152_00_Flora")
 #' connection <- connect_inbo_dbase("W0003_00_Lims")
 #' }
-connect_inbo_dbase <- function(database_name, autoconvert_utf8 = deprecated()) {
+connect_inbo_dbase <- function(
+  database_name, timeout = 2, autoconvert_utf8 = deprecated()
+) {
 
   if (lifecycle::is_present(autoconvert_utf8)) {
     lifecycle::deprecate_warn(
@@ -77,7 +82,8 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = deprecated()) {
       port = 1433,
       database = database_name,
       trusted_connection = "yes",
-      encrypt = "no"
+      encrypt = "no",
+      timeout = timeout
     ),
     error = function(e) {
       tryCatch(
@@ -88,7 +94,8 @@ connect_inbo_dbase <- function(database_name, autoconvert_utf8 = deprecated()) {
           port = 1433,
           database = database_name,
           trusted_connection = "yes",
-          encrypt = "no"
+          encrypt = "no",
+          timeout = timeout
         ),
         error = function(e) {
           assert_that(
