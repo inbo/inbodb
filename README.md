@@ -47,7 +47,7 @@ remotes::install_github("inbo/inbodb")
 The main function, `connect_inbo_dbase()`, makes a connection to an INBO database by simply providing the database's name as an argument (when connected to the INBO network).
 After making this connection, a Connections pane in RStudio shows an overview of the INBO databases, in which database contents can be explored by clicking on the icons.
 
-The connection allows to download or query data from the database using functions of packages [DBI](https://dbi.r-dbi.org/) and [dbplyr](https://dbplyr.tidyverse.org/).
+The connection allows to download or query data from the database using functions of packages [DBI](https://dbi.r-dbi.org/) and [dbplyr](https://dbplyr.tidyverse.org/), which is used in the background by [dplyr](https://dplyr.tidyverse.org/) when a database table is passed instead of a data frame.
 Some of the `DBI` functions have extra functionality in `inbodb`, for instance `dbDisconnect()` will also close the Connections pane in RStudio in addition to closing the connection.
 Other functions may give more informative errors or (temporarily) fix small technical issues in addition to the DBI functionality, to ensure smooth access to the INBO databases.
 
@@ -67,7 +67,7 @@ dbReadTable(con, "Bron")
 # query a database using a SQL query
 dbGetQuery(con, "SELECT ID, Code, Beschrijving FROM Bron")
 
-# compose a query using R-code and dbplyr
+# compose a query using R-code and dplyr
 library(dplyr)
 tbl(con, "Bron") |>
   select("ID", "Code", "Beschrijving") |>

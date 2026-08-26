@@ -83,12 +83,13 @@
 #' }
 
 get_inboveg_recording <- function(
-    connection,
-    survey_name = "%",
-    user_reference = "%",
-    recording_givid = "%",
-    collect = FALSE,
-    multiple = deprecated()) {
+  connection,
+  survey_name = "%",
+  user_reference = "%",
+  recording_givid = "%",
+  collect = FALSE,
+  multiple = deprecated()
+) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")

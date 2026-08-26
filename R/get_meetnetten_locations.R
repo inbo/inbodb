@@ -102,9 +102,10 @@
 #' }
 
 get_meetnetten_locations <- function(
-    connection,
-    scheme_name = NULL,
-    species_group = NULL) {
+  connection,
+  scheme_name = NULL,
+  species_group = NULL
+) {
 
   species_group_selected <- species_group
 

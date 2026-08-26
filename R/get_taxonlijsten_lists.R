@@ -57,10 +57,11 @@
 #' }
 
 get_taxonlijsten_lists <- function(
-    connection,
-    list = "%",
-    version = c("latest", "old", "all"),
-    collect = FALSE) {
+  connection,
+  list = "%",
+  version = c("latest", "old", "all"),
+  collect = FALSE
+) {
 
   assert_that(is.character(list))
 

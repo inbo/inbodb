@@ -67,12 +67,13 @@
 #' }
 
 get_florabank_taxon_ifbl_year <- function(
-    connection,
-    starting_year = 2010,
-    ifbl_resolution = c("1km-by-1km", "4km-by-4km"),
-    taxongroup =
-        c("Vaatplanten", "Mossen", "Lichenen (korstmossen)", "Kranswieren"),
-    collect = FALSE) {
+  connection,
+  starting_year = 2010,
+  ifbl_resolution = c("1km-by-1km", "4km-by-4km"),
+  taxongroup =
+    c("Vaatplanten", "Mossen", "Lichenen (korstmossen)", "Kranswieren"),
+  collect = FALSE
+) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")

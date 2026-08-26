@@ -43,10 +43,11 @@
 #' }
 
 get_taxonlijsten_features <- function(
-    connection,
-    list = "%",
-    version = c("latest", "old", "all"),
-    collect = FALSE) {
+  connection,
+  list = "%",
+  version = c("latest", "old", "all"),
+  collect = FALSE
+) {
 
   assert_that(is.character(list))
 
