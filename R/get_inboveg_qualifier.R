@@ -69,10 +69,11 @@
 
 
 get_inboveg_qualifier <- function(
-    connection,
-    survey_name,
-    qualifier_type,
-    multiple = FALSE) {
+  connection,
+  survey_name,
+  qualifier_type,
+  multiple = FALSE
+) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")

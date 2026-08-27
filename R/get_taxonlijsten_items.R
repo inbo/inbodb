@@ -68,13 +68,14 @@
 #' }
 
 get_taxonlijsten_items <- function(
-    connection,
-    list = "%",
-    taxon = "%",
-    feature = "%",
-    version = c("latest", "old", "all"),
-    original = FALSE,
-    collect = FALSE) {
+  connection,
+  list = "%",
+  taxon = "%",
+  feature = "%",
+  version = c("latest", "old", "all"),
+  original = FALSE,
+  collect = FALSE
+) {
 
   assert_that(is.character(list))
 

@@ -1,3 +1,9 @@
+# inbodb 0.0.11
+
+* improve performance of establishing a connection with `connect_inbo_dbase()`
+* add `timeout` as an argument in `connect_inbo_dbase()`
+* minor documentation update (issue #74)
+
 # inbodb 0.0.10
 
 * bugfix: solve encoding problem with database Watina by deprecating argument

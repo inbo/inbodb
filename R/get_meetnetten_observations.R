@@ -145,10 +145,11 @@
 #' }
 
 get_meetnetten_observations <- function(
-    connection,
-    scheme_name = NULL,
-    species_group = NULL,
-    collect = FALSE) {
+  connection,
+  scheme_name = NULL,
+  species_group = NULL,
+  collect = FALSE
+) {
 
   species_group_selected <- species_group
 
