@@ -96,7 +96,7 @@ get_florabank_taxon_ifbl_year <- function(
   #   and no fallback is needed.
   # Wrapped in DBI::SQL() so glue_sql() inserts them verbatim instead of
   # quoting them as string literals/identifiers.
-  ifbl_4by4_sql <- DBI::SQL(if (is_4km) { #nolint object_usage_linter.
+  ifbl_4by4_sql <- DBI::SQL(if (is_4km) { #nolint: object_usage_linter.
     "CASE WHEN tmp.code IS NULL THEN h.code ELSE tmp.Code END AS ifbl_4by4"
   } else {
     "tmp.code AS ifbl_4by4"
