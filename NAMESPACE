@@ -22,39 +22,50 @@ export(get_taxonlijsten_items)
 export(get_taxonlijsten_lists)
 exportMethods(dbDisconnect)
 exportMethods(dbFetch)
-importFrom(DBI,dbConnect)
-importFrom(DBI,dbDisconnect)
-importFrom(DBI,dbFetch)
-importFrom(DBI,dbGetQuery)
-importFrom(assertthat,assert_that)
-importFrom(assertthat,noNA)
-importFrom(dplyr,"%>%")
-importFrom(dplyr,arrange)
-importFrom(dplyr,collect)
-importFrom(dplyr,distinct)
-importFrom(dplyr,filter)
-importFrom(dplyr,group_by)
-importFrom(dplyr,left_join)
-importFrom(dplyr,mutate)
-importFrom(dplyr,n)
-importFrom(dplyr,pull)
-importFrom(dplyr,rename)
-importFrom(dplyr,select)
-importFrom(dplyr,sql)
-importFrom(dplyr,summarize)
-importFrom(dplyr,tbl)
-importFrom(dplyr,ungroup)
+importFrom(DBI,
+  SQL,
+  dbConnect,
+  dbDisconnect,
+  dbFetch,
+  dbGetQuery
+)
+importFrom(assertthat,
+  assert_that,
+  noNA
+)
+importFrom(dplyr,
+  "%>%",
+  arrange,
+  collect,
+  distinct,
+  filter,
+  group_by,
+  left_join,
+  mutate,
+  n,
+  pull,
+  rename,
+  select,
+  sql,
+  summarize,
+  tbl,
+  ungroup
+)
 importFrom(glue,glue_sql)
 importFrom(lifecycle,deprecated)
 importFrom(methods,setMethod)
-importFrom(odbc,dbColumnInfo)
-importFrom(odbc,dbIsValid)
-importFrom(odbc,odbc)
-importFrom(odbc,odbcListColumns)
-importFrom(odbc,odbcListDrivers)
-importFrom(odbc,odbcListObjectTypes)
-importFrom(odbc,odbcListObjects)
-importFrom(odbc,odbcPreviewObject)
+importFrom(odbc,
+  dbColumnInfo,
+  dbIsValid,
+  odbc,
+  odbcListColumns,
+  odbcListDrivers,
+  odbcListObjectTypes,
+  odbcListObjects,
+  odbcPreviewObject
+)
 importFrom(rlang,.data)
-importFrom(utils,getFromNamespace)
-importFrom(utils,tail)
+importFrom(utils,
+  getFromNamespace,
+  tail
+)

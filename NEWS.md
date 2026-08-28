@@ -1,3 +1,8 @@
+# inbodb 0.1.0
+
+* `get_florabank_taxon_ifbl_year()` now also returns the month
+* `get_florabank_taxon_ifbl_year()` `SQL` edge case fixed
+
 # inbodb 0.0.11
 
 * improve performance of establishing a connection with `connect_inbo_dbase()`
