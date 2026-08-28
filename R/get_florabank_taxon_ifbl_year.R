@@ -92,6 +92,7 @@ get_florabank_taxon_ifbl_year <- function(
       "SELECT DISTINCT h.Code AS Hok
 	, CASE WHEN tmp.code IS NULL THEN h.code ELSE tmp.Code END AS ifbl_4by4
 	, DATEPART(year, e.BeginDatum) AS Jaar
+	, DATEPART(month, e.BeginDatum) AS Maand
 	, cte.ParentTaxonID
 	, cte.ParentTaxoncode
 	, cte.ParentNaamWetenschappelijk
@@ -162,6 +163,7 @@ ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
     "SELECT DISTINCT h.Code AS Hok
 	, tmp.code AS ifbl_4by4
 	, DATEPART(year, e.BeginDatum) AS Jaar
+	, DATEPART(month, e.BeginDatum) AS Maand
 	, cte.ParentTaxonID
 	, cte.ParentTaxoncode
 	, cte.ParentNaamWetenschappelijk
