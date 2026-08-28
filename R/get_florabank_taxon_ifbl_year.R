@@ -42,6 +42,7 @@
 #' @importFrom glue glue_sql
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr %>% group_by summarize n ungroup sql collect
+#' @importFrom DBI SQL
 #' @importFrom rlang .data
 #'
 #' @export
@@ -85,12 +86,26 @@ get_florabank_taxon_ifbl_year <- function(
   ifbl_resolution <- match.arg(ifbl_resolution)
   taxongroup <- match.arg(taxongroup)
 
+  is_4km <- ifbl_resolution == "4km-by-4km"
 
+  # The only structural differences between the two resolutions:
+  # - 4km: a 4x4 square may already BE its own parent, so we LEFT JOIN the
+  #   parent lookup and fall back to the square's own code when there's no
+  #   match.
+  # - 1km: a 1km square always has a 4x4 parent, so an INNER JOIN suffices
+  #   and no fallback is needed.
+  # Wrapped in DBI::SQL() so glue_sql() inserts them verbatim instead of
+  # quoting them as string literals/identifiers.
+  ifbl_4by4_sql <- DBI::SQL(if (is_4km) {
+    "CASE WHEN tmp.code IS NULL THEN h.code ELSE tmp.Code END AS ifbl_4by4"
+  } else {
+    "tmp.code AS ifbl_4by4"
+  })
+  tmp_join_sql <- DBI::SQL(if (is_4km) "LEFT JOIN" else "INNER JOIN")
 
-  if (ifbl_resolution == "4km-by-4km") {
-    glue_statement <- glue_sql(
-      "SELECT DISTINCT h.Code AS Hok
-	, CASE WHEN tmp.code IS NULL THEN h.code ELSE tmp.Code END AS ifbl_4by4
+  glue_statement <- glue_sql(
+    "SELECT DISTINCT h.Code AS Hok
+	, {ifbl_4by4_sql}
 	, DATEPART(year, e.BeginDatum) AS Jaar
 	, DATEPART(month, e.BeginDatum) AS Maand
 	, cte.ParentTaxonID
@@ -101,7 +116,7 @@ FROM [event] e
 	INNER JOIN Hok h ON h.ID = e.HokID
 	INNER JOIN Waarneming w ON w.EventID = e.ID
 	INNER JOIN waarnemingstatus ws ON ws.id = w.WaarnemingStatusID
-	LEFT JOIN (SELECT HokIDChild
+	{tmp_join_sql} (SELECT HokIDChild
 					, h.Code
 				FROM Hok_Hok hh
 					INNER JOIN HokRelatieType hrt ON hrt.ID = hh.HokRelatieTypeID
@@ -135,13 +150,14 @@ WHERE 1=1
 	AND tg.Beschrijving = {taxongroup}
 	AND ws.code IN ('GDGA','GDGK')
 ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
-      starting_year = starting_year,
-      taxongroup = taxongroup,
-      .con = connection
-    )
-    glue_statement <- iconv(glue_statement, from =  "UTF-8", to = "latin1")
-    query_result <- tbl(connection, sql(glue_statement))
+    starting_year = starting_year,
+    taxongroup = taxongroup,
+    .con = connection
+  )
+  glue_statement <- iconv(glue_statement, from = "UTF-8", to = "latin1")
+  query_result <- tbl(connection, sql(glue_statement))
 
+  if (is_4km) {
     query_result <- query_result %>%
       group_by(.data$ifbl_4by4, .data$Jaar, .data$ParentTaxonID,
                .data$ParentTaxoncode, .data$ParentNaamWetenschappelijk,
@@ -150,68 +166,8 @@ ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
         ifbl_number_squares = n()
       ) %>%
       ungroup()
-
-    if (!isTRUE(collect)) {
-      return(query_result)
-    } else {
-      query_result <- query_result %>%
-        collect()
-      return(query_result)
-    }
   }
 
-  glue_statement <- glue_sql(
-    "SELECT DISTINCT h.Code AS Hok
-	, tmp.code AS ifbl_4by4
-	, DATEPART(year, e.BeginDatum) AS Jaar
-	, DATEPART(month, e.BeginDatum) AS Maand
-	, cte.ParentTaxonID
-	, cte.ParentTaxoncode
-	, cte.ParentNaamWetenschappelijk
-	, cte.ParentNaamNederlands
-FROM [event] e
-	INNER JOIN Hok h ON h.ID = e.HokID
-	INNER JOIN Waarneming w ON w.EventID = e.ID
-	INNER JOIN waarnemingstatus ws ON ws.id = w.WaarnemingStatusID
-	INNER JOIN (SELECT HokIDChild
-					, h.Code
-				FROM Hok_Hok hh
-					INNER JOIN HokRelatieType hrt ON hrt.ID = hh.HokRelatieTypeID
-					INNER JOIN Hok h ON h.ID = hh.HokIDParent
-				WHERE hrt.Code = 'DV')tmp ON tmp.HokIDChild = e.hokid
-	INNER JOIN (SELECT t.id AS taxonid
-					, t.code AS taxoncode
-					, t.NaamNederlands
-					, t.NaamWetenschappelijk
-					, t.TaxonGroepID
-					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
-					THEN t.id ELSE t.ParentTaxonID END AS ParentTaxonID
-					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
-					THEN t.code ELSE tp.code END AS ParentTaxoncode
-					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
-					THEN t.NaamNederlands ELSE tp.NaamNederlands
-					END AS ParentNaamNederlands
-					, CASE WHEN t.ParentTaxonID IS NULL OR t.TaxonRelatieTypeID = 1
-					THEN t.NaamWetenschappelijk ELSE tp.NaamWetenschappelijk
-					END AS ParentNaamWetenschappelijk
-				FROM Taxon t
-					LEFT JOIN Taxon tp ON tp.id = t.ParentTaxonID)cte
-					ON cte.taxonid = w.TaxonID
-	INNER JOIN TaxonGroep tg ON tg.ID = cte.TaxonGroepID
-WHERE 1=1
-	AND cte.ParentTaxoncode NOT LIKE '%-sp'
-	AND DATEPART(year, e.BeginDatum) >= {starting_year}
-  AND (e.EindDatum IS NULL OR
-    DATEPART(year, e.BeginDatum) = DATEPART(year, e.EindDatum))
-	AND tg.Beschrijving = {taxongroup}
-	AND ws.code IN ('GDGA','GDGK')
-ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
-    starting_year = starting_year,
-    taxongroup = taxongroup,
-    .con = connection
-  )
-  glue_statement <- iconv(glue_statement, from =  "UTF-8", to = "latin1")
-  query_result <- tbl(connection, sql(glue_statement))
   if (!isTRUE(collect)) {
     return(query_result)
   } else {
