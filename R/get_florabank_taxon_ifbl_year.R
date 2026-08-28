@@ -101,7 +101,7 @@ get_florabank_taxon_ifbl_year <- function(
   } else {
     "tmp.code AS ifbl_4by4"
   })
-  tmp_join_sql <- DBI::SQL(if (is_4km) "LEFT JOIN" else "INNER JOIN") #nolint object_usage_linter.
+  tmp_join_sql <- DBI::SQL(if (is_4km) "LEFT JOIN" else "INNER JOIN") #nolint: object_usage_linter.
 
   glue_statement <- glue_sql(
     "SELECT DISTINCT h.Code AS Hok
