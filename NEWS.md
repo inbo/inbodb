@@ -1,3 +1,7 @@
+# inbodb 0.1.0
+
+* 
+
 # inbodb 0.0.11
 
 * improve performance of establishing a connection with `connect_inbo_dbase()`

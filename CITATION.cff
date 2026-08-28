@@ -36,7 +36,7 @@ contact:
   affiliation: Research Institute for Nature and Forest (INBO)
   orcid: 0000-0002-3481-5684
 doi: ~
-license: GPL-3.0
+license: GPL-3.0-only
 repository-code: https://github.com/inbo/inbodb/
 type: software
 abstract: "A bundle of functions to connect to and retrieve data from databases on
@@ -44,4 +44,4 @@ abstract: "A bundle of functions to connect to and retrieve data from databases 
 identifiers:
 - type: url
   value: https://inbo.github.io/inbodb/
-version: 0.0.11
+version: 0.1.0
