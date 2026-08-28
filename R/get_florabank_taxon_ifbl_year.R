@@ -130,7 +130,8 @@ FROM [event] e
 WHERE 1=1
 	AND cte.ParentTaxoncode NOT LIKE '%-sp'
 	AND DATEPART(year, e.BeginDatum) >= {starting_year}
-	AND DATEPART(year, e.BeginDatum) = DATEPART(year, e.EindDatum)
+  AND (e.EindDatum IS NULL OR
+    DATEPART(year, e.BeginDatum) = DATEPART(year, e.EindDatum))
 	AND tg.Beschrijving = {taxongroup}
 	AND ws.code IN ('GDGA','GDGK')
 ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
@@ -200,7 +201,8 @@ FROM [event] e
 WHERE 1=1
 	AND cte.ParentTaxoncode NOT LIKE '%-sp'
 	AND DATEPART(year, e.BeginDatum) >= {starting_year}
-	AND DATEPART(year, e.BeginDatum) = DATEPART(year, e.EindDatum)
+  AND (e.EindDatum IS NULL OR
+    DATEPART(year, e.BeginDatum) = DATEPART(year, e.EindDatum))
 	AND tg.Beschrijving = {taxongroup}
 	AND ws.code IN ('GDGA','GDGK')
 ORDER BY DATEPART(year, e.BeginDatum) desc OFFSET 0 ROWS",
