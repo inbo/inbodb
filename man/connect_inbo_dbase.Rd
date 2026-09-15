@@ -4,10 +4,14 @@
 \alias{connect_inbo_dbase}
 \title{Connect to an INBO database}
 \usage{
-connect_inbo_dbase(database_name, autoconvert_utf8 = deprecated())
+connect_inbo_dbase(database_name, timeout = 2, autoconvert_utf8 = deprecated())
 }
 \arguments{
 \item{database_name}{char Name of the INBO database you want to connect}
+
+\item{timeout}{Time in seconds to timeout the connection attempt.
+Setting a timeout of \code{Inf} or \code{NA} indicates no timeout.
+Defaults to 2 seconds.}
 
 \item{autoconvert_utf8}{this argument is not needed any more thanks to better
 encoding in R for Windows and is therefore deprecated, do not use it any more}

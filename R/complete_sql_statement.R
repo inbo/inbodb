@@ -10,11 +10,12 @@
 #' @noRd
 #'
 complete_sql_statement <- function(
-    survey_name,
-    recording_givid,
-    user_reference,
-    common_part,
-    connection) {
+  survey_name,
+  recording_givid,
+  user_reference,
+  common_part,
+  connection
+) {
   survey_where <- ifelse(
     length(survey_name) != 1,
     " AND ivS.Name IN ({survey_name*})",

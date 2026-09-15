@@ -71,11 +71,12 @@
 #' }
 
 get_inboveg_ppa <- function(
-    connection,
-    survey_name = "%",
-    user_reference = "%",
-    recording_givid = "%",
-    collect = FALSE) {
+  connection,
+  survey_name = "%",
+  user_reference = "%",
+  recording_givid = "%",
+  collect = FALSE
+) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")

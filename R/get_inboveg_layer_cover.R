@@ -57,9 +57,10 @@
 
 
 get_inboveg_layer_cover <- function(
-    connection,
-    survey_name,
-    multiple = FALSE) {
+  connection,
+  survey_name,
+  multiple = FALSE
+) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
