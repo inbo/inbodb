@@ -82,10 +82,10 @@ janitor::clean_names(dataset)
 
 As databases can be rather complex, we also wrote manuals and functions to easily retain data from some databases:
 
-- [`Florabank`](https://www.vlaanderen.be/inbo/datasets/florabank/) (see description of [functions under 'Reference'](https://inbo.github.io/inbodb/reference/index.html))
-- [`INBOveg`](https://www.vlaanderen.be/inbo/datasets/inboveg/) (see `vignette("get_data_inboveg", package = "inbodb")` and [functions](https://inbo.github.io/inbodb/reference/index.html))
-- [`meetnetten.be`](https://www.vlaanderen.be/inbo/datasets/meetnettenbe/) (see `vignette("get_data_meetnetten", package = "inbodb")` and [functions](https://inbo.github.io/inbodb/reference/index.html))
-- `taxonlijsten` (see `vignette("get_data_taxonlijsten", package = "inbodb")` and [functions](https://inbo.github.io/inbodb/reference/index.html))
+- [`Florabank`](https://www.vlaanderen.be/inbo/datasets/florabank/) (see description of [functions]([https://inbo.github.io/inbodb/reference/index.html](https://inbo.github.io/inbodb/reference/index.html#functions-to-query-florabank)))
+- [`INBOveg`](https://www.vlaanderen.be/inbo/datasets/inboveg/) (see `vignette("get_data_inboveg", package = "inbodb")` and [functions](https://inbo.github.io/inbodb/reference/index.html#functions-to-query-inboveg))
+- [`meetnetten.be`](https://www.vlaanderen.be/inbo/datasets/meetnettenbe/) (see `vignette("get_data_meetnetten", package = "inbodb")` and [functions](https://inbo.github.io/inbodb/reference/index.html#functions-to-query-the-meetnetten-database))
+- `taxonlijsten` (see `vignette("get_data_taxonlijsten", package = "inbodb")` and [functions](https://inbo.github.io/inbodb/reference/index.html#functions-to-query-database-taxonlijsten))
 
 Some other databases have functions in a dedicated R package to retain or analyse data, e.g.
 
