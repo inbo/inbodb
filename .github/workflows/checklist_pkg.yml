@@ -16,7 +16,7 @@ jobs:
       contents: read
     steps:
       - name: "Check package with checklist"
-        uses: inbo/actions/check_pkg@devel-option
+        uses: inbo/actions/check_pkg@main
   deploy-pages:
     name: deploy-gh-pages
     runs-on: ubuntu-24.04
