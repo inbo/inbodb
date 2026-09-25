@@ -65,10 +65,11 @@
 #'
 
 get_inboveg_relation_recording <- function(
-    connection,
-    survey_name,
-    multiple = FALSE,
-    collect = FALSE) {
+  connection,
+  survey_name,
+  multiple = FALSE,
+  collect = FALSE
+) {
 
   assert_that(inherits(connection, what = "Microsoft SQL Server"),
               msg = "Not a connection object to database.")
