@@ -145,6 +145,13 @@ connect_inbo_dbase <- function(
 #' @importFrom DBI dbDisconnect
 #' @noRd
 on_connection_opened <- function(connection, code, type) {
+  # Positron does not support the RStudio Connections contract;
+  # registering the connection in Positron causes it to immediately
+  # invoke the disconnect callback and invalidate the connection pointer.
+  if (identical(Sys.getenv("POSITRON"), "1")) {
+    return(invisible(NULL))
+  }
+
   # make sure we have an observer
   observer <- getOption("connectionObserver")
   if (is.null(observer))

@@ -1,4 +1,8 @@
 on_connection_closed <- function(connection) {
+  if (identical(Sys.getenv("POSITRON"), "1")) {
+    return(invisible(NULL))
+  }
+
   # make sure we have an observer
   observer <- getOption("connectionObserver")
   if (is.null(observer))
